@@ -1,0 +1,26 @@
+@(title: String, mobile: Boolean = false)(content: Html)
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>@title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="@routes.Assets.at("stylesheets/main.min.css")">
+        <link rel="shortcut icon" href="@routes.Assets.at("/images/favicon.ico")" type="image/x-icon" />
+        <script src="@routes.Assets.at("javascripts/jquery-1.7.2.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/jquery-ui-1.8.20.min.js")" type="text/javascript"></script>
+        @if(mobile) {
+          <link rel="stylesheet" href="@routes.Assets.at("stylesheets/touch.css")">
+          <script src="@routes.Assets.at("javascripts/jquery.ui.touch-punch.min.js")" type="text/javascript"></script>
+          <script src="@routes.Assets.at("javascripts/touch.js")" type="text/javascript"></script>
+        }
+        <script src="@routes.Assets.at("javascripts/survey.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/validation.min.js")" type="text/javascript"></script>
+    </head>
+    <body>
+	    <div class="container">
+	        @content
+	    </div>
+    </body>
+</html>

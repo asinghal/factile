@@ -1,0 +1,210 @@
+@(survey: Survey, questions: List[Question], pageNumber: Int, responseId: String, percentComplete: Int = 0, replacements: Map[String, String] = Map[String, String](), message: String = null)(implicit request: RequestHeader)
+
+@import helpers.ResponseHelper._
+
+@inputClass()(f: => Boolean) = {
+	@if(f) {
+	  class="required input-xlarge"
+  } else {
+    class="input-xlarge"
+  }
+} 
+
+@replace(text: String) = { @Html(replaceTokens(text, replacements)) }
+
+@respondent(survey.name, isMobilePhone) {
+<style>
+	body { background-color: @survey.layout.bodycolor; color: @survey.layout.textColor; padding-top: 2%;}
+	.survey { background-color: @survey.layout.containercolor; padding: 2% 2% 2% 2%; }
+	.banner { background-color: @survey.layout.logoBgColor; width: 100%; height: 100%; padding: 2% 2% 2% 2%; }
+	.logo { display: block; @if(survey.layout.logoAlignment == "right" || survey.layout.logoAlignment == "center") {
+	    margin-left: auto;
+		} @if(survey.layout.logoAlignment == "left" || survey.layout.logoAlignment == "center") {
+	    margin-right: auto;
+		} }
+</style>
+
+@if(survey.logo != null && survey.logo != "") {
+	<div class="row">
+		<div class="span12">
+		<div class="banner">
+		  <img src="@("/assets/uploads/" +  survey.hash_string + "/" + survey.logo)" class="logo"/>
+		</div>
+		</div>
+	</div>
+}
+
+<div class="row">
+	<div class="span12 survey">
+		<h1>@survey.name</h1>
+		<hr>
+	</div>
+</div>
+
+@if(message != null && message.trim != "") {
+	<div class="row">
+		<div class="span12 survey">
+			<div id="errorNoticeMain" class="alert alert-info" >
+				@message
+			</div>
+		</div>
+	</div>
+} else {
+
+	@if((survey.intro_text != null && survey.intro_text.trim.length > 0) && !questions.isEmpty) {
+	<div class="row">
+		<div class="span12 survey">
+			@Html(survey.intro_text)
+		</div>
+	</div>
+	}
+}
+
+<div id="errorNotice">
+</div>
+<div class="row">
+	<div class="span12 survey">
+	
+	<form method="POST" id="response_form">
+	  	<input type="hidden" name="pageNum" value="@pageNumber" />
+	  	<input type="hidden" name="responseId" value="@responseId" />
+		@questions.map { q => 
+		<div class="row">
+			<div class="span12">
+		    @q match {
+		      case question: TextBox => {
+				<b>@replace(question.texts(0).text)</b> <input name="@question.questionId" type="text" @inputClass()(question.mandatory)  />
+		      }
+		      case question: RadioButtons => {
+				<b>@replace(question.texts(0).text)</b> 
+
+				<div id="@(question.questionId + "_options")" class="required">
+					<ul class="radioList">
+				  @question.options.map { o =>
+				    @defining(question.options(0).value) { o1 => 
+				        <li><input name="@question.questionId" type="radio" value="@o.value" @inputClass()(question.mandatory && o.value == o1) /><span>@replace(o.texts(0).text)</span><span class="check">&#x2713</span></li>
+		   		    }
+		   		  }
+		   		</ul>
+
+			      @if(question.hasOther) {
+				    <span class="tchbtn"><label><input name="@question.questionId" type="radio" value="other" id="@(question.questionId + "_other")"/><span>&nbsp;</span></label> @question.otherBox(0).text <input name="@(question.questionId + "_other")" type="text" onfocus="$('#@(question.questionId + "_other")').attr('checked', 'checked');" /></span>
+			      }
+			    </div>
+		      }
+		      case question: DropDown => {
+					<b>@replace(question.texts(0).text)</b> 
+					<div id="@(question.questionId + "_options")" class="required">
+
+						<select name="@question.questionId" @inputClass()(question.mandatory) >
+						@question.options.map { o =>
+						  <option value="@o.value">@replace(o.texts(0).text)</option>
+					    }
+
+					    @if(question.hasOther) {
+					      <option value="other">@question.otherBox(0).text</option>
+					    }
+					    </select>
+					    @if(question.hasOther) {
+						  <input name="@(question.questionId + "_other")" type="text"/>
+					    }
+				    </div>
+		      }
+		      case question: CheckBoxes => {
+					<b>@replace(question.texts(0).text)</b> 
+					<div id="@(question.questionId + "_options")" class="required tchbtn">
+
+          <ul>
+					@question.options.map { o =>
+					<li><label><input name="@question.questionId" type="checkbox" value="@o.value" @inputClass()(question.mandatory) /><span>&nbsp;</span><span>@replace(o.texts(0).text)</span></label></li>
+				    }
+				    @if(question.hasOther) {
+					  <li><label><input name="@question.questionId" type="checkbox" value="other" id="@(question.questionId + "_other")"/><span>&nbsp;</span></label> @question.otherBox(0).text <input name="@(question.questionId + "_other")" type="text" onfocus="$('#@(question.questionId + "_other")').attr('checked', 'checked');" /></li>
+				    }
+			  </ul>
+			    </div>
+		      }
+		      case question: Ranking => {
+					<b>@replace(question.texts(0).text)</b> 
+					<div id="@(question.questionId + "_options")" class="required">
+						<input name="@question.questionId" type="hidden" />
+						<input name="@(question.questionId + "_type")" type="hidden" value="ranking" />
+						<ul class="sortable">
+						@question.options.map { o =>
+						  <li class="ui-state-default" id="@(question.questionId + "_" + o.value)"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>@replace(o.texts(0).text)</li>
+				    }
+						</ul>
+				    @if(question.hasOther) {
+						  <br><input name="@question.questionId" type="checkbox" disabled="disabled" value="other" id="@(question.questionId + "_other")"/> @question.otherBox(0).text <input name="@(question.questionId + "_other")" type="text" onfocus="$('#@(question.questionId + "_other")').attr('checked', 'checked');" />
+				    }
+			    </div>
+		      }
+		      case question: RatingScale => {
+				  <b>@replace(question.texts(0).text)</b> <br>
+
+			    <table class="table table-striped tchbtn">
+				  <tr>
+				    <th>&nbsp;</th>
+				    @question.options.map { o =>
+				      <th> @replace(o.texts(0).text)</th>
+			        }
+				        @if(question.hasOther) {
+			          <th> @question.otherBox(0).text </th>
+			        }
+			      </tr>
+				  @question.dimensions.map { d =>
+				    <tr>
+				      <td>@replace(d.texts(0).text)</td>
+				      @question.options.map { o =>
+				        <td><label><input name="@(question.questionId + "_" + d.value)" type="radio" value="@o.value"/><span>&nbsp;</span></label></td>
+			          }
+				      @if(question.hasOther) {
+					    <td><input name="@(question.questionId + "_" + d.value + "_other")" type="text"/></td>
+				      }
+			        </tr>
+			      }
+			    </table>
+		      }
+		      case question: TextArea => {
+				<b>@replace(question.texts(0).text)</b> <br><textarea name="@question.questionId" @inputClass()(question.mandatory) ></textarea>
+		      }
+		      case question: PlainText => {
+				@replace(question.texts(0).text)
+		      }
+		    }
+			</div>
+			<div class="clearfix">&nbsp;</div>
+			<div class="clearfix">&nbsp;</div>
+		</div>
+		}
+
+		@if(questions.isEmpty) {
+			<p>@Html(survey.thank_you_text)</p>
+	    } else {
+<div class="row">
+	<div class="span4">&nbsp;</div>
+		@if(survey.layout.includeProgress) {
+		<div class="span4">
+			<div class="progress">
+		    <div class="bar" style="width: @percentComplete%;"></div>
+	    </div>
+		</div>
+		<div class="span3">&nbsp;</div>
+  } else {
+    <div class="span7">&nbsp;</div>
+  }
+	<div class="span1 pull-right">
+			<input type="submit" value="Next" class="btn btn-info pull-right" />
+	</div>
+</div>
+	    }
+
+  </form>
+	</div>
+</div>
+}
+@if(survey.language == "5" || survey.language == "8") {
+<script type="text/javascript">
+  rtl = true;
+</script>
+}

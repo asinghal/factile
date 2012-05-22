@@ -1,0 +1,117 @@
+@(surveyId: String, user: String, accessType: String, surveyLink: String = null)
+@import helpers.BasicFormHelper._
+
+@main(user, -1) {
+  <button class="btn btn-info pull-right" onclick="$('#survey_form').submit();"><i class="icon-envelope icon-white"></i>&nbsp;Invite</button>
+  <h1>Invite Participants</h1>
+  <hr>
+
+  @if(accessType == "open") {
+  <div id="open_msg" class="alert alert-info">This is an open survey and can be accessed directly by opening <a href="@surveyLink">@surveyLink</a> from anywhere.</div>
+  }
+  <p>Enter full email addresses of the participants in the box below. Please only enter<b> one email per line.</b></p>
+  <div id="error" class="alert alert-warning" style="display: none;">
+    Some of the email addresses seem to be incorrect. Please review the list before submitting the form. Please note that the email addresses must be full addresses (e.g. abc@@test.com)
+  </div>
+  @form_for("/surveys/" + surveyId + "/email", "survey_form", "class" -> "form-horizontal") { 
+    <div class="control-group">
+    	<label class="control-label" for="respondentListBox">Participant List</label>
+    	<div class="controls"><a data-toggle="modal" href="#addressBookModal" class="btn pull-right">Address Book</a>@text_area("respondentListBox", "", "input-xxlarge", false, 10)</div>
+    </div>
+    <div class="control-group">
+    	<label class="control-label" for="from_address">From</label>
+    	<div class="controls">@text_field("from_address", user, "From Address", "input-xxlarge")</div>
+    </div>
+    <div class="control-group">
+    	<label class="control-label" for="subject">Subject</label>
+    	<div class="controls">@text_field("subject", "", "Email Subject", "input-xxlarge")</div>
+    </div>
+    <div class="control-group">
+    	<label class="control-label" for="subject">Email Type</label>
+    	<div class="controls">
+    		<input type="radio" id="html_email" name="mailtype" value="html" checked="checked" onclick="$('#mail_body_holder').show();$('#text_body_holder').hide();"/> HTML&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    		<input type="radio" id="text_email" name="mailtype" value="text" onclick="$('#mail_body_holder').hide();$('#text_body_holder').show();"/> Text
+    	</div>
+    </div>
+    <div class="control-group" id="mail_body_holder">
+    	<label class="control-label" for="mailBody">Email Body</label>
+    	<div class="controls">@text_area("mailBody", "{{survey_link}}", "input-xxlarge")</div>
+    </div>
+    <div class="control-group" id="text_body_holder" style="display:none;">
+    	<label class="control-label" for="text_body">Email Body</label>
+    	<div class="controls">@text_area("text_body", "{{survey_link}}", "input-xxlarge", false, 10)</div>
+    </div>
+     <div class="modal hide fade" style="display: none;" id="addressBookModal">
+      <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>Address Book</h3>
+      </div>
+      <div class="modal-body">        
+      </div>
+      <div class="modal-footer">
+        <a href="#" onclick="$('#addressBookModal').modal('toggle');" class="btn">Close</a>
+        <a href="#" onclick="addAddresses();" class="btn btn-primary">Include As Participants</a>
+      </div>
+    </div>
+  }
+}
+
+<script src="@routes.Assets.at("javascripts/jquery-linedtextarea.js")"></script>
+<link href="@routes.Assets.at("stylesheets/jquery-linedtextarea.css")" type="text/css" rel="stylesheet" />
+
+<script>
+$(function() {
+  $("#respondentListBox").linedtextarea(
+    {selectedLine: 1}
+  );
+  $("#respondentListBox").blur(function() {
+  	var email = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*@@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
+  	var v = $("#respondentListBox").val();
+  	var valid = true;
+  	if (v.indexOf("\n") != -1) {
+  		var a = v.split("\n");
+  		for ( var i =0; i< a.length; i++ ) {
+  	     valid = valid && ($.trim(a[i]) == "" || email.test(a[i]));
+  		}
+  	} else {
+  	     valid = valid && ($.trim(v) == "" || email.test(v));
+  	}
+  	if (!valid) {
+  		$("#error").show();
+  	} else {
+  		$("#error").hide();
+  	}
+  });
+});
+
+$('#addressBookModal').on('show', function() {
+ $.ajax({
+    type: "GET",
+    url: '/addressbook/open',
+    success: function( response) {
+      $('#addressBookModal').find(".modal-body").html(response);
+    }
+  });
+})
+
+function addAddresses() {
+  $('#addressBookModal').modal('toggle');
+  $('#addressBookModal').find(".modal-body").find('input').each(function(){
+    if ($(this).attr('checked') == 'checked' && $(this).attr('name') != 'all') {
+      var x = $(this).val();
+      $('#respondentListBox').val(function( index, value ) {
+        if (value != '') {
+          value += '\n';
+        }
+        return value + x;
+      });
+      $(this).attr('checked', "");
+    }
+  });
+}
+
+$('#addressbook a').click(function (e) {
+    e.preventDefault();
+    $(this).tab('show');
+  });
+</script>

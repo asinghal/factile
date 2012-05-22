@@ -1,0 +1,9 @@
+logs
+project/project
+project/target
+public/uploads
+target
+tmp
+.history
+dist
+.DS_Store

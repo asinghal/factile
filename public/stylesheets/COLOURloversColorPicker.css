@@ -1,0 +1,144 @@
+	.CLCP {
+		position: absolute;
+		display: none;
+		z-index: 8;
+		background: #0c0c0c;
+	}
+
+	.CLCP td, .CLCP div {
+		font: normal 11px/14px Arial, sans-serif;
+		color: #cecece;
+		text-align: left;
+	}
+
+	.CLCPDragDiv {
+		position: relative;
+		width: 242px;
+		height: 248px;
+		padding: 10px;
+		cursor: move;
+	}
+
+	.CLCPIinnerShell {
+		width: 242px;
+		height: 248px;
+		cursor: default;
+	}
+
+	.CLCPPicker {
+		width: 242px;
+		height: 152px;
+		margin-bottom: 9px;
+	}
+
+	.CLCPSatVal {
+		background: #ff0000 url(http://colourlovers.com.s3.amazonaws.com/images/copaso/basic/hsvBG.png) no-repeat;
+		border: 1px solid #000000;
+		position: relative;
+		float: left;
+		height: 150px;
+		width: 150px;
+		cursor: crosshair;
+		filter : progid:DXImageTransform.Microsoft.AlphaImageLoader(src="/images/copaso/basic/hsvBG.png", sizingMethod="scale");
+		-moz-user-select: none;
+		-khtml-user-select: none;
+		user-select: none;
+	}
+
+	.CLCPSatValSlide {
+		background: url(http://colourlovers.com.s3.amazonaws.com/images/copaso/colorPickerLarge.png) no-repeat;
+		height: 14px;
+		width: 14px;
+		position: relative;
+		font-size: 0;
+		line-height: 0;
+		top: -3px;
+		left: -3px;
+	}
+
+	.CLCPHueContainer, .CLCPSatContainer, .CLCPValContainer {
+		cursor: crosshair;
+		position: relative;
+		float: left;
+		height: 154px;
+		width: 22px;
+		margin-left: 8px;
+		top: -5px;
+		-moz-user-select: none;
+		-khtml-user-select: none;
+		user-select: none;
+	}
+
+	.CLCPHueSlide, .CLCPSatSlide, .CLCPValSlide {
+		background: url(http://colourlovers.com.s3.amazonaws.com/images/copaso/verticalSliderTransparent.png) no-repeat;
+		height: 18px;
+		width: 18px;
+		position: relative;
+		font-size: 0;
+		line-height: 0;
+		z-index: 10;
+	}
+
+	.CLCPHue, .CLCPSat, .CLCPVal {
+		width: 20px;
+		height: 150px;
+		border: 1px solid #000000;
+		position: relative;
+		top: -13px;
+	}
+
+	.CLCPHue {
+		background: url(http://colourlovers.com.s3.amazonaws.com/images/copaso/basic/hueBG.jpg) no-repeat;
+	}
+
+	.CLCPSat {
+		background: #ff0000 url(http://colourlovers.com.s3.amazonaws.com/images/copaso/basic/satBG.png) no-repeat;
+	}
+
+	.CLCPVal {
+		background: #ff0000 url(http://colourlovers.com.s3.amazonaws.com/images/copaso/basic/valBG.png) no-repeat;
+	}
+
+	.CLCPbPE {
+		width: 242px;
+		height: 85px;
+		margin: 0 auto;
+	}
+
+	.CLCPbPE div {
+		float: left;
+		height: 14px;
+		width: 28px;
+		text-align: center;
+		color: #808080;
+		font-size: 11px;
+		line-height: 11px;
+		margin-right: 1px;
+	}
+
+	.CLCPbPE input {
+		float: left;
+		width: 28px;
+		height: 20px;
+		padding-top: 4px;
+		font-size: 11px;
+		line-height: 11px;
+		color: #cccccc;
+		border: 0 none;
+		background: url(http://colourlovers.com.s3.amazonaws.com/images/copaso/basic/formFieldSmallBG.png) no-repeat;
+		text-align: center;
+		text-transform: uppercase;
+	}
+
+	.CLCPClear {
+		float: none !important;
+		margin: 0 !important;
+		padding: 0 !important;
+		line-height: 0 !important;
+		clear: both !important;
+	}
+
+	.CLCPNoDim {
+		width: 0 !important;
+		height: 0 !important;
+	}

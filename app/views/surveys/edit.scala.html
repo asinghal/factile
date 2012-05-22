@@ -1,0 +1,5 @@
+@(user: String, survey: Survey)
+
+@main(user, 0) {
+  @surveys.form("/surveys/" + survey.surveyId + "/updateinfo", "Edit Survey", Some(survey))
+}

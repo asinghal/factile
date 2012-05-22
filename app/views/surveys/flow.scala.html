@@ -1,0 +1,64 @@
+@(user: String, surveyId: String, pages: List[Question] = List[Question]())
+
+@main(user, 0) {
+<style>
+.factile-nav { display: none;}
+.workflow { margin: 0 auto; width: 100%; }
+.node { -o-box-shadow: 2px 2px 19px #aaa;
+   -webkit-box-shadow: 2px 2px 19px #aaa;
+   -moz-box-shadow: 2px 2px 19px #aaa; text-align: center; padding-top: 1em;
+   -webkit-border-top-left-radius:4px;-moz-border-radius-topleft:4px;border-top-left-radius:4px;-webkit-border-bottom-left-radius:4px;-moz-border-radius-bottomleft:4px;border-bottom-left-radius:4px;-webkit-border-top-right-radius:4px;-moz-border-radius-topright:4px;border-top-right-radius:4px;-webkit-border-bottom-right-radius:4px;-moz-border-radius-bottomright:4px;border-bottom-right-radius:4px; min-height: 3em; margin-top: 1em; margin-bottom: 1em; }
+.pageNode { border: #346789 solid 2px; width: 50%; background-color: #FFFFFF;}
+.middle { margin: 0 auto; width: 50%;  }
+.condition { background-color: #F9F9F9; padding: 1em 1em 1em 1em; float:right;}
+.conditionNode { border: #FAA732 solid 2px; width: 90%; } 
+.start { background-color: #5BB75B; color: #FFFFFF;}
+.end { background-color: #DA4F49; color: #FFFFFF;}
+.pass-through { border-left: #888 dashed 1px; margin-left: 0.5em; height: 16em;}
+</style>
+<div class="workflow">
+	<div class="node alert-success" id="survey_start">Survey Start</div>
+	<div class="middle"><i class="icon-arrow-down"></i></div>
+	<div class="node pageNode" id="p1">
+	  &nbsp;Page 1
+	</div>
+	@pages.zipWithIndex.map { case (p: PageBreak, i: Int) =>
+	<div class="middle">
+		<i class="icon-arrow-down"></i>
+		<a href="#" class="btn btn-mini" onclick="addNode('@p.questionId');"><i class="icon-cog"></i></a>
+	</div>
+	<div class="node pageNode" id="@p.questionId">
+		&nbsp;Page @(i + 2)
+	</div>
+	}
+	<div class="middle"><i class="icon-arrow-down"></i></div>
+	<div class="node alert-error" id="survey_end">
+	  &nbsp;End of Survey
+	</div>
+</div>
+}
+
+<script type="text/javascript">
+  function addNode(qId) {
+  	$.ajax({
+	    type: "GET",
+	    cache: false,
+      dataType: "json",
+	    url: '/surveys/questions/@surveyId/' + qId,
+	    success: function( response) {
+		  	var obj = $('#' + qId);
+		  	$('<div class="pull-left"><div class="pass-through"></div><div><i class="icon-arrow-down"></div></div>').insertBefore(obj);
+		  	var x = obj.html();
+		  	obj.attr('class', 'condition');
+		  	obj.removeAttr('id');
+
+		  	var displaySelector = "<select name=\"display_" + qId + "\" class='input-small'><option>Show If</option><option>Skip If</option></select>";
+		  	var questionSelector = "<select name=\"display_" + qId + "\"><option>Show If</option><option>Skip If</option></select>";
+		  	var answerSelector = "<select name=\"display_" + qId + "\"><option>Show If</option><option>Skip If</option></select>";
+		  	var comparisonTypeSelector = "<select name=\"display_" + qId + "\" class='input-small'><option>is</option><option>is not</option><option>has</option><option>has not</option></select>";
+		  	var moreSelector = "<select name=\"display_" + qId + "\" class='input-small'><option></option><option>And</option><option>Or</option></select>";
+		  	obj.html("<div class=\"node conditionNode\" id=\"" + qId + "_condition \">" + displaySelector +" " + questionSelector + " " + comparisonTypeSelector + " " + answerSelector+ " "  + moreSelector +"</div><div class=\"node pageNode\" id=\"" + qId + " \">" + x + "</div>");
+	    }
+	  });
+  }
+</script>

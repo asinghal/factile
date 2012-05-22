@@ -1,0 +1,57 @@
+@(message: String, user: String)
+
+@main(user, -1) {
+<!--[if IE]>
+  <style>
+    .signin input[type="text"], input[type="password"] { width: 150px; }
+  </style>
+<![endif]-->
+<div class="row home">
+  <div class="span9">
+    <div class="clearfix">&nbsp;</div>
+    <div class="clearfix">&nbsp;</div>
+	<div class="hero-unit">
+	  <h1>Hello, world!</h1>
+	  <p>Welcome to Factile, your free online fact finding survey tool.</p>
+	  <p><a class="btn btn-primary btn-large" href="/assets/html/features.html">Learn more &raquo;</a></p>
+    <div class="clearfix">&nbsp;</div>
+    <div class="pull-right">
+  @tags.socialmedia {
+    }
+  </div>
+	</div>
+</div>
+  <div class="span3">
+    <div class="clearfix">&nbsp;</div>
+    <div class="clearfix">&nbsp;</div>
+    @if(user == null) {
+    <div class="signin">
+      <form action="/login" method="post">
+        <input name="username" type="text" placeholder="Email address"/><br/>
+        <input name="password" type="password" placeholder="Password" /><br/>
+        <input type="submit" value="Sign in" class="btn btn-primary"/>
+        <div class="clearfix">&nbsp;</div>
+      </form>
+      <p>Not a member yet? Click here to <a href="/newuser">sign up</a></p>
+      <p>Issues logging in? Click here to <a href="/recover">recover your password</a></p>
+    </div>
+    }
+  </div>
+</div>
+<div class="row">
+  <span class="pull-right footer_text">Icons by <a href="http://dryicons.com" target="_blank">http://dryicons.com</a></span>
+</div>
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24696060-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    if (document.location.href.indexOf('factile.net') != -1) {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    }
+  })();
+</script>
+}

@@ -1,0 +1,48 @@
+@(surveys: Seq[Survey], user: String)
+
+@import java.text.SimpleDateFormat
+
+@format_date(date: java.util.Date) = @{
+	new SimpleDateFormat("dd MMM yyyy kk:mm a").format(date)
+}
+@main(user) {
+<h1>My Surveys</h1>
+<hr>
+<br>
+@if(surveys.size > 0) {
+<table class="table table-striped">
+	<thead>
+		<tr>
+		  <th>Title</th>
+		  <th>Created</th>
+		  <th>Status</th>
+		  <th></th>
+		</tr>
+	</thead>
+	<tbody>
+  @surveys.map { survey => 
+		<tr>
+		  <td>@survey.name</td>
+		  <td>@format_date(survey.history.created_at)</td>
+		  <td>@survey.status</td>
+		  <td>
+		  	<span class="pull-right">
+		  	<a href="/surveys/@survey.surveyId/editinfo" class="btn btn-info" title="Edit"><i class="icon-edit icon-white"></i>&nbsp;</a>
+		    <a href="/surveys/@survey.surveyId/data" class="btn btn-info" title="Get Responses"><i class="icon-gift icon-white"></i>&nbsp;</a>
+            <span class="dropdown">
+		    <a href="#" class="btn btn-danger dropdown-toggle" title="Delete" data-toggle="dropdown"><i class="icon-trash icon-white"></i>&nbsp;<b class="caret"></b></a>
+		    <ul class="dropdown-menu">
+                <li><a href="/surveys/@survey.surveyId/flush">Only Data</a></li>
+                <li><a href="/surveys/@survey.surveyId/delete">Survey And Data</a></li>
+              </ul>
+            </span>
+		</span>
+		</td>
+		</tr>
+  }
+	</tbody>
+</table>
+} else {
+	<p>You do not have any surveys here. Go forth and create one! <a href="/surveys/new" class="btn btn-warning">Create A Survey</a> </p><br><br><br><br><br><br><br>
+}
+}

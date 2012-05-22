@@ -27,14 +27,17 @@
 	      <div class="navbar-inner">
 	        <div class="container">
 	          <a class="brand" href="/">Factile</a>
-                @if(user != null) {
 	              <div class="nav-collapse">
 	                <ul class="nav">
+                @if(user != null) {
 	                  <li @if(tab ==0) { class="active" }><a href="/dashboard">My Surveys</a></li>
 	                  <li @if(tab ==1) { class="active" }><a href="/surveys/new">New Survey</a></li>
 	                  <li @if(tab ==2) { class="active" }><a href="/user/preferences">Settings</a></li>
+                }
+	                  <li ><a href="/assets/html/learn.html">Help</a></li>
 	                </ul>
 	              </div><!--/.nav-collapse -->
+                @if(user != null) {
                 <div class="pull-right">
                 	<ul class="nav"><li><a href="/logout">Log out</a></li></ul>
                 </div>

@@ -1,15 +1,15 @@
-.h1 Welcome to Factile!
+### Welcome to Factile!
 =====================================
 
 Factile is an online survey platform that enables market research and insights into data. This is an open source tool and available for free for all purposes. 
 
 The only thing I must ask for is that you give the due credits to Factile when using it. And please feel free to Tweet about it, share it with your friends and colleagues or write blogs about it! Publicity is more than welcome, ofcourse!
 
-.h2 License
+### License
 ======================================
 The tool and its source code are available under the LGPL license (http://www.gnu.org/copyleft/lesser.html). However, your contributions are welcome and I'll be happy to discuss if you have a need to use the code/ application outside of the LGPL license. You can reach me at asinghal79 at gmail dot com.
 
-.h2 Features
+### Features
 ======================================
 
 1. Design a survey with multiple pages and multiple questions, just as fast as you can type :-). 
@@ -36,12 +36,12 @@ The tool and its source code are available under the LGPL license (http://www.gn
 7. Allows you to define simple jump logic (e.g. go to page 10 if user clicks x ).
 8. Download and install on your local box if you don't like the hosted instance!
 
-.h2 Technology Stack
+### Technology Stack
 ======================================
 
 The application code is written in Scala and uses the Play framework. The database used is MongoDB.
 
-.h2 Installation
+### Installation
 ======================================
 
 1. Git clone this repository

@@ -10,7 +10,7 @@
 				<script src="/assets/html/lightbox/js/jquery-1.7.2.min.js"></script>
 				<script src="/assets/html/lightbox/js/lightbox.js"></script>
 				<style>
-				.single > a > img { width: 15em; height: 10em; margin-left: 2em; float: left; margin-top: 2em;}
+				.single > a > img { max-width: 15em; max-height: 10em; margin-left: 2em; float: left; margin-top: 2em;}
 				</style>
     </head>
     <body>
@@ -44,6 +44,7 @@
               <li><a href="#analyse">Analyse Data</a></li>
               <li><a href="#manage">Manage Surveys</a></li>
               <li><a href="#qtype">Question Types</a></li>
+              <li><a href="#mobile">Mobile Devices</a></li>
             </ul>
           </div>
 	    		</div>
@@ -161,7 +162,18 @@
 						      </div>
 						      <div class="clearfix" id="qtype">&nbsp;</div>
 						  		<br><br><h3>Question Types</h3><br>
-						  		<p>There are many question types that are supported by factile.<br>
+						  		<p>There are many question types that are supported by Factile.<br>
+						  			<dl>
+						  				<dt>Text Box</dt><dd>Small text boxes for free text. Typically used for capturing simple information like name/ department.</dd>
+						  				<dt>Single Choice</dt><dd>Radio buttons that allow user to select one of a given set of choices. You can also add a 'Other' option so users could specify a free text answer as an alternative to the given choices. When accessed on mobile devices, each radio button would appear as a big bar that the user could touch/ click to select.</dd>
+						  				<dt>Multiple Choice</dt><dd>Checkboxes that allow user to select one or more of a given set of choices. You can also add a 'Other' option so users could specify a free text answer as an alternative to the given choices. When accessed on mobile devices, each checkbox would appear as a on/off switch that the user could touch/ click to select.</dd>
+						  				<dt>Ranking</dt><dd>Some times, you want users to be able to rank a given list of options in their order of preference. Ranking questions give a drag and drop interface that allow users to rearrange the options.</dd>
+						  				<dt>Dropdowns</dt><dd>These are combo boxes that allow users to select one from a given set of options. These are typically more useful when the list is large and help keep the page clean.</dd>
+						  				<dt>Rating Scale</dt><dd>Predefined scale on which users can rate different 'dimensions'. Each Dimension is a question for the user in itself. These questions are presented as a matrix of single choice questions. You can also add a 'Other' box to each dimension.</dd>
+						  				<dt>Plain Text</dt><dd>Fixed/ instructional text that you would want to present on a page.</dd>
+						  				<dt>Large Text/ Essay</dt><dd>Large text boxes that are suitable for free text answers, like comments/ thoughts.</dd>
+						  			</dl>
+						  			<br>
 						  			Some screenshots are captured here:<br>
 						      <div class="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/question_plain.png" rel="lightbox[factile]" title="Plain Text"><img src="/assets/html/lightbox/images/screenshots/question_plain.png" alt="Factile Survey Dashboard"></a>
@@ -184,8 +196,24 @@
 						      <div class="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/question_textbox.png" rel="lightbox[factile]" title="Text Box"><img src="/assets/html/lightbox/images/screenshots/question_textbox.png" alt="Factile Survey Dashboard"></a>
 						      </div>
-						      <div class="single last">
+						      <div class="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/question_dropdown.png" rel="lightbox[factile]" title="Dropdown"><img src="/assets/html/lightbox/images/screenshots/question_dropdown.png" alt="Factile Delete Survey"></a>
+						      </div>
+						      <div class="clearfix" id="mobile">&nbsp;</div>
+						  		<br><br><h3>Mobile Devices</h3><br>
+						  		<p>Factile has full support for mobile devices and makes it easy for users to take surveys from where ever they are.<br>
+						  			Some screenshots are captured here:<br>
+						      <div class="single">
+						  		  <a href="/assets/html/lightbox/images/screenshots/survey_iphone1.png" rel="lightbox[factile]" title="Survey Page"><img src="/assets/html/lightbox/images/screenshots/survey_iphone1.png" alt="Factile Mobile Support"></a>
+						      </div>
+						      <div class="single">
+						  		  <a href="/assets/html/lightbox/images/screenshots/survey_iphone2.png" rel="lightbox[factile]" title="Rating Scale with on/off switches"><img src="/assets/html/lightbox/images/screenshots/survey_iphone2.png" alt="Factile Mobile Support"></a>
+						      </div>
+						      <div class="single">
+						  		  <a href="/assets/html/lightbox/images/screenshots/survey_iphone3.png" rel="lightbox[factile]" title="Single Choice Questions"><img src="/assets/html/lightbox/images/screenshots/survey_iphone3.png" alt="Factile Mobile Support"></a>
+						      </div>
+						      <div class="single last">
+						  		  <a href="/assets/html/lightbox/images/screenshots/survey_iphone4.png" rel="lightbox[factile]" title="Multiple Choice Questions."><img src="/assets/html/lightbox/images/screenshots/survey_iphone4.png" alt="Factile Mobile Support"></a>
 						      </div>
 						  	</div>
 						  </div>

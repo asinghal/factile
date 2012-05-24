@@ -3,7 +3,7 @@ function displayAnswerOptions(id) {
   var q = questions[$('#' + id).prop('selectedIndex') - 1];
   var html = ""
   for(i=0; i< q.options.length; i++) {
-  	html += ("<option value=''>" + q.options[i] + "</option>");
+  	html += ("<option value='"+ q.options[i].id+ "'>" + q.options[i].text + "</option>");
   }
   var qId = id.replace('_q', '');
   var obj = $('#' + qId + "_ans");

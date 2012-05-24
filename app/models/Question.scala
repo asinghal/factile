@@ -51,7 +51,9 @@ case class Dimension(texts: Seq[Text], value: String) extends Element
 
 case class Text(text: String, language: String) extends Element
 
-case class PageBreak(questionId: String) extends Question("page", questionId)
+case class Condition(questionId: String, value: String, op: String, display: Boolean) extends Element
+
+case class PageBreak(questionId: String, conditions: Seq[Condition] = List[Condition]()) extends Question("page", questionId)
 
 case class History(created_at: Date, created_by: String, updated_at: Date, updated_by: String) extends Element
 

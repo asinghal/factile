@@ -313,13 +313,32 @@ object Surveys extends Controller with Secured {
         val survey = deserialize(classOf[Survey], s.toMap)
         val breaks = survey.questions.filter(q => q.qType == "page")
         pages :::= breaks.toList
+
+        getRequestData().foreach { params => 
+          pages.foreach { page =>
+            val q = params(page.id + "_q").asInstanceOf[List[String]]
+            if (!q.isEmpty && q(0) != "") {
+              val display = params(page.id + "_display").asInstanceOf[List[String]]
+              val op = params(page.id + "_op").asInstanceOf[List[String]]
+              val ans = params(page.id + "_ans").asInstanceOf[List[String]]
+              q.zipWithIndex.foreach {
+                case (qid, i) =>
+                println(new Condition(qid, ans(i), op(i), display(i) == "show"))
+              }
+            }
+          }
+        }
       }
 
       Ok(views.html.surveys.flow(user, id, pages))
    }
 
    def questions(id: String, qId: String) = IsAuthenticated { user => implicit request => 
-     import play.api.libs.json.Json._
+
+     def toJson(id: String, text: String, options: String = "") = {
+       "{\"id\": \"" + id +"\", \"text\": \"" + text.replace("\"", "'") + "\"" + options + "}"
+     }
+
     var allQuestions = List[Question]()
     var json = "{\"questions\": __QUESTIONS__ }"
     var qt = "[ "
@@ -336,16 +355,22 @@ object Surveys extends Controller with Secured {
                       }
                       var options = ", \"options\": ["
                       q match {
-                        case x: RadioButtons => options += x.options.map { a => "\"" + a.texts(0).text.replace("\"", "'") + "\"" }.mkString(", ")
-                        case x: DropDown => options += x.options.map { a => "\"" + a.texts(0).text.replace("\"", "'") + "\"" }.mkString(", ")
-                        case x: CheckBoxes => options += x.options.map { a => "\"" + a.texts(0).text.replace("\"", "'") + "\"" }.mkString(", ")
-                        case x: Ranking => options += x.options.map { a => "\"" + a.texts(0).text.replace("\"", "'") + "\"" }.mkString(", ")
-                        case x: RatingScale =>
+                        case x: RadioButtons => options += x.options.map { a => toJson(a.value, a.texts(0).text) }.mkString(", ")
+                        case x: DropDown => options += x.options.map { a => toJson(a.value, a.texts(0).text) }.mkString(", ")
+                        case x: CheckBoxes => options += x.options.map { a => toJson(a.value, a.texts(0).text) }.mkString(", ")
+                        case x: Ranking => options += x.options.map { a => toJson(a.value, a.texts(0).text) }.mkString(", ")
+                        case x: RatingScale => {
+                                                  options += x.options.map { a => toJson(a.value, a.texts(0).text) }.mkString(", ")
+                                                  options += "]"
+                                                  qt += x.dimensions.map { d => toJson(q.id + "_" + d.value, d.texts(0).text, options) }.mkString(", ")
+                                                }
                         case x: TextBox =>
                         case x: TextArea =>
                       }
-                      options += "]"
-                      qt += ("{ \"id\": \"" + q.id + "\", \"text\": \"" + q.getTexts(0).text + "\"" + options + "}")
+                      if (!q.isInstanceOf[RatingScale]) {
+                        options += "]"
+                        qt += ("{ \"id\": \"" + q.id + "\", \"text\": \"" + q.getTexts(0).text + "\"" + options + "}")
+                      }
                     }
           })
       }

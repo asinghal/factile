@@ -110,12 +110,13 @@ object Mongo {
     "options" -> classOf[AnswerOption],
     "dimensions" -> classOf[Dimension],
     "texts" -> classOf[Text],
+    "conditions" -> classOf[Condition],
     "layout" -> classOf[SurveyLayout],
     "otherBox" -> classOf[Text]
     )
 
   val defaultValues = Map("questions" -> List[Question](), "responses" -> List[QuestionResponse](), 
-    "groups" -> List[AddressGroup](), "addresses" -> List[Address]() )
+    "groups" -> List[AddressGroup](), "addresses" -> List[Address](), "conditions" -> List[Condition](), "texts" -> List[Text]() )
 
   /**
    * Recursively binds the data contained in a Mongo DB object onto an appropriate model object.

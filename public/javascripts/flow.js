@@ -42,7 +42,7 @@ function displayAnswerOptions(id) {
 
 		  	var answerSelector = "<select name=\"" + qId + "_ans\" id=\"" + qId + "_ans\"></select>";
 		  	var comparisonTypeSelector = "<select name=\"" + qId + "_op\" id=\"" + qId + "_op\" class='input-small'><option value='eq'>is</option><option value='ne'>is not</option><option value='like'>has</option><option value='notlike'>does not have</option></select>";
-		  	var moreSelector = "<select name=\"" + qId + "_more\" class='input-small' disabled='disabled'><option></option><option>And</option><option>Or</option></select>";
+		  	var moreSelector = ""; //"<select name=\"" + qId + "_more\" class='input-small' disabled='disabled'><option></option><option>And</option><option>Or</option></select>";
 		  	var includeQuestionTag = "<br><a href='javascript:void(0);' onclick='includeNext(\"" + nextId + "\");' class='btn btn-mini btn-info'><i class='icon-circle-arrow-right icon-white'></i> Include Next</a>";
 		  	obj.html("<div class=\"node conditionNode\" id=\"" + qId + "_condition \">" + displaySelector +" " + questionSelector + " " + comparisonTypeSelector + " " + answerSelector+ " "  + moreSelector +"</div><div class=\"node pageNode\" id=\"" + qId + " \">" + x + "</div>" + includeQuestionTag + "<div class='clearfix'>&nbsp;</div>");
 	    }

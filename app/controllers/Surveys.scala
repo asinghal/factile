@@ -311,26 +311,37 @@ object Surveys extends Controller with Secured {
 
       Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
         val survey = deserialize(classOf[Survey], s.toMap)
-        val breaks = survey.questions.filter(q => q.qType == "page")
-        pages :::= breaks.toList
-
+        var questions = List[Question]()
         getRequestData().foreach { params => 
-          pages.foreach { page =>
-            val q = params(page.id + "_q").asInstanceOf[List[String]]
-            if (!q.isEmpty && q(0) != "") {
-              val display = params(page.id + "_display").asInstanceOf[List[String]]
-              val op = params(page.id + "_op").asInstanceOf[List[String]]
-              val ans = params(page.id + "_ans").asInstanceOf[List[String]]
-              q.zipWithIndex.foreach {
-                case (qid, i) =>
-                println(new Condition(qid, ans(i), op(i), display(i) == "show"))
-              }
+          survey.questions.foreach { question =>
+            question match {
+              case page: PageBreak =>
+                      var conditions = List[Condition]() 
+                      page.conditions.foreach { conditions ::= _ } //TODO This should not be needed
+                      val q = params(page.id + "_q").asInstanceOf[List[String]]
+                      if (!q.isEmpty && q(0) != "") {
+                        val display = params(page.id + "_display").asInstanceOf[List[String]]
+                        val op = params(page.id + "_op").asInstanceOf[List[String]]
+                        val ans = params(page.id + "_ans").asInstanceOf[List[String]]
+                        q.zipWithIndex.foreach {
+                          case (qid, i) =>
+                          conditions ::= (new Condition(qid, ans(i), op(i), display(i) == "show"))
+                        }
+                      }
+                      questions ::= new PageBreak(page.questionId, conditions)
+              case _ => questions ::= question
             }
           }
         }
+
+        // Update history
+        var history = deserialize(classOf[History], s.get("history").asInstanceOf[com.mongodb.BasicDBObject].toMap)
+        history = new History(history.created_at, history.created_by, new Date, user)
+
+        Survey.update(s.get("_id"), "questions" -> questions.reverse, "history" -> history)
       }
 
-      Ok(views.html.surveys.flow(user, id, pages))
+      Redirect(routes.Surveys.flow(id))
    }
 
    def questions(id: String, qId: String) = IsAuthenticated { user => implicit request => 

@@ -230,6 +230,40 @@ object SurveyHelper {
       (texts, qTexts.reverse)
     }
 
+    def findNextPage(survey: Survey, responseId: String, pageNum: Int) = {
+      var page = 1
+      SurveyResponse.findOne("surveyId"-> survey.surveyId, "responseId" -> responseId).foreach { r => 
+        val response = dao.Mongo.deserialize(classOf[SurveyResponse], r.toMap)
+        var found = false
+        survey.questions.filter(q => q.qType == "page").foreach { case (p: PageBreak) =>
+          if (!found) {
+            page += 1
+            if (page >= pageNum) {
+              var display = true
+              p.conditions.foreach { c =>
+                response.responses.find( x => x.question == c.questionId ).map { x => 
+                  // check if the condition is satisfied
+                  val satisfied = c.op match {
+                    case "eq" => (x.answers.contains(c.value))
+                    case "ne" => (!x.answers.contains(c.value))
+                    case "like" => !(x.answers.find( _.indexOf(c.value) != -1).isEmpty)
+                    case "notlike" => (x.answers.find( _.indexOf(c.value) != -1).isEmpty)
+                  }
+
+                  // determine the action
+                  display = display && ((c.display && satisfied) || (!c.display && !satisfied))
+                }
+              }
+              found = display
+            }
+          }
+        }
+        if (!found) page = -1
+      }
+
+      page
+    }
+
     /**
      * Delete a directory
      */

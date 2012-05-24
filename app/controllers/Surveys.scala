@@ -314,12 +314,17 @@ object Surveys extends Controller with Secured {
         val survey = deserialize(classOf[Survey], s.toMap)
         var questions = List[Question]()
         getRequestData().foreach { params => 
+          var prevConditions = List[Condition]()
           survey.questions.foreach { question =>
             question match {
               case page: PageBreak =>
                       var conditions = List[Condition]() 
                       page.conditions.foreach { conditions ::= _ } //TODO This should not be needed
                       val q = params(page.id + "_q").asInstanceOf[List[String]]
+                      val included = params(page.id + "_included").asInstanceOf[List[String]]
+                      if (!included.isEmpty && included(0) != "" && included(0).toBoolean) {
+                        conditions = prevConditions
+                      }
                       if (!q.isEmpty && q(0) != "") {
                         val display = params(page.id + "_display").asInstanceOf[List[String]]
                         val op = params(page.id + "_op").asInstanceOf[List[String]]
@@ -329,6 +334,7 @@ object Surveys extends Controller with Secured {
                           conditions ::= (new Condition(qid, ans(i), op(i), display(i) == "show"))
                         }
                       }
+                      prevConditions = conditions
                       questions ::= new PageBreak(page.questionId, conditions)
               case _ => questions ::= question
             }

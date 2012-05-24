@@ -47,26 +47,30 @@ object Interview extends Controller with Secured {
         val m = s.toMap
         val status = m.get("status").toString
 
-          if (status == "Live") {
-            val restrict = restrictAccess(id, respId, m.get("accessType").toString)
+        if (status == "Live") {
+          val restrict = restrictAccess(id, respId, m.get("accessType").toString)
 
-            if (restrict) {
-              survey = findQuestionsForPage(id, -1, s.toMap) { q => questions ::= q }
-              message = "The access to this survey is restricted."
-            } else {
-              getRequestData().foreach { params =>
-                page = params("pageNum").asInstanceOf[Seq[String]](0).toInt + 1
-                responseId = getResponses(params) { (x, value, other, ranking) => responses ::= new QuestionResponse(x, value, other, ranking) }
-              }
-
-              if(page > 1) responseId = saveResponses(id, responseId, responses)
-              survey = findQuestionsForPage(id, page, s.toMap) { q => questions ::= q }
-              updateInterviewStatus(id, respId, m.get("accessType").toString, questions.isEmpty)
-            }
+          if (restrict) {
+            survey = findQuestionsForPage(id, -1, m) { q => questions ::= q }
+            message = "The access to this survey is restricted."
           } else {
-            message = if (status == "Closed") CLOSED_MSG else NOT_STARTED_MSG
-            survey = findQuestionsForPage(id, -1, s.toMap) { q => questions ::= q }
+            getRequestData().foreach { params =>
+              page = params("pageNum").asInstanceOf[Seq[String]](0).toInt + 1
+              responseId = getResponses(params) { (x, value, other, ranking) => responses ::= new QuestionResponse(x, value, other, ranking) }
+            }
+
+            if(page > 1) {
+              val survey = deserialize(classOf[Survey], m)
+              responseId = saveResponses(id, responseId, responses)
+              page = findNextPage(survey, responseId, page)
+            }
+            survey = findQuestionsForPage(id, page, m) { q => questions ::= q }
+            updateInterviewStatus(id, respId, m.get("accessType").toString, questions.isEmpty)
           }
+        } else {
+          message = if (status == "Closed") CLOSED_MSG else NOT_STARTED_MSG
+          survey = findQuestionsForPage(id, -1, m) { q => questions ::= q }
+        }
       }
 
       val s = survey._1

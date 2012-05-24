@@ -328,9 +328,12 @@ object Surveys extends Controller with Secured {
                         val display = params(page.id + "_display").asInstanceOf[List[String]]
                         val op = params(page.id + "_op").asInstanceOf[List[String]]
                         val ans = params(page.id + "_ans").asInstanceOf[List[String]]
+                        val texts = params(page.id + "_text").asInstanceOf[List[String]]
+                        var t = -1
                         q.zipWithIndex.foreach {
                           case (qid, i) =>
-                          conditions ::= (new Condition(qid, ans(i), op(i), display(i) == "show"))
+                          val value = if (ans(i) != "") ans(i) else { t += 1; texts(t) }
+                          conditions ::= (new Condition(qid, value, op(i), display(i) == "show"))
                         }
                       }
                       prevConditions = conditions

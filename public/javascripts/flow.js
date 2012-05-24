@@ -10,7 +10,7 @@ function displayAnswerOptions(id) {
   obj.html(html);
   if (html == "") {
   	if (obj.parent().find('input[type="text"]').length == 0) {
-	  	$("<input type='text' id='" + qId + "_text'/>").insertAfter(obj);
+	  	$("<input type='text' id='" + qId + "_text' name='" + qId + "_text'/>").insertAfter(obj);
   	}
   } else {
   	obj.parent().find('input[type="text"]').remove();

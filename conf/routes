@@ -41,6 +41,7 @@ POST    /surveys/:id/start            controllers.Interview.response(id: String,
 GET    /surveys/:id/:rid/start        controllers.Interview.response(id: String, rid: String)
 POST    /surveys/:id/:rid/start       controllers.Interview.response(id: String, rid: String)
 GET    /surveys/:id/flow              controllers.Surveys.flow(id: String)
+POST   /surveys/:id/updateflow        controllers.Surveys.updateflow(id: String)
 POST    /surveys/:id/flow             controllers.Surveys.flow(id: String)
 GET    /surveys/:id/collaborate       controllers.Surveys.collaborate(id: String)
 POST    /surveys/:id/collaborate      controllers.Surveys.collaborate(id: String)

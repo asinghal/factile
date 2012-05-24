@@ -18,7 +18,11 @@ import java.util.Date
 
 trait Element
 
-abstract class Question(val qType: String, questionId: String, texts: Seq[Text] = null) extends Element 
+abstract class Question(val qType: String, questionId: String, texts: Seq[Text] = null) extends Element {
+  def id = questionId
+
+  def getTexts = texts
+}
 
 case class RadioButtons(questionId: String, texts: Seq[Text], options: Seq[AnswerOption], otherBox: Seq[Text], hasOther: Boolean, 
 	mandatory: Boolean) extends Question("radio", questionId, texts) 

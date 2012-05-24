@@ -296,22 +296,61 @@ object Surveys extends Controller with Secured {
         val breaks = survey.questions.filter(q => q.qType == "page")
         pages :::= breaks.toList
       }
+
+      Ok(views.html.surveys.flow(user, id, pages))
+   }
+
+  /**
+   * Allows for editting of the flow of a survey.
+   *
+   * @param survey id
+   */
+   def updateflow(id: String) = IsAuthenticated { user => implicit request => 
+
+     var pages = List[Question]()
+
+      Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
+        val survey = deserialize(classOf[Survey], s.toMap)
+        val breaks = survey.questions.filter(q => q.qType == "page")
+        pages :::= breaks.toList
+      }
+
       Ok(views.html.surveys.flow(user, id, pages))
    }
 
    def questions(id: String, qId: String) = IsAuthenticated { user => implicit request => 
      import play.api.libs.json.Json._
-    var questions = List[Question]()
+    var allQuestions = List[Question]()
+    var json = "{\"questions\": __QUESTIONS__ }"
+    var qt = "[ "
      Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
         val survey = deserialize(classOf[Survey], s.toMap)
         var found = false
         survey.questions.map(q => q match {
           case p: PageBreak => if (p.questionId == qId) { found = true }
           case p: PlainText => 
-          case _ => if (!found) questions ::= q
+          case _ => if (!found) { 
+                      allQuestions ::= q
+                      if (qt != "[ ") {
+                        qt += ", "
+                      }
+                      var options = ", \"options\": ["
+                      q match {
+                        case x: RadioButtons => options += x.options.map { a => "\"" + a.texts(0).text.replace("\"", "'") + "\"" }.mkString(", ")
+                        case x: DropDown => options += x.options.map { a => "\"" + a.texts(0).text.replace("\"", "'") + "\"" }.mkString(", ")
+                        case x: CheckBoxes => options += x.options.map { a => "\"" + a.texts(0).text.replace("\"", "'") + "\"" }.mkString(", ")
+                        case x: Ranking => options += x.options.map { a => "\"" + a.texts(0).text.replace("\"", "'") + "\"" }.mkString(", ")
+                        case x: RatingScale =>
+                        case x: TextBox =>
+                        case x: TextArea =>
+                      }
+                      options += "]"
+                      qt += ("{ \"id\": \"" + q.id + "\", \"text\": \"" + q.getTexts(0).text + "\"" + options + "}")
+                    }
           })
       }
-     Ok//(toJson(questions.reverse.toList))
+      qt += " ]"
+     Ok(json.replace("__QUESTIONS__", qt))
    }
 
   /**
@@ -346,7 +385,7 @@ object Surveys extends Controller with Secured {
       Participant.deleteAll("surveyId" -> id)
       if (!dataOnly) {
         val hash_string = s.get("hash_string").toString
-        val path = "./public/uploads/" + hash_string + "/"
+        val path = UPLOAD_DIR + hash_string + "/"
         deleteDirectory(new java.io.File(path))
         Survey.delete(s.get("_id"))
       }

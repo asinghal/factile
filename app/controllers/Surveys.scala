@@ -319,7 +319,6 @@ object Surveys extends Controller with Secured {
             question match {
               case page: PageBreak =>
                       var conditions = List[Condition]() 
-                      page.conditions.foreach { conditions ::= _ } //TODO This should not be needed
                       val q = params(page.id + "_q").asInstanceOf[List[String]]
                       val included = params(page.id + "_included").asInstanceOf[List[String]]
                       if (!included.isEmpty && included(0) != "" && included(0).toBoolean) {

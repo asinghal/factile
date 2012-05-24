@@ -33,7 +33,7 @@ function displayAnswerOptions(id) {
 
 		  	questions = response.questions
 
-		  	var displaySelector = "<select name=\"" + qId + "_display\" class='input-small'><option value='show'>Show If</option><option value='skip'>Skip If</option></select>";
+		  	var displaySelector = "<select name=\"" + qId + "_display\" id=\"" + qId + "_display\" class='input-small'><option value='show'>Show If</option><option value='skip'>Skip If</option></select>";
 		  	var questionSelector = "<select name=\"" + qId + "_q\" id=\"" + qId + "_q\" onChange=\"displayAnswerOptions('" + qId+ "_q');\"><option></option>";
 		  	for (i=0; i< response.questions.length; i++) {
 		  		questionSelector += "<option value='" + response.questions[i].id + "'>" + response.questions[i].text + "</option>";
@@ -41,7 +41,7 @@ function displayAnswerOptions(id) {
 		  	questionSelector += "</select>";
 
 		  	var answerSelector = "<select name=\"" + qId + "_ans\" id=\"" + qId + "_ans\"></select>";
-		  	var comparisonTypeSelector = "<select name=\"" + qId + "_op\" class='input-small'><option value='eq'>is</option><option value='ne'>is not</option><option value='like'>has</option><option value='notlike'>does not have</option></select>";
+		  	var comparisonTypeSelector = "<select name=\"" + qId + "_op\" id=\"" + qId + "_op\" class='input-small'><option value='eq'>is</option><option value='ne'>is not</option><option value='like'>has</option><option value='notlike'>does not have</option></select>";
 		  	var moreSelector = "<select name=\"" + qId + "_more\" class='input-small' disabled='disabled'><option></option><option>And</option><option>Or</option></select>";
 		  	var includeQuestionTag = "<br><a href='javascript:void(0);' onclick='includeNext(\"" + nextId + "\");' class='btn btn-mini btn-info'><i class='icon-circle-arrow-right icon-white'></i> Include Next</a>";
 		  	obj.html("<div class=\"node conditionNode\" id=\"" + qId + "_condition \">" + displaySelector +" " + questionSelector + " " + comparisonTypeSelector + " " + answerSelector+ " "  + moreSelector +"</div><div class=\"node pageNode\" id=\"" + qId + " \">" + x + "</div>" + includeQuestionTag + "<div class='clearfix'>&nbsp;</div>");

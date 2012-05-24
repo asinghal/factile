@@ -7,3 +7,5 @@ tmp
 .history
 dist
 .DS_Store
+build.sh
+public/static.tar.gz

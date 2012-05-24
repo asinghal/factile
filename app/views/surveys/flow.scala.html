@@ -35,6 +35,19 @@
 @pages.map { case (page: PageBreak) =>
   @if(!page.conditions.isEmpty) {
   	addNode("@surveyId", "@page.questionId");
+  	@page.conditions.map { c => 
+  		var display = "";
+  		@if(c.display) {
+	  		display = "show";
+	  	} else {
+	  		display = "skip";
+	  	} 
+  		setTimeout("$('#@(page.questionId + "_display")').val('" + display + "')", 300);
+	  	setTimeout("$('#@(page.questionId + "_q")').val('@c.questionId')", 300);
+	  	setTimeout("displayAnswerOptions('@(page.questionId + "_q")');", 300);
+	  	setTimeout("$('#@(page.questionId + "_op")').val('@c.op')", 100);
+	  	setTimeout("$('#@(page.questionId + "_ans")').val('@c.value')", 300);
+  	}
   }
 }
 </script>

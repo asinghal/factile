@@ -28,7 +28,7 @@ object SurveyHelper {
      *
      * @param request params
      */
-	def getQuestions()(implicit params: Map[String, Any], language: String) = {
+	def getQuestions(conditions: Map[String, Seq[Condition]] = Map[String, Seq[Condition]]())(implicit params: Map[String, Any], language: String) = {
 		var questions = new ListBuffer[Question]
 		params.getOrElse("question[]", "") match {
 			case p: Seq[_] => { 
@@ -56,7 +56,10 @@ object SurveyHelper {
 			      	  case "text" => questions += new TextBox(q, getTexts(language -> qText), mandatory)
 			      	  case "info" => questions += new PlainText(q, getTexts(language -> qText))
 			      	  case "textarea" => questions += new TextArea(q, getTexts(language -> qText), mandatory)
-			      	  case "page" => questions += new PageBreak(q)
+			      	  case "page" => {
+                  val c = conditions.getOrElse(q, List[Condition]())
+                  questions += new PageBreak(q, c)
+                }
 			        }
 			      }
 		      }

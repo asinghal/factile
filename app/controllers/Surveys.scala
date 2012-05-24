@@ -186,9 +186,10 @@ object Surveys extends Controller with Secured {
        accessType = s.get("accessType").toString
 
        getRequestData().foreach { params =>
-        questions = getQuestions()(params, language)
-        val statuses = params("survey_status").asInstanceOf[Seq[String]]
-        status = if (statuses.isEmpty) "" else statuses(0)
+         val conditions = deserialize(classOf[Survey], s.toMap).questions.filter(q => q.qType == "page").map { case (p: PageBreak) => (p.questionId -> p.conditions)}.toMap
+         questions = getQuestions(conditions)(params, language)
+         val statuses = params("survey_status").asInstanceOf[Seq[String]]
+         status = if (statuses.isEmpty) "" else statuses(0)
        }
 
       // Update history

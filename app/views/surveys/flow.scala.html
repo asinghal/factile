@@ -31,4 +31,11 @@
 	</div>
 </div>
 }
+<script type="text/javascript">
+@pages.map { case (page: PageBreak) =>
+  @if(!page.conditions.isEmpty) {
+  	addNode("@surveyId", "@page.questionId");
+  }
+}
+</script>
 }

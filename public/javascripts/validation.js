@@ -68,10 +68,11 @@ function validateOptions(parent, inputtype) {
 		}
 	});
 
+  var obj = parent.closest(".required");
   if (!x) {
-	  parent.attr('class', parent.attr('class') + ' error');
+	  obj.attr('class', obj.attr('class') + ' error');
   } else {
-	  parent.attr('class', parent.attr('class').replace(' error', ''));
+	  obj.attr('class', obj.attr('class').replace(' error', ''));
   }
 
   return x;

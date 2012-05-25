@@ -169,5 +169,5 @@ object Validators {
 
   lazy val email_validator = new play.data.validation.Constraints.EmailValidator
 
-  def isValidEmail(email: String) = email_validator.isValid(email)
+  def isValidEmail(email: String) = email.trim != "" && email_validator.isValid(email)
 }

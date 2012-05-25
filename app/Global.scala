@@ -49,6 +49,12 @@ object Global extends GlobalSettings {
     InternalServerError(
       views.html.common.errorPage("error")
     )
+  }
+
+  override def onHandlerNotFound(request: RequestHeader): Result = {
+    InternalServerError(
+      views.html.common.errorPage("error")
+    )
   }  
     
 }

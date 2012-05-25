@@ -319,16 +319,16 @@ object Surveys extends Controller with Secured {
             question match {
               case page: PageBreak =>
                       var conditions = List[Condition]() 
-                      val q = params(page.id + "_q").asInstanceOf[List[String]]
-                      val included = params(page.id + "_included").asInstanceOf[List[String]]
+                      val q = params(page.id + "_q").asInstanceOf[Seq[String]]
+                      val included = params(page.id + "_included").asInstanceOf[Seq[String]]
                       if (!included.isEmpty && included(0) != "" && included(0).toBoolean) {
                         conditions = prevConditions
                       }
                       if (!q.isEmpty && q(0) != "") {
-                        val display = params(page.id + "_display").asInstanceOf[List[String]]
-                        val op = params(page.id + "_op").asInstanceOf[List[String]]
-                        val ans = params(page.id + "_ans").asInstanceOf[List[String]]
-                        val texts = params(page.id + "_text").asInstanceOf[List[String]]
+                        val display = params(page.id + "_display").asInstanceOf[Seq[String]]
+                        val op = params(page.id + "_op").asInstanceOf[Seq[String]]
+                        val ans = params(page.id + "_ans").asInstanceOf[Seq[String]]
+                        val texts = params(page.id + "_text").asInstanceOf[Seq[String]]
                         var t = -1
                         q.zipWithIndex.foreach {
                           case (qid, i) =>
@@ -405,11 +405,11 @@ object Surveys extends Controller with Secured {
    */
    def collaborate(id: String) = IsAuthenticated { user => implicit request => 
      var pages = List[Question]()
-     var owners = List[String]()
+     var owners = Seq[String]()
 
       Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
         getRequestData().foreach { params => 
-          owners = params("owners").asInstanceOf[List[String]]
+          owners = params("owners").asInstanceOf[Seq[String]]
           Survey.update(s.get("_id"), "owner" -> owners)
         }
 

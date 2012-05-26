@@ -12,6 +12,8 @@ GET     /logout                     controllers.Application.logout
 # sign up
 GET     /newuser                    controllers.Application.newuser
 POST    /signup                     controllers.Application.signup
+GET     /facebook                   controllers.ExternalAuthentication.facebook
+GET     /google                     controllers.ExternalAuthentication.google
 
 # user management
 GET    /recover                     controllers.Application.recoverPassword

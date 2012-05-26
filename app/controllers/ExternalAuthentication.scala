@@ -21,6 +21,7 @@ import play.api.libs.json._
 
 import java.net._
 import java.io._
+import scala.io.Source
 
 /**
  * A Controller for managing authentication via external systems (viz FaceBook and Google).
@@ -35,14 +36,14 @@ object ExternalAuthentication extends Controller {
 
   private val google_auth_url = "https://accounts.google.com/o/oauth2/token"
   private val google_profile_url = "https://www.googleapis.com/oauth2/v1/userinfo?access_token="
-  private val google_client_id = ""
-  private val google_client_secret = ""
+  private val google_client_id = "1064263236398.apps.googleusercontent.com"
+  private val google_client_secret = "quAU2KN0XNsfKJfOl8MTT43_"
 
   /**
    *
    */
   def facebook = Action { implicit request =>
-    val code = request.queryString.getOrElse("code", "").asInstanceOf[String]
+    val code = request.queryString.getOrElse("code", List("")).asInstanceOf[Seq[String]](0)
     var email = ""
 
     if (code.trim != "") {
@@ -73,25 +74,19 @@ object ExternalAuthentication extends Controller {
    *
    */
   def google = Action { implicit request =>
-    val code = request.queryString.getOrElse("code", "").asInstanceOf[String]
+    val code = request.queryString.getOrElse("code", List("")).asInstanceOf[Seq[String]](0)
     var email = ""
 
     if (code.trim != "") {
       val url = new URL(google_auth_url)
-      postData(url, "code" -> code, "client_id" -> google_client_id, "client_secret" -> google_client_secret, 
-        "redirect_uri" -> "http://www.factile.net/google", "grant_type" -> "authorization_code").split("&").foreach { k =>
-        val pair = k.split("=")
-        val key = pair(0)
-        key match {
-          case "access_token" => {
-            val token = pair(1)
-            val jsonString = readURL(new URL(google_profile_url + token))
-            val json: JsValue = Json.parse(jsonString)
-            email = (json \ "email").asOpt[String].getOrElse("")
-          }
-          case "expires_in" => // TODO: should we use this ?!
-          case _ => // ignore ?
-        }
+      val j = Json.parse(postData(url, "code" -> code, "client_id" -> google_client_id, "client_secret" -> google_client_secret, 
+        "redirect_uri" -> "http://www.factile.net/google", "grant_type" -> "authorization_code"))
+
+      val token = (j \ "access_token").asOpt[String].getOrElse("")
+      if (token != "") {
+        val jsonString = readURL(new URL(google_profile_url + token))
+        val json: JsValue = Json.parse(jsonString)
+        email = (json \ "email").asOpt[String].getOrElse("")
       }
     }
 
@@ -113,30 +108,14 @@ object ExternalAuthentication extends Controller {
     wr.flush();
 
     // Get the response
-    val rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-    var line = "";
-    val sb = new StringBuffer
-    while ((line = rd.readLine()) != null) {
-        sb.append(line)
-    }
+    val sb = Source.fromInputStream(conn.getInputStream).getLines().mkString
     wr.close();
-    rd.close();
 
-    sb.toString
+    sb
   }
 
   private def readURL(url: URL) = {
-    val baos = new ByteArrayOutputStream
-    val is = url.openStream
-    try {
-      var r: Int = 0;
-      while ((r = is.read()) != -1) {
-        baos.write(r)
-      }
-    } finally {
-      if (is != null) is.close
-    }
-    new String(baos.toByteArray)
+    Source.fromURL(url).getLines().mkString
   }
 
 }

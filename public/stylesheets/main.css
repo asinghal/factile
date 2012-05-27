@@ -112,3 +112,13 @@ div.error { padding: 1em 1em 1em 1em;}
 .flow > li.activeStep > span.flow-triangle {
 	border-left: 1.7em solid #08C !important;
 }
+#inviteDialog {
+	z-index: 1000;
+	position: absolute;
+	top: 30%;
+	left: 30%;
+	width: 30%;
+	background-color: #FAFAFA;
+	border: #EEEEEE 1px solid;
+	padding: 2em 2em 2em 2em;
+}

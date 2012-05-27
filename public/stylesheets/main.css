@@ -121,4 +121,7 @@ div.error { padding: 1em 1em 1em 1em;}
 	background-color: #FAFAFA;
 	border: #EEEEEE 1px solid;
 	padding: 2em 2em 2em 2em;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
 }

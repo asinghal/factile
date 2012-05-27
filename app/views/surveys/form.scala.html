@@ -10,8 +10,8 @@
       <li><a href="/surveys/@survey.get.surveyId/edit"><span class="stepNumber">2.</span> Add Questions</a><span class="flow-triangle"></span></li>
       <li><a href="/surveys/@survey.get.surveyId/invite"><span class="stepNumber">3.</span> Share It With Your Audience</a><span class="flow-triangle"></span></li>
     } else {
-      <li><a href="javascript:alert('Please add a survey name and click on \'Save Details\'.');"><span class="stepNumber">2.</span> Add Questions</a><span class="flow-triangle"></span></li>
-      <li><a href="javascript:alert('Please add a survey name and click on \'Save Details\'.');"><span class="stepNumber">3.</span> Share It With Your Audience</a><span class="flow-triangle"></span></li>
+      <li><a href="javascript:void(0);" class="lb"><span class="stepNumber">2.</span> Add Questions</a><span class="flow-triangle"></span></li>
+      <li><a href="javascript:void(0);" class="lb"><span class="stepNumber">3.</span> Share It With Your Audience</a><span class="flow-triangle"></span></li>
     }
   </ul>
   <div class="clearfix">&nbsp;</div>
@@ -111,9 +111,19 @@
 <script type="text/javascript" src="@routes.Assets.at("javascripts/COLOURloversColorPicker.js")"></script>
 <script type="text/javascript" src="@routes.Assets.at("javascripts/survey_form.js")"></script>
 <div id="CLCP" class="CLCP"></div>
+ <div id="inviteDialog" title="Confirmation Required" style="display:none;">
+    Please add a survey name and click on 'Save Details'.
+    <a href="javascript:void(0);" onclick="$('#inviteDialog').hide();" class='btn'>OK</a>
+  </div>
 
   }
 
 <script type="text/javascript">
   initial_hex = "@survey.getString(_.layout.bodycolor, "#FFFFFF")";
+  $(document).ready(function(){
+    $(".lb").click(function(e) {
+        $("#inviteDialog").show();
+        return false;
+      });
+  });
 </script>

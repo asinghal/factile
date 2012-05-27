@@ -62,13 +62,13 @@ $(document).ready(function() {
 
 function validateOptions(parent, inputtype) {
 	var x = false;
-	parent.find(inputtype).each(function() {
+  var obj = parent.closest(".required");
+	obj.find(inputtype).each(function() {
 		if (!x && $(this).attr("checked")) {
 			x = true;
 		}
 	});
 
-  var obj = parent.closest(".required");
   if (!x) {
 	  obj.attr('class', obj.attr('class') + ' error');
   } else {

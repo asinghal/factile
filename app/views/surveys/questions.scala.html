@@ -37,6 +37,12 @@
 }
 
 @main(user) {
+  <ul class="flow">
+    <li><a href="/surveys/@surveyId/editinfo"><span class="stepNumber">1.</span> Basic Survey Details</a><span class="flow-triangle"></span></li>
+    <li class="activeStep"><a href="javascript:void(0);"><span class="stepNumber">2.</span> Add Questions</a><span class="flow-triangle"></span></li>
+    <li><a href="/surveys/@surveyId/invite"><span class="stepNumber">3.</span> Share It With Your Audience</a><span class="flow-triangle"></span></li>
+  </ul>
+  <div class="clearfix">&nbsp;</div>
   @surveys.toolbar(surveyId)
   @form_for("/surveys/" + surveyId + "/update", "survey_form", "class" -> "form-horizontal") { 
 

@@ -70,3 +70,45 @@ div.error { padding: 1em 1em 1em 1em;}
 .check { display: none;}
 .tchbtn > ul { list-style: none; margin-left: 0 !important; }
 .tchbtn label, .tchbtn span, .tchbtn input { display: inline-block; }
+
+.flow {
+	list-style: none;
+	overflow: hidden;
+	font: 18px Helvetica, Arial, Sans-Serif;
+	margin-left: 0px;
+}
+.flow > li {
+	float: left;
+	margin-right: 20px;
+}
+.flow > li > a {
+	color: #555555;
+	background-color: #EEEEEE;
+	min-height: 1em;
+	text-decoration: none;
+	position: relative;
+	float: left;
+	padding: 1em 1em 1em 1em;
+}
+
+.flow-triangle {
+	width: 0;
+	height: 0;
+	border-top: 1.7em solid transparent;
+	border-bottom: 1.7em solid transparent;
+	border-left: 1.7em solid #eeeeee;
+	float: right;
+}
+
+.stepNumber {
+	font-size: 2em;
+}
+
+.flow > li.activeStep > a {
+	color: #FFFFFF;
+	background-color: #08C;
+}
+
+.flow > li.activeStep > span.flow-triangle {
+	border-left: 1.7em solid #08C !important;
+}

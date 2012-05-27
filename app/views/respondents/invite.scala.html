@@ -2,6 +2,12 @@
 @import helpers.BasicFormHelper._
 
 @main(user, -1) {
+  <ul class="flow">
+    <li><a href="/surveys/@surveyId/editinfo"><span class="stepNumber">1.</span> Basic Survey Details</a><span class="flow-triangle"></span></li>
+    <li><a href="/surveys/@surveyId/edit"><span class="stepNumber">2.</span> Add Questions</a><span class="flow-triangle"></span></li>
+    <li class="activeStep"><a href="javascript:void(0);"><span class="stepNumber">3.</span> Share It With Your Audience</a><span class="flow-triangle"></span></li>
+  </ul>
+  <div class="clearfix">&nbsp;</div>
   <button class="btn btn-info pull-right" onclick="$('#survey_form').submit();"><i class="icon-envelope icon-white"></i>&nbsp;Invite</button>
   <h1>Invite Participants</h1>
   <hr>

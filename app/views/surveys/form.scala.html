@@ -4,6 +4,17 @@
 @import models.Languages._
 
 @form_for(action, "survey_form", "class" -> "form-horizontal", "enctype" -> "multipart/form-data" ) { 
+  <ul class="flow">
+    <li class="activeStep"><a href="javascript:void(0);"><span class="stepNumber">1.</span> Basic Survey Details</a><span class="flow-triangle"></span></li>
+    @if(survey != None) {
+      <li><a href="/surveys/@survey.get.surveyId/edit"><span class="stepNumber">2.</span> Add Questions</a><span class="flow-triangle"></span></li>
+      <li><a href="/surveys/@survey.get.surveyId/invite"><span class="stepNumber">3.</span> Share It With Your Audience</a><span class="flow-triangle"></span></li>
+    } else {
+      <li><a href="javascript:alert('Please add a survey name and click on \'Save Details\'.');"><span class="stepNumber">2.</span> Add Questions</a><span class="flow-triangle"></span></li>
+      <li><a href="javascript:alert('Please add a survey name and click on \'Save Details\'.');"><span class="stepNumber">3.</span> Share It With Your Audience</a><span class="flow-triangle"></span></li>
+    }
+  </ul>
+  <div class="clearfix">&nbsp;</div>
 <div class="pull-right">
   @if(survey != None) {
     <a href="/surveys/@survey.get.surveyId/edit" class="btn btn-warning">Questions</a>&nbsp;

@@ -202,7 +202,7 @@ object Surveys extends Controller with Secured {
       }
    	}
 
-     if (status == "Live" && accessType != "open") {
+     if (status == "Live") {
       Redirect(routes.Participants.invite(id))
      } else {
       Redirect(routes.Surveys.dashboard)

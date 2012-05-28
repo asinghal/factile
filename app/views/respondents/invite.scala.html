@@ -8,7 +8,7 @@
     <li class="activeStep"><a href="javascript:void(0);"><span class="stepNumber">3.</span> Share It With Your Audience</a><span class="flow-triangle"></span></li>
   </ul>
   <div class="clearfix">&nbsp;</div>
-  <button class="btn btn-info pull-right" onclick="$('#survey_form').submit();"><i class="icon-envelope icon-white"></i>&nbsp;Invite</button>
+  <button class="btn btn-info pull-right" onclick="if (validateEmail()) { $('#survey_form').submit(); }"><i class="icon-envelope icon-white"></i>&nbsp;Invite</button>
   <h1>Invite Participants</h1>
   <hr>
 
@@ -66,27 +66,32 @@
 <link href="@routes.Assets.at("stylesheets/jquery-linedtextarea.css")" type="text/css" rel="stylesheet" />
 
 <script>
+function validateEmail() {
+  var email = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*@@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
+  var v = $("#respondentListBox").val();
+  var valid = true;
+  if (v.indexOf("\n") != -1) {
+    var a = v.split("\n");
+    for ( var i =0; i< a.length; i++ ) {
+       valid = valid && ($.trim(a[i]) == "" || email.test(a[i]));
+    }
+  } else {
+       valid = valid && ($.trim(v) == "" || email.test(v));
+  }
+  if (!valid) {
+    $("#error").show();
+  } else {
+    $("#error").hide();
+  }
+  return valid;
+}
+
 $(function() {
   $("#respondentListBox").linedtextarea(
     {selectedLine: 1}
   );
   $("#respondentListBox").blur(function() {
-  	var email = /^\s*[\w\-\+_]+(\.[\w\-\+_]+)*@@[\w\-\+_]+\.[\w\-\+_]+(\.[\w\-\+_]+)*\s*$/;
-  	var v = $("#respondentListBox").val();
-  	var valid = true;
-  	if (v.indexOf("\n") != -1) {
-  		var a = v.split("\n");
-  		for ( var i =0; i< a.length; i++ ) {
-  	     valid = valid && ($.trim(a[i]) == "" || email.test(a[i]));
-  		}
-  	} else {
-  	     valid = valid && ($.trim(v) == "" || email.test(v));
-  	}
-  	if (!valid) {
-  		$("#error").show();
-  	} else {
-  		$("#error").hide();
-  	}
+  	validateEmail();
   });
 });
 

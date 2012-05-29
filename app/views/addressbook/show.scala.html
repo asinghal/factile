@@ -6,9 +6,9 @@
 		<div class="span12">
 			@form_for("/addressbook/update", "survey_form", "class" -> "form-horizontal") { 
 			<div class="pull-right">
-			    <a href="#" onclick="addContact();" class="btn btn-warning"><i class="icon-user icon-white"></i>&nbsp;Add Contact</a>&nbsp;
+			    <a href="javascript:void(0);" onclick="addContact();" class="btn btn-warning"><i class="icon-user icon-white"></i>&nbsp;Add Contact</a>&nbsp;
 			    <a data-toggle="modal" href="#groupNameModal" class="btn btn-warning"><i class="icon-folder-close icon-white"></i>&nbsp;Add Group</a>&nbsp;
-			    <a href="#" onclick="removeGroup();" class="btn btn-danger"><i class="icon-trash icon-white"></i>&nbsp;Remove Group</a>&nbsp;
+			    <a href="javascript:void(0);" onclick="removeGroup();" class="btn btn-danger"><i class="icon-trash icon-white"></i>&nbsp;Remove Group</a>&nbsp;
 				  <input type="submit" value="Save Details" class="btn btn-info"/> 
 			</div>
 			<h1>Address Book</h1>
@@ -22,7 +22,7 @@
 		  </ul>
 		  <div class="tab-content">
 		  	<div class="pull-right clearfix">
-			    <a href="#" onclick="removeGroup();" title="delete this group"><i class="icon-trash"></i></a>
+			    <a href="javascript:void(0);" onclick="removeGroup();" title="delete this group"><i class="icon-trash"></i></a>
 			  	<div class="clearfix">&nbsp;</div>
 			  </div>
 				@book.groups.map { group =>
@@ -35,7 +35,7 @@
 		    			</tr>
 		    		@group.addresses.map { address =>
 		    			<tr>
-		    				<td><a href="#" onclick="removeContact(this);" class="btn btn-mini btn-danger"><i class="icon-remove-sign icon-white"></i></a></td>
+		    				<td><a href="javascript:void(0);" onclick="removeContact(this);" class="btn btn-mini btn-danger"><i class="icon-remove-sign icon-white"></i></a></td>
 			    		  <td><input type="hidden" name="@(group.name + "_name")" value="@address.name" />@address.name</td>
 			    		  <td><input type="hidden" name="@(group.name + "_email")" value="@address.email" />@address.email</td>
 		    			</tr>
@@ -56,8 +56,8 @@
 		    <p><input type="text" id="groupName" placeholder="Group Name"/></p>
 		  </div>
 		  <div class="modal-footer">
-		    <a href="#" onclick="clearGroupName();" class="btn">Close</a>
-		    <a href="#" onclick="addGroup();" class="btn btn-primary">Save changes</a>
+		    <a href="javascript:void(0);" onclick="clearGroupName();" class="btn">Close</a>
+		    <a href="javascript:void(0);" onclick="addGroup();" class="btn btn-primary">Save changes</a>
 		  </div>
 		</div>
 	</div>
@@ -75,7 +75,7 @@
 
 	function addContact() {
 		var group = $('.tab-pane.active').attr('id');
-	$('.tab-pane.active').find('table').append('<tr><td><a href="#" onclick="removeContact(this);" class="btn btn-mini btn-danger"><i class="icon-remove-sign icon-white"></i></a>&nbsp;</td><td><input type="text" name="'+ group +'_name" class="input-xlarge"/></td><td><input type="text" name="'+ group +'_email" class="input-xlarge"/></td></tr>');
+	$('.tab-pane.active').find('table').append('<tr><td><a href="javascript:void(0);" onclick="removeContact(this);" class="btn btn-mini btn-danger"><i class="icon-remove-sign icon-white"></i></a>&nbsp;</td><td><input type="text" name="'+ group +'_name" class="input-xlarge"/></td><td><input type="text" name="'+ group +'_email" class="input-xlarge"/></td></tr>');
 	}
 
 	function removeContact(obj) {

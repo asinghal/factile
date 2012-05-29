@@ -77,7 +77,7 @@ function qText(qId, qTypeName, qType, plain) {
   if (plain) {
     html += "<textarea name='" + qId + "_q' id='" + qId + "_q' rows='5' class='input-xxlarge'></textarea>";
   } else {
-    html += "<input type='text' name='" + qId + "_q' id='" + qId + "_q' class='input-xxlarge' />";
+    html += "<input type='text' name='" + qId + "_q' id='" + qId + "_q' class='input-xxlarge' placeholder='Please enter the question here'/>";
     html += "</div><div class=\"controls\"><label class=\"checkbox\">";
     html += "<input type='checkbox' name='" + qId + "_m' id='" + qId + "_m' value='true' />Mandatory</label>";
   }

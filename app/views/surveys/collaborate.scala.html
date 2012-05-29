@@ -10,17 +10,17 @@
 		<div>
 		  @hidden_field("owners", owner)
 		  @if(owner != user) {
-		    <a href="#" onclick="removeCollaborator(this);" class="btn btn-mini btn-danger"><i class="icon-remove-sign icon-white"></i></a>
+		    <a href="javascript:void(0);" onclick="removeCollaborator(this);" class="btn btn-mini btn-danger"><i class="icon-remove-sign icon-white"></i></a>
 		  } @owner<br>
 		</div>
 		}
-		<br><br><a href="#" class="btn btn-primary" onclick="addCollaborator();"><i class="icon-plus-sign icon-white"></i>&nbsp;Add</a><br>
+		<br><br><a href="javascript:void(0);" class="btn btn-primary" onclick="addCollaborator();"><i class="icon-plus-sign icon-white"></i>&nbsp;Add</a><br>
 	}
 }
 
 <script type="text/javascript">
 function addCollaborator() {
-$('#survey_form').append('<br><div><a href="#" onclick="removeCollaborator(this);" class="btn btn-mini btn-danger"><i class="icon-remove-sign icon-white"></i></a>&nbsp;<input type="text" name="owners" class="input-xlarge"/></div><br>');
+$('#survey_form').append('<br><div><a href="javascript:void(0);" onclick="removeCollaborator(this);" class="btn btn-mini btn-danger"><i class="icon-remove-sign icon-white"></i></a>&nbsp;<input type="text" name="owners" class="input-xlarge"/></div><br>');
 }
 
 function removeCollaborator(obj) {

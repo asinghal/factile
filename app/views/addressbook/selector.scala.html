@@ -2,7 +2,7 @@
 @books.map { book =>
 	@book.groups.map { group =>
 	<div class='block'>
-	  <h4><a href="#" onclick="$('#@group.name').toggle();"><i class="icon-plus-sign"></i></a>&nbsp;@group.name</h4>
+	  <h4><a href="javascript:void(0);" onclick="$('#@group.name').toggle();"><i class="icon-plus-sign"></i></a>&nbsp;@group.name</h4>
   	<div style="display:none;" id="@group.name">
   		<input type="checkbox" name="all" onclick="toggleAll(this);"/>&nbsp; Select All
   		<table class="table table-striped table-bordered table-condensed">

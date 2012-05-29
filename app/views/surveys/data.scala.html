@@ -21,13 +21,13 @@ responseSummary: Map[String, String] = Map[String, String]())
 		<tr>
 		  <td colspan="4" style="background-color: #DDD">
             <span class="dropdown pull-right">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Chart <b class="caret"></b></a>
+              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Chart <b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#" onclick="javascript:show_pie_chart('@(texts.getOrElse(question, question))', '@(question + "_container")', [ @responseSummary(question) ] );">Pie Chart</a></li>
+                <li><a href="javascript:void(0);" onclick="javascript:show_pie_chart('@(texts.getOrElse(question, question))', '@(question + "_container")', [ @responseSummary(question) ] );">Pie Chart</a></li>
                 <li>
             	  @defining(sorted.map{ x => texts.getOrElse(question.split("_")(0) + "_" + x._1, x._1)}.mkString("', '")) { options =>
             	    @defining(sorted.map(_._2).mkString(", ")) { values =>
-            	      <a href="#" onclick="javascript:show_bar_chart('@(texts.getOrElse(question, question))', '@(question + "_container")', [ '@options'], [ @values ] );">Bar Chart</a></li>
+            	      <a href="javascript:void(0);" onclick="javascript:show_bar_chart('@(texts.getOrElse(question, question))', '@(question + "_container")', [ '@options'], [ @values ] );">Bar Chart</a></li>
                     }
                   }
               </ul>

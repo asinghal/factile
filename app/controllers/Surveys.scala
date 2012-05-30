@@ -95,7 +95,7 @@ object Surveys extends Controller with Secured {
    *
    * @param survey id
    */
-   def create = IsMultipartAuthenticated(parse.multipartFormData) { user => implicit request => 
+   def create = IsAuthenticated(parse.multipartFormData) { user => implicit request => 
      val (surveyname, language, introText, thankyouText, accessType, bodycolor, containercolor, textColor, 
        logoBgColor, includeProgress, logoAlignment) = surveyForm.bindFromRequest.get
     val id = Survey.nextId
@@ -117,7 +117,7 @@ object Surveys extends Controller with Secured {
    *
    * @param survey id
    */
-   def updateinfo(id: String) = IsMultipartAuthenticated(parse.multipartFormData) { user => implicit request => 
+   def updateinfo(id: String) = IsAuthenticated(parse.multipartFormData) { user => implicit request => 
      val (surveyname, language, introText, thankyouText, accessType, bodycolor, containercolor, textColor, 
        logoBgColor, includeProgress, logoAlignment) = surveyForm.bindFromRequest.get
 

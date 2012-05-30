@@ -6,6 +6,8 @@
   <input type="submit" value="Save Details" class="btn btn-info pull-right"/>
   <h1>Collaborators</h1>
   <hr>
+  <p><em>You can add others as collaborators here. Once added, they will be able to view this survey as their own on their dashboard, and make changes, view responses, do everything you can do with it.</em></p><br><br>
+  <p>The collaborators to this survey are:</p>
 		@owners.map { owner =>
 		<div>
 		  @hidden_field("owners", owner)

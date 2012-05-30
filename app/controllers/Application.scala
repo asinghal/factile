@@ -123,7 +123,7 @@ object Secured {
  * Provide security features
  */
 trait Secured {
-  import play.api.libs.Files.TemporaryFile
+  import play.api.mvc.BodyParsers._
   
   /**
    * Retrieve the connected user email.
@@ -136,19 +136,19 @@ trait Secured {
   private def onUnauthorized(request: RequestHeader) = Results.Redirect(routes.Application.index)
   
   // --
-  
+
   /** 
    * Action for authenticated users.
    */
-  def IsAuthenticated(f: => String => Request[AnyContent] => Result) = Security.Authenticated(username, onUnauthorized) { user =>
-    Action(request => f(user)(request))
+  def IsAuthenticated[A](p: BodyParser[A])(f: => String => Request[A] => Result) = Security.Authenticated(username, onUnauthorized) { user =>
+    Action(p)(request => f(user)(request))
   }
 
   /** 
    * Action for authenticated users.
    */
-  def IsMultipartAuthenticated(p: BodyParser[MultipartFormData[TemporaryFile]])(f: => String => Request[MultipartFormData[TemporaryFile]] => Result) = Security.Authenticated(username, onUnauthorized) { user =>
-    Action(p)(request => f(user)(request))
+  def IsAuthenticated(f: => String => Request[AnyContent] => Result) : Action[(Action[AnyContent], AnyContent)] = {
+    IsAuthenticated(parse.anyContent)(f)
   }
 
   def getRequestData[A <: AnyContent]()(implicit request: Request[A]) = {

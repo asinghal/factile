@@ -67,12 +67,12 @@ object MailPublisher {
 
 	val dispatcher = system.actorOf(Props(new MailDispatcher))
 
-  val factory = new ConnectionFactory();
-  factory.setHost(Mailer.host);
+  //val factory = new ConnectionFactory();
+  //factory.setHost(Mailer.host);
 
 
 	def send(message: String) = {
-    val connection = factory.newConnection();
+    /*val connection = factory.newConnection();
     val channel = connection.createChannel();
 
     channel.queueDeclare(Mailer.queue, false, false, false, null);
@@ -81,7 +81,8 @@ object MailPublisher {
     } finally {
 	    channel.close();
 	    connection.close();	
-  	}
+  	}*/
+  	dispatcher ! message
   }
 
 }
@@ -93,7 +94,7 @@ class MailDispatcher extends Actor {
 	import com.rabbitmq.client.QueueingConsumer;
 	import scala.xml._
 
-	val factory = new ConnectionFactory();
+	/*val factory = new ConnectionFactory();
   factory.setHost(Mailer.host);
   val connection = factory.newConnection();
   val channel = connection.createChannel();
@@ -114,7 +115,7 @@ class MailDispatcher extends Actor {
     val html = (xml \\ "isHtml").text.toBoolean
     dispatch(toAddress, fromAddress, subject, body, html)
   }
-
+  */
   def dispatch(toAddress: String, fromAddress: String, subject: String, body: String, html: Boolean) {
     try {
 			val message = new MimeMessage(Mailer.session);
@@ -134,7 +135,16 @@ class MailDispatcher extends Actor {
 		}
   }
 
-	def receive = { case _ => }
+	def receive = { case message:String => {
+												val xml = XML.loadString(message)
+										    val toAddress = (xml \\ "toAddress").text
+										    val fromAddress = (xml \\ "fromAddress").text
+										    val subject = (xml \\ "subject").text
+										    val body = (xml \\ "body").text
+										    val html = (xml \\ "isHtml").text.toBoolean
+										    dispatch(toAddress, fromAddress, subject, body, html)
+											}
+									case _ => }
 }
 
 case class Email(toAddress: String, fromAddress: String, subject: String, body: String, html: Boolean) {

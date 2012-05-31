@@ -47,12 +47,27 @@ function validateColor(id) {
   return valid;
 }
 
+function validateURI() {
+  var valid = true;
+  var x = $('#surveyURI').val().replace(" ", "");
+  if (x != "" && !/^[a-zA-Z0-9_\.\-]*$/.test(x)) {
+    valid = false;
+  }
+  return valid;
+}
+
 $(document).ready(function() {
   $('#survey_form').submit(function() {
     var valid = true;
     if ($('#surveyname').val() == "") {
       $('#surveyname').attr("class", "input-xlarge error");
       $('#errorNotice').attr("style", "display: block;");
+      valid = false;
+    }
+
+    if (!validateURI()) {
+      $('#surveyURI').attr("class", "input-xlarge error");
+      alert("Please check the survey URI. Please note that it can only have letters of the English alphabet, Arabic numerals, period ( . ), hyphen ( - ) or underscores ( _ ).");
       valid = false;
     }
 
@@ -75,6 +90,7 @@ $(document).ready(function() {
   $('#containercolor').focus(function() { _whichField = 'containercolor'; $('#CLCP').hide(); });
   $('#textColor').focus(function() { _whichField = 'textColor'; $('#CLCP').hide(); });
   $('#logoBgColor').focus(function() { _whichField = 'logoBgColor'; $('#CLCP').hide(); });
+  $('#surveyURI').blur(function() { validateURI(); });
 
   // --------- Color picker
   _whichField = "bodycolor";

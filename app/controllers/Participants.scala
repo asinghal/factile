@@ -42,10 +42,12 @@ object Participants extends Controller with Secured {
     */
    def invite(id: String) = IsAuthenticated { user => implicit request =>
       var accessType = "open"
+      var surveyURI: String = null
        Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
          accessType = s.get("accessType").toString
+         surveyURI = if (s.get("uri") != null) s.get("uri").toString.trim else null
        }
-      val surveyLink = "http://" + request.host + "/surveys/" + id + "/start"
+      val surveyLink = getSurveyLink(id, surveyURI, null)
       Ok(views.html.respondents.invite(id, user, accessType, surveyLink))
    }
 
@@ -67,22 +69,34 @@ object Participants extends Controller with Secured {
      val htmlFormat = if (mailtype == "html") true else false
 
      var open = true
+     var surveyURI: String = null
      Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
        open = s.get("accessType").toString == "open"
+       surveyURI = if (s.get("uri") != null) s.get("uri").toString.trim else null
      }
 
      var surveyLink = ""
      respondentList.split("\n").foreach { toAddress =>
        if (open) {
-         surveyLink = "http://" + request.host + "/surveys/" + id + "/start"
+         surveyLink = getSurveyLink(id, surveyURI, null)
        } else {
          val participant = new Participant(id, Participant.nextId, toAddress)
          participant.save
-         surveyLink = "http://" + request.host + "/surveys/" + id + "/" + participant.respId + "/start"
+         surveyLink = getSurveyLink(id, surveyURI, participant)
        }
        val body = if (htmlFormat) mailBody.replace("{{survey_link}}", surveyLink) else text_body.replace("{{survey_link}}", surveyLink)
        helpers.Mailer.send(toAddress, fromAddress, subject, body, htmlFormat)
      }
      Redirect("/dashboard")
+   }
+
+   private def getSurveyLink(id: String, surveyURI: String, participant: Participant = null)(implicit request: Request[AnyContent]) = {
+     var surveyLink = ""
+     if (participant == null) {
+       surveyLink = if (surveyURI != null && surveyURI.trim != "") "http://" + request.host + "/" + surveyURI.trim else "http://" + request.host + "/surveys/" + id + "/start"
+     } else {
+       surveyLink = if (surveyURI != null && surveyURI.trim != "") "http://" + request.host + "/" + surveyURI.trim + "/" + participant.respId else "http://" + request.host + "/surveys/" + id + "/" + participant.respId + "/start"
+     }
+     surveyLink
    }
 }

@@ -15,7 +15,7 @@
 package models
 
 case class Survey(surveyId: String, name: String, language: String, owner: List[String], hash_string: String, questions: Seq[Question], history: History, 
-	intro_text: String, thank_you_text: String, logo: String, accessType: String, layout: SurveyLayout, status: String ="Draft"
+	intro_text: String, thank_you_text: String, logo: String, accessType: String, layout: SurveyLayout, uri: String = null, status: String ="Draft"
 	) extends Model[Survey] { }
 
 case class SurveyLayout(logoAlignment: String = "left", includeProgress: Boolean = false, bodycolor: String = "#FFFFFF", 

@@ -50,6 +50,7 @@ object Surveys extends Controller with Secured {
       "textColor" -> text,
       "logoBgColor" -> text,
       "includeProgress" -> text,
+      "surveyURI" -> text,
       "logoAlignment" -> text
     )
   )
@@ -97,7 +98,7 @@ object Surveys extends Controller with Secured {
    */
    def create = IsAuthenticated(parse.multipartFormData) { user => implicit request => 
      val (surveyname, language, introText, thankyouText, accessType, bodycolor, containercolor, textColor, 
-       logoBgColor, includeProgress, logoAlignment) = surveyForm.bindFromRequest.get
+       logoBgColor, includeProgress, surveyURI, logoAlignment) = surveyForm.bindFromRequest.get
     val id = Survey.nextId
     val random = new SecureRandom
     val hash_string = new BigInteger(80, random).toString(32)
@@ -107,7 +108,7 @@ object Surveys extends Controller with Secured {
 
     val history = new History(new Date, user, new Date, user)
     val layout = new SurveyLayout(logoAlignment, includeProgress.toBoolean, bodycolor, containercolor, textColor, logoBgColor)
-    new Survey(id, surveyname, language, List(user), hash_string, null, history, introText, thankyouText, logoFile, accessType, layout).save
+    new Survey(id, surveyname, language, List(user), hash_string, null, history, introText, thankyouText, logoFile, accessType, layout, surveyURI).save
 
     Redirect(routes.Surveys.edit(id))
    }
@@ -119,7 +120,7 @@ object Surveys extends Controller with Secured {
    */
    def updateinfo(id: String) = IsAuthenticated(parse.multipartFormData) { user => implicit request => 
      val (surveyname, language, introText, thankyouText, accessType, bodycolor, containercolor, textColor, 
-       logoBgColor, includeProgress, logoAlignment) = surveyForm.bindFromRequest.get
+       logoBgColor, includeProgress, surveyURI, logoAlignment) = surveyForm.bindFromRequest.get
 
       Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
         val layout = new SurveyLayout(logoAlignment, includeProgress.toBoolean, bodycolor, containercolor, textColor, logoBgColor)
@@ -127,7 +128,7 @@ object Surveys extends Controller with Secured {
         var history = deserialize(classOf[History], s.get("history").asInstanceOf[com.mongodb.BasicDBObject].toMap)
         history = new History(history.created_at, history.created_by, new Date, user)
         Survey.update(s.get("_id"), "name" -> surveyname, "language" -> language, "intro_text" -> introText, "thank_you_text" -> thankyouText, 
-          "layout" -> layout, "accessType" -> accessType, "history" -> history)
+          "layout" -> layout, "accessType" -> accessType, "history" -> history, "uri" -> surveyURI)
 
         var logoFile: String = null
         request.body.file("logo").map { logo => 

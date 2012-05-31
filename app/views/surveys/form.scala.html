@@ -55,6 +55,13 @@
     </div>
   </div>
   <div class="control-group">
+    <label class="control-label" for="accessType">Survey Link</label>
+    <div class="controls">
+      @text_field("surveyURI", survey.getString(_.uri), "Survey Link", "input-xlarge")
+      <p><small>e.g. http://www.factile.net/MY_LINK. <br>At times, you may want a more user friendly link. <br>The text you specify above will be used to form the link that the user will get. <br>If not specified, a unique system generated text will be used.</small></p>
+    </div>
+  </div>
+  <div class="control-group">
     <label class="control-label" for="logoAlignment">Logo Position</label>
     <div class="controls">
       @radio_buttons("logoAlignment", survey.getString(_.layout.logoAlignment), List[(String, String)]("Left" -> "left", "Center" -> "center", "Right" -> "right"), "input-xlarge")

@@ -38,8 +38,8 @@ GET    /surveys/:id/close             controllers.Surveys.close(id: String)
 # view survey
 GET    /surveys/:id/preview           controllers.Surveys.preview(id: String)
 POST    /surveys/:id/preview          controllers.Surveys.preview(id: String)
-GET    /surveys/:id/start             controllers.Interview.response(id: String, rid = null)
-POST    /surveys/:id/start            controllers.Interview.response(id: String, rid = null)
+GET    /surveys/:id/start             controllers.Interview.response(id: String, rid: String = null)
+POST    /surveys/:id/start            controllers.Interview.response(id: String, rid: String = null)
 GET    /surveys/:id/:rid/start        controllers.Interview.response(id: String, rid: String)
 POST    /surveys/:id/:rid/start       controllers.Interview.response(id: String, rid: String)
 GET    /surveys/:id/flow              controllers.Surveys.flow(id: String)
@@ -65,3 +65,9 @@ POST  /addressbook/update             controllers.Addresses.update
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+GET     /:company                     controllers.Interview.customUriResponse(company: String, rid: String = null)
+POST    /:company                     controllers.Interview.customUriResponse(company: String, rid: String = null)
+
+GET     /:company/:rid                controllers.Interview.customUriResponse(company: String, rid: String)
+POST    /:company/:rid                controllers.Interview.customUriResponse(company: String, rid: String)

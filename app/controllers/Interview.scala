@@ -33,7 +33,15 @@ object Interview extends Controller with Secured {
    /**
     * Action to process user responses and store them in the database.
     */
-   def response(id: String, respId: String = null) = Action { implicit request =>
+   def response(id: String, respId: String = null) = collectResponse("surveyId", id, respId) { (s: Survey, questions: List[Question], page: Int, responseId: String, percentComplete: Int, replacements: Map[String, String], message: String) => implicit request =>
+      Ok(views.html.respondents.preview(s, questions, page, responseId, percentComplete, replacements, message))
+   }
+
+   def customUriResponse(id: String, respId: String = null) = collectResponse("uri", id, respId) { (s: Survey, questions: List[Question], page: Int, responseId: String, percentComplete: Int, replacements: Map[String, String], message: String) => implicit request =>
+      Ok(views.html.respondents.preview(s, questions, page, responseId, percentComplete, replacements, message))
+   }
+
+   private def collectResponse(attr: String, sid: String, respId: String = null)(f: => (Survey, List[Question], Int, String, Int, Map[String, String], String) => Request[AnyContent] => Result) = Action { implicit request =>
       var page = 1
 
       var responseId = ""
@@ -42,10 +50,12 @@ object Interview extends Controller with Secured {
       var questions = List[Question]()
 
       var message = ""
+      var id = ""
 
-      Survey.findOne("surveyId" -> id).foreach { s => 
+      Survey.findOne(attr -> sid).foreach { s => 
         val m = s.toMap
         val status = m.get("status").toString
+        id = m.get("surveyId").toString
 
         if (status == "Live") {
           val restrict = restrictAccess(id, respId, m.get("accessType").toString)
@@ -74,7 +84,7 @@ object Interview extends Controller with Secured {
       }
 
       val s = survey._1
-      Ok(views.html.respondents.preview(s, questions.reverse, page, responseId, survey._2, getResponseTexts(id, responseId, s.language), message))
+      f(s, questions.reverse, page, responseId, survey._2, getResponseTexts(id, responseId, s.language), message)(request)
    }
 
    def data(id: String) = IsAuthenticated { user => _ => 

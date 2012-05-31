@@ -422,6 +422,11 @@ object Surveys extends Controller with Secured {
       Ok(views.html.surveys.collaborate(id, owners, user))
    }
 
+   def uriexists(uri: String) = IsAuthenticated { user => implicit request => 
+     val json = "{ \"exists\": " + !Survey.find("uri" -> uri).toList.isEmpty + " }"
+     Ok(json)
+   }
+
   /**
    * Delete a survey and/ or all responses associated. Also delete any uploaded files for this survey.
    */

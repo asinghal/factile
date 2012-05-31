@@ -90,7 +90,25 @@ $(document).ready(function() {
   $('#containercolor').focus(function() { _whichField = 'containercolor'; $('#CLCP').hide(); });
   $('#textColor').focus(function() { _whichField = 'textColor'; $('#CLCP').hide(); });
   $('#logoBgColor').focus(function() { _whichField = 'logoBgColor'; $('#CLCP').hide(); });
-  $('#surveyURI').blur(function() { validateURI(); });
+  $('#surveyURI').blur(function() { 
+    if (validateURI()) {
+      $.ajax({
+      type: "GET",
+      cache: false,
+      dataType: "json",
+      url: '/uriexists/'+ $('#surveyURI').val().replace(" ", ""),
+      success: function( response) {
+        if (response.exists) {
+          $('#surveyURI').attr("class", "input-xlarge error");
+          alert("The link " + $('#surveyURI').val() + " is already in use. Please choose another one.");
+        } else {
+          $('#surveyURI').attr("class", "input-xlarge");
+        }
+      }
+    });
+      
+    } 
+  });
 
   // --------- Color picker
   _whichField = "bodycolor";

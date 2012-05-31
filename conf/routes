@@ -63,7 +63,7 @@ GET   /addressbook                    controllers.Addresses.show
 GET   /addressbook/open               controllers.Addresses.open
 POST  /addressbook/update             controllers.Addresses.update
 
-# GET   /uriexists/:uri                 controllers.Surveys.uriexists(uri: String)
+GET   /uriexists/:uri                 controllers.Surveys.uriexists(uri: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

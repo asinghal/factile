@@ -84,7 +84,12 @@ object Interview extends Controller with Secured {
       }
 
       val s = survey._1
-      f(s, questions.reverse, page, responseId, survey._2, getResponseTexts(id, responseId, s.language), message)(request)
+      if (s != null) {
+        f(s, questions.reverse, page, responseId, survey._2, getResponseTexts(id, responseId, s.language), message)(request)
+      } else {
+        Logger.info("An attempt to access a survey with id " + sid + " was unsucessful.")
+        NotFound(views.html.common.notfound("error"))
+      }
    }
 
    def data(id: String) = IsAuthenticated { user => _ => 

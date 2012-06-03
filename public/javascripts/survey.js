@@ -26,20 +26,21 @@ $(document).ready(function() {
 });
 
 function addQuestion(q) {
+	var required = q.mandatory ? "required " : "";
 	var obj = $('#response_form').find('.row:last-child');
 	if (q.qType == "textbox") {
-		$("<div class=\"row\"><div class=\"span12\"><b>" + q.texts[0].text + "</b> <input name=\""+ q.questionId +"\" type=\"text\" class=\"required input-xlarge\"></div><div class=\"clearfix\">&nbsp;</div><div class=\"clearfix\">&nbsp;</div></div>").insertBefore(obj);
+		$("<div class=\"row\"><div class=\"span12\"><b>" + q.texts[0].text + "</b> <input name=\""+ q.questionId +"\" type=\"text\" class=\"" + required + "input-xlarge\"></div><div class=\"clearfix\">&nbsp;</div><div class=\"clearfix\">&nbsp;</div></div>").insertBefore(obj);
 	} else if (q.qType == "textarea") {
 		$("<div class=\"row\"><div class=\"span12\"><b>" + q.texts[0].text + "</b> <textarea name=\""+ q.questionId +"\" class=\"input-xlarge\"></textarea></div><div class=\"clearfix\">&nbsp;</div><div class=\"clearfix\">&nbsp;</div></div>").insertBefore(obj);
 	} else if (q.qType == "radio") {
 		var options = "";
 		for (var i=0; i < q.options.length; i++) {
 			var o = q.options[i];
-			options += "<li><input name=\""+ q.questionId +"\" type=\"radio\" value=\""+ o.value +"\" class=\"required input-xlarge\"><span>"+ o.texts[0].text +"</span><span class=\"check\">&#x2713</span></li>";
+			options += "<li><input name=\""+ q.questionId +"\" type=\"radio\" value=\""+ o.value +"\" class=\"" + required + "input-xlarge\"><span> "+ o.texts[0].text +" </span><span class=\"check\">&#x2713</span></li>";
 		}
 		var other = "";
 		if (q.hasOther) {
-			other = "<span class=\"tchbtn\"><label><input name=\""+ q.questionId +"\" type=\"radio\" value=\"other\" id=\""+ q.questionId +"_other\"><span>&nbsp;</span></label>" + q.otherBox[0].text + "<input name=\""+ q.questionId +"_other\" type=\"text\" onfocus=\"$('#"+ q.questionId +"_other').attr('checked', 'checked');\"></span>";
+			other = "<span class=\"tchbtn\"><label><input name=\""+ q.questionId +"\" type=\"radio\" value=\"other\" id=\""+ q.questionId +"_other\"><span>&nbsp;</span></label> " + q.otherBox[0].text + " <input name=\""+ q.questionId +"_other\" type=\"text\" onfocus=\"$('#"+ q.questionId +"_other').attr('checked', 'checked');\"></span>";
 		}
     var html = "<div class=\"row\"><div class=\"span12\"><b>" + q.texts[0].text + "</b><div id=\""+ q.questionId +"_options\" class=\"required\"><ul class=\"radioList\">"+ options +"</ul>" + other + "</div></div><div class=\"clearfix\">&nbsp;</div><div class=\"clearfix\">&nbsp;</div></div>";
     $(html).insertBefore(obj);
@@ -47,10 +48,10 @@ function addQuestion(q) {
 		var options = "";
 		for (var i=0; i < q.options.length; i++) {
 			var o = q.options[i];
-			options += "<li><label><input name=\""+ q.questionId +"\" type=\"checkbox\" value=\""+ o.value +"\" class=\"input-xlarge\"><span>&nbsp;</span><span>"+ o.texts[0].text +"</span></label></li>";
+			options += "<li><label><input name=\""+ q.questionId +"\" type=\"checkbox\" value=\""+ o.value +"\" class=\"" + required + "input-xlarge\"><span>&nbsp;</span><span> "+ o.texts[0].text +" </span></label></li>";
 		}
 		if (q.hasOther) {
-			options += "<li><label><input name=\""+ q.questionId +"\" type=\"checkbox\" value=\"other\" id=\""+ q.questionId +"_other\"><span>&nbsp;</span></label>"+ q.otherBox[0].text +"<input name=\""+ q.questionId +"_other\" type=\"text\" onfocus=\"$('#"+ q.questionId +"_other').attr('checked', 'checked');\"></li>";
+			options += "<li><label><input name=\""+ q.questionId +"\" type=\"checkbox\" value=\"other\" id=\""+ q.questionId +"_other\"><span>&nbsp;</span></label> "+ q.otherBox[0].text +" <input name=\""+ q.questionId +"_other\" type=\"text\" onfocus=\"$('#"+ q.questionId +"_other').attr('checked', 'checked');\"></li>";
 		}
     var html = "<div class=\"row\"><div class=\"span12\"><b>"+ q.texts[0].text +"</b><div id=\""+ q.questionId +"_options\" class=\"required tchbtn\"><ul>" + options + "</ul></div></div><div class=\"clearfix\">&nbsp;</div><div class=\"clearfix\">&nbsp;</div></div>";
     $(html).insertBefore(obj);
@@ -63,7 +64,7 @@ function addQuestion(q) {
 		if (q.hasOther) {
 			options += "<option value=\"other\">"+ q.otherBox[0].text +"</option>";
 		}
-    var html = "<div class=\"row\"><div class=\"span12\"><b>" + q.texts[0].text + "</b><div id=\""+ q.questionId +"_options\" class=\"required\"><select name=\""+ q.questionId +"\" id=\""+ q.questionId +"\"  class=\"required input-xlarge\">" + options + "</select></div></div><div class=\"clearfix\">&nbsp;</div><div class=\"clearfix\">&nbsp;</div></div>";
+    var html = "<div class=\"row\"><div class=\"span12\"><b>" + q.texts[0].text + "</b><div id=\""+ q.questionId +"_options\" class=\"" + required + "\"><select name=\""+ q.questionId +"\" id=\""+ q.questionId +"\"  class=\"" + required + " input-xlarge\">" + options + "</select></div></div><div class=\"clearfix\">&nbsp;</div><div class=\"clearfix\">&nbsp;</div></div>";
     $(html).insertBefore(obj);
 	}
 }
@@ -77,6 +78,13 @@ function serializeStoredData() {
     }
   }
   return data;
+}
+
+function addLastNote(thank_you_text) {
+	var obj = $('#response_form').find('.row:last-child');
+  var html = "<div class=\"row\"><div class=\"span12\">" + thank_you_text + "</div><div class=\"clearfix\">&nbsp;</div></div>";
+  $(html).insertBefore(obj);
+  obj.remove();
 }
 
 var hasLocalStorage = function(){

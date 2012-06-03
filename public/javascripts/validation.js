@@ -1,8 +1,8 @@
 $(document).ready(function() {
   $("#response_form").submit(function(e) {
-    e.preventDefault();
     var valid = isFormValid();
     if (offline && valid) {
+      e.preventDefault();
       valid = false;
       // serializeArray is awesome and powerful
       var data = $(this).serializeArray();
@@ -19,18 +19,43 @@ $(document).ready(function() {
       if (surveyJson == null) surveyJson = Json.parse(localStorage.getItem("survey"));
       if (surveyJson != null) {
         var p = 1;
+        var found = false;
+        var count = 0;
+        var inc = 1;
         for (var i=0; i<surveyJson.questions.length; i++) {
           var q = surveyJson.questions[i];
 
-          if (p == (page + 1)) {
+          if (p == (page + inc)) {
+            found = true;
             addQuestion(q);
-          } else if (p > (page + 1)) {
+          } else if (p > (page + inc)) {
             break;
+          } else {
+            count++;
           }
 
           if(q.qType == "page") {
             p++;
+            var cond = true;
+            for(var x=0; x<q.conditions.length; x++) {
+              var res = false;
+              if ((q.conditions[x].op == 'eq' && (localStorage.getItem(q.conditions[x].questionId) == q.conditions[x].value)) || 
+                (q.conditions[x].op == 'ne' && (localStorage.getItem(q.conditions[x].questionId) != q.conditions[x].value)) ||
+                (q.conditions[x].op == 'like' && (localStorage.getItem(q.conditions[x].questionId).indexOf(q.conditions[x].value) != -1)) ||
+                (q.conditions[x].op == 'notlike' && (localStorage.getItem(q.conditions[x].questionId).indexOf(q.conditions[x].value) == -1))) {
+                res = true;
+              }
+              if (!q.conditions[x].display) res = !res; 
+              cond = cond && res;
+            }
+            if (!cond) inc++;
           }
+        }
+        if (!found) {
+          addLastNote(surveyJson.thank_you_text);
+          if (surveyJson.layout.includeProgress) $(".bar").attr('style','width: ' + 100 + '%;');
+        } else {
+          if (surveyJson.layout.includeProgress) $(".bar").attr('style','width: ' + (count/ surveyJson.questions.length) * 100 + '%;');
         }
       }
     }

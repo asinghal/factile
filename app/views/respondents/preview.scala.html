@@ -1,4 +1,4 @@
-@(survey: Survey, questions: List[Question], pageNumber: Int, responseId: String, percentComplete: Int = 0, replacements: Map[String, String] = Map[String, String](), message: String = null)(implicit request: RequestHeader)
+@(survey: Survey, questions: List[Question], pageNumber: Int, responseId: String, percentComplete: Int = 0, offlineLink: String = null, replacements: Map[String, String] = Map[String, String](), message: String = null)(implicit request: RequestHeader)
 
 @import helpers.ResponseHelper._
 
@@ -37,6 +37,9 @@
 <div class="row">
 	<div class="span12 survey">
 		<h1>@survey.name</h1>
+		<span class="pull-right" id="workoffline">@if(offlineLink != null) {
+			<a href="javascript:void(0);" onclick="workoffline('@offlineLink');" class="btn btn-warning btn-mini">Work Offline</a>
+		}</span>
 		<hr>
 	</div>
 </div>

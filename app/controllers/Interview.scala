@@ -34,13 +34,22 @@ object Interview extends Controller with Secured {
     * Action to process user responses and store them in the database.
     */
    def response(id: String, respId: String = null) = collectResponse("surveyId", id, respId) { (s: Survey, questions: List[Question], page: Int, responseId: String, percentComplete: Int, replacements: Map[String, String], message: String) => implicit request =>
-      Ok(views.html.respondents.preview(s, questions, page, responseId, percentComplete, replacements, message))
+    val offlineLink = if (respId != null) "/downloadSurvey/" + id + "/" + respId + "/start" else "/downloadSurvey/" + id + "/start"
+    Ok(views.html.respondents.preview(s, questions, page, responseId, percentComplete, offlineLink, replacements, message))
    }
 
+   /**
+    * Action to process user responses and store them in the database. But instead of taking a survey id from 
+    * the URL, it works on custom URI and maps them to a survey id.
+    */
    def customUriResponse(id: String, respId: String = null) = collectResponse("uri", id, respId) { (s: Survey, questions: List[Question], page: Int, responseId: String, percentComplete: Int, replacements: Map[String, String], message: String) => implicit request =>
-      Ok(views.html.respondents.preview(s, questions, page, responseId, percentComplete, replacements, message))
+    val offlineLink = if (respId != null) "/" + id + "/" + respId + "/offline" else "/" + id + "/offline"
+    Ok(views.html.respondents.preview(s, questions, page, responseId, percentComplete, offlineLink, replacements, message))
    }
 
+   /**
+    * Actual action that collects responses. Both survey Id and custom URI based actions invoke this.
+    */
    private def collectResponse(attr: String, sid: String, respId: String = null)(f: => (Survey, List[Question], Int, String, Int, Map[String, String], String) => Request[AnyContent] => Result) = Action { implicit request =>
       var page = 1
 
@@ -61,7 +70,8 @@ object Interview extends Controller with Secured {
           val restrict = restrictAccess(id, respId, m.get("accessType").toString)
 
           if (restrict) {
-            survey = findQuestionsForPage(id, -1, m) { q => questions ::= q }
+            m.remove("questions")
+            survey = (deserialize(classOf[Survey], m), 100)
             message = "The access to this survey is restricted."
           } else {
             getRequestData().foreach { params =>
@@ -70,16 +80,17 @@ object Interview extends Controller with Secured {
             }
 
             if(page > 1) {
-              val survey = deserialize(classOf[Survey], m)
+              val surveyData = deserialize(classOf[Survey], m)
               responseId = saveResponses(id, responseId, responses)
-              page = findNextPage(survey, responseId, page)
+              page = findNextPage(surveyData, responseId, page)
             }
             survey = findQuestionsForPage(id, page, m) { q => questions ::= q }
             updateInterviewStatus(id, respId, m.get("accessType").toString, questions.isEmpty)
           }
         } else {
           message = if (status == "Closed") CLOSED_MSG else NOT_STARTED_MSG
-          survey = findQuestionsForPage(id, -1, m) { q => questions ::= q }
+          m.remove("questions")
+          survey = (deserialize(classOf[Survey], m), 100)
         }
       }
 
@@ -92,6 +103,9 @@ object Interview extends Controller with Secured {
       }
    }
 
+   /**
+    * Get response data for a survey
+    */
    def data(id: String) = IsAuthenticated { user => _ => 
    	var responses = Map[String, Map[String, Double]]()
    	var numberOfResponses = 0
@@ -132,6 +146,9 @@ object Interview extends Controller with Secured {
    	Ok(views.html.surveys.data(id, user, responses, numberOfResponses, texts, responseSummary))
    }
 
+   /**
+    * Exports the response data of a survey to a XLSX file.
+    */
    def export(id: String) = IsAuthenticated { user => _ =>
      import java.io.File 
      val file = new File("result.xlsx") 
@@ -139,6 +156,32 @@ object Interview extends Controller with Secured {
      Ok.sendFile( 
         content = file, 
         fileName = _ => "result.xlsx") 
+   }
+
+   /**
+    * Generates a JSON of a survey that can be stored on client side for offline use.
+    */
+   def downloadSurvey(sid: String, attr: String, respId: String = null) = Action {
+      import com.codahale.jerkson.Json._
+
+      val jsonStr = Survey.findOne(attr -> sid).map { s => 
+        val m = s.toMap
+        val status = m.get("status").toString
+        val id = m.get("surveyId").toString
+        if (status == "Live" && !restrictAccess(id, respId, m.get("accessType").toString)) {
+          m.remove("_id")
+          m.remove("owner")
+          m.remove("hash_string")
+          m.remove("history")
+          generate(m)
+        } else {
+          "{\"questions\":[]}"
+        }
+      }.getOrElse {
+        "{\"questions\":[]}"
+      }
+
+      Ok(jsonStr)
    }
 
    /**

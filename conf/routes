@@ -64,6 +64,8 @@ GET   /addressbook/open               controllers.Addresses.open
 POST  /addressbook/update             controllers.Addresses.update
 
 GET   /uriexists/:uri                 controllers.Surveys.uriexists(uri: String)
+GET   /downloadSurvey/:id             controllers.Interview.downloadSurvey(id: String, attr: String = "surveyId", rid: String = null)
+GET   /downloadSurvey/:id/:rid        controllers.Interview.downloadSurvey(id: String, attr: String = "surveyId", rid: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
@@ -71,5 +73,7 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 GET     /:company                     controllers.Interview.customUriResponse(company: String, rid: String = null)
 POST    /:company                     controllers.Interview.customUriResponse(company: String, rid: String = null)
 
+GET   /:company/offline               controllers.Interview.downloadSurvey(company: String, attr: String = "uri", rid: String = null)
+GET   /:company/:rid/offline          controllers.Interview.downloadSurvey(company: String, attr: String = "uri", rid: String)
 GET     /:company/:rid                controllers.Interview.customUriResponse(company: String, rid: String)
 POST    /:company/:rid                controllers.Interview.customUriResponse(company: String, rid: String)

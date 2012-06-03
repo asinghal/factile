@@ -1,64 +1,102 @@
 $(document).ready(function() {
-  $("#response_form").submit(function() {
-    var valid = true;
-    var first = true;
-    $("#response_form").find("input.required:text").each(function() {
-    	if (!$(this).val() || $(this).val() == "") {
-    		valid = false;
-    		$(this).attr('class', $(this).attr('class') + ' error');
-        if (first) {
-          $(this).focus();
-          first = false;
+  $("#response_form").submit(function(e) {
+    e.preventDefault();
+    var valid = isFormValid();
+    if (offline && valid) {
+      valid = false;
+      // serializeArray is awesome and powerful
+      var data = $(this).serializeArray();
+      // iterate over results
+      $.each(data, function(i, obj) {
+        // HTML5 magic!!
+        localStorage.setItem(obj.name, obj.value);
+      });
+
+      var page = parseInt($("input[name=pageNum]").val());
+      $("input[name=pageNum]").val(page + 1);
+      $(this).find(".row:not(:last-child)").remove();
+      $('#errorNotice').hide();
+      if (surveyJson == null) surveyJson = Json.parse(localStorage.getItem("survey"));
+      if (surveyJson != null) {
+        var p = 1;
+        for (var i=0; i<surveyJson.questions.length; i++) {
+          var q = surveyJson.questions[i];
+
+          if (p == (page + 1)) {
+            addQuestion(q);
+          } else if (p > (page + 1)) {
+            break;
+          }
+
+          if(q.qType == "page") {
+            p++;
+          }
         }
-    	} else {
-    		$(this).attr('class', $(this).attr('class').replace(' error', ''));
-    	}
-    });
-
-    $("#response_form").find("textarea.required").each(function() {
-    	if (!$(this).val() || $(this).val() == "") {
-    		valid = false;
-    		$(this).attr('class', $(this).attr('class') + ' error');
-    	} else {
-    		$(this).attr('class', $(this).attr('class').replace(' error', ''));
-    	}
-    });
-
-    $("#response_form").find("input.required:radio").each(function() {
-    	valid = validateOptions($(this).parent(), 'input:radio') && valid;
-    });
-
-    $("#response_form").find("input.required:checkbox").each(function() {
-    	valid = validateOptions($(this).parent(), 'input:checkbox') && valid;
-    });
-
-    $("#response_form").find("select.required").each(function() {
-    	var x = false;
-    	$(this).find("option").each(function() {
-    		if (!x && $(this).attr("selected") == "selected" && $(this).val() != "" ) {
-    		  x = true;
-    		}
-    	});
-  		var parent = $(this).parent();
-    	if (!x) {
-    		valid = false;
-    		parent.attr('class', parent.attr('class') + ' error');
-    	} else {
-    		parent.attr('class', parent.attr('class').replace(' error', ''));
-    	}
-    });
-
-    if(!valid) {
-      $('#errorNotice').attr('class', "alert alert-error");
-      $('#errorNotice').html("Please provide answers to the highlighted questions below.");
-    } else {
-      $('#errorNotice').attr('class', "");
-      $('#errorNotice').html("");
+      }
     }
-
     return valid;
   });
 });
+
+function isFormValid() {
+  var valid = true;
+  var first = true;
+  $("#response_form").find("input.required:text").each(function() {
+    if (!$(this).val() || $(this).val() == "") {
+      valid = false;
+      $(this).attr('class', $(this).attr('class') + ' error');
+      if (first) {
+        $(this).focus();
+        first = false;
+      }
+    } else {
+      $(this).attr('class', $(this).attr('class').replace(' error', ''));
+    }
+  });
+
+  $("#response_form").find("textarea.required").each(function() {
+    if (!$(this).val() || $(this).val() == "") {
+      valid = false;
+      $(this).attr('class', $(this).attr('class') + ' error');
+    } else {
+      $(this).attr('class', $(this).attr('class').replace(' error', ''));
+    }
+  });
+
+  $("#response_form").find("input.required:radio").each(function() {
+    valid = validateOptions($(this).parent(), 'input:radio') && valid;
+  });
+
+  $("#response_form").find("input.required:checkbox").each(function() {
+    valid = validateOptions($(this).parent(), 'input:checkbox') && valid;
+  });
+
+  $("#response_form").find("select.required").each(function() {
+    var x = false;
+    $(this).find("option").each(function() {
+      if (!x && $(this).attr("selected") == "selected" && $(this).val() != "" ) {
+        x = true;
+      }
+    });
+    var parent = $(this).parent();
+    if (!x) {
+      valid = false;
+      parent.attr('class', parent.attr('class') + ' error');
+    } else {
+      parent.attr('class', parent.attr('class').replace(' error', ''));
+    }
+  });
+
+  if(!valid) {
+    $('#errorNotice').attr('class', "alert alert-error");
+    $('#errorNotice').html("Please provide answers to the highlighted questions below.");
+  } else {
+    $('#errorNotice').attr('class', "");
+    $('#errorNotice').html("");
+  }
+
+  return valid;
+ }
 
 function validateOptions(parent, inputtype) {
 	var x = false;

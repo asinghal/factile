@@ -2,6 +2,7 @@ var rtl = false;
 var offline = false;
 
 var surveyJson = null;
+var surveyUrl = null;
 
 $(document).ready(function() {
 	$(document).find(".sortable").each(function() {
@@ -21,8 +22,6 @@ $(document).ready(function() {
 			$(this).attr("style", "margin-right: 4%; float: right; direction: rtl; text-align: justify;");
 		});
 	}
-
-	//navigator.onLine
 });
 
 function addQuestion(q) {
@@ -32,6 +31,8 @@ function addQuestion(q) {
 		$("<div class=\"row\"><div class=\"span12\"><b>" + q.texts[0].text + "</b> <input name=\""+ q.questionId +"\" type=\"text\" class=\"" + required + "input-xlarge\"></div><div class=\"clearfix\">&nbsp;</div><div class=\"clearfix\">&nbsp;</div></div>").insertBefore(obj);
 	} else if (q.qType == "textarea") {
 		$("<div class=\"row\"><div class=\"span12\"><b>" + q.texts[0].text + "</b> <textarea name=\""+ q.questionId +"\" class=\"input-xlarge\"></textarea></div><div class=\"clearfix\">&nbsp;</div><div class=\"clearfix\">&nbsp;</div></div>").insertBefore(obj);
+	} else if (q.qType == "plaintext") {
+		$("<div class=\"row\"><div class=\"span12\">"+ q.texts[0].text + "</div><div class=\"clearfix\">&nbsp;</div><div class=\"clearfix\">&nbsp;</div></div>").insertBefore(obj);
 	} else if (q.qType == "radio") {
 		var options = "";
 		for (var i=0; i < q.options.length; i++) {
@@ -80,9 +81,25 @@ function serializeStoredData() {
   return data;
 }
 
+var disabled = !navigator.onLine;
+window.addEventListener("online", function(e) {
+	disabled = false;
+	if ($('#final_submit_btn').length > 0) {
+		$('#final_submit_btn').attr('class', $('#final_submit_btn').attr('class').replace('disabled', ''));
+	}
+})
+window.addEventListener("offline", function(e) {
+	disabled = true;
+	if ($('#final_submit_btn').length > 0) {
+		$('#final_submit_btn').attr('class', $('#final_submit_btn').attr('class') + ' disabled');
+	}
+})
+
 function addLastNote(thank_you_text) {
 	var obj = $('#response_form').find('.row:last-child');
   var html = "<div class=\"row\"><div class=\"span12\">" + thank_you_text + "</div><div class=\"clearfix\">&nbsp;</div></div>";
+	var u = surveyUrl.replace('downloadSurvey', 'surveys').replace('/offline', '');
+  html += "<div class=\"row\"><div class=\"span12\" id=\"final_submit\"><a id=\"final_submit_btn\" class='btn btn-success btn-large" + (disabled ? ' disabled' : '') + "' href='javascript:void(0);' onclick='sendResponses(\"" + u + "\")'>Send Responses</a></div><div class=\"clearfix\">&nbsp;</div></div>";
   $(html).insertBefore(obj);
   obj.remove();
 }
@@ -92,6 +109,24 @@ var hasLocalStorage = function(){
 		return 'localStorage' in window && window['localStorage'] !== null;
 	} catch(err){
 		return false;
+	}
+}
+
+function sendResponses(url) {
+	if (navigator.onLine) {
+		$('#final_submit_btn').attr('class', $('#final_submit_btn').attr('class') + ' disabled');
+		$.ajax({
+	      type: "POST",
+			  cache: false,
+	      url: url,
+	      data: serializeStoredData(),
+	      success: function( response ) {
+	        for (var key in localStorage){
+				    localStorage.removeItem(key);
+				  }
+	        $('#final_submit').html('');
+	      }
+	    });
 	}
 }
 
@@ -109,7 +144,8 @@ function workoffline(url) {
 	  		surveyJson = response;
 	  		var ls = window.localStorage;
 	  		ls.setItem("survey", JSON.stringify(response) );
-	  		$('#workoffline').html("<a class='btn btn-success btn-mini' href='" + url.replace('downloadSurvey', 'surveys').replace('/offline', '') + " '>Send Responses</a>");
+	  		surveyUrl = url;
+	  		$('#workoffline').html('<a href="javascript:void(0);" class="btn btn-danger">Offline</a>');
 	  	}
 	  }
 	});

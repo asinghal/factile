@@ -68,7 +68,9 @@ object SurveyExporter {
    	  		var answer: String = null
    	  		if (res != null)  {
 	   	  		val option = if (res.question.indexOf("_") != -1) res.question.split("_")(0) else res.question
-	   	  		answer = res.answers.map { a => texts.getOrElse(option + "_" + a, a) }.mkString("\n")
+	   	  		answer = res.answers.map { a => 
+                 var text = if (res.ranking) (a.replace(res.question + "_", "")) else a
+                 texts.getOrElse(option + "_" + text, text) }.mkString("\n")
    	  		} else if (q.endsWith("_other")) {
    	  			val q1 = q.replace("_other", "")
    	  			val res1 = responses.getOrElse(q1, null)

@@ -65,13 +65,14 @@ function show_bar_chart(description, target, options, responses) {
     tooltip: {
         formatter: function() {
             return ''+
-                this.series.name +': '+ this.y +'';
+                this.series.name +': '+ Math.round(this.y * 10)/10 +'';
         }
     },
     plotOptions: {
         bar: {
             dataLabels: {
-                enabled: true
+                enabled: true,
+                formatter:function(){return''+Math.round(this.y * 10)/10+''}
             }
         }
     },

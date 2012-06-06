@@ -37,7 +37,8 @@ responseSummary: Map[String, String] = Map[String, String]())
 						<div class="clearfix">&nbsp;</div>
 					</div>
 						<div class="row"><div id="@(question + "_container")" class="span11"></div>
-						<div class="span11 pull-left"><a href="javascript:void(0);" onclick="javascript: $(this).parent().parent().nextAll('.answerBox').toggle();" class="btn btn-mini">+</a></div>
+						<div class="span12 pull-left"><a href="javascript:void(0);" onclick="javascript: $(this).parent().parent().nextAll('.answerBox').toggle();" class="btn btn-mini">+</a></div>
+						<div class="clearfix">&nbsp;</div>
 						</div>
 						<div class="answerBox">
 				  @sorted.zipWithIndex.map { case ((ans, count), aIndex) => 

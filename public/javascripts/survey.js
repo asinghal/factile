@@ -5,6 +5,16 @@ var surveyJson = null;
 var surveyUrl = null;
 
 $(document).ready(function() {
+	updateSortables();
+
+  if (rtl) {
+		$(document).find(".row").each(function() {
+			$(this).attr("style", "margin-right: 4%; float: right; direction: rtl; text-align: justify;");
+		});
+	}
+});
+
+function updateSortables() {
 	$(document).find(".sortable").each(function() {
 		$(this).sortable({
 			update: function(event, ui) {
@@ -16,13 +26,7 @@ $(document).ready(function() {
 		var eleOrder = $(this).sortable('toArray').toString();
 		$(this).parent().find("input:hidden:first").val(eleOrder);
 	});
-
-  if (rtl) {
-		$(document).find(".row").each(function() {
-			$(this).attr("style", "margin-right: 4%; float: right; direction: rtl; text-align: justify;");
-		});
-	}
-});
+}
 
 function addQuestion(q) {
 	var required = q.mandatory ? "required " : "";
@@ -56,6 +60,20 @@ function addQuestion(q) {
 		}
     var html = "<div class=\"row\"><div class=\"span12\"><b>"+ q.texts[0].text +"</b><div id=\""+ q.questionId +"_options\" class=\"required tchbtn\"><ul>" + options + "</ul></div></div><div class=\"clearfix\">&nbsp;</div><div class=\"clearfix\">&nbsp;</div></div>";
     $(html).insertBefore(obj);
+
+  } else if (q.qType == "ranking") {
+		var options = "";
+		var other = "";
+		for (var i=0; i < q.options.length; i++) {
+			var o = q.options[i];
+			options += "<li class=\"ui-state-default\" id=\"" + q.questionId + "_" + o.value + "\"><span class=\"ui-icon ui-icon-arrowthick-2-n-s\"></span>"+ o.texts[0].text +"</li>";
+		}
+		if (q.hasOther) {
+			other += "<br><input name=\"" + q.questionId + "\" type=\"checkbox\" disabled=\"disabled\" value=\"other\" id=\"" + q.questionId + "_other" + "\"/> " + q.otherBox[0].text + "<input name=\"" + q.questionId + "_other" + "\" type=\"text\" onfocus=\"$('#" + q.questionId + "_other" + "').attr('checked', 'checked');\" />";
+		}
+    var html = "<div class=\"row\"><div class=\"span12\"><b>" + q.texts[0].text + "</b><div id=\""+ q.questionId +"_options\" class=\"required\"><input name=\"" + q.questionId + "\" type=\"hidden\" /><input name=\"" + q.questionId + "_type\" type=\"hidden\" value=\"ranking\" /><ul class=\"sortable ui-sortable\">" + options + "</ul>" + other + "</div></div><div class=\"clearfix\">&nbsp;</div><div class=\"clearfix\">&nbsp;</div></div>";
+    $(html).insertBefore(obj);
+    setTimeout('$("#'+ q.questionId + '_options").find("ul").sortable({accept:"ui-state-default"}).disableSelection();updateSortables();', 10);
 	} else if (q.qType == "dropdown") {
 		var options = "";
 		for (var i=0; i < q.options.length; i++) {
@@ -66,6 +84,28 @@ function addQuestion(q) {
 			options += "<option value=\"other\">"+ q.otherBox[0].text +"</option>";
 		}
     var html = "<div class=\"row\"><div class=\"span12\"><b>" + q.texts[0].text + "</b><div id=\""+ q.questionId +"_options\" class=\"" + required + "\"><select name=\""+ q.questionId +"\" id=\""+ q.questionId +"\"  class=\"" + required + " input-xlarge\">" + options + "</select></div></div><div class=\"clearfix\">&nbsp;</div><div class=\"clearfix\">&nbsp;</div></div>";
+    $(html).insertBefore(obj);
+	} else if (q.qType == "rating") {
+		var html = "<div class=\"row\"><div class=\"span12\"><b>" + q.texts[0].text + "</b> <br><table class=\"table table-striped tchbtn\"><tbody>";
+		var head = "";
+		var dim = "";
+		for (var i=0; i < q.options.length; i++) {
+			var o = q.options[i];
+			head += "<th>"+ o.texts[0].text +"</th>";
+			dim += "<td><label><input name=\""+ q.questionId +"_DIMENSION_NUM_\" type=\"radio\" value=\""+ o.value +"\"><span>&nbsp;</span></label></td>"
+		}
+		if (q.hasOther) {
+			head += "<th>"+ q.otherBox[0].text +"</th>";
+			dim += "<td><input name=\""+ q.questionId +"_DIMENSION_NUM__other\" type=\"text\"></td>";
+		}
+
+		html += "<tr><th>&nbsp;</th>" + head + "</tr>";
+		for (var i=0; i < q.dimensions.length; i++) {
+			var d = q.dimensions[i];
+			html += "<tr><td>" + d.texts[0].text + "</td>" + (dim.replace(/_DIMENSION_NUM_/g, '_' + d.value)) + "</tr>";
+		}
+					      
+		html += "</tbody></table></div><div class=\"clearfix\">&nbsp;</div><div class=\"clearfix\">&nbsp;</div></div>";
     $(html).insertBefore(obj);
 	}
 }
@@ -85,7 +125,7 @@ var disabled = !navigator.onLine;
 window.addEventListener("online", function(e) {
 	disabled = false;
 	if ($('#final_submit_btn').length > 0) {
-		$('#final_submit_btn').attr('class', $('#final_submit_btn').attr('class').replace('disabled', ''));
+		$('#final_submit_btn').attr('class', $('#final_submit_btn').attr('class').replace(/disabled/g, ''));
 	}
 })
 window.addEventListener("offline", function(e) {

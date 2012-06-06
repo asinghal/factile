@@ -1,56 +1,58 @@
 @(surveyId: String, user: String, responses: Map[String, Map[String, Double]], numberOfResponses: Int = 0, texts: Map[String, String] = Map[String, String](), 
 responseSummary: Map[String, String] = Map[String, String]())
 
+@answerClass(index: Int) = {
+	@if(index % 2 == 0) {
+		even
+	} else {
+		odd
+	}
+}
 @main(user, 0, true) {
     <a href="/surveys/@surveyId/export" class="btn btn-info pull-right" title="Export to Excel"><i class="icon-download icon-white"></i>&nbsp;Download</a>    
-<h1>@numberOfResponses Responses Captured So Far</h1>
-<hr>
-<br>
+	<h1>@numberOfResponses Responses Captured So Far</h1>
+	<hr>
+	<br>
 
-<table class="table table-striped">
-	<thead>
-		<tr>
-		  <th>&nbsp;</th>
-		  <th>&nbsp;</th>
-		  <th>&nbsp;</th>
-		  <th>&nbsp;</th>
-		</tr>
-	<tbody>
-@responses.toList.sortBy{_._1}.map { case (question, answers) =>
-  @defining(answers.toList.sortBy{_._1}) { sorted =>
-		<tr>
-		  <td colspan="4" style="background-color: #DDD">
-            <span class="dropdown pull-right">
-              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Chart <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="javascript:void(0);" onclick="javascript:show_pie_chart('@(texts.getOrElse(question, question))', '@(question + "_container")', [ @responseSummary(question) ] );">Pie Chart</a></li>
-                <li>
-            	  @defining(sorted.map{ x => texts.getOrElse(question.split("_")(0) + "_" + x._1, x._1)}.mkString("', '")) { options =>
-            	    @defining(sorted.map(_._2).mkString(", ")) { values =>
-            	      <a href="javascript:void(0);" onclick="javascript:show_bar_chart('@(texts.getOrElse(question, question))', '@(question + "_container")', [ '@options'], [ @values ] );">Bar Chart</a></li>
-                    }
-                  }
-              </ul>
-            </span>
-			<table class="inner_table">
-				<tr><td>@(texts.getOrElse(question, question))</td></tr>
-				<tr>
-				  <td><div id="@(question + "_container")"></div></td>
-				</tr>
-			</table>
-		  </td>
-		</tr>
-		  @sorted.map { case (ans, count) => 
-		  <tr>
-		      <td>&nbsp;</td>
-			  <td>@(texts.getOrElse(question.split("_")(0) + "_" + ans, ans))</td>
-			  <td>@(new java.text.DecimalFormat("#######.#").format(count))</td>
-			  <td>@((((1d * count) / numberOfResponses) * 100).toInt) %</td>
-			</tr>
+	@responses.toList.sortBy{_._1}.zipWithIndex.map { case ((question, answers),index) =>
+		<div class="questionBox">
+			<div class="row">
+				<div class="span11">
+		  @defining(answers.toList.sortBy{_._1}) { sorted =>
+		            <span class="dropdown pull-right">
+		              <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">Chart <b class="caret"></b></a>
+		              <ul class="dropdown-menu">
+		                <li><a href="javascript:void(0);" onclick="javascript:show_pie_chart('@(texts.getOrElse(question, question))', '@(question + "_container")', [ @responseSummary(question) ] );">Pie Chart</a></li>
+		                <li>
+		            	  @defining(sorted.map{ x => texts.getOrElse(question.split("_")(0) + "_" + x._1, x._1)}.mkString("', '")) { options =>
+		            	    @defining(sorted.map(_._2).mkString(", ")) { values =>
+		            	      <a href="javascript:void(0);" onclick="javascript:show_bar_chart('@(texts.getOrElse(question, question))', '@(question + "_container")', [ '@options'], [ @values ] );">Bar Chart</a></li>
+		                    }
+		                  }
+		              </ul>
+		            </span>
+						<h3>@(index + 1). @(texts.getOrElse(question, question))</h3>
+						</div>
+						<div class="clearfix">&nbsp;</div>
+						<div class="clearfix">&nbsp;</div>
+					</div>
+						<div class="row"><div id="@(question + "_container")" class="span11"></div>
+						<div class="span11 pull-left"><a href="javascript:void(0);" onclick="javascript: $(this).parent().parent().nextAll('.answerBox').toggle();" class="btn btn-mini">+</a></div>
+						</div>
+						<div class="answerBox">
+				  @sorted.zipWithIndex.map { case ((ans, count), aIndex) => 
+						<div class="row">
+							<div class="span11 @answerClass(aIndex + 1).body.trim">
+				    	<div class="span6">@(texts.getOrElse(question.split("_")(0) + "_" + ans, ans))</div>
+					  	<div class="span2">@(new java.text.DecimalFormat("#######.#").format(count))</div>
+					  	<div class="span2">@((((1d * count) / numberOfResponses) * 100).toInt) %</div>
+					  </div>
+						</div>  
+				  }
+				</div>
 		  }
-		</tr>
-  }
-}
-	</tbody>
-</table>
+		</div>  
+		<div class="clearfix">&nbsp;</div>
+		<div class="clearfix">&nbsp;</div>
+	}
 }

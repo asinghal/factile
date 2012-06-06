@@ -13,6 +13,11 @@ body {
 
 .block { background-color: #eee; padding: 10px 10px 10px 10px; margin-bottom: 10px; }
 
+.odd { background-color: #F7F7F7;}
+.even { background-color: #EDEDED;}
+.questionBox { border: #EEE 1px solid; padding: 10px 10px 10px 10px; }
+.answerBox{display:none;}
+
 .icon-padding { padding-left: 3px; padding-right: 3px;}
 
 .inner_table { width: 100%; border: 0; background-color: inherit;}

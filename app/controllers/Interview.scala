@@ -110,6 +110,7 @@ object Interview extends Controller with Secured {
    	var responses = Map[String, Map[String, Double]]()
    	var numberOfResponses = 0
     var texts = Map[String, String]()
+    var wordClouds = Map[String, Map[String, Int]]()
     var responseSummary = Map[String, String]()
    	// lets make sure the user is the rightful owner before we show him the results!
    	Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
@@ -133,17 +134,28 @@ object Interview extends Controller with Secured {
    	  	}
    	  }
 
+      val stop = stopWords.getProperty(s.get("language").toString)
+
       responses.foreach { case (q, res) => 
         var summary = ""
+        var cloud = ""
         res.foreach { case (name, count) =>
           if (summary != "") summary += ", "
-          summary += "['" + texts.getOrElse(q.split("_")(0) + "_" + name, name) + "', " + count + "]"
+          var text = texts.getOrElse(q.split("_")(0) + "_" + name, name)
+          if (text == name && text != "other") {
+            cloud += (" " + text)
+          }
+          summary += "['" + text.replace("'", "\\'") + "', " + count + "]"
+        }
+        if (cloud.trim != "") {
+          val c = cloud.trim.replaceAll("(?i)\\b(" + stop + ")\\b", "").split(" ").map(_.trim).foldLeft(Map[String, Int]())((m, s) => m + (s -> (m.getOrElse(s, 0) + 1)))
+          wordClouds += (q -> c)
         }
         responseSummary = responseSummary + (q -> summary)
       }
     }
 
-   	Ok(views.html.surveys.data(id, user, responses, numberOfResponses, texts, responseSummary))
+   	Ok(views.html.surveys.data(id, user, responses, numberOfResponses, texts, responseSummary, wordClouds))
    }
 
    /**

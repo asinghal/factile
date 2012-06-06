@@ -15,6 +15,7 @@
 package helpers
 
 import java.util.Date
+import java.util.Properties
 
 import models._
 import dao.Mongo._
@@ -25,6 +26,20 @@ import dao.Mongo._
  * @author Aishwarya Singhal
  */
 object ResponseHelper {
+
+  lazy val _stopWords = new Properties
+  
+  def stopWords = {
+    import java.io._
+
+    if (_stopWords.isEmpty) {
+      var line = "";
+      val sb = io.Source.fromInputStream(this.getClass.getClassLoader.getResourceAsStream("stopwords.properties"), "UTF-8").getLines.mkString("\n")
+      _stopWords.load(new StringReader(sb))
+    }
+
+    _stopWords
+  }
 
     /**
      * Saves the captured responses into the database. If a response document exists, it is updated 

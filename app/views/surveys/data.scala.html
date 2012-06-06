@@ -1,5 +1,5 @@
 @(surveyId: String, user: String, responses: Map[String, Map[String, Double]], numberOfResponses: Int = 0, texts: Map[String, String] = Map[String, String](), 
-responseSummary: Map[String, String] = Map[String, String]())
+responseSummary: Map[String, String] = Map[String, String](), wordClouds: Map[String, Map[String, Int]] = Map[String, Map[String, Int]]())
 
 @answerClass(index: Int) = {
 	@if(index % 2 == 0) {
@@ -24,11 +24,14 @@ responseSummary: Map[String, String] = Map[String, String]())
 		              <ul class="dropdown-menu">
 		                <li><a href="javascript:void(0);" onclick="javascript:show_pie_chart('@(texts.getOrElse(question, question))', '@(question + "_container")', [ @responseSummary(question) ] );">Pie Chart</a></li>
 		                <li>
-		            	  @defining(sorted.map{ x => texts.getOrElse(question.split("_")(0) + "_" + x._1, x._1)}.mkString("', '")) { options =>
+		            	  @defining(sorted.map{ x => texts.getOrElse(question.split("_")(0) + "_" + x._1, x._1).replace("'", "\\'")}.mkString("', '")) { options =>
 		            	    @defining(sorted.map(_._2).mkString(", ")) { values =>
 		            	      <a href="javascript:void(0);" onclick="javascript:show_bar_chart('@(texts.getOrElse(question, question))', '@(question + "_container")', [ '@options'], [ @values ] );">Bar Chart</a></li>
 		                    }
 		                  }
+		                @if(wordClouds.getOrElse(question, null) != null) {
+		                <li><a href="javascript:void(0);" onclick="javascript:$('#@(question + "_cloud")').find('.wordcloud').show();">Word Cloud</a></li>
+		                }
 		              </ul>
 		            </span>
 						<h3>@(index + 1). @(texts.getOrElse(question, question))</h3>
@@ -37,6 +40,15 @@ responseSummary: Map[String, String] = Map[String, String]())
 						<div class="clearfix">&nbsp;</div>
 					</div>
 						<div class="row"><div id="@(question + "_container")" class="span11"></div>
+						@if(wordClouds.getOrElse(question, null) != null) {
+							<div id="@(question + "_cloud")" class="span11">
+								<div class="wordcloud" style="display:none;">
+								  @wordClouds(question).toList.map { case (w, c) =>
+								    <a href="javascript:void(0);" rel="@c">@w</a>
+								  }
+								</div>
+							</div>
+					  }
 						<div class="span12 pull-left"><a href="javascript:void(0);" onclick="javascript: $(this).parent().parent().nextAll('.answerBox').toggle();" class="btn btn-mini">+</a></div>
 						<div class="clearfix">&nbsp;</div>
 						</div>
@@ -57,3 +69,13 @@ responseSummary: Map[String, String] = Map[String, String]())
 		<div class="clearfix">&nbsp;</div>
 	}
 }
+<script type="text/javascript">
+$.fn.tagcloud.defaults = {
+  size: {start: 1, end: 5, unit: 'em'},
+  color: {start: '#AAB5F0', end: '#39D'}
+};
+
+$(function () {
+  $('.wordcloud a').tagcloud();
+});
+</script>

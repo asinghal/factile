@@ -67,6 +67,13 @@ object Reports extends Controller with Secured {
 	      			x.answers.foreach { a =>
 	      				str.foreach { s => l ::= (s + "-" + q.split("_")(0) + "_" + a) }
 	      			}
+	      			if (x.answers.isEmpty) {
+	      			  str.foreach { s => l ::= (s + "- ") }	
+	      			}
+	      			str = l
+	      		}.getOrElse{
+	      			var l = List[String]()
+	      			str.foreach { s => l ::= (s + "- ") }
 	      			str = l
 	      		}
 	      	}

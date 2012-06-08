@@ -76,16 +76,19 @@ object Participants extends Controller with Secured {
      }
 
      var surveyLink = ""
-     respondentList.split("\n").foreach { toAddress =>
-       if (open) {
-         surveyLink = getSurveyLink(id, surveyURI, null)
-       } else {
-         val participant = new Participant(id, Participant.nextId, toAddress)
-         participant.save
-         surveyLink = getSurveyLink(id, surveyURI, participant)
+     respondentList.split("\n").foreach { a =>
+       val toAddress = a.trim
+       if (toAddress != "") {
+         if (open) {
+           surveyLink = getSurveyLink(id, surveyURI, null)
+         } else {
+           val participant = new Participant(id, Participant.nextId, toAddress)
+           participant.save
+           surveyLink = getSurveyLink(id, surveyURI, participant)
+         }
+         val body = if (htmlFormat) mailBody.replace("{{survey_link}}", surveyLink) else text_body.replace("{{survey_link}}", surveyLink)
+         helpers.Mailer.send(toAddress, fromAddress, subject, body, htmlFormat)
        }
-       val body = if (htmlFormat) mailBody.replace("{{survey_link}}", surveyLink) else text_body.replace("{{survey_link}}", surveyLink)
-       helpers.Mailer.send(toAddress, fromAddress, subject, body, htmlFormat)
      }
      Redirect("/dashboard")
    }

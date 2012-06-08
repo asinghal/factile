@@ -58,6 +58,10 @@ GET    /surveys/:id/template/:tid     controllers.Surveys.template(id: String, t
 GET    /surveys/:id/invite            controllers.Participants.invite(id: String)
 POST    /surveys/:id/email            controllers.Participants.email(id: String)
 
+# reports
+GET   /reports/:id                    controllers.Reports.start(id: String)
+POST  /reports/:id                    controllers.Reports.build(id: String)
+
 # Address Book
 GET   /addressbook                    controllers.Addresses.show
 GET   /addressbook/open               controllers.Addresses.open

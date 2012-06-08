@@ -9,7 +9,10 @@ responseSummary: Map[String, String] = Map[String, String](), wordClouds: Map[St
 	}
 }
 @main(user, 0, true) {
-    <a href="/surveys/@surveyId/export" class="btn btn-info pull-right" title="Export to Excel"><i class="icon-download icon-white"></i>&nbsp;Download</a>    
+  <div class="pull-right">
+    <a href="/surveys/@surveyId/export" class="btn btn-info" title="Export to Excel"><i class="icon-download icon-white"></i>&nbsp;Download</a>&nbsp;
+    <a href="/reports/@surveyId" class="btn btn-warning" title="Insights"><i class="icon-eye-open icon-white"></i>&nbsp;Insights</a>&nbsp;
+  </div>
 	<h1>@numberOfResponses Responses Captured So Far</h1>
 	<hr>
 	<br>

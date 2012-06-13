@@ -1,6 +1,6 @@
 /*
  * Mailer.scala
- * 
+ *
  * Copyright (c) 2012, Aishwarya Singhal. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -25,85 +25,88 @@ import javax.mail.internet.MimeMessage;
 import akka.actor._
 
 object Mailer {
+  import java.io.{ File, FileInputStream }
+
   lazy val config = play.Play.application.configuration
-	lazy val host = config.getString("rabbitmq.host")
-	lazy val queue = config.getString("rabbitmq.queue")
-	lazy val exchange = config.getString("rabbitmq.exchange")
+  lazy val host = config.getString("rabbitmq.host")
+  lazy val queue = config.getString("rabbitmq.queue")
+  lazy val exchange = config.getString("rabbitmq.exchange")
 
-	val authenticator = new javax.mail.Authenticator() {
-		override def getPasswordAuthentication = {
-			new PasswordAuthentication("factilenet","AllFacts4U");
-		}
-	}
-	
-	val props = new Properties();
-	props.put("mail.smtp.host", "smtp.gmail.com");
-	props.put("mail.smtp.socketFactory.port", "465");
-	props.put("mail.smtp.socketFactory.class",
-			"javax.net.ssl.SSLSocketFactory");
-	props.put("mail.smtp.auth", "true");
-	props.put("mail.smtp.port", "465");
+  private val customProps = new Properties
+  customProps.load(new FileInputStream(new File(System.getProperty("user.home") + System.getProperty("file.separator") + "factile.properties")))
 
-	val session = Session.getDefaultInstance(props, authenticator);
+  val authenticator = new javax.mail.Authenticator() {
+    override def getPasswordAuthentication = {
+      new PasswordAuthentication(customProps.getProperty("mail.user"), customProps.getProperty("mail.passwd"))
+    }
+  }
 
-	/**
-	 * Sends emails to the gives addresses
-	 *
-	 * @param toAddress 
-	 * @param fromAddress
-	 * @param subject
-	 * @param body
-	 */
-	def send(toAddress: String, fromAddress: String, subject: String, body: String, html: Boolean = false) = {
-		MailPublisher.send((new Email(toAddress, fromAddress, subject, body, html)).xml);
-	}
+  val props = new Properties();
+  props.put("mail.smtp.host", "smtp.gmail.com");
+  props.put("mail.smtp.socketFactory.port", "465");
+  props.put("mail.smtp.socketFactory.class",
+      "javax.net.ssl.SSLSocketFactory");
+  props.put("mail.smtp.auth", "true");
+  props.put("mail.smtp.port", "465");
+
+  /**
+   * Sends emails to the gives addresses
+   *
+   * @param toAddress
+   * @param fromAddress
+   * @param subject
+   * @param body
+   */
+  def send(toAddress: String, fromAddress: String, subject: String, body: String, html: Boolean = false) = {
+    MailPublisher.send((new Email(toAddress, fromAddress, subject, body, html)).xml);
+  }
 }
 
 object MailPublisher {
-	import com.rabbitmq.client.ConnectionFactory;
-	import com.rabbitmq.client.Connection;
-	import com.rabbitmq.client.Channel;
+  import com.rabbitmq.client.ConnectionFactory;
+  import com.rabbitmq.client.Connection;
+  import com.rabbitmq.client.Channel;
   val system = ActorSystem("mailer")
 
-	val dispatcher = system.actorOf(Props(new MailDispatcher))
+  val dispatcher = system.actorOf(Props(new MailDispatcher))
 
   //val factory = new ConnectionFactory();
   //factory.setHost(Mailer.host);
 
 
-	def send(message: String) = {
+  def send(message: String) = {
     /*val connection = factory.newConnection();
     val channel = connection.createChannel();
 
     channel.queueDeclare(Mailer.queue, false, false, false, null);
     try {
-	    channel.basicPublish("", Mailer.queue, null, message.getBytes());
+      channel.basicPublish("", Mailer.queue, null, message.getBytes());
     } finally {
-	    channel.close();
-	    connection.close();	
-  	}*/
-  	dispatcher ! message
+      channel.close();
+      connection.close();
+    }*/
+    dispatcher ! message
   }
 
 }
 
 class MailDispatcher extends Actor {
-	import com.rabbitmq.client.ConnectionFactory;
-	import com.rabbitmq.client.Connection;
-	import com.rabbitmq.client.Channel;
-	import com.rabbitmq.client.QueueingConsumer;
-	import scala.xml._
+  import com.rabbitmq.client.ConnectionFactory;
+  import com.rabbitmq.client.Connection;
+  import com.rabbitmq.client.Channel;
+  import com.rabbitmq.client.QueueingConsumer;
+  import scala.xml._
 
-	/*val factory = new ConnectionFactory();
+  /*val factory = new ConnectionFactory();
   factory.setHost(Mailer.host);
   val connection = factory.newConnection();
   val channel = connection.createChannel();
 
   channel.queueDeclare(Mailer.queue, false, false, false, null);
-  
+
   val consumer = new QueueingConsumer(channel);
   channel.basicConsume(Mailer.queue, true, consumer);
-  
+
   while (true) {
     val delivery = consumer.nextDelivery();
     val message = new String(delivery.getBody());
@@ -118,35 +121,37 @@ class MailDispatcher extends Actor {
   */
   def dispatch(toAddress: String, fromAddress: String, subject: String, body: String, html: Boolean) {
     try {
-			val message = new MimeMessage(Mailer.session);
-			message.setFrom(new InternetAddress(fromAddress));
-			message.setRecipients(Message.RecipientType.TO, toAddress);
-			message.setSubject(subject);
-			if (html) {
-				message.setContent(body, "text/html")
-			} else {
-			  message.setText(body);
-			}
- 
-			Transport.send(message); 
-		} catch {
-			case e: MessagingException =>
-			  throw new RuntimeException(e);
-		}
+      val session = Session.getInstance(Mailer.props, Mailer.authenticator)
+      val message = new MimeMessage(session);
+      message.setFrom(new InternetAddress(fromAddress));
+      message.setReplyTo(Array(new InternetAddress(fromAddress)));
+      message.setRecipients(Message.RecipientType.TO, toAddress);
+      message.setSubject(subject);
+      if (html) {
+        message.setContent(body, "text/html")
+      } else {
+        message.setText(body);
+      }
+
+      Transport.send(message);
+    } catch {
+      case e: MessagingException =>
+        throw new RuntimeException(e);
+    }
   }
 
-	def receive = { case message:String => {
-												val xml = XML.loadString(message)
-										    val toAddress = (xml \\ "toAddress").text
-										    val fromAddress = (xml \\ "fromAddress").text
-										    val subject = (xml \\ "subject").text
-										    val body = (xml \\ "body").text
-										    val html = (xml \\ "isHtml").text.toBoolean
-										    dispatch(toAddress, fromAddress, subject, body, html)
-											}
-									case _ => }
+  def receive = { case message:String => {
+                        val xml = XML.loadString(message)
+                        val toAddress = (xml \\ "toAddress").text
+                        val fromAddress = (xml \\ "fromAddress").text
+                        val subject = (xml \\ "subject").text
+                        val body = (xml \\ "body").text
+                        val html = (xml \\ "isHtml").text.toBoolean
+                        dispatch(toAddress, fromAddress, subject, body, html)
+                      }
+                  case _ => }
 }
 
 case class Email(toAddress: String, fromAddress: String, subject: String, body: String, html: Boolean) {
-	def xml = { "<email><toAddress>%s</toAddress><fromAddress>%s</fromAddress><subject><![CDATA[%s]]></subject><body><![CDATA[%s]]></body><isHtml>%s</isHtml></email>".format(toAddress, fromAddress, subject, body, html) }
+  def xml = { "<email><toAddress>%s</toAddress><fromAddress>%s</fromAddress><subject><![CDATA[%s]]></subject><body><![CDATA[%s]]></body><isHtml>%s</isHtml></email>".format(toAddress, fromAddress, subject, body, html) }
 }

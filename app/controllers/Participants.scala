@@ -86,6 +86,7 @@ object Participants extends Controller with Secured {
            participant.save
            surveyLink = getSurveyLink(id, surveyURI, participant)
          }
+         surveyLink = "<a href=\"" + surveyLink + "\">" + surveyLink + "</a>"
          val body = if (htmlFormat) mailBody.replace("{{survey_link}}", surveyLink) else text_body.replace("{{survey_link}}", surveyLink)
          helpers.Mailer.send(toAddress, fromAddress, subject, body, htmlFormat)
        }
@@ -96,10 +97,14 @@ object Participants extends Controller with Secured {
    private def getSurveyLink(id: String, surveyURI: String, participant: Participant = null)(implicit request: Request[AnyContent]) = {
      var surveyLink = ""
      if (participant == null) {
-       surveyLink = if (surveyURI != null && surveyURI.trim != "") "http://" + request.host + "/" + surveyURI.trim else "http://" + request.host + "/surveys/" + id + "/start"
+       surveyLink = getSurveyURI(surveyURI).map( x => "http://" + request.host + "/" + x).getOrElse("http://" + request.host + "/surveys/" + id + "/start")
      } else {
-       surveyLink = if (surveyURI != null && surveyURI.trim != "") "http://" + request.host + "/" + surveyURI.trim + "/" + participant.respId else "http://" + request.host + "/surveys/" + id + "/" + participant.respId + "/start"
+       surveyLink = getSurveyURI(surveyURI).map( x => "http://" + request.host + "/" + x + "/" + participant.respId).getOrElse("http://" + request.host + "/surveys/" + id + "/" + participant.respId + "/start")
      }
      surveyLink
+   }
+
+   private def getSurveyURI(uri: String): Option[String] = {
+     if (uri != null && uri.trim != "") Some(java.net.URLEncoder.encode(uri.trim, "UTF-8")) else None
    }
 }

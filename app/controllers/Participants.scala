@@ -86,7 +86,7 @@ object Participants extends Controller with Secured {
            participant.save
            surveyLink = getSurveyLink(id, surveyURI, participant)
          }
-         surveyLink = "<a href=\"" + surveyLink + "\">" + surveyLink + "</a>"
+         if (htmlFormat) surveyLink = "<a href=\"" + surveyLink + "\">" + surveyLink + "</a>"
          val body = if (htmlFormat) mailBody.replace("{{survey_link}}", surveyLink) else text_body.replace("{{survey_link}}", surveyLink)
          helpers.Mailer.send(toAddress, fromAddress, subject, body, htmlFormat)
        }

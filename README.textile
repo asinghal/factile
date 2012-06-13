@@ -10,29 +10,29 @@ The tool and its source code are available under the LGPL license (http://www.gn
 
 h2. Features
 
-1. Design a survey with multiple pages and multiple questions, just as fast as you can type :-). 
-2. The different question types that are available are:
-	a. Text boxes
-	b. Radio buttons
-	c. Check boxes
-	d. Combo boxes (dropdowns)
-	e. Text areas
-	f. Plain texts
-	more to come ...
-3. Preview a survey before sending it out.
-4. Surveys are based on Twitter Bootstrap's responsive design so they work on various devices.
-	a. Natural and adaptive support for various computer screen resolutions.
-	b. Support for iPhone/ iPads
-	c. Support for Blackberry handhelds.
-	d. Support for most other mobile devices!
-5. Invite participants through email.
-6. Analyse the captured data 
-	a. Build charts for individual questions.
-	b. Group questions and build charts for the cumulative view.
-	c. Draw insights on grouped questions.
-	d. Export the data as Excel.
-7. Allows you to define simple jump logic (e.g. go to page 10 if user clicks x ).
-8. Download and install on your local box if you don't like the hosted instance!
+# Design a survey with multiple pages and multiple questions, just as fast as you can type :-). 
+# The different question types that are available are:
+## Text boxes
+## Radio buttons
+## Check boxes
+## Combo boxes (dropdowns)
+## Text areas
+## Plain texts
+## more to come ...
+# Preview a survey before sending it out.
+# Surveys are based on Twitter Bootstrap's responsive design so they work on various devices.
+## Natural and adaptive support for various computer screen resolutions.
+## Support for iPhone/ iPads
+## Support for Blackberry handhelds.
+## Support for most other mobile devices!
+# Invite participants through email.
+# Analyse the captured data 
+## Build charts for individual questions.
+## Group questions and build charts for the cumulative view.
+## Draw insights on grouped questions.
+## Export the data as Excel.
+# Allows you to define simple jump logic (e.g. go to page 10 if user clicks x ).
+# Download and install on your local box if you don't like the hosted instance!
 
 h2. Technology Stack
 
@@ -40,10 +40,10 @@ The application code is written in Scala and uses the Play framework. The databa
 
 h2. Installation
 
-1. Git clone this repository
-2. You must have play, scala 2.9 and sbt installed.
-3. Install MongoDB and run mongod
-4. Install RabbitMQ
-5. Start this application by going into the directory and running "play". On the console that opens, type "run".
-6. Open http://localhost:9000 !
+# Git clone this repository
+# You must have play, scala 2.9 and sbt installed.
+# Install MongoDB and run mongod
+# Install RabbitMQ
+# Start this application by going into the directory and running "play". On the console that opens, type "run".
+# Open http://localhost:9000 !
 

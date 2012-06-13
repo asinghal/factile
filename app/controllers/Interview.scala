@@ -1,6 +1,6 @@
 /*
  * Interview.scala
- * 
+ *
  * Copyright (c) 2012, Aishwarya Singhal. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under the terms of the GNU Lesser General Public
@@ -39,7 +39,7 @@ object Interview extends Controller with Secured {
    }
 
    /**
-    * Action to process user responses and store them in the database. But instead of taking a survey id from 
+    * Action to process user responses and store them in the database. But instead of taking a survey id from
     * the URL, it works on custom URI and maps them to a survey id.
     */
    def customUriResponse(id: String, respId: String = null) = collectResponse("uri", id, respId) { (s: Survey, questions: List[Question], page: Int, responseId: String, percentComplete: Int, replacements: Map[String, String], message: String) => implicit request =>
@@ -61,7 +61,7 @@ object Interview extends Controller with Secured {
       var message = ""
       var id = ""
 
-      Survey.findOne(attr -> sid).foreach { s => 
+      Survey.findOne(attr -> sid).foreach { s =>
         val m = s.toMap
         val status = m.get("status").toString
         id = m.get("surveyId").toString
@@ -106,37 +106,37 @@ object Interview extends Controller with Secured {
    /**
     * Get response data for a survey
     */
-   def data(id: String) = IsAuthenticated { user => _ => 
-   	var responses = Map[String, Map[String, Double]]()
-   	var numberOfResponses = 0
+   def data(id: String) = IsAuthenticated { user => _ =>
+     var responses = Map[String, Map[String, Double]]()
+     var numberOfResponses = 0
     var texts = Map[String, String]()
     var wordClouds = Map[String, Map[String, Int]]()
     var responseSummary = Map[String, String]()
-   	// lets make sure the user is the rightful owner before we show him the results!
-   	Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
+     // lets make sure the user is the rightful owner before we show him the results!
+     Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s =>
 
       texts = getQuestionTexts(s.toMap)._1
 
-   	  SurveyResponse.find("surveyId" -> id).foreach { r => 
-   	  	numberOfResponses += 1
-   	  	val qResponse = deserialize(classOf[SurveyResponse], r.toMap)
-   	  	qResponse.responses.foreach { res =>
-  	      var q = responses.getOrElse(res.question, Map[String, Double]()) 
+       SurveyResponse.find("surveyId" -> id).foreach { r =>
+         numberOfResponses += 1
+         val qResponse = deserialize(classOf[SurveyResponse], r.toMap)
+         qResponse.responses.foreach { res =>
+          var q = responses.getOrElse(res.question, Map[String, Double]())
           var rank = 0
           val size = res.answers.size
-  	      res.answers.foreach { ans => 
+          res.answers.foreach { ans =>
             var text = if (res.ranking) (ans.replace(res.question + "_", "")) else ans
             rank += 1
             val inc = if (res.ranking) (1d * size * (size - rank + 1) / qResponse.responses.size) else 1d
-  	      	q = q.updated(text, q.getOrElse(text, 0d) + inc)
-  	      }
+            q = q.updated(text, q.getOrElse(text, 0d) + inc)
+          }
           responses = responses + (res.question -> q)
-   	  	}
-   	  }
+         }
+       }
 
       val stop = stopWords.getProperty(s.get("language").toString)
 
-      responses.foreach { case (q, res) => 
+      responses.foreach { case (q, res) =>
         var summary = ""
         var cloud = ""
         res.foreach { case (name, count) =>
@@ -155,19 +155,23 @@ object Interview extends Controller with Secured {
       }
     }
 
-   	Ok(views.html.surveys.data(id, user, responses, numberOfResponses, texts, responseSummary, wordClouds))
+     Ok(views.html.surveys.data(id, user, responses, numberOfResponses, texts, responseSummary, wordClouds))
    }
 
    /**
     * Exports the response data of a survey to a XLSX file.
     */
    def export(id: String) = IsAuthenticated { user => _ =>
-     import java.io.File 
-     val file = new File("result.xlsx") 
+     import java.io.File
+     val file = new File("result_" + id + ".xlsx")
      helpers.SurveyExporter.excel(id, user, file)
-     Ok.sendFile( 
-        content = file, 
-        fileName = _ => "result.xlsx") 
+     try {
+     Ok.sendFile(
+        content = file,
+        fileName = _ => "result.xlsx")
+     } finally {
+       file.delete
+     }
    }
 
    /**
@@ -176,7 +180,7 @@ object Interview extends Controller with Secured {
    def downloadSurvey(sid: String, attr: String, respId: String = null) = Action {
       import com.codahale.jerkson.Json._
 
-      val jsonStr = Survey.findOne(attr -> sid).map { s => 
+      val jsonStr = Survey.findOne(attr -> sid).map { s =>
         val m = s.toMap
         val status = m.get("status").toString
         val id = m.get("surveyId").toString
@@ -201,12 +205,12 @@ object Interview extends Controller with Secured {
     */
    private def getResponses(params: Map[String, Any])(build: (String, Seq[String], String, Boolean) => Unit) = {
     val reg = "(q.*)".r
-	  var responseId = ""
+    var responseId = ""
 
-    params foreach { case (name, value) => 
+    params foreach { case (name, value) =>
       name match {
-        case reg(x) => { 
-          if (!x.endsWith("_other") && !x.endsWith("_type")) { 
+        case reg(x) => {
+          if (!x.endsWith("_other") && !x.endsWith("_type")) {
             val other = params.getOrElse(x + "_other", List("")).asInstanceOf[Seq[String]](0)
             val qType = params.getOrElse(x + "_type", List("")).asInstanceOf[Seq[String]](0)
             var v = value.asInstanceOf[Seq[String]]
@@ -215,10 +219,10 @@ object Interview extends Controller with Secured {
               v = v(0).split(",").toList.map(s => s.trim)
               ranking = true;
             }
-            build(x, v, other, ranking) 
-          } 
+            build(x, v, other, ranking)
+          }
         }
-        case "responseId" => { 
+        case "responseId" => {
           val list = value.asInstanceOf[Seq[String]]
           responseId = if (!list.isEmpty) list(0) else ""
         }

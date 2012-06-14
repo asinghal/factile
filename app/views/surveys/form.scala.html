@@ -10,8 +10,8 @@
       <li><a href="/surveys/@survey.get.surveyId/edit"><span class="stepNumber">2.</span> Add Questions</a><span class="flow-triangle"></span></li>
       <li><a href="/surveys/@survey.get.surveyId/invite"><span class="stepNumber">3.</span> Share It With Your Audience</a><span class="flow-triangle"></span></li>
     } else {
-      <li><a href="javascript:void(0);" class="lb"><span class="stepNumber">2.</span> Add Questions</a><span class="flow-triangle"></span></li>
-      <li><a href="javascript:void(0);" class="lb"><span class="stepNumber">3.</span> Share It With Your Audience</a><span class="flow-triangle"></span></li>
+      <li><a data-toggle="modal" href="#inviteDialog" class="lb"><span class="stepNumber">2.</span> Add Questions</a><span class="flow-triangle"></span></li>
+      <li><a data-toggle="modal" href="#inviteDialog" class="lb"><span class="stepNumber">3.</span> Share It With Your Audience</a><span class="flow-triangle"></span></li>
     }
   </ul>
   <div class="clearfix">&nbsp;</div>
@@ -118,9 +118,18 @@
 <script type="text/javascript" src="@routes.Assets.at("javascripts/COLOURloversColorPicker.js")"></script>
 <script type="text/javascript" src="@routes.Assets.at("javascripts/survey_form.js")"></script>
 <div id="CLCP" class="CLCP"></div>
- <div id="inviteDialog" title="Confirmation Required" style="display:none;">
-    Please add a survey name and click on 'Save Details'.
-    <a href="javascript:void(0);" onclick="$('#inviteDialog').hide();" class='btn'>OK</a>
+ <div id="inviteDialog" title="Confirmation Required" class="modal hide fade" style="display:none;">
+   <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>Please note</h3>
+      </div>
+      <div class="modal-body">
+        Please add a survey name and click on 'Save Details'.
+      </div>
+      <div class="modal-footer">
+        <a href="javascript:void(0);" onclick="$('#inviteDialog').modal('toggle');" class='btn'>OK</a>
+      </div>
+    </div>
   </div>
 
   }
@@ -129,7 +138,7 @@
   initial_hex = "@survey.getString(_.layout.bodycolor, "#FFFFFF")";
   $(document).ready(function(){
     $(".lb").click(function(e) {
-        $("#inviteDialog").show();
+        $("#inviteDialog").modal('toggle');
         return false;
       });
   });

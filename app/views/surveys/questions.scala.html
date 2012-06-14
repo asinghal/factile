@@ -40,7 +40,7 @@
   <ul class="flow">
     <li><a href="/surveys/@surveyId/editinfo"><span class="stepNumber">1.</span> Basic Survey Details</a><span class="flow-triangle"></span></li>
     <li class="activeStep"><a href="javascript:void(0);"><span class="stepNumber">2.</span> Add Questions</a><span class="flow-triangle"></span></li>
-    <li><a href="/surveys/@surveyId/invite" class='lb'><span class="stepNumber">3.</span> Share It With Your Audience</a><span class="flow-triangle"></span></li>
+    <li><a data-toggle="modal" href="#inviteDialog" class='lb'><span class="stepNumber">3.</span> Share It With Your Audience</a><span class="flow-triangle"></span></li>
   </ul>
   <div class="clearfix">&nbsp;</div>
   @surveys.toolbar(surveyId)
@@ -133,12 +133,18 @@
       }
     </div>
   </div>
-
-  <div id="inviteDialog" title="Confirmation Required" style="display:none;">
-    Any unsaved changes would be lost. You must click on one of <em>'Save Draft'</em>, <em>'Activate'</em> or <em>'Preview'</em> buttons to save changes before proceeding. Proceed?
-    <br>
-    <br>
-    <a href="javascript:void(0);" onclick="$('#inviteDialog').hide();" class='btn'>Cancel</a>&nbsp;<a href="javascript:void(0);" onclick="window.location.href = $('.lb').attr('href');"  class='btn btn-info'>Proceed</a>&nbsp;
+  <div id="inviteDialog" title="Confirmation Required" class="modal hide fade" style="display:none;">
+    <div class="modal-header">
+        <button class="close" data-dismiss="modal">×</button>
+        <h3>Are you sure?</h3>
+      </div>
+      <div class="modal-body">
+        Any unsaved changes would be lost. You must click on one of <em>'Save Draft'</em>, <em>'Activate'</em> or <em>'Preview'</em> buttons to save changes before proceeding. Proceed?
+      </div>
+      <div class="modal-footer">
+        <a href="javascript:void(0);" onclick="$('#inviteDialog').modal('toggle');" class='btn'>Cancel</a>&nbsp;<a href="javascript:void(0);" onclick="window.location.href = '/surveys/@surveyId/invite';"  class='btn btn-info'>Proceed</a>&nbsp;
+      </div>
+    </div>
   </div>
 
     <script type="text/javascript">
@@ -150,7 +156,7 @@
 
     $(document).ready(function(){
       $(".lb").click(function(e) {
-          $("#inviteDialog").show();
+        $('#inviteDialog').modal('toggle');
           return false;
         });
     });

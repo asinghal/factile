@@ -47,3 +47,5 @@ h2. Installation
 # Start this application by going into the directory and running "play". On the console that opens, type "run".
 # Open http://localhost:9000 !
 
+PS: If you get an error 'Mongo db "can't call something"', check https://github.com/asinghal/factile/issues/2
+

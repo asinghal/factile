@@ -85,7 +85,7 @@ object Interview extends Controller with Secured {
               page = findNextPage(surveyData, responseId, page)
             }
             survey = findQuestionsForPage(id, page, m) { q => questions ::= q }
-            updateInterviewStatus(id, respId, m.get("accessType").toString, questions.isEmpty)
+            updateInterviewStatus(id, respId, m.get("accessType").toString, questions.isEmpty, responseId)
           }
         } else {
           message = if (status == "Closed") CLOSED_MSG else NOT_STARTED_MSG

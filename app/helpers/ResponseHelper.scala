@@ -166,10 +166,16 @@ object ResponseHelper {
    * @param respId
    * @param accessType
    * @param lastPage
+   * @param responseId
    */
-  def updateInterviewStatus(id: String, respId: String, accessType: String, lastPage: Boolean) = {
+  def updateInterviewStatus(id: String, respId: String, accessType: String, lastPage: Boolean, responseId: String) = {
     if (lastPage && accessType != "open") {
-      Participant.findOne("surveyId" -> id, "respId" -> respId).map { p => Participant.update(p.get("_id"), "status" -> "Completed" ) }
+      Participant.findOne("surveyId" -> id, "respId" -> respId).map { p => 
+        SurveyResponse.findOne("surveyId" -> id, "responseId" -> responseId).map { r =>
+          SurveyResponse.update(r.get("_id"), "email" -> p.get("email").toString)
+        }
+        Participant.update(p.get("_id"), "status" -> "Completed" ) 
+      }
     }
   }
 

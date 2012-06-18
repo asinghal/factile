@@ -16,7 +16,7 @@ package models
 
 import java.util.Date
 
-case class SurveyResponse(responseId: String, surveyId: String, created_at: Date, responses: Seq[QuestionResponse]) extends Model[SurveyResponse] { }
+case class SurveyResponse(responseId: String, surveyId: String, created_at: Date, responses: Seq[QuestionResponse], email: String = null) extends Model[SurveyResponse] { }
 
 object SurveyResponse extends QueryOn[SurveyResponse] { 
   import java.util.UUID

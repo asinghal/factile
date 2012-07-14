@@ -40,7 +40,7 @@ object Global extends GlobalSettings {
   }  
   
   override def onStop(app: Application) {
-    dao.Mongo.connection.close
+    if (!Play.isTest(app)) dao.Mongo.connection.close
     Logger.info("Application shutdown...")
   }  
 

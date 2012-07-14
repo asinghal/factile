@@ -50,20 +50,15 @@ object Mongo {
    */
   def serializeAllFields(o: Any) = {
     val builder = MongoDBObject.newBuilder
-    o.getClass.getDeclaredFields.foreach { f => 
+    def ser(f: java.lang.reflect.Field) {
       if (!f.getName.contains("collectionName") && f.getName != "table" && !f.getName.startsWith("bitmap")) {
         f.setAccessible(true)
         val v = f.get(o)
         builder += (f.getName -> serialize(v)) 
       }
     }
-    o.getClass.getSuperclass.getDeclaredFields.foreach { f => 
-      if (!f.getName.contains("collectionName") && f.getName != "table" && !f.getName.startsWith("bitmap")) {
-        f.setAccessible(true)
-        val v = f.get(o)
-        builder += (f.getName -> serialize(v)) 
-      }
-    }
+    o.getClass.getDeclaredFields.foreach { ser }
+    o.getClass.getSuperclass.getDeclaredFields.foreach { ser }
 
     builder.result.asDBObject
   }

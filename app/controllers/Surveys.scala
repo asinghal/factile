@@ -59,7 +59,7 @@ object Surveys extends Controller with Secured {
    * Shows all surveys for the current user.
    */
    def dashboard = IsAuthenticated { user => _ =>
-   	var surveys = Survey.find("owner" -> user).map { x => 
+     var surveys = Survey.find("owner" -> user).map { x => 
        val m = x.toMap
        // remove the keys we won't use and save on deserialization effort
        m.remove("questions")
@@ -152,20 +152,20 @@ object Surveys extends Controller with Secured {
       var q = 0
       var pageIds = List[String]()
       Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
-  	    survey = deserialize(classOf[Survey], s.toMap)
-  	    if (survey.questions != null && !survey.questions.isEmpty) { 
-		    import com.mongodb._
-  	    	s.toMap.get("questions").asInstanceOf[BasicDBList].toArray.foreach { case m: BasicDBObject => 
+        survey = deserialize(classOf[Survey], s.toMap)
+        if (survey.questions != null && !survey.questions.isEmpty) { 
+        import com.mongodb._
+          s.toMap.get("questions").asInstanceOf[BasicDBList].toArray.foreach { case m: BasicDBObject => 
               val data = m.toMap
               val questionId = data.get("questionId").asInstanceOf[String]
-    	    		val i = questionId.substring(1).toInt 
-    	    		if (i > q) q = i
+              val i = questionId.substring(1).toInt 
+              if (i > q) q = i
               data.get("qType").asInstanceOf[String] match {
                 case "page"=> pageIds ::= questionId
                 case _ =>
               }
-  	        }
-  	    }
+            }
+        }
       }
       Ok(views.html.surveys.questions(id, user, q, survey, pageIds.reverse))
    }
@@ -176,13 +176,13 @@ object Surveys extends Controller with Secured {
    * @param survey id
    */
    def update(id: String) = IsAuthenticated { user => implicit request => 
-   	var questions: Seq[Question] = null
+     var questions: Seq[Question] = null
 
     var status = ""
 
     var accessType = "open"
 
-   	Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
+     Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
        val language = s.get("language").toString
        accessType = s.get("accessType").toString
 
@@ -197,11 +197,11 @@ object Surveys extends Controller with Secured {
       var history = deserialize(classOf[History], s.get("history").asInstanceOf[com.mongodb.BasicDBObject].toMap)
       history = new History(history.created_at, history.created_by, new Date, user)
 
-   		Survey.update(s.get("_id"), "questions" -> questions, "history" -> history)
+       Survey.update(s.get("_id"), "questions" -> questions, "history" -> history)
       if (status != "") {
         Survey.update(s.get("_id"), "status" -> status)
       }
-   	}
+     }
 
      if (status == "Live") {
       Redirect(routes.Participants.invite(id))

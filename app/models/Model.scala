@@ -31,6 +31,6 @@ trait Model[T <: Model[T]] {
   }
 
   def save {
-	  table += Mongo.serializeAllFields(this)
+    table += Mongo.serializeAllFields(this)
   }
 }

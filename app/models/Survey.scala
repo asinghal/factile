@@ -15,19 +15,19 @@
 package models
 
 case class Survey(surveyId: String, name: String, language: String, owner: List[String], hash_string: String, questions: Seq[Question], history: History, 
-	intro_text: String, thank_you_text: String, logo: String, accessType: String, layout: SurveyLayout, uri: String = null, status: String ="Draft"
-	) extends Model[Survey] { }
+  intro_text: String, thank_you_text: String, logo: String, accessType: String, layout: SurveyLayout, uri: String = null, status: String ="Draft"
+  ) extends Model[Survey] { }
 
 case class SurveyLayout(logoAlignment: String = "left", includeProgress: Boolean = false, bodycolor: String = "#FFFFFF", 
-	containercolor: String = "#FFFFFF", textColor: String = "#555555", logoBgColor: String = "#FFFFFF") extends Element {}
+  containercolor: String = "#FFFFFF", textColor: String = "#555555", logoBgColor: String = "#FFFFFF") extends Element {}
 
 object Survey extends QueryOn[Survey] { 
   import java.util.UUID
   override lazy val indexedFields = List[String]("owner", "surveyId")
 
   def nextId = {
-  	Survey.synchronized {
-  	  UUID.randomUUID.toString
+    Survey.synchronized {
+      UUID.randomUUID.toString
     }
   }
 }

@@ -31,10 +31,10 @@ object Application extends Controller with Secured {
   )
 
   def login = Action { implicit request =>
-  	val (username, password) = loginForm.bindFromRequest.get
-  	val user = User.find("email" -> username, "password" -> User.encrypt(password))
+    val (username, password) = loginForm.bindFromRequest.get
+    val user = User.find("email" -> username, "password" -> User.encrypt(password))
 
-  	if (user.isEmpty) {
+    if (user.isEmpty) {
       Ok(views.html.common.index("Login failed.", null))
     } else {
       Redirect(routes.Surveys.dashboard).withSession("email" -> username)
@@ -55,13 +55,13 @@ object Application extends Controller with Secured {
   }
 
   def signup = Action { implicit request =>
-  	val (username, password) = loginForm.bindFromRequest.get
+    val (username, password) = loginForm.bindFromRequest.get
 
     if (!isValidEmail(username) || !User.find("email" -> username).isEmpty) {
       Ok(views.html.users.signup("You have entered an invalid email address, or it is already registered."))
     } else {
-  	  val user = new User(username, User.encrypt(password))
-  	  user.save
+      val user = new User(username, User.encrypt(password))
+      user.save
 
       Redirect(routes.Surveys.dashboard).withSession("email" -> username)
     }

@@ -25,19 +25,19 @@ abstract class Question(val qType: String, questionId: String, texts: Seq[Text] 
 }
 
 case class RadioButtons(questionId: String, texts: Seq[Text], options: Seq[AnswerOption], otherBox: Seq[Text], hasOther: Boolean, 
-	mandatory: Boolean) extends Question("radio", questionId, texts) 
+  mandatory: Boolean) extends Question("radio", questionId, texts) 
 
 case class DropDown(questionId: String, texts: Seq[Text], options: Seq[AnswerOption], otherBox: Seq[Text], hasOther: Boolean, 
-	mandatory: Boolean) extends Question("dropdown", questionId, texts) 
+  mandatory: Boolean) extends Question("dropdown", questionId, texts) 
 
 case class CheckBoxes(questionId: String, texts: Seq[Text], options: Seq[AnswerOption], otherBox: Seq[Text], hasOther: Boolean, 
-	mandatory: Boolean) extends Question("checkbox", questionId, texts)
+  mandatory: Boolean) extends Question("checkbox", questionId, texts)
 
 case class Ranking(questionId: String, texts: Seq[Text], options: Seq[AnswerOption], otherBox: Seq[Text], hasOther: Boolean, 
   mandatory: Boolean) extends Question("ranking", questionId, texts)
 
 case class RatingScale(questionId: String, texts: Seq[Text], dimensions: Seq[Dimension], options: Seq[AnswerOption], 
-	otherBox: Seq[Text], hasOther: Boolean, mandatory: Boolean) extends Question("rating", questionId, texts)
+  otherBox: Seq[Text], hasOther: Boolean, mandatory: Boolean) extends Question("rating", questionId, texts)
 
 case class TextBox(questionId: String, texts: Seq[Text], mandatory: Boolean) extends Question("textbox", questionId, texts)
 
@@ -62,8 +62,8 @@ object Languages {
     "Arabic" -> "5", "Chinese" -> "6", "Japanese" -> "7", "Hebrew" -> "8", "Hindi" -> "9", "Russian" -> "10" ).toList.sortBy {_._1}
 
   def getTexts(texts: (String, String)*) = {
-  	var list = List[Text]()
-  	texts.foreach {case (language, value) => list ::= new Text(value, language) }
-  	list
+    var list = List[Text]()
+    texts.foreach {case (language, value) => list ::= new Text(value, language) }
+    list
   }
 }

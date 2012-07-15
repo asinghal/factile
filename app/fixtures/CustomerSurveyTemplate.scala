@@ -18,9 +18,9 @@ import models.Languages._
 
 // refer to http://www.surveyquestions.com.au/customer-survey-questions.htm
 object CustomerSurveyTemplate {
-	var questions = List[Question]()
+  var questions = List[Question]()
   questions ::= new PlainText("q0001",List(new Text("<p>" +
-	"<span>In [COMPANY], we would like to know what you think of our work. Please complete this short survey to provide us with feedback.</span></p>", "1")))
+  "<span>In [COMPANY], we would like to know what you think of our work. Please complete this short survey to provide us with feedback.</span></p>", "1")))
 
   questions ::= new RadioButtons("q0002",List(new Text("What is your overall satisfaction with [COMPANY] products and services?  ", "1")),List(new AnswerOption(List(new Text("Very satisfied", "1")),"o1"), new AnswerOption(List(new Text("Satisfied", "1")),"o2"), new AnswerOption(List(new Text("Neutral", "1")),"o3"), new AnswerOption(List(new Text("Dissatisfied", "1")),"o4"), new AnswerOption(List(new Text("Very dissatisfied", "1")),"o5")),List(new Text("", "1")),false,false)
   questions ::= new TextArea("q0003",List(new Text("If you are dissatisfied, why?", "1")),false)
@@ -46,6 +46,6 @@ object CustomerSurveyTemplate {
   questions ::= new TextArea("q0023",List(new Text("Finally, do you know anyone else that [COMPANY] may be able to assist? Please click here [ new window opens ] to view our 'Customer Referral Rewards' program details.", "1")),false)
   questions ::= new TextArea("q0024",List(new Text("Please submit your contact information if you have any additional questions and would like us to contact you.", "1")),false)
 
-	val template = new Template("Customer Survey Questions (Standard)", "asinghal79@gmail.com", questions.reverse)
-	template.save
+  val template = new Template("Customer Survey Questions (Standard)", "asinghal79@gmail.com", questions.reverse)
+  template.save
 }

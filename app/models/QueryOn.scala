@@ -35,7 +35,7 @@ trait QueryOn[T <: Model[T]] {
   }
   
   def all = {
-  	table.find
+    table.find
   }
 
   def find[A <: String, B](q: (A, B)*) = {

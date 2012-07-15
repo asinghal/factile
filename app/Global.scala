@@ -19,11 +19,11 @@ import play.api.mvc.Results._
 object Global extends GlobalSettings {
 
   override def onStart(app: Application) {
-  	import models.Template
+    import models.Template
 
-  	if(Template.all.isEmpty) {
-  		ClientSurveyTemplate
-  		CustomerSurveyTemplate
+    if(Template.all.isEmpty) {
+      ClientSurveyTemplate
+      CustomerSurveyTemplate
       ExitSurveyTemplate
       StaffSurveyTemplate
       EmployeeSurveyTemplate
@@ -34,7 +34,7 @@ object Global extends GlobalSettings {
       TrainingFeedbackTemplate
       CustomerSurveyShortTemplate
       EmployeeSurveyLongTemplate
-  	}
+    }
 
     Logger.info("Application has started")
   }  
@@ -45,7 +45,7 @@ object Global extends GlobalSettings {
   }  
 
   override def onError(request: RequestHeader, ex: Throwable) = {
-  	Logger.error("Error occurred", ex)
+    Logger.error("Error occurred", ex)
     InternalServerError(
       views.html.common.errorPage("error")
     )

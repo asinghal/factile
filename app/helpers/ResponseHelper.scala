@@ -50,9 +50,9 @@ object ResponseHelper {
      * @param list of captured responses
      * @return response id 
      */
-	def saveResponses(id: String, responseId: String, responses: List[QuestionResponse]) = {
-		var rId = responseId
-		if (responseId != "") {
+  def saveResponses(id: String, responseId: String, responses: List[QuestionResponse]) = {
+    var rId = responseId
+    if (responseId != "") {
         // exists, load up
         SurveyResponse.findOne("surveyId"-> id, "responseId" -> responseId).foreach { r => 
           var questionResponses = Seq[QuestionResponse]()
@@ -70,7 +70,7 @@ object ResponseHelper {
       }
 
       rId
-	}
+  }
 
   /**
    * Extracts the response texts. Answer option codes are converted into their display texts.

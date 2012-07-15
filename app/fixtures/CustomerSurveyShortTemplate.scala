@@ -16,7 +16,7 @@ import models._
 
 // refer to http://www.surveyquestions.com.au/Questionnaires/Customer-Survey-Questionnaires.htm
 object CustomerSurveyShortTemplate {
-	var questions = List[Question]()
+  var questions = List[Question]()
   questions ::= new PlainText("q0002",List(new Text("<p><span>Dear Customer,&nbsp;</span><br /><br /><span>Our goal is to provide our customers with the best service possible. Please take a few minutes to complete the following customer service questionnaire. Your comments will enable us to see how we&#39;re doing overall and find out how we can improve.</span></p>", "1")))
   questions ::= new RatingScale("q0003",List(new Text("", "1")),List(new Dimension(List(new Text("Staff were available in a timely manner.", "1")),"d1"), new Dimension(List(new Text("Staff greeted you and offered to help you.", "1")),"d2"), new Dimension(List(new Text("Staff were friendly and cheerful throughout.", "1")),"d3"), new Dimension(List(new Text("Staff answered all of your questions.", "1")),"d4"), new Dimension(List(new Text("Staff showed sufficient knowledge of our products/services.", "1")),"d5"), new Dimension(List(new Text("Staff offered pertinent advice.", "1")),"d6"), new Dimension(List(new Text("Staff were courteous throughout.", "1")),"d7")),List(new AnswerOption(List(new Text("Strongly Agree", "1")),"o1"), new AnswerOption(List(new Text("Agree", "1")),"o2"), new AnswerOption(List(new Text("Neutral", "1")),"o3"), new AnswerOption(List(new Text("Disagree", "1")),"o4"), new AnswerOption(List(new Text("Strongly Disagree", "1")),"o5")),List(new Text("", "1")),false,false)
   questions ::= new PageBreak("q0004")
@@ -29,6 +29,6 @@ object CustomerSurveyShortTemplate {
   questions ::= new PageBreak("q0015")
   questions ::= new TextArea("q0016",List(new Text("Do you have any final comments regarding your experience with us?", "1")),false)
 
-	val template = new Template("Customer Survey Questionnaires", "asinghal79@gmail.com", questions.reverse)
-	template.save
+  val template = new Template("Customer Survey Questionnaires", "asinghal79@gmail.com", questions.reverse)
+  template.save
 }

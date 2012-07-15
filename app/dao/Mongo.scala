@@ -27,9 +27,9 @@ import models._
 object Mongo {
 
   lazy val config = Play.application.configuration
-	lazy val host = config.getString("mongo.db.host")
-	lazy val port = config.getInt("mongo.db.port")
-	lazy val database = config.getString("mongo.db.database")
+  lazy val host = config.getString("mongo.db.host")
+  lazy val port = config.getInt("mongo.db.port")
+  lazy val database = config.getString("mongo.db.database")
 
   lazy val connection = MongoConnection(host, port)
 

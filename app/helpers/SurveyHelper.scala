@@ -28,46 +28,46 @@ object SurveyHelper {
      *
      * @param request params
      */
-	def getQuestions(conditions: Map[String, Seq[Condition]] = Map[String, Seq[Condition]]())(implicit params: Map[String, Any], language: String) = {
-		var questions = new ListBuffer[Question]
-		params.getOrElse("question[]", "") match {
-			case p: Seq[_] => { 
-				p.foreach { case (q: String) =>
-			      val qText = getParam[String](q + "_q")
-			      val qType = params(q + "_t")
+  def getQuestions(conditions: Map[String, Seq[Condition]] = Map[String, Seq[Condition]]())(implicit params: Map[String, Any], language: String) = {
+    var questions = new ListBuffer[Question]
+    params.getOrElse("question[]", "") match {
+      case p: Seq[_] => { 
+        p.foreach { case (q: String) =>
+            val qText = getParam[String](q + "_q")
+            val qType = params(q + "_t")
 
-			      val options = params.getOrElse(q + "_options", null)
+            val options = params.getOrElse(q + "_options", null)
             val dimensions = params.getOrElse(q + "_dimensions", null)
             val allow_other = getParam(q + "_allow_other", "false").toBoolean
             val mandatory = getParam(q + "_m", "false").toBoolean
             val other_text = getParam(q + "_other_text", "")
-			      qType.asInstanceOf[Seq[_]].foreach { 
-			      	_ match {
-			      	  case "radio" => questions += new RadioButtons(q, getTexts(language -> qText), extractOptions(options), getTexts(language -> other_text), 
+            qType.asInstanceOf[Seq[_]].foreach { 
+              _ match {
+                case "radio" => questions += new RadioButtons(q, getTexts(language -> qText), extractOptions(options), getTexts(language -> other_text), 
                   allow_other, mandatory)
-			      	  case "checkbox" => questions += new CheckBoxes(q, getTexts(language -> qText), extractOptions(options), getTexts(language -> other_text), 
+                case "checkbox" => questions += new CheckBoxes(q, getTexts(language -> qText), extractOptions(options), getTexts(language -> other_text), 
                   allow_other, mandatory)
                 case "ranking" => questions += new Ranking(q, getTexts(language -> qText), extractOptions(options), getTexts(language -> other_text), 
                   allow_other, mandatory)
-			      	  case "dropdown" => questions += new DropDown(q, getTexts(language -> qText), extractOptions(options), getTexts(language -> other_text), 
+                case "dropdown" => questions += new DropDown(q, getTexts(language -> qText), extractOptions(options), getTexts(language -> other_text), 
                   allow_other, mandatory)
                 case "rating" => questions += new RatingScale(q, getTexts(language -> qText), extractDimensions(dimensions), extractOptions(options), 
                   getTexts(language -> other_text), allow_other, mandatory)
-			      	  case "text" => questions += new TextBox(q, getTexts(language -> qText), mandatory)
-			      	  case "info" => questions += new PlainText(q, getTexts(language -> qText))
-			      	  case "textarea" => questions += new TextArea(q, getTexts(language -> qText), mandatory)
-			      	  case "page" => {
+                case "text" => questions += new TextBox(q, getTexts(language -> qText), mandatory)
+                case "info" => questions += new PlainText(q, getTexts(language -> qText))
+                case "textarea" => questions += new TextArea(q, getTexts(language -> qText), mandatory)
+                case "page" => {
                   val c = conditions.getOrElse(q, List[Condition]())
                   questions += new PageBreak(q, c)
                 }
-			        }
-			      }
-		      }
-		    }
-		    case _ =>
-		   }
-		questions.toList
-	}
+              }
+            }
+          }
+        }
+        case _ =>
+       }
+    questions.toList
+  }
 
   /**
    * Gets a parameter from the (implict) request parameters. It assumes that the request 
@@ -99,20 +99,20 @@ object SurveyHelper {
    *
    * @param options
    */
-	def extractOptions(options: Any)(implicit language: String) = {
-		var e = new ListBuffer[AnswerOption]
-		var count = 0
-		options match {
-			case o: Seq[_] => o.foreach { x => x.toString.trim.split("\n").foreach { s =>
-				  count += 1
-				  e += new AnswerOption(getTexts(language -> s.trim), "o" + count)
-				} 
-			}
-			case _ => 
-		}
+  def extractOptions(options: Any)(implicit language: String) = {
+    var e = new ListBuffer[AnswerOption]
+    var count = 0
+    options match {
+      case o: Seq[_] => o.foreach { x => x.toString.trim.split("\n").foreach { s =>
+          count += 1
+          e += new AnswerOption(getTexts(language -> s.trim), "o" + count)
+        } 
+      }
+      case _ => 
+    }
 
-		e.toList
-	}
+    e.toList
+  }
 
   /**
    * Extracts the different options entered by splitting the lines.
@@ -139,7 +139,7 @@ object SurveyHelper {
    *
    * @param options
    */
-	def findQuestionsForPage(id: String, page: Int, s: java.util.Map[ _ <: Any,  _ <: Any])(f: (Question) => Unit ) = {
+  def findQuestionsForPage(id: String, page: Int, s: java.util.Map[ _ <: Any,  _ <: Any])(f: (Question) => Unit ) = {
       var survey = dao.Mongo.deserialize(classOf[Survey], s)
 
       var completed = 0
@@ -166,7 +166,7 @@ object SurveyHelper {
      *
      * @param survey
      */
-    def getQuestionTexts(survey: java.util.Map[ _ <: Any,  _ <: Any], buildQList: Boolean = false) = {	
+    def getQuestionTexts(survey: java.util.Map[ _ <: Any,  _ <: Any], buildQList: Boolean = false) = {  
       import com.mongodb._
 
       def getText(data: java.util.Map[ _ <: Any,  _ <: Any]) = { 

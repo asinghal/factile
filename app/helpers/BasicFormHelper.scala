@@ -35,9 +35,9 @@ object BasicFormHelper {
     * @param html body of form elements
     */
    def form_for(action: String, id: String, options: (String, String)* )(f: => Html ) = {
-   	val inner = f.body
-    val optionsstr = options.foldLeft("") { (s, o) => s + (o._1 + "=\"" + o._2 + "\" ")}
-   	new Html("<form method=\"POST\" action=\"" + action + "\" id=\"" + id + "\" " + optionsstr.trim +">" + inner + "</form>")
+     val inner = f.body
+     val optionsstr = options.foldLeft("") { (s, o) => s + (o._1 + "=\"" + o._2 + "\" ")}
+     new Html("<form method=\"POST\" action=\"" + action + "\" id=\"" + id + "\" " + optionsstr.trim +">" + inner + "</form>")
    }
 
    /**
@@ -50,11 +50,11 @@ object BasicFormHelper {
     * @param className CSS
     */
    def text_field(name: String, value: String, placeholder: String, className: String, password: Boolean = false) = {
-   	val inputType = if (password) "password" else "text"
-   	val valueString = if (value != null) "value=\"" + value + "\"" else ""
-    val css = if (className != "") " class=\"" + className + "\""
+     val inputType = if (password) "password" else "text"
+     val valueString = if (value != null) "value=\"" + value + "\"" else ""
+     val css = if (className != "") " class=\"" + className + "\""
 
-   	new Html("<input type=\""+ inputType + "\" name=\"" + name + "\" id=\"" + name + "\" " + valueString + " placeholder=\"" + placeholder + "\"" + css + " />")
+     new Html("<input type=\""+ inputType + "\" name=\"" + name + "\" id=\"" + name + "\" " + valueString + " placeholder=\"" + placeholder + "\"" + css + " />")
    }
 
    /**
@@ -68,8 +68,8 @@ object BasicFormHelper {
     */
    def text_area(name: String, value: String, className: String, ckeditor: Boolean = true, rows: Int = 0) = {
      val ckString = if (ckeditor) "ckeditor " else ""
-    val rowstr = if (rows != 0) " rows = " + rows else ""
-    new Html("<textarea class=\"" + ckString + className + "\" name=\"" + name + "\" id=\"" + name + "\"" + rowstr +">" + value + "</textarea>")
+     val rowstr = if (rows != 0) " rows = " + rows else ""
+     new Html("<textarea class=\"" + ckString + className + "\" name=\"" + name + "\" id=\"" + name + "\"" + rowstr +">" + value + "</textarea>")
    }
 
    /**
@@ -94,19 +94,19 @@ object BasicFormHelper {
     * @param className CSS
     */
    def dropdown(name: String, value: String, options: Seq[(String, String)], selectMultiple: Boolean = false, className: String) = {
-   	val multiple = if(selectMultiple) "multiple=\"multiple\"" else ""
-    val css = if (className != "") " class=\"" + className + "\""
-   	var html = "<select name=\"" + name + "\" id=\"" + name + "\" " + multiple + css + ">"
-   	options.foreach { case (t, v) => 
+     val multiple = if(selectMultiple) "multiple=\"multiple\"" else ""
+     val css = if (className != "") " class=\"" + className + "\""
+     var html = "<select name=\"" + name + "\" id=\"" + name + "\" " + multiple + css + ">"
+     options.foreach { case (t, v) => 
        var selected = "";
        if (v == value) {
          selected = " selected=\"selected\"";
        }
        html += "<option value=\"" + v + "\"" + selected + ">" + t + "</option>" 
      } 
-   	html += "</select>"
+     html += "</select>"
 
-   	new Html(html)
+     new Html(html)
    }
 
    /**
@@ -118,7 +118,7 @@ object BasicFormHelper {
     * @param className CSS
     */
    def radio_buttons(name: String, value: String, options: Seq[(String, String)], className: String, inline: Boolean = true) = {
-    val css = if (className != "") " class=\"" + className + "\""
+     val css = if (className != "") " class=\"" + className + "\""
      var html = ""
      var i = 0
      val sep = if(inline) "&nbsp;" else "<br>"
@@ -144,7 +144,7 @@ object BasicFormHelper {
     */
    def file_field(name: String, value: String, placeholder: String, className: String) = {
      val valueString = if (value != null) "<a href=\"" + value + "\" target=\"_blank\">"+ value.substring(value.lastIndexOf("/") + 1) + "</a>&nbsp;" else ""
-    val css = if (className != "") " class=\"" + className + "\""
+     val css = if (className != "") " class=\"" + className + "\""
 
      new Html(valueString + "<input type=\"file\" name=\"" + name + "\" id=\"" + name + "\" " + " placeholder=\"" + placeholder + "\"" + css + " />")
    }

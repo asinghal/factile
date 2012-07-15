@@ -26,9 +26,9 @@ import helpers.SurveyHelper._
  * Controller to handle reports.
  */
 object Reports extends Controller with Secured {
-	
-	def start(id: String) = IsAuthenticated { user => implicit request => 
-		val survey = Survey.findOne("surveyId" -> id, "owner" -> user).map { s => 
+  
+  def start(id: String) = IsAuthenticated { user => implicit request => 
+    val survey = Survey.findOne("surveyId" -> id, "owner" -> user).map { s => 
       val m = s.toMap
      // remove the keys we won't use and save on deserialization effort
       m.remove("history")
@@ -36,11 +36,11 @@ object Reports extends Controller with Secured {
       deserialize(classOf[Survey], m)
     }
     Ok(views.html.reports.insights(user, survey.getOrElse(null)))
-	}
+  }
 
-	def build(id: String) = IsAuthenticated { user => implicit request => 
-		var questionTexts = Map[String, String]()
-		val survey = Survey.findOne("surveyId" -> id, "owner" -> user).map { s => 
+  def build(id: String) = IsAuthenticated { user => implicit request => 
+    var questionTexts = Map[String, String]()
+    val survey = Survey.findOne("surveyId" -> id, "owner" -> user).map { s => 
       val m = s.toMap
      // remove the keys we won't use and save on deserialization effort
       m.remove("history")
@@ -50,55 +50,55 @@ object Reports extends Controller with Secured {
     }
 
     val allResponses = SurveyResponse.find("surveyId" -> id)
-  	var responses = Map[String, Int]().withDefault(x => 0)
-  	val numResponses = allResponses.size
-  	var matchingResponses = 0
-  	var questions = Seq[String]()
-  	var constraintsList = Seq[(String, String)]()
+    var responses = Map[String, Int]().withDefault(x => 0)
+    val numResponses = allResponses.size
+    var matchingResponses = 0
+    var questions = Seq[String]()
+    var constraintsList = Seq[(String, String)]()
     if (!survey.isEmpty) {
       getRequestData().foreach { params =>
-      	//val groups = params("groups").asInstanceOf[Seq[String]].head.split(",")
-      	//val questions = groups.map(params(_).asInstanceOf[Seq[String]].head)
-      	questions = params("questions").asInstanceOf[Seq[String]]
-      	val constraints = params("constraint").asInstanceOf[Seq[String]]
-      	val values = params("constraint_value").asInstanceOf[Seq[String]]
-      	constraintsList = constraints.zip(values)
-      	def satisfies(r: SurveyResponse) = {
-      		var i = 0
-      		constraints.foldLeft(true) { (res, c) => 
-      			val e = r.responses.find { x => (c == "") || ((x.question == c) && (x.answers.contains(values(i)))) }
-      			i += 1
-      			res && !e.isEmpty
-      		}
-      	}
-	      allResponses.foreach { r => 
-	      	val res = deserialize(classOf[SurveyResponse], r.toMap)
-	      	if (constraints.isEmpty || satisfies(res)) {
-	      		matchingResponses += 1
-		      	var str = List[String]("")
-		      	questions.foreach { q => 
-		      		res.responses.find( _.question == q).map { x =>
-		      			var l = List[String]()
-		      			x.answers.foreach { a =>
-		      				str.foreach { s => l ::= (s + "-" + q.split("_")(0) + "_" + a) }
-		      			}
-		      			if (x.answers.isEmpty) {
-		      			  str.foreach { s => l ::= (s + "- ") }	
-		      			}
-		      			str = l
-		      		}.getOrElse{
-		      			var l = List[String]()
-		      			str.foreach { s => l ::= (s + "- ") }
-		      			str = l
-		      		}
-		      	}
+        //val groups = params("groups").asInstanceOf[Seq[String]].head.split(",")
+        //val questions = groups.map(params(_).asInstanceOf[Seq[String]].head)
+        questions = params("questions").asInstanceOf[Seq[String]]
+        val constraints = params("constraint").asInstanceOf[Seq[String]]
+        val values = params("constraint_value").asInstanceOf[Seq[String]]
+        constraintsList = constraints.zip(values)
+        def satisfies(r: SurveyResponse) = {
+          var i = 0
+          constraints.foldLeft(true) { (res, c) => 
+            val e = r.responses.find { x => (c == "") || ((x.question == c) && (x.answers.contains(values(i)))) }
+            i += 1
+            res && !e.isEmpty
+          }
+        }
+        allResponses.foreach { r => 
+          val res = deserialize(classOf[SurveyResponse], r.toMap)
+          if (constraints.isEmpty || satisfies(res)) {
+            matchingResponses += 1
+            var str = List[String]("")
+            questions.foreach { q => 
+              res.responses.find( _.question == q).map { x =>
+                var l = List[String]()
+                x.answers.foreach { a =>
+                  str.foreach { s => l ::= (s + "-" + q.split("_")(0) + "_" + a) }
+                }
+                if (x.answers.isEmpty) {
+                  str.foreach { s => l ::= (s + "- ") }  
+                }
+                str = l
+              }.getOrElse{
+                var l = List[String]()
+                str.foreach { s => l ::= (s + "- ") }
+                str = l
+              }
+            }
 
-		      	str.foreach { o => 
-		      		val s = o.substring(1)
-		      		responses += (s -> (responses(s) + 1))
-		      	}
-	      	}
-	      }
+            str.foreach { o => 
+              val s = o.substring(1)
+              responses += (s -> (responses(s) + 1))
+            }
+          }
+        }
       }
     }
 
@@ -106,5 +106,5 @@ object Reports extends Controller with Secured {
     val n = if (responses.size > 5) 5 else responses.size
     val r = responses.toList.sortBy(_._2).reverse.take(n)
     Ok(views.html.reports.insights(user, survey.getOrElse(null), Some(r), questionTexts, numResponses, matchingResponses, questions, constraintsList))
-	}
+  }
 }

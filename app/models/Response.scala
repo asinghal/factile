@@ -23,8 +23,8 @@ object SurveyResponse extends QueryOn[SurveyResponse] {
   override lazy val indexedFields = List[String]("surveyId")
 
   def nextId = {
-  	SurveyResponse.synchronized {
-  	  UUID.randomUUID.toString
+    SurveyResponse.synchronized {
+      UUID.randomUUID.toString
     }
   }
 }

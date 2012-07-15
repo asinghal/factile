@@ -16,7 +16,20 @@ package models
 
 import java.util.Date
 
-case class SurveyResponse(responseId: String, surveyId: String, created_at: Date, responses: Seq[QuestionResponse], email: String = null) extends Model[SurveyResponse] { }
+case class SurveyResponse(responseId: String, surveyId: String, created_at: Date, responses: Seq[QuestionResponse], email: String = null) extends Model[SurveyResponse] {
+  
+  /**
+   * Checks if this response satisfies the given constraints.
+   *
+   * @param constraints: Seq of question ids mapped to their constrained values
+   */
+  def satisfies(constraints: Seq[(String, String)]) = {
+    constraints.isEmpty || constraints.foldLeft(true) { case (res, (c, v)) => 
+      val e = responses.find { x => (c == "") || ((x.question == c) && (x.answers.contains(v))) }
+      res && !e.isEmpty
+    }
+  }
+}
 
 object SurveyResponse extends QueryOn[SurveyResponse] { 
   import java.util.UUID

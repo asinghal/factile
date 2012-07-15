@@ -27,6 +27,9 @@ import helpers.SurveyHelper._
  */
 object Reports extends Controller with Secured {
   
+  /**
+   * Inits the page
+   */
   def start(id: String) = IsAuthenticated { user => implicit request => 
     val survey = Survey.findOne("surveyId" -> id, "owner" -> user).map { s => 
       val m = s.toMap
@@ -38,16 +41,11 @@ object Reports extends Controller with Secured {
     Ok(views.html.reports.insights(user, survey.getOrElse(null)))
   }
 
+  /**
+   * Builds a report based on selected constraints and questions.
+   */
   def build(id: String) = IsAuthenticated { user => implicit request => 
-    var questionTexts = Map[String, String]()
-    val survey = Survey.findOne("surveyId" -> id, "owner" -> user).map { s => 
-      val m = s.toMap
-     // remove the keys we won't use and save on deserialization effort
-      m.remove("history")
-      m.remove("layout")
-      questionTexts = getQuestionTexts(m)._1
-      deserialize(classOf[Survey], m)
-    }
+    val (questionTexts, survey) = getSurvey(id, user)
 
     val allResponses = SurveyResponse.find("surveyId" -> id)
     var responses = Map[String, Int]().withDefault(x => 0)
@@ -56,44 +54,15 @@ object Reports extends Controller with Secured {
     var questions = Seq[String]()
     var constraintsList = Seq[(String, String)]()
     if (!survey.isEmpty) {
-      getRequestData().foreach { params =>
-        //val groups = params("groups").asInstanceOf[Seq[String]].head.split(",")
-        //val questions = groups.map(params(_).asInstanceOf[Seq[String]].head)
-        questions = params("questions").asInstanceOf[Seq[String]]
-        val constraints = params("constraint").asInstanceOf[Seq[String]]
-        val values = params("constraint_value").asInstanceOf[Seq[String]]
-        constraintsList = constraints.zip(values)
-        def satisfies(r: SurveyResponse) = {
-          var i = 0
-          constraints.foldLeft(true) { (res, c) => 
-            val e = r.responses.find { x => (c == "") || ((x.question == c) && (x.answers.contains(values(i)))) }
-            i += 1
-            res && !e.isEmpty
-          }
-        }
+      getRequestData().foreach { implicit params =>
+        questions = get("questions")
+        constraintsList = get("constraint").zip(get("constraint_value"))
+
         allResponses.foreach { r => 
           val res = deserialize(classOf[SurveyResponse], r.toMap)
-          if (constraints.isEmpty || satisfies(res)) {
+          if (res.satisfies(constraintsList)) {
             matchingResponses += 1
-            var str = List[String]("")
-            questions.foreach { q => 
-              res.responses.find( _.question == q).map { x =>
-                var l = List[String]()
-                x.answers.foreach { a =>
-                  str.foreach { s => l ::= (s + "-" + q.split("_")(0) + "_" + a) }
-                }
-                if (x.answers.isEmpty) {
-                  str.foreach { s => l ::= (s + "- ") }  
-                }
-                str = l
-              }.getOrElse{
-                var l = List[String]()
-                str.foreach { s => l ::= (s + "- ") }
-                str = l
-              }
-            }
-
-            str.foreach { o => 
+            collateAnswers(questions, res).foreach { o => 
               val s = o.substring(1)
               responses += (s -> (responses(s) + 1))
             }
@@ -106,5 +75,70 @@ object Reports extends Controller with Secured {
     val n = if (responses.size > 5) 5 else responses.size
     val r = responses.toList.sortBy(_._2).reverse.take(n)
     Ok(views.html.reports.insights(user, survey.getOrElse(null), Some(r), questionTexts, numResponses, matchingResponses, questions, constraintsList))
+  }
+
+  /**
+   * Convinience method to get survey details from the database. 
+   */
+  private def getSurvey(id: String, user: String) = {
+    var questionTexts = Map[String, String]()
+    var survey = Survey.findOne("surveyId" -> id, "owner" -> user).map { s => 
+      val m = s.toMap
+      // remove the keys we won't use and save on deserialization effort
+      m.remove("history")
+      m.remove("layout")
+      questionTexts = getQuestionTexts(m)._1
+      deserialize(classOf[Survey], m)
+    }
+    (questionTexts, survey)
+  }
+
+  /**
+   * Convinience method to get a parameter's value from request as a Seq of String.
+   *
+   * @param name: parameter name in request
+   * @param params: Implicitly passed request parameters
+   * @return Seq[String]
+   */
+  private def get(name: String)(implicit params: Map[String, AnyRef]) = {
+    params(name).asInstanceOf[Seq[String]]
+  }
+  
+  /**
+   * Collates the answers to form hyphen separated strings (for building permutations).
+   */
+  private def collateAnswers(questions: Seq[String], res: SurveyResponse) = {
+    var str = List[String]("")
+    questions.foreach { q => 
+      res.responses.find( _.question == q).map { x =>
+        str = addAnswer(q, x, str)
+      }.getOrElse{
+        str = addBlank(str)
+      }
+    }
+    str
+  }
+
+  /**
+   * Concatenates an answer to a hyphen separated string.
+   */
+  private def addAnswer(q: String, x: QuestionResponse, str: List[String]) = {
+    var l = List[String]()
+    x.answers.foreach { a =>
+      str.foreach { s => l ::= (s + "-" + q.split("_")(0) + "_" + a) }
+    }
+    if (x.answers.isEmpty) {
+      l = addBlank(str) 
+    }
+    l
+  }
+
+  /**
+   * Add a hyphen for a missing entry.
+   */
+  private def addBlank(str: List[String]) = {
+    var l = List[String]()
+    str.foreach { s => l ::= (s + "- ") }
+    l
   }
 }

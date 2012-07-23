@@ -1,2 +1,5 @@
 User-agent: *
 Disallow: /surveys/
+Disallow: /newuser
+Disallow: /signup
+Disallow: /recover

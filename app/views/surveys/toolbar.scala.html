@@ -5,7 +5,7 @@
       <ul class="dropdown-menu">
         @defining(Template.all) { templates => 
            @templates.map { template => 
-            <li><a href="/surveys/@surveyId/template/@template.get("_id")">@template.get("name")</a></li>
+            <li><a href="javascript:confirmBox('/surveys/@surveyId/template/@template.get("_id")');">@template.get("name")</a></li>
           }
         }
           </ul>

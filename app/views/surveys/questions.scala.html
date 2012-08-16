@@ -160,6 +160,12 @@
           return false;
         });
     });
+
+    function confirmBox(url) {
+      if (confirm('Applying the template will overwrite any existing questions in this survey. Are you sure you want to proceed?')) {
+        location.href = url;
+      }
+    }
     </script>
   }
 }

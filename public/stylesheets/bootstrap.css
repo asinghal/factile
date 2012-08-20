@@ -4779,11 +4779,11 @@ button.close {
     clear: both;
   }
   .nav-collapse .nav {
-    float: none;
+    /*float: none;*/
     margin: 0 0 9px;
   }
   .nav-collapse .nav > li {
-    float: none;
+    /*float: none;*/
   }
   .nav-collapse .nav > li > a {
     margin-bottom: 2px;
@@ -4864,7 +4864,7 @@ button.close {
   }
   .nav-collapse,
   .nav-collapse.collapse {
-    overflow: hidden;
+    /*overflow: hidden;*/
     height: 0;
   }
   .navbar .btn-navbar {

@@ -427,6 +427,26 @@ object Surveys extends Controller with Secured {
      Ok(json)
    }
 
+   def export(id: String) = IsAuthenticated { user => implicit request => 
+    import util.pdf.PDF
+    import java.io._
+
+    val file = new File("survey_" + id + ".pdf")
+    Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
+      val fos = new FileOutputStream(file)
+      val survey = deserialize(classOf[Survey], s.toMap)
+      fos.write(PDF.toBytes(views.html.surveys.export(survey)))
+      fos.close
+    }
+    try {
+     Ok.sendFile(
+        content = file,
+        fileName = _ => "survey.pdf")
+     } finally {
+       file.delete
+     }
+   }
+
   /**
    * Delete a survey and/ or all responses associated. Also delete any uploaded files for this survey.
    */

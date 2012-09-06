@@ -47,6 +47,7 @@ POST   /surveys/:id/updateflow        controllers.Surveys.updateflow(id: String)
 POST    /surveys/:id/flow             controllers.Surveys.flow(id: String)
 GET    /surveys/:id/collaborate       controllers.Surveys.collaborate(id: String)
 POST    /surveys/:id/collaborate      controllers.Surveys.collaborate(id: String)
+GET    /surveys/:id/pdf               controllers.Surveys.export(id: String)
 
 GET    /surveys/questions/:id/:qId    controllers.Surveys.questions(id: String, qId: String)
 

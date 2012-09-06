@@ -432,10 +432,14 @@ object Surveys extends Controller with Secured {
     import java.io._
 
     val file = new File("survey_" + id + ".pdf")
-    Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
+    Survey.findOne("surveyId" -> id, "owner" -> user).map { s => 
       val fos = new FileOutputStream(file)
       val survey = deserialize(classOf[Survey], s.toMap)
       fos.write(PDF.toBytes(views.html.surveys.export(survey)))
+      fos.close
+    }.getOrElse {
+      val fos = new FileOutputStream(file)
+      fos.write("This survey does not exist, or you may not have access to it.".getBytes)
       fos.close
     }
     try {

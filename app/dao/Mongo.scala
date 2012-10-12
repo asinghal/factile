@@ -134,7 +134,7 @@ object Mongo {
                 var l = new ListBuffer[AnyRef]
                 x.toArray.foreach { case x: BasicDBObject => { l += deserializeDBObject(x, f.getName) } case x: AnyRef => l += x }
 
-                if (x.isEmpty) { o += defaultValues(f.getName) } else { o += l.toList }
+                if (x.isEmpty) { o += defaultValues.getOrElse(f.getName, null) } else { o += l.toList }
               }
               case x: BasicDBObject =>  o += deserializeDBObject(x, f.getName)
               case x: AnyRef => o += x

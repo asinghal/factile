@@ -16,7 +16,7 @@
 	font-weight: bold;
 	-webkit-tap-highlight-color: transparent;
 }
-.radioList li:hover {
+.radioList li:hover, .radioList li.selected {
 	background-image: 
 		-webkit-gradient(linear, left top, left bottom, 
 			from(#4286f5), 
@@ -65,7 +65,7 @@
 	opacity: 1;
 	color: #496691;
 }
-.radioList li > .check, .radioList li.selected:hover > .check {
+.radioList li > .check, .radioList li.selected > .check {
 	color: #fff;
 }
 .radioList li > input[type="radio"] {

@@ -18,6 +18,7 @@ import play.api._
 import play.api.mvc._
 import play.api.data._
 import play.api.data.Forms._
+import play.api.data.validation.Constraints._
 
 import models._
 import models.Languages._
@@ -40,7 +41,7 @@ object Surveys extends Controller with Secured {
    */
   val surveyForm = Form(
     tuple(
-      "surveyname" -> text,
+      "surveyname" -> nonEmptyText,
       "language" -> text,
       "introText" -> text,
       "thankyouText" -> text,
@@ -52,7 +53,9 @@ object Surveys extends Controller with Secured {
       "includeProgress" -> text,
       "surveyURI" -> text,
       "logoAlignment" -> text
-    )
+    ) verifying("Please select a different survey link as this one already exists.", fields => fields match { 
+      case (_, _, _, _, _, _, _, _, _, _, uri, _) => uri == null || uri.trim == "" || Survey.find("uri" -> uri).toList.isEmpty
+    })
   )
    
   /**
@@ -97,20 +100,26 @@ object Surveys extends Controller with Secured {
    * @param survey id
    */
    def create = IsAuthenticated(parse.multipartFormData) { user => implicit request => 
-     val (surveyname, language, introText, thankyouText, accessType, bodycolor, containercolor, textColor, 
-       logoBgColor, includeProgress, surveyURI, logoAlignment) = surveyForm.bindFromRequest.get
-    val id = Survey.nextId
-    val random = new SecureRandom
-    val hash_string = new BigInteger(80, random).toString(32)
-    var logoFile: String = null
+     surveyForm.bindFromRequest.fold(
+       formWithErrors => BadRequest(views.html.surveys.newsurvey(user, formWithErrors.errors)),
+       form => {
+          val (surveyname, language, introText, thankyouText, accessType, bodycolor, containercolor, textColor, 
+             logoBgColor, includeProgress, surveyURI, logoAlignment) = form
 
-    request.body.file("logo").map { logo => logoFile = uploadFile(hash_string, logo) }
+          val id = Survey.nextId
+          val random = new SecureRandom
+          val hash_string = new BigInteger(80, random).toString(32)
+          var logoFile: String = null
 
-    val history = new History(new Date, user, new Date, user)
-    val layout = new SurveyLayout(logoAlignment, includeProgress.toBoolean, bodycolor, containercolor, textColor, logoBgColor)
-    new Survey(id, surveyname, language, List(user), hash_string, null, history, introText, thankyouText, logoFile, accessType, layout, surveyURI).save
+          request.body.file("logo").map { logo => logoFile = uploadFile(hash_string, logo) }
 
-    Redirect(routes.Surveys.edit(id))
+          val history = new History(new Date, user, new Date, user)
+          val layout = new SurveyLayout(logoAlignment, includeProgress.toBoolean, bodycolor, containercolor, textColor, logoBgColor)
+          new Survey(id, surveyname, language, List(user), hash_string, null, history, introText, thankyouText, logoFile, accessType, layout, surveyURI).save
+
+          Redirect(routes.Surveys.edit(id))
+        }
+      )
    }
 
   /**
@@ -119,27 +128,32 @@ object Surveys extends Controller with Secured {
    * @param survey id
    */
    def updateinfo(id: String) = IsAuthenticated(parse.multipartFormData) { user => implicit request => 
-     val (surveyname, language, introText, thankyouText, accessType, bodycolor, containercolor, textColor, 
-       logoBgColor, includeProgress, surveyURI, logoAlignment) = surveyForm.bindFromRequest.get
+     surveyForm.bindFromRequest.fold(
+       formWithErrors => BadRequest(views.html.surveys.newsurvey(user, formWithErrors.errors)),
+       form => {
+          val (surveyname, language, introText, thankyouText, accessType, bodycolor, containercolor, textColor, 
+             logoBgColor, includeProgress, surveyURI, logoAlignment) = form
 
-      Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
-        val layout = new SurveyLayout(logoAlignment, includeProgress.toBoolean, bodycolor, containercolor, textColor, logoBgColor)
-        // Update history
-        var history = deserialize(classOf[History], s.get("history").asInstanceOf[com.mongodb.BasicDBObject].toMap)
-        history = new History(history.created_at, history.created_by, new Date, user)
-        Survey.update(s.get("_id"), "name" -> surveyname, "language" -> language, "intro_text" -> introText, "thank_you_text" -> thankyouText, 
-          "layout" -> layout, "accessType" -> accessType, "history" -> history, "uri" -> surveyURI)
+          Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
+            val layout = new SurveyLayout(logoAlignment, includeProgress.toBoolean, bodycolor, containercolor, textColor, logoBgColor)
+            // Update history
+            var history = deserialize(classOf[History], s.get("history").asInstanceOf[com.mongodb.BasicDBObject].toMap)
+            history = new History(history.created_at, history.created_by, new Date, user)
+            Survey.update(s.get("_id"), "name" -> surveyname, "language" -> language, "intro_text" -> introText, "thank_you_text" -> thankyouText, 
+              "layout" -> layout, "accessType" -> accessType, "history" -> history, "uri" -> surveyURI)
 
-        var logoFile: String = null
-        request.body.file("logo").map { logo => 
-          // first delete existing logo
-          val existing_hash = deleteExistingLogo(s.toMap)
-          logoFile = uploadFile(s.get("hash_string").toString, logo, existing_hash) 
-          Survey.update(s.get("_id"), "logo" -> logoFile)
+            var logoFile: String = null
+            request.body.file("logo").map { logo => 
+              // first delete existing logo
+              val existing_hash = deleteExistingLogo(s.toMap)
+              logoFile = uploadFile(s.get("hash_string").toString, logo, existing_hash) 
+              Survey.update(s.get("_id"), "logo" -> logoFile)
+            }
+         }
+
+         Redirect(routes.Surveys.edit(id))
         }
-     }
-
-    Redirect(routes.Surveys.edit(id))
+      )
    }
 
   /**

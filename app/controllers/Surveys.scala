@@ -129,7 +129,15 @@ object Surveys extends Controller with Secured {
    */
    def updateinfo(id: String) = IsAuthenticated(parse.multipartFormData) { user => implicit request => 
      surveyForm.bindFromRequest.fold(
-       formWithErrors => BadRequest(views.html.surveys.newsurvey(user, formWithErrors.errors)),
+       formWithErrors => {
+        val survey = Survey.findOne("surveyId" -> id, "owner" -> user).map { s => 
+          val m = s.toMap
+          // remove the keys we won't use and save on deserialization effort
+          m.remove("questions")
+          deserialize(classOf[Survey], m)
+        }
+        BadRequest(views.html.surveys.edit(user, survey.getOrElse(null), formWithErrors.errors))
+       },
        form => {
           val (surveyname, language, introText, thankyouText, accessType, bodycolor, containercolor, textColor, 
              logoBgColor, includeProgress, surveyURI, logoAlignment) = form

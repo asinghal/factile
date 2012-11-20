@@ -35,7 +35,7 @@ object Interview extends Controller with Secured {
     */
    def response(id: String, respId: String = null) = collectResponse("surveyId", id, respId) { (s: Survey, questions: List[Question], page: Int, responseId: String, percentComplete: Int, replacements: Map[String, String], message: String) => implicit request =>
     val offlineLink = if (respId != null) "/downloadSurvey/" + id + "/" + respId + "/start" else "/downloadSurvey/" + id + "/start"
-    Ok(views.html.respondents.preview(s, questions, page, responseId, percentComplete, offlineLink, replacements, message))
+    Ok(views.html.respondents.preview(s, questions, false, page, responseId, percentComplete, offlineLink, replacements, message))
    }
 
    /**
@@ -44,7 +44,7 @@ object Interview extends Controller with Secured {
     */
    def customUriResponse(id: String, respId: String = null) = collectResponse("uri", id, respId) { (s: Survey, questions: List[Question], page: Int, responseId: String, percentComplete: Int, replacements: Map[String, String], message: String) => implicit request =>
     val offlineLink = if (respId != null) "/" + id + "/" + respId + "/offline" else "/" + id + "/offline"
-    Ok(views.html.respondents.preview(s, questions, page, responseId, percentComplete, offlineLink, replacements, message))
+    Ok(views.html.respondents.preview(s, questions, false, page, responseId, percentComplete, offlineLink, replacements, message))
    }
 
    /**

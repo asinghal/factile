@@ -303,7 +303,7 @@ object Surveys extends Controller with Secured {
       }
 
       val s = survey._1
-      Ok(views.html.respondents.preview(s, questions.reverse, page, null, survey._2))
+      Ok(views.html.respondents.preview(s, questions.reverse, true, page, null, survey._2))
    }
 
   /**

@@ -1,4 +1,4 @@
-@(survey: Survey, questions: List[Question], pageNumber: Int, responseId: String, percentComplete: Int = 0, offlineLink: String = null, replacements: Map[String, String] = Map[String, String](), message: String = null)(implicit request: RequestHeader)
+@(survey: Survey, questions: List[Question], previewMode: Boolean, pageNumber: Int, responseId: String, percentComplete: Int = 0, offlineLink: String = null, replacements: Map[String, String] = Map[String, String](), message: String = null)(implicit request: RequestHeader)
 
 @import helpers.ResponseHelper._
 
@@ -43,6 +43,16 @@
 		<hr>
 	</div>
 </div>
+
+@if(previewMode) {
+	<div class="row">
+		<div class="span12 survey">
+			<div class="alert alert-warning" >
+				Please note that your responses are not saved in preview mode, and hence conditional flow and answer piping will not work in this mode. To test those, please activate the survey and take the survey as a participant. Also note that this message will not appear in the actual survey.
+			</div>
+		</div>
+	</div>
+}
 
 @if(message != null && message.trim != "") {
 	<div class="row">

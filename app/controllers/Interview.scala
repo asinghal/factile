@@ -67,7 +67,7 @@ object Interview extends Controller with Secured {
         id = m.get("surveyId").toString
 
         if (status == "Live") {
-          val restrict = restrictAccess(id, respId, m.get("accessType").toString)
+          val restrict = restrictAccess(id, respId, m.get("accessType").toString, status)
 
           if (restrict) {
             m.remove("questions")
@@ -117,22 +117,24 @@ object Interview extends Controller with Secured {
 
       texts = getQuestionTexts(s.toMap)._1
 
-       SurveyResponse.find("surveyId" -> id).foreach { r =>
-         numberOfResponses += 1
-         val qResponse = deserialize(classOf[SurveyResponse], r.toMap)
-         qResponse.responses.foreach { res =>
-          var q = responses.getOrElse(res.question, Map[String, Double]())
-          var rank = 0
-          val size = res.answers.size
-          res.answers.foreach { ans =>
-            var text = if (res.ranking) (ans.replace(res.question + "_", "")) else ans
-            rank += 1
-            val inc = if (res.ranking) (1d * size * (size - rank + 1) / qResponse.responses.size) else 1d
-            q = q.updated(text, q.getOrElse(text, 0d) + inc)
-          }
-          responses = responses + (res.question -> q)
+      if (s.get("status").toString != "Blocked") {
+         SurveyResponse.find("surveyId" -> id).foreach { r =>
+           numberOfResponses += 1
+           val qResponse = deserialize(classOf[SurveyResponse], r.toMap)
+           qResponse.responses.foreach { res =>
+            var q = responses.getOrElse(res.question, Map[String, Double]())
+            var rank = 0
+            val size = res.answers.size
+            res.answers.foreach { ans =>
+              var text = if (res.ranking) (ans.replace(res.question + "_", "")) else ans
+              rank += 1
+              val inc = if (res.ranking) (1d * size * (size - rank + 1) / qResponse.responses.size) else 1d
+              q = q.updated(text, q.getOrElse(text, 0d) + inc)
+            }
+            responses = responses + (res.question -> q)
+           }
          }
-       }
+      }
 
       val stop = stopWords.getProperty(s.get("language").toString)
 
@@ -184,7 +186,7 @@ object Interview extends Controller with Secured {
         val m = s.toMap
         val status = m.get("status").toString
         val id = m.get("surveyId").toString
-        if (status == "Live" && !restrictAccess(id, respId, m.get("accessType").toString)) {
+        if (status == "Live" && !restrictAccess(id, respId, m.get("accessType").toString, status)) {
           m.remove("_id")
           m.remove("owner")
           m.remove("hash_string")
@@ -198,6 +200,39 @@ object Interview extends Controller with Secured {
       }
 
       Ok(jsonStr)
+   }
+
+
+   /**
+    * Block a survey when reported for abuse
+    *
+    * @param survey id
+    */
+   def reportAbuseById(id: String) = Action { 
+      var surveyURI: String = null
+      var survey: Survey = null
+
+       Survey.findOne("surveyId" -> id).foreach { s => 
+         survey = deserialize(classOf[Survey], s.toMap)
+         Survey.update(s.get("_id"), "status" -> "Blocked")
+       }
+      Ok(views.html.respondents.reportAbuse(survey))
+   }
+
+   /**
+    * Block a survey when reported for abuse
+    *
+    * @param survey id
+    */
+   def reportAbuseByUri(uri: String) = Action { 
+      var surveyURI: String = null
+      var survey: Survey = null
+
+       Survey.findOne("uri" -> uri).foreach { s => 
+         survey = deserialize(classOf[Survey], s.toMap)
+         Survey.update(s.get("_id"), "status" -> "Blocked")
+       }
+      Ok(views.html.respondents.reportAbuse(survey))
    }
 
    /**

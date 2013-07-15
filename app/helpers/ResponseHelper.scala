@@ -144,7 +144,7 @@ object ResponseHelper {
   *
   * @return true if the access should be restricted.
   */
- def restrictAccess(id: String, respId: String, accessType: String) = {
+ def restrictAccess(id: String, respId: String, accessType: String, status: String) = {
   var restrict = false
   if (accessType != "open" && (respId == null || respId.trim == "")) {
     // attempt to access a restricted survey
@@ -154,6 +154,8 @@ object ResponseHelper {
     if (participant == null || participant.get("status").toString == "Completed") {
       restrict = true
     }
+  } else if (status == "Blocked") {
+    restrict = true;
   }
 
   restrict

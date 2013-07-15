@@ -53,7 +53,7 @@ object Reports extends Controller with Secured {
     var matchingResponses = 0
     var questions = Seq[String]()
     var constraintsList = Seq[(String, String)]()
-    if (!survey.isEmpty) {
+    if (!survey.isEmpty && survey.get.status != "Blocked") {
       getRequestData().foreach { implicit params =>
         questions = get("questions")
         constraintsList = get("constraint").zip(get("constraint_value"))

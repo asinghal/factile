@@ -16,7 +16,7 @@ package models
 
 import java.security.MessageDigest
 
-case class User(email: String, password: String, firstName: String = "", lastName: String = "") extends Model[User] { }
+case class User(email: String, password: String, status: String = "Active", firstName: String = "", lastName: String = "") extends Model[User] { }
 
 object User extends QueryOn[User] {
   override lazy val indexedFields = List[String]("email")

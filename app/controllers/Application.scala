@@ -32,10 +32,12 @@ object Application extends Controller with Secured {
 
   def login = Action { implicit request =>
     val (username, password) = loginForm.bindFromRequest.get
-    val user = User.find("email" -> username, "password" -> User.encrypt(password))
+    val user = User.findOne("email" -> username, "password" -> User.encrypt(password))
 
     if (user.isEmpty) {
       Ok(views.html.common.index("Login failed.", null))
+    } else if(user.get.get("status") == "Blocked") {
+      Ok(views.html.common.index("Your login has been blocked for repeated abuse of the system.", null))
     } else {
       Redirect(routes.Surveys.dashboard).withSession("email" -> username)
     }

@@ -6,6 +6,9 @@
     .signin input[type="text"], input[type="password"] { width: 150px; }
   </style>
 <![endif]-->
+@if(message != null && message != "Factile") {
+  <div class="row alert">@message</div>
+}
 <div class="row home">
   <div class="span9">
     <div class="clearfix">&nbsp;</div>

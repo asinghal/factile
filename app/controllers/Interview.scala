@@ -208,30 +208,22 @@ object Interview extends Controller with Secured {
     *
     * @param survey id
     */
-   def reportAbuseById(id: String) = Action { 
-      var surveyURI: String = null
-      var survey: Survey = null
-
-       Survey.findOne("surveyId" -> id).foreach { s => 
-         survey = deserialize(classOf[Survey], s.toMap)
-         Survey.update(s.get("_id"), "status" -> "Blocked")
-       }
-      Ok(views.html.respondents.reportAbuse(survey))
-   }
+   def reportAbuseById(id: String) = reportAbuse("surveyId" -> id)
 
    /**
     * Block a survey when reported for abuse
     *
     * @param survey id
     */
-   def reportAbuseByUri(uri: String) = Action { 
-      var surveyURI: String = null
+   def reportAbuseByUri(uri: String) = reportAbuse("uri" -> uri)
+
+   private def reportAbuse(params: (String, String)) = Action {
       var survey: Survey = null
 
-       Survey.findOne("uri" -> uri).foreach { s => 
-         survey = deserialize(classOf[Survey], s.toMap)
-         Survey.update(s.get("_id"), "status" -> "Blocked")
-       }
+      Survey.findOne(params).foreach { s => 
+       survey = deserialize(classOf[Survey], s.toMap)
+       Survey.update(s.get("_id"), "status" -> "Blocked")
+      }
       Ok(views.html.respondents.reportAbuse(survey))
    }
 

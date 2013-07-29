@@ -24,7 +24,8 @@ POST   /user/preferences            controllers.Application.settings
 # generic survey routes
 GET    /dashboard                     controllers.Surveys.dashboard
 GET    /surveys/:id/data              controllers.Interview.data(id: String)
-GET    /surveys/:id/export              controllers.Interview.export(id: String)
+GET    /surveys/:id/responses         controllers.Interview.dataAsJson(id: String)
+GET    /surveys/:id/export            controllers.Interview.export(id: String)
 
 # survey CRUD
 GET   /surveys/new                    controllers.Surveys.newsurvey

@@ -181,6 +181,48 @@ object ResponseHelper {
     }
   }
 
+  def flattenResponses(res: QuestionResponse, numOfResponses: Int, responses: Map[String, Map[String, Double]]) = {
+    var q = responses.getOrElse(res.question, Map[String, Double]())
+    var rank = 0
+    val size = res.answers.size
+    res.answers.foreach { ans =>
+      var text = if (res.ranking) (ans.replace(res.question + "_", "")) else ans
+      rank += 1
+      val inc = if (res.ranking) (1d * size * (size - rank + 1) / numOfResponses) else 1d
+      q = q.updated(text, q.getOrElse(text, 0d) + inc)
+    }
+    (res.question -> q)
+  }
+
+  /**
+   *
+   */
+  def getResponseSummaryAndWordCloud(responses: Map[String, Map[String, Double]], texts: Map[String, String], language: String) = {
+    var wordClouds = Map[String, Map[String, Int]]()
+    var responseSummary = Map[String, String]()
+    val stop = stopWords.getProperty(language)
+
+    responses.foreach { case (q, res) =>
+      var summary = ""
+      var cloud = ""
+      res.foreach { case (name, count) =>
+        if (summary != "") summary += ", "
+        var text = texts.getOrElse(q.split("_")(0) + "_" + name, name)
+        if (text == name && text != "other") {
+          cloud += (" " + text)
+        }
+        summary += "['" + text.replace("'", "\\'") + "', " + count + "]"
+      }
+      if (cloud.trim != "") {
+        val c = cloud.trim.replaceAll("(?i)\\b(" + stop + ")\\b", "").split(" ").map(_.trim).foldLeft(Map[String, Int]())((m, s) => m + (s -> (m.getOrElse(s, 0) + 1)))
+        wordClouds += (q -> c)
+      }
+      responseSummary = responseSummary + (q -> summary)
+    }
+
+    (responseSummary, wordClouds)
+  }
+
   // define user agents for mobile browsers
   val browser = ".*(iPhone|iPad|BlackBerry|Android|SymbianOS|Opera Mini).*".r
 

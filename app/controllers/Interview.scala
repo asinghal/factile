@@ -20,6 +20,7 @@ import play.api.mvc._
 import dao.Mongo._
 import models._
 import helpers.ResponseHelper._
+import helpers.ResponseStore._
 import helpers.SurveyHelper._
 
 /**
@@ -74,6 +75,8 @@ object Interview extends Controller with Secured {
             survey = (deserialize(classOf[Survey], m), 100)
             message = "The access to this survey is restricted."
           } else {
+            touch(sid)
+
             getRequestData().foreach { params =>
               page = params("pageNum").asInstanceOf[Seq[String]](0).toInt + 1
               responseId = getResponses(params) { (x, value, other, ranking) => responses ::= new QuestionResponse(x, value, other, ranking) }
@@ -109,12 +112,13 @@ object Interview extends Controller with Secured {
    def data(id: String) = IsAuthenticated { user => _ =>
      var responses = Map[String, Map[String, Double]]()
      var numberOfResponses = 0
-    var texts = Map[String, String]()
-    var wordClouds = Map[String, Map[String, Int]]()
-    var responseSummary = Map[String, String]()
+     var texts = Map[String, String]()
+     var wordClouds = Map[String, Map[String, Int]]()
+     var responseSummary = Map[String, String]()
+
      // lets make sure the user is the rightful owner before we show him the results!
      Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s =>
-
+      watch(id)
       texts = getQuestionTexts(s.toMap)._1
 
       if (s.get("status").toString != "Blocked") {
@@ -122,42 +126,55 @@ object Interview extends Controller with Secured {
            numberOfResponses += 1
            val qResponse = deserialize(classOf[SurveyResponse], r.toMap)
            qResponse.responses.foreach { res =>
-            var q = responses.getOrElse(res.question, Map[String, Double]())
-            var rank = 0
-            val size = res.answers.size
-            res.answers.foreach { ans =>
-              var text = if (res.ranking) (ans.replace(res.question + "_", "")) else ans
-              rank += 1
-              val inc = if (res.ranking) (1d * size * (size - rank + 1) / qResponse.responses.size) else 1d
-              q = q.updated(text, q.getOrElse(text, 0d) + inc)
-            }
-            responses = responses + (res.question -> q)
+            responses = responses + flattenResponses(res, qResponse.responses.size, responses)
            }
          }
       }
 
-      val stop = stopWords.getProperty(s.get("language").toString)
-
-      responses.foreach { case (q, res) =>
-        var summary = ""
-        var cloud = ""
-        res.foreach { case (name, count) =>
-          if (summary != "") summary += ", "
-          var text = texts.getOrElse(q.split("_")(0) + "_" + name, name)
-          if (text == name && text != "other") {
-            cloud += (" " + text)
-          }
-          summary += "['" + text.replace("'", "\\'") + "', " + count + "]"
-        }
-        if (cloud.trim != "") {
-          val c = cloud.trim.replaceAll("(?i)\\b(" + stop + ")\\b", "").split(" ").map(_.trim).foldLeft(Map[String, Int]())((m, s) => m + (s -> (m.getOrElse(s, 0) + 1)))
-          wordClouds += (q -> c)
-        }
-        responseSummary = responseSummary + (q -> summary)
-      }
+      val w = getResponseSummaryAndWordCloud(responses, texts, s.get("language").toString)
+      responseSummary = w._1
+      wordClouds = w._2
     }
 
      Ok(views.html.surveys.data(id, user, responses, numberOfResponses, texts, responseSummary, wordClouds))
+   }
+
+   def dataAsJson(id: String) = Action { implicit request =>
+      import com.codahale.jerkson.Json._
+
+      val jsonStr = if (hasNew(id)) {
+        reset(id)
+        
+        Survey.findOne("surveyId" -> id).map { s =>
+          val m = s.toMap
+          val status = m.get("status").toString
+          if (status != "Blocked") {
+            var texts = getQuestionTexts(s.toMap)._1
+            var responses = Map[String, Map[String, Double]]()
+
+            SurveyResponse.find("surveyId" -> id).foreach { r =>
+             val qResponse = deserialize(classOf[SurveyResponse], r.toMap)
+             qResponse.responses.foreach { res =>
+              responses = responses + flattenResponses(res, qResponse.responses.size, responses)
+             }
+            }
+
+            val w = getResponseSummaryAndWordCloud(responses, texts, s.get("language").toString)
+            var responseSummary = w._1
+            var wordClouds = w._2
+
+            generate(responseSummary)
+          } else {
+            "[]"
+          }
+        }.getOrElse {
+          "[]"
+        }
+      } else {
+        "[]"
+      }
+
+      Ok(jsonStr)
    }
 
    /**

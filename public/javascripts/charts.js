@@ -1,7 +1,29 @@
 
-var chart;
-function show_pie_chart(description, target, responses) {
-  chart = new Highcharts.Chart({
+var chart = {};
+
+var polledSurveyId = null;
+
+var timeoutId = null;
+
+var pollSurveyResults = function(){
+  $.get('/surveys/' + polledSurveyId + '/responses', function(res){
+    if (res) {
+      for (var q in res) {
+        if (res.hasOwnProperty(q)) {
+          var d = JSON.parse("[" + res[q].replace(/\'/g, '"') + "]");
+          if (chart[q + "_container_pie"]) chart[q + "_container_pie"].series[0].setData(d);
+          if (chart[q + "_container_bar"]) chart[q + "_container_bar"].series[0].setData(d);
+        }
+      }
+    }
+  }, "json");
+
+  timeoutId = setTimeout(pollSurveyResults, 30000);
+};
+
+
+function show_pie_chart(description, surveyId, target, responses) {
+  chart[target + "_pie"] = new Highcharts.Chart({
     chart: {
       renderTo: target,
       plotBackgroundColor: null,
@@ -39,10 +61,16 @@ function show_pie_chart(description, target, responses) {
       data: responses
     }]
   });
+
+  if (!polledSurveyId || polledSurveyId !== surveyId) {
+    polledSurveyId = surveyId;
+    if (timeoutId) clearTimeout(timeoutId);
+    pollSurveyResults();
+  }
 }
 
-function show_bar_chart(description, target, options, responses) {
-  chart = new Highcharts.Chart({
+function show_bar_chart(description, surveyId, target, options, responses) {
+  chart[target + "_bar"] = new Highcharts.Chart({
     chart: {
         renderTo: target,
         type: 'bar'
@@ -84,4 +112,9 @@ function show_bar_chart(description, target, options, responses) {
         data: responses
     }]
   });
+  if (!polledSurveyId || polledSurveyId !== surveyId) {
+    polledSurveyId = surveyId;
+    if (timeoutId) clearTimeout(timeoutId);
+    pollSurveyResults();
+  }
 }

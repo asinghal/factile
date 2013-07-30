@@ -14,25 +14,37 @@
  */
 package helpers
 
+import java.util.Calendar
 import models._
 
 object ResponseStore {
 
-	var _store = Map[String, Boolean]()
+	var _store = Map[String, (Boolean, Calendar)]()
 
 	def watch(qId: String) {
-		_store = _store.updated(qId, false)
+		_store = _store.updated(qId, (false -> Calendar.getInstance))
+
+		discardOldEntries
 	}
 
 	def touch(qId: String) {
 		if (_store.contains(qId)) {
-			_store = _store.updated(qId, true)
+			val date = _store.get(qId).get._2
+			_store = _store.updated(qId, (true -> date))
 		}
 	}
 
 	def reset(qId: String) {
-	    _store = _store.updated(qId, false)	
+		val date = _store.get(qId).get._2
+		_store = _store.updated(qId, (false -> date))
 	}
 
-	def hasNew(qId: String) = _store.getOrElse(qId, false)
+	def hasNew(qId: String) = _store.getOrElse(qId, (false -> Calendar.getInstance))._1
+
+	private def discardOldEntries {
+		val d = Calendar.getInstance
+		d.add(Calendar.HOUR_OF_DAY, -12)
+
+		_store.foreach { case (q, e) => if (e._2.before(d)) { _store -= q } }
+	}
 }

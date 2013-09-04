@@ -27,6 +27,7 @@
 		  <td>@survey.status</td>
 		  <td>
 		  	<span class="pull-right">
+        <a href="javascript:void(0)" onclick="var name=prompt('Please give a name for the new survey.'); if (name) location.href='/surveys/@survey.surveyId/makecopy/' + name;" class="btn btn-info" title="Copy"><i class="icon-book icon-white"></i>&nbsp;</a>
 		  	<a href="/surveys/@survey.surveyId/editinfo" class="btn btn-info" title="Edit"><i class="icon-edit icon-white"></i>&nbsp;</a>
 		    <a href="/surveys/@survey.surveyId/data" class="btn btn-info" title="Get Responses"><i class="icon-gift icon-white"></i>&nbsp;</a>
             <span class="dropdown">

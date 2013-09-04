@@ -35,6 +35,7 @@ GET   /surveys/:id/editinfo           controllers.Surveys.editinfo(id: String)
 GET    /surveys/:id/edit              controllers.Surveys.edit(id: String)
 POST   /surveys/:id/updateinfo        controllers.Surveys.updateinfo(id: String)
 GET    /surveys/:id/close             controllers.Surveys.close(id: String)
+GET    /surveys/:id/makecopy/:name    controllers.Surveys.copy(id: String, name: String)
 
 # view survey
 GET    /surveys/:id/preview           controllers.Surveys.preview(id: String)

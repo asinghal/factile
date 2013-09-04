@@ -251,6 +251,28 @@ object Surveys extends Controller with Secured {
    }
 
   /**
+   * Updates the survey status to 'Closed' so that it can no longer be accessed by survey participants.
+   * This allows for a freeze on response capturing.
+   *
+   * @param survey id
+   */
+   def copy(id: String, name: String) = IsAuthenticated { user => implicit request => 
+     Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
+          var m = s.toMap
+          var survey = deserialize(classOf[Survey], m)
+          
+          val id = Survey.nextId
+          val random = new SecureRandom
+          val hash_string = new BigInteger(80, random).toString(32)
+
+          val history = new History(new Date, user, new Date, user)
+          Survey.createCopy(name, survey, List(user), hash_string, history)
+     }
+
+      Redirect(routes.Surveys.dashboard)
+   }
+
+  /**
    * Delete a survey and all responses associated. Also delete any uploaded files for this survey.
    *
    * @param survey id

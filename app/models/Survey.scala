@@ -31,8 +31,8 @@ object Survey extends QueryOn[Survey] {
     }
   }
 
-  def createCopy(name: String, another: Survey, owner: List[String], hash_string: String, history: History) {
-    new Survey(another.surveyId, name, another.language, owner, hash_string, another.questions, history, 
+  def createCopy(surveyId: String, name: String, another: Survey, owner: List[String], hash_string: String, history: History) {
+    new Survey(surveyId, name, another.language, owner, hash_string, another.questions, history, 
       another.intro_text, another.thank_you_text, another.logo, another.accessType, another.layout).save
   }
 }

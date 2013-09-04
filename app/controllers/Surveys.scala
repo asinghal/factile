@@ -261,12 +261,12 @@ object Surveys extends Controller with Secured {
           var m = s.toMap
           var survey = deserialize(classOf[Survey], m)
           
-          val id = Survey.nextId
+          val surveyId = Survey.nextId
           val random = new SecureRandom
           val hash_string = new BigInteger(80, random).toString(32)
 
           val history = new History(new Date, user, new Date, user)
-          Survey.createCopy(name, survey, List(user), hash_string, history)
+          Survey.createCopy(surveyId, name, survey, List(user), hash_string, history)
      }
 
       Redirect(routes.Surveys.dashboard)

@@ -240,7 +240,7 @@ object Interview extends Controller with Secured {
       Survey.findOne(params).foreach { s => 
         survey = deserialize(classOf[Survey], s.toMap)
         Survey.update(s.get("_id"), "status" -> "Blocked")
-        val body = views.html.emails.reportAbuse(hash_string)
+        val body = views.html.emails.reportAbuse(survey.name)
 
         survey.owner.foreach { email =>
           // Now send an email

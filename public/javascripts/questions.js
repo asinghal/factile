@@ -46,6 +46,14 @@ function addNode(html, qId) {
 }
 
 function addPage() {
+  var pageNum = prompt("Please enter the page number after which this page would be inserted.")
+  if (!pageNum) return false;
+  
+  if (pageNum < 1 || pageNum > $("#page_nav_tabs li").length) {
+    alert("The page number should be between 1 and " + $("#page_nav_tabs li").length);
+    return false;
+  }
+
   var qId = initQuestion();
   var html = "";
   html += "<div class=\"pull-right\"><a href=\"#\" onclick=\"removePage(this);\" class=\"btn btn-danger\"><i class=\"icon-trash icon-white\" title=\"Delete\"></i></a></div>";
@@ -57,16 +65,34 @@ function addPage() {
 
   var div = document.createElement('div'); 
   div.id = qId;
+  div.class = "page";
   div.innerHTML = html;
-  document.getElementById("survey").appendChild(div);
+
+  $(".page").each(function(i, p){
+    if (i+1 == pageNum) {
+      $(div).insertAfter(p);
+    }
+  });
 
   var tab = document.createElement('li'); 
   tab.id = "tab_" + qId;
   pageCount += 1;
   tab.innerHTML = "<a href=\"#\" onclick=\"openPage('" + qId + "')\">Page " + pageCount + "</a>";
 
-  document.getElementById("page_nav_tabs").appendChild(tab);
+  $("#page_nav_tabs li").each(function(i, p){
+    if (i+1 == pageNum) {
+      $(tab).insertAfter(p);
+    }
+  });
+
+  reNumberPages();
   openPage(qId);
+}
+
+function reNumberPages() {
+  $("#page_nav_tabs li a").each(function(index, obj){
+    $(obj).html("Page " + (index + 1));
+  });
 }
 
 function qText(qId, qTypeName, qType, plain) {
@@ -176,6 +202,8 @@ function removePage(obj) {
   survey.removeChild(page);
 
   document.getElementById("page_nav_tabs").removeChild(tab);
+  reNumberPages();
+
   var id = $("#page_nav_tabs").find("li:first").attr("id").replace("tab_", "");
   openPage(id);
 }

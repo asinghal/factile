@@ -67,8 +67,8 @@
   </ul>
   <div id="piping" class="pipe-menu"></div>
   <div id="survey">
-    <div id="p1">
-      <div class="pull-right"><a href="javascript:void(0);" onclick="removePage(this);" class="btn btn-danger"><i class="icon-trash icon-white" title="Delete"></i></a></div>
+    <div id="p1" class="page">
+      <div class="pull-right"><a href="javascript:void(0);" onclick="movePage(this);" class="btn"><i class="icon-move" title="Move"></i></a>&nbsp;<a href="javascript:void(0);" onclick="removePage(this);" class="btn btn-danger"><i class="icon-trash icon-white" title="Delete"></i></a></div>
       <div class="clearfix">&nbsp;</div>
       <div class="clearfix">&nbsp;</div>
       @if(survey != null && survey.questions != null) {
@@ -122,8 +122,8 @@
             }
             case t: PageBreak => {
               </div>
-              <div id="@t.questionId">
-                <div class="pull-right"><a href="javascript:void(0);" onclick="removePage(this);" class="btn btn-danger"><i class="icon-trash icon-white" title="Delete"></i></a></div>
+              <div id="@t.questionId" class="page">
+                <div class="pull-right"><a href="javascript:void(0);" onclick="movePage(this);" class="btn"><i class="icon-move" title="Move"></i></a>&nbsp;<a href="javascript:void(0);" onclick="removePage(this);" class="btn btn-danger"><i class="icon-trash icon-white" title="Delete"></i></a></div>
                 <div class="clearfix">&nbsp;</div>
                 <div class="clearfix">&nbsp;</div>
                 <input type='hidden' name='question[]' id='@t.questionId' value='@t.questionId'/><input type='hidden' name='@(t.questionId + "_q")' id='@(t.questionId + "_q")' value='page'/><input type='hidden' name='@(t.questionId + "_t")' id='@(t.questionId + "_t")' value='page'/>

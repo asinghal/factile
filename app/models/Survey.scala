@@ -19,7 +19,7 @@ case class Survey(surveyId: String, name: String, language: String, owner: List[
   ) extends Model[Survey] { }
 
 case class SurveyLayout(logoAlignment: String = "left", includeProgress: Boolean = false, bodycolor: String = "#FFFFFF", 
-  containercolor: String = "#FFFFFF", textColor: String = "#555555", logoBgColor: String = "#FFFFFF") extends Element {}
+  containercolor: String = "#FFFFFF", textColor: String = "#555555", logoBgColor: String = "#FFFFFF", fontSize: String = "13px") extends Element {}
 
 object Survey extends QueryOn[Survey] { 
   import java.util.UUID

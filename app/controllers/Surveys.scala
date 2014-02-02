@@ -52,9 +52,10 @@ object Surveys extends Controller with Secured {
       "logoBgColor" -> text,
       "includeProgress" -> text,
       "surveyURI" -> text,
-      "logoAlignment" -> text
+      "logoAlignment" -> text,
+      "fontSize" -> text
     ) verifying("Please select a different survey link as this one already exists.", fields => fields match { 
-      case (_, _, _, _, _, _, _, _, _, _, uri, _) => uri == null || uri.trim == "" || Survey.find("uri" -> uri).toList.isEmpty
+      case (_, _, _, _, _, _, _, _, _, _, uri, _, _) => uri == null || uri.trim == "" || Survey.find("uri" -> uri).toList.isEmpty
     })
   )
    
@@ -104,7 +105,7 @@ object Surveys extends Controller with Secured {
        formWithErrors => BadRequest(views.html.surveys.newsurvey(user, formWithErrors.errors)),
        form => {
           val (surveyname, language, introText, thankyouText, accessType, bodycolor, containercolor, textColor, 
-             logoBgColor, includeProgress, surveyURI, logoAlignment) = form
+             logoBgColor, includeProgress, surveyURI, logoAlignment, fontSize) = form
 
           val id = Survey.nextId
           val random = new SecureRandom
@@ -114,7 +115,7 @@ object Surveys extends Controller with Secured {
           request.body.file("logo").map { logo => logoFile = uploadFile(hash_string, logo) }
 
           val history = new History(new Date, user, new Date, user)
-          val layout = new SurveyLayout(logoAlignment, includeProgress.toBoolean, bodycolor, containercolor, textColor, logoBgColor)
+          val layout = new SurveyLayout(logoAlignment, includeProgress.toBoolean, bodycolor, containercolor, textColor, logoBgColor, fontSize)
           new Survey(id, surveyname, language, List(user), hash_string, null, history, introText, thankyouText, logoFile, accessType, layout, surveyURI).save
 
           Redirect(routes.Surveys.edit(id))
@@ -140,10 +141,10 @@ object Surveys extends Controller with Secured {
        },
        form => {
           val (surveyname, language, introText, thankyouText, accessType, bodycolor, containercolor, textColor, 
-             logoBgColor, includeProgress, surveyURI, logoAlignment) = form
+             logoBgColor, includeProgress, surveyURI, logoAlignment, fontSize) = form
 
           Survey.findOne("surveyId" -> id, "owner" -> user).foreach { s => 
-            val layout = new SurveyLayout(logoAlignment, includeProgress.toBoolean, bodycolor, containercolor, textColor, logoBgColor)
+            val layout = new SurveyLayout(logoAlignment, includeProgress.toBoolean, bodycolor, containercolor, textColor, logoBgColor, fontSize)
             // Update history
             var history = deserialize(classOf[History], s.get("history").asInstanceOf[com.mongodb.BasicDBObject].toMap)
             history = new History(history.created_at, history.created_by, new Date, user)

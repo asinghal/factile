@@ -102,6 +102,12 @@
     </div>
   </div>
   <div class="control-group">
+    <label class="control-label" for="textColor">Font Size</label>
+    <div class="controls">
+      @text_field("fontSize", survey.getString(_.layout.fontSize, "13px"), "Font Size", "input-xlarge")
+    </div>
+  </div>
+  <div class="control-group">
     <label class="control-label" for="introText">Introductory Message (optional)</label>
     <div class="controls">
       @text_area("introText", survey.getString(_.intro_text), "input-xlarge")

@@ -22,6 +22,10 @@
 		} @if(survey.layout.logoAlignment == "left" || survey.layout.logoAlignment == "center") {
 	    margin-right: auto;
 		} }
+
+	.container {
+		font-size: @(survey.layout.fontSize);
+	}
 </style>
 
 @if(survey.logo != null && survey.logo != "") {

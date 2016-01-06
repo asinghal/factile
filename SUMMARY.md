@@ -1,4 +1,4 @@
 # Summary
 
-* Home
+* [Home](home.md)
 

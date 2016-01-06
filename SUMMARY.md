@@ -1,4 +1,3 @@
 # Summary
 
-* [Home](home.md)
 

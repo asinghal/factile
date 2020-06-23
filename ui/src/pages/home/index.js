@@ -1,4 +1,5 @@
 import React from "react";
+import LoginForm from './login-form.js';
 
 import './home.css';
 
@@ -16,7 +17,7 @@ export default function Home() {
                     </div>
                     <div className="col-xl-5 col-md-6">
                         <div>
-                            login form
+                            <LoginForm />
                         </div>
                     </div>
                 </div>

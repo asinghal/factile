@@ -1,0 +1,16 @@
+.header {
+    background-color: #4CA9FD;
+    color: #ffffff;
+    padding: 25px 0px;
+    margin-bottom: 30px;
+}
+
+.header a {
+    color: #ffffff;
+}
+
+.header .main-header-area .main-menu ul li {
+    display: inline-block;
+    position: relative;
+    margin: 0 10px;
+}

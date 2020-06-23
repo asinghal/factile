@@ -1,0 +1,25 @@
+.footer {
+    padding-top: 117px;
+    padding-bottom: 30px;
+    background: #1F1F1F;
+    color: #C7C7C7;
+}
+
+.footer a {
+    color: #C7C7C7;
+}
+
+.footer ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+.footer ul li {
+    line-height: 42px;
+    list-style: none;
+}
+
+.copy-right_text {
+    margin-top: 5em;
+    font-size: 0.8em;
+}

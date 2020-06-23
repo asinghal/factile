@@ -11,7 +11,7 @@ export default function Dropdown({ question }) {
             <div>
                 <select name={question.questionId}>
                     {question.options.map(option => (
-                        <option value={option.value}>{option.texts[0].text}</option>
+                        <option key={question.questionId + "-" + option.value} value={option.value}>{option.texts[0].text}</option>
                     ))}
                 </select>
             </div>

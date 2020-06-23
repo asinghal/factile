@@ -8,13 +8,13 @@ export default function ContactUs() {
           <h1>How Can We Help?</h1>
           
           <h3>General Issues</h3>
-          <p>If you want to report a problem, or seek guidance on the tool, or perhaps have a query, please visit <a href="http://groups.google.com/group/factile" target="_blank">our forum</a>.</p>
+          <p>If you want to report a problem, or seek guidance on the tool, or perhaps have a query, please visit <a href="http://groups.google.com/group/factile" target="_blank" rel="noopener noreferrer">our forum</a>.</p>
           
           <h3>Bugs/ Feature Requests</h3>
-          <p>If you would like to open a bug/ issue or request a new feature, please raise an issue on <a href="http://github.com/asinghal/factile/issues" target="_blank">github</a>.</p>
+          <p>If you would like to open a bug/ issue or request a new feature, please raise an issue on <a href="http://github.com/asinghal/factile/issues" target="_blank" rel="noopener noreferrer">github</a>.</p>
           
           <h3>Anything Else</h3>
-          <p>For anything else, please checkout our tutorials/ FAQs or drop us a note on <a href="http://groups.google.com/group/factile" target="_blank">our forum</a>, or leave your thoughts below. We will contact you if needed.</p>
+          <p>For anything else, please checkout our tutorials/ FAQs or drop us a note on <a href="http://groups.google.com/group/factile" target="_blank" rel="noopener noreferrer">our forum</a>, or leave your thoughts below. We will contact you if needed.</p>
         </div>
 
         <div class="row"><div class="span12 clearfix">&nbsp;</div></div>

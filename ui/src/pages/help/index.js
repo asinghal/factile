@@ -21,7 +21,7 @@ export default function Help() {
 	    		</div>
 	    		<div class="span9">
 						<h1>Tutorials</h1>
-            <p>Watch a quick video <iframe width="560" height="315" src="http://www.youtube.com/embed/IXgl27L6mo4" frameborder="0" allowfullscreen></iframe></p>
+            <p>Watch a quick video <iframe width="560" height="315" title="factile introduction" src="http://www.youtube.com/embed/IXgl27L6mo4" frameborder="0" allowfullscreen></iframe></p>
 						<div class="imageRow">
 						  	<div class="set">
 						      <div class="clearfix" id="designing">&nbsp;</div>

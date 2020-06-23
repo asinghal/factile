@@ -19,15 +19,18 @@ export default function Header() {
                             <div className="main-menu d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                    <li>
-                                        <Link to="/">Home</Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/surveys">Surveys</Link>
-                                    </li>
-                                    <li>
-                                        <Link to="/surveys/new">New Survey</Link>
-                                    </li>
+                                        <li>
+                                            <Link to="/surveys">My Surveys</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/surveys/new">New Survey</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/user/preferences">Settings</Link>
+                                        </li>
+                                        <li>
+                                            <Link to="/static/help">Help</Link>
+                                        </li>
                                     </ul>
                                 </nav>
                             </div>
@@ -35,7 +38,7 @@ export default function Header() {
                         <div className="col-xl-3 col-lg-3 d-none d-lg-block">
                             <div className="Appointment">
                                 <div className="book_btn d-none d-lg-block">
-                                    <a href="#">Login/ Logout</a>
+                                    <a href="/">Login/ Logout</a>
                                 </div>
                             </div>
                         </div>

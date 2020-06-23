@@ -1,3 +1,13 @@
 body {
   font-family: 'Poppins', sans-serif;
 }
+
+table {
+  border: 1px solid;
+  width: 100%;
+}
+
+table td, table th {
+  border: 1px solid #cccccc;
+  padding: 0 5px;
+}

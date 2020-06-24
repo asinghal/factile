@@ -28,7 +28,7 @@ export default function Features() {
 
 	    	<div className="row">
 	    		<div className="col-md-6 feature-block">
-                    <i class="fas fa-tags"></i> Various Question Types
+                    <i className="fas fa-tags"></i> Various Question Types
 	    			<p>Design a survey with multiple pages and multiple questions, just as fast as you can type :-). The different question types that are available are:</p>
 							<ol>
 								<li>Text boxes</li>
@@ -42,7 +42,7 @@ export default function Features() {
 						  </ol>
 	    		</div>
 	    		<div className="col-md-6 feature-block">
-                    <i class="fas fa-globe"></i> Surveys That Run Anywhere
+                    <i className="fas fa-globe"></i> Surveys That Run Anywhere
 	    			<p>
 							<ol>
 								<li>Natural and adaptive support for various computer screen resolutions.</li>
@@ -56,7 +56,7 @@ export default function Features() {
 	    	<div className="row"><div className="col-md-12 clearfix">&nbsp;</div></div>
 	    	<div className="row">
 	    		<div className="col-md-6 feature-block">
-                    <i class="fas fa-chart-pie"></i> Analyse The Captured Data 
+                    <i className="fas fa-chart-pie"></i> Analyse The Captured Data 
 	    			<p>
 							<ol>
 								<li>Build charts for individual questions.</li>
@@ -68,7 +68,7 @@ export default function Features() {
 	    			</p>
 	    		</div>
 	    		<div className="col-md-6 feature-block">
-                    <i class="far fa-edit"></i> Customize the Survey Look and Feel 
+                    <i className="far fa-edit"></i> Customize the Survey Look and Feel 
 	    			<p>
 							<ol>
 								<li>Add your logo.</li>
@@ -81,29 +81,29 @@ export default function Features() {
 	    	<div className="row"><div className="col-md-12 clearfix">&nbsp;</div></div>
 	      <div className="row">
 	    		<div className="col-md-6 feature-block">
-                    <i class="fas fa-wifi"></i> Surveys That Work Offline
+                    <i className="fas fa-wifi"></i> Surveys That Work Offline
 	    			<p>Even if the participants take your survey in transit (trains/ air planes/ etc) and do not have a proper network, they can fill in the survey. They just need to click on "Work Offline" link on the survey, fill in the survey and then click on "Send Responses" once they are back on network. As simple as that!</p>
 	    		</div>
 	    		<div className="col-md-6 feature-block">
-                    <i class="fas fa-chart-line"></i> Powerful Analysis
+                    <i className="fas fa-chart-line"></i> Powerful Analysis
 	    			<p>Draw insights easily with Factile's powerful analytical ability. Group a set of questions and generate a report on most preferred answer combinations, across different permutations!</p>
 	    		</div>
 	    	</div>
 	    	<div className="row"><div className="col-md-12 clearfix">&nbsp;</div></div>
 	      <div className="row">
 	    		<div className="col-md-6 feature-block">
-                    <i class="fas fa-project-diagram"></i> Manage The Survey Flow
+                    <i className="fas fa-project-diagram"></i> Manage The Survey Flow
 	    			<p>Allows you to define simple jump logic (e.g. go to page 10 if user clicks x, or skip page 5 if user's answer to a question has a perticular word/ phrase).</p>
 	    		</div>
 	    		<div className="col-md-6 feature-block">
-                    <i class="fas fa-code"></i> Start With A Template
+                    <i className="fas fa-code"></i> Start With A Template
 	    			<p>Use one of the predefined questionnaires as a starting point and customize it to suit your needs.</p>
 	    		</div>
 	    	</div>
 	    	<div className="row"><div className="col-md-12 clearfix">&nbsp;</div></div>
 	      <div className="row">
 	    		<div className="col-md-6 feature-block">
-                    <i class="fas fa-language"></i> Multiple Languages
+                    <i className="fas fa-language"></i> Multiple Languages
 	    			<p>Support for 10 languages. 
 	    				<ol>
 	    					<li>Build the survey in any language.</li>
@@ -113,40 +113,40 @@ export default function Features() {
   					</p>
 	    		</div>
 	    		<div className="col-md-6 feature-block">
-                    <i class="fab fa-apple"></i> Special Design For Smart Phones
+                    <i className="fab fa-apple"></i> Special Design For Smart Phones
 	    			<p>Radio buttons, checkboxes, ranking or rating scales that look like iPhone and work easily with touch phones.</p>
 	    		</div>
 	    	</div>
 	    	<div className="row"><div className="col-md-12 clearfix">&nbsp;</div></div>
 	    	<div className="row">
 	    		<div className="col-md-6 feature-block">
-                    <i class="fas fa-camera"></i> Preview Survey Before Sending It Out.
+                    <i className="fas fa-camera"></i> Preview Survey Before Sending It Out.
 	    			<p>See for yourself what the survey would look like, just while you design it!</p>
 	    		</div>
 	    		<div className="col-md-6 feature-block">
-                    <i class="fas fa-mail-bulk"></i> Sharing Made Easy
+                    <i className="fas fa-mail-bulk"></i> Sharing Made Easy
 	    			<p>Invite participants through email, or make it an open survey and just share the link on Facebook/ Twitter/ anywhere!</p>
 	    		</div>
 	    	</div>
 	    	<div className="row"><div className="col-md-12 clearfix">&nbsp;</div></div>
 	      <div className="row">
 	    		<div className="col-md-6 feature-block">
-                    <i class="fas fa-users"></i> Collaborate
+                    <i className="fas fa-users"></i> Collaborate
 	    			<p>Add other collaborators to your survey so they could make changes or view data as well.</p>
 	    		</div>
 	    		<div className="col-md-6 feature-block">
-                    <i class="fas fa-address-book"></i> Address Book
+                    <i className="fas fa-address-book"></i> Address Book
 	    			<p>Maintain an address book of frequently used email addresses.</p>
 	    		</div>
 	    	</div>
 	    	<div className="row"><div className="col-md-12 clearfix">&nbsp;</div></div>
 	      <div className="row">
 	    		<div className="col-md-6 feature-block">
-                    <i class="fas fa-shield-alt"></i> Security
+                    <i className="fas fa-shield-alt"></i> Security
 	    			<p>The survey and its data are safely secured by Factile. Multiple checks and encryption ensure that only the intended users have access to your data.</p>
 	    		</div>
 	    		<div className="col-md-6 feature-block">
-                    <i class="fas fa-download"></i> Download Me!
+                    <i className="fas fa-download"></i> Download Me!
 	    			<p>This is free software and you can download and install on your infrastructure.</p>
 	    		</div>
 	    	</div>

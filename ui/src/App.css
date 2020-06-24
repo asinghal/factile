@@ -11,3 +11,11 @@ table td, table th {
   border: 1px solid #cccccc;
   padding: 0 5px;
 }
+
+.error-message {
+  color: red;
+}
+
+.blue {
+  color: #4CA9FD;
+}

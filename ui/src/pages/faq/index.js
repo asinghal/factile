@@ -13,7 +13,7 @@ export default function FAQ() {
                     <div className="question">
                             <div>
                                 <strong>
-                                    <i class="fas fa-question-circle"></i>&nbsp;What is Factile?
+                                    <i className="blue fas fa-question-circle"></i>&nbsp;What is Factile?
                                 </strong>
                             </div>
                             <div>
@@ -25,7 +25,7 @@ export default function FAQ() {
                     <div className="question">
                             <div>
                                 <strong>
-                                    <i class="fas fa-question-circle"></i>&nbsp;Why should I use Factile?
+                                    <i className="blue fas fa-question-circle"></i>&nbsp;Why should I use Factile?
                                 </strong>
                             </div>
                             <div>
@@ -40,7 +40,7 @@ export default function FAQ() {
                     <div className="question">
                             <div>
                                 <strong>
-                                    <i class="fas fa-question-circle"></i>&nbsp;Why is it free? What's the caveat?
+                                    <i className="blue fas fa-question-circle"></i>&nbsp;Why is it free? What's the caveat?
                                 </strong>
                             </div>
                             <div>
@@ -60,7 +60,7 @@ export default function FAQ() {
                     <div className="question">
                             <div>
                                 <strong>
-                                    <i class="fas fa-question-circle"></i>&nbsp;How do I create a survey?
+                                    <i className="blue fas fa-question-circle"></i>&nbsp;How do I create a survey?
                                 </strong>
                             </div>
                             <div>
@@ -77,7 +77,7 @@ export default function FAQ() {
                     <div className="question">
                             <div>
                                 <strong>
-                                    <i class="fas fa-question-circle"></i>&nbsp;What does 'Collaborate' do?
+                                    <i className="blue fas fa-question-circle"></i>&nbsp;What does 'Collaborate' do?
                                 </strong>
                             </div>
                             <div>
@@ -88,7 +88,7 @@ export default function FAQ() {
                     <div className="question">
                             <div>
                                 <strong>
-                                    <i class="fas fa-question-circle"></i>&nbsp;I have to share the questionnaire in multiple languages. How do I do that?
+                                    <i className="blue fas fa-question-circle"></i>&nbsp;I have to share the questionnaire in multiple languages. How do I do that?
                                 </strong>
                             </div>
                             <div>
@@ -99,7 +99,7 @@ export default function FAQ() {
                     <div className="question">
                             <div>
                                 <strong>
-                                    <i class="fas fa-question-circle"></i>&nbsp;What options do I have for sharing the survey?
+                                    <i className="blue fas fa-question-circle"></i>&nbsp;What options do I have for sharing the survey?
                                 </strong>
                             </div>
                             <div>

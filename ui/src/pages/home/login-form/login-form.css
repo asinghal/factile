@@ -1,0 +1,30 @@
+.login-form {
+    background-color: #FFFFFF;
+    border: 1px solid #dddddd;
+    margin: 5em 2em;
+    padding: 1em;
+}
+
+.login-form input {
+    height: 3em;
+    border: 1px solid #dddddd;
+    width: 100%;
+}
+
+.hero .login-form h3 {
+    color: #333333;
+    font-size: 2em;
+    line-height: 40px;
+}
+
+.login-form .row {
+    margin: 1em 0;
+}
+
+.login-form button {
+    background-color: #4CA9FD;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    height: 3em;
+    width: 50%;
+}

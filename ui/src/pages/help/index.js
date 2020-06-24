@@ -2,13 +2,13 @@ import React from "react";
 
 export default function Help() {
     return (
-        <div class="container">
-	    	<div class="row">
-	    		<div class="span3">
-	    			<div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Index</li>
-              <li class="active"><a href="#designing">Designing a survey</a></li>
+        <div className="container">
+	    	<div className="row">
+	    		<div className="span3">
+	    			<div className="well sidebar-nav">
+            <ul className="nav nav-list">
+              <li className="nav-header">Index</li>
+              <li className="active"><a href="#designing">Designing a survey</a></li>
               <li><a href="#logic">Defining Logic</a></li>
               <li><a href="#preview">Preview the survey</a></li>
               <li><a href="#share">Distribute/ Share</a></li>
@@ -19,13 +19,13 @@ export default function Help() {
             </ul>
           </div>
 	    		</div>
-	    		<div class="span9">
+	    		<div className="span9">
 						<h1>Tutorials</h1>
             <p>Watch a quick video <iframe width="560" height="315" title="factile introduction" src="http://www.youtube.com/embed/IXgl27L6mo4" frameborder="0" allowfullscreen></iframe></p>
-						<div class="imageRow">
-						  	<div class="set">
-						      <div class="clearfix" id="designing">&nbsp;</div>
-						  		<h3>Designing a survey</h3>
+						<div className="imageRow">
+						  	<div className="set">
+						      <div className="clearfix" id="designing">&nbsp;</div>
+						  		<h3><i className="fas fa-chevron-circle-right blue"></i>&nbsp;Designing a survey</h3>
 						  		<p>To create a new survey:
 						  			<ol>
 						  				<li>Click on New Survey link on top menu.</li>
@@ -39,25 +39,25 @@ export default function Help() {
 						  			</ol>
 						  			Some screenshots are captured here:
 						  		</p>
-						  	  <div class="single first">
+						  	  <div className="single first">
 						  		  <a href="/assets/html/lightbox/images/screenshots/designer1.png" rel="lightbox[factile]" title="Creating a new survey"><img src="/assets/html/lightbox/images/screenshots/designer1.png" alt="Factile Designer"/></a>
 						  		</div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/designer2.png" rel="lightbox[factile]" title="Creating a new survey (Multi lingual support)"><img src="/assets/html/lightbox/images/screenshots/designer2.png" alt="Factile Designer"/></a>
 						      </div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/questions1.png" rel="lightbox[factile]" title="Multiple question types"><img src="/assets/html/lightbox/images/screenshots/questions1.png" alt="Factile Designer"/></a>
 						      </div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/questions2.png" rel="lightbox[factile]" title="Add questions"><img src="/assets/html/lightbox/images/screenshots/questions2.png" alt="Factile Designer"/></a>
 						      </div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/move.png" rel="lightbox[factile]" title="Moving questions (Select the question after which this one should be moved)"><img src="/assets/html/lightbox/images/screenshots/move.png" alt="Factile Flow"/></a>
 						      </div>
-						      <div class="clearfix" id="logic">&nbsp;</div>
-						  		<h3>Defining Logic</h3>
+						      <div className="clearfix" id="logic">&nbsp;</div>
+						  		<h3><i className="fas fa-chevron-circle-right blue"></i>&nbsp;Defining Logic</h3>
 						  		<p>Factile provides for 2 types of logic control:
-						  			<dl class="dl-horizontal">
+						  			<dl className="dl-horizontal">
 						  				<dt>Flow control</dt><dd>Control the appearance of pages on the basis of user's responses.</dd>
 						  				<dt>Answer Piping</dt><dd>Use answers of questions to form questions/ answer options in other questions.</dd>
 						  			</dl>
@@ -68,26 +68,26 @@ export default function Help() {
 						  				<li>For piping, click on the chevron next to question/ options box. Select the question to pipe from the menu.</li>
 						  			</ol>
 						  			Some screenshots are captured here:</p>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/flow.png" rel="lightbox[factile]" title="Manage survey flow"><img src="/assets/html/lightbox/images/screenshots/flow.png" alt="Factile Flow"/></a>
 						      </div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/piping.png" rel="lightbox[factile]" title="Piping - Use anwsers from one question in another"><img src="/assets/html/lightbox/images/screenshots/piping.png" alt="Factile Flow"/></a>
 						      </div>
-						      <div class="clearfix" id="preview">&nbsp;</div>
-						  		<h3>Preview the survey</h3>
+						      <div className="clearfix" id="preview">&nbsp;</div>
+						  		<h3><i className="fas fa-chevron-circle-right blue"></i>&nbsp;Preview the survey</h3>
 						  		<p>Before you send out the survey, you should test what it would look like. A quick and easy way is to click on 'Preview' button on the questionnaire page.
 						  			The preview works exactly the same way as the actual survey would, so you can test the color scheme, logic and mandatory checks easily.
 
 						  			Some screenshots are captured here:</p>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/preview1.png" rel="lightbox[factile]" title="Preview the survey"><img src="/assets/html/lightbox/images/screenshots/preview1.png" alt="Factile Survey Preview"/></a>
 						      </div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/preview2.png" rel="lightbox[factile]" title="Preview the survey"><img src="/assets/html/lightbox/images/screenshots/preview2.png" alt="Factile Survey Preview"/></a>
 						      </div>
-						      <div class="clearfix" id="share">&nbsp;</div>
-						  		<h3>Distribute/ Share</h3>
+						      <div className="clearfix" id="share">&nbsp;</div>
+						  		<h3><i className="fas fa-chevron-circle-right blue"></i>&nbsp;Distribute/ Share</h3>
 						  		<p>To distribute/ share a survey:
 						  			<ol>
 						  				<li>Click on 'View/ Edit' button on the dashboard.</li>
@@ -98,14 +98,14 @@ export default function Help() {
 						  				<li>You may want to have different groups on the address book to help build different target audiences.</li>
 						  			</ol>
 						  			Some screenshots are captured here:</p>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/invite.png" rel="lightbox[factile]" title="Invite participants through email"><img src="/assets/html/lightbox/images/screenshots/invite.png" alt="Factile Survey Data"/></a>
 						      </div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/using_addressbook.png" rel="lightbox[factile]" title="Using the addressbook"><img src="/assets/html/lightbox/images/screenshots/using_addressbook.png" alt="Factile Survey Data"/></a>
 						      </div>
-						      <div class="clearfix" id="analyse">&nbsp;</div>
-						  		<h3>Analyse Data</h3>
+						      <div className="clearfix" id="analyse">&nbsp;</div>
+						  		<h3><i className="fas fa-chevron-circle-right blue"></i>&nbsp;Analyse Data</h3>
 						  		<p>To analyze the survey responses:
 						  			<ol>
 						  				<li>Click on 'View Responses' button on the dashboard.</li>
@@ -115,24 +115,24 @@ export default function Help() {
 						  				<li>You can also download the responses into an Excel sheet.</li>
 						  			</ol>
 						  			Some screenshots are captured here:</p>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/data1.png" rel="lightbox[factile]" title="View response data"><img src="/assets/html/lightbox/images/screenshots/data1.png" alt="Factile Survey Data"/></a>
 						      </div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/data2.png" rel="lightbox[factile]" title="Build a Pie chart or a Bar chart"><img src="/assets/html/lightbox/images/screenshots/data2.png" alt="Factile Survey Data"/></a>
 						      </div>
-						      <div class="clearfix" id="manage">&nbsp;</div>
-						  		<h3>Manage Surveys</h3>
+						      <div className="clearfix" id="manage">&nbsp;</div>
+						  		<h3><i className="fas fa-chevron-circle-right blue"></i>&nbsp;Manage Surveys</h3>
 						  		<p>You can view/ edit a survey, review its responses or delete just the responses/ the questionnaire as well from the dashboard.
 						  			Some screenshots are captured here:</p>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/dashboard.png" rel="lightbox[factile]" title="Dashboard"><img src="/assets/html/lightbox/images/screenshots/dashboard.png" alt="Factile Survey Dashboard"/></a>
 						      </div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/delete.png" rel="lightbox[factile]" title="Deleting a survey/ data."><img src="/assets/html/lightbox/images/screenshots/delete.png" alt="Factile Delete Survey"/></a>
 						      </div>
-						      <div class="clearfix" id="qtype">&nbsp;</div>
-						  		<h3>Question Types</h3>
+						      <div className="clearfix" id="qtype">&nbsp;</div>
+						  		<h3><i className="fas fa-chevron-circle-right blue"></i>&nbsp;Question Types</h3>
 						  		<p>There are many question types that are supported by Factile.
 						  			<dl>
 						  				<dt>Text Box</dt><dd>Small text boxes for free text. Typically used for capturing simple information like name/ department.</dd>
@@ -146,44 +146,44 @@ export default function Help() {
 						  			</dl>
 						  			
 						  			Some screenshots are captured here:</p>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/question_plain.png" rel="lightbox[factile]" title="Plain Text"><img src="/assets/html/lightbox/images/screenshots/question_plain.png" alt="Factile Survey Dashboard"/></a>
 						      </div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/question_single.png" rel="lightbox[factile]" title="Single Choice"><img src="/assets/html/lightbox/images/screenshots/question_single.png" alt="Factile Survey Dashboard"/></a>
 						      </div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/question_largetext.png" rel="lightbox[factile]" title="Large Text Box"><img src="/assets/html/lightbox/images/screenshots/question_largetext.png" alt="Factile Survey Dashboard"/></a>
 						      </div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/question_rating.png" rel="lightbox[factile]" title="Rating Scale"><img src="/assets/html/lightbox/images/screenshots/question_rating.png" alt="Factile Survey Dashboard"/></a>
 						      </div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/question_ranking.png" rel="lightbox[factile]" title="Ranking (drag and drop ordering)"><img src="/assets/html/lightbox/images/screenshots/question_ranking.png" alt="Factile Survey Dashboard"/></a>
 						      </div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/question_multiple.png" rel="lightbox[factile]" title="Multiple Choice"><img src="/assets/html/lightbox/images/screenshots/question_multiple.png" alt="Factile Survey Dashboard"/></a>
 						      </div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/question_textbox.png" rel="lightbox[factile]" title="Text Box"><img src="/assets/html/lightbox/images/screenshots/question_textbox.png" alt="Factile Survey Dashboard"/></a>
 						      </div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/question_dropdown.png" rel="lightbox[factile]" title="Dropdown"><img src="/assets/html/lightbox/images/screenshots/question_dropdown.png" alt="Factile Delete Survey"/></a>
 						      </div>
-						      <div class="clearfix" id="mobile">&nbsp;</div>
-						  		<h3>Mobile Devices</h3>
+						      <div className="clearfix" id="mobile">&nbsp;</div>
+						  		<h3><i className="fas fa-chevron-circle-right blue"></i>&nbsp;Mobile Devices</h3>
 						  		<p>Factile has full support for mobile devices and makes it easy for users to take surveys from where ever they are.
 						  			Some screenshots are captured here:</p>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/survey_iphone1.png" rel="lightbox[factile]" title="Survey Page"><img src="/assets/html/lightbox/images/screenshots/survey_iphone1.png" alt="Factile Mobile Support"/></a>
 						      </div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/survey_iphone2.png" rel="lightbox[factile]" title="Rating Scale with on/off switches"><img src="/assets/html/lightbox/images/screenshots/survey_iphone2.png" alt="Factile Mobile Support"/></a>
 						      </div>
-						      <div class="single">
+						      <div className="single">
 						  		  <a href="/assets/html/lightbox/images/screenshots/survey_iphone3.png" rel="lightbox[factile]" title="Single Choice Questions"><img src="/assets/html/lightbox/images/screenshots/survey_iphone3.png" alt="Factile Mobile Support"/></a>
 						      </div>
-						      <div class="single last">
+						      <div className="single last">
 						  		  <a href="/assets/html/lightbox/images/screenshots/survey_iphone4.png" rel="lightbox[factile]" title="Multiple Choice Questions."><img src="/assets/html/lightbox/images/screenshots/survey_iphone4.png" alt="Factile Mobile Support"/></a>
 						      </div>
 						  	</div>

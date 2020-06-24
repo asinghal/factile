@@ -2,9 +2,9 @@ import React from "react";
 
 export default function ContactUs() {
     return (
-        <div class="container">
+        <div className="container">
           
-        <div class="row">
+        <div className="row">
           <h1>How Can We Help?</h1>
           
           <h3>General Issues</h3>
@@ -17,19 +17,19 @@ export default function ContactUs() {
           <p>For anything else, please checkout our tutorials/ FAQs or drop us a note on <a href="http://groups.google.com/group/factile" target="_blank" rel="noopener noreferrer">our forum</a>, or leave your thoughts below. We will contact you if needed.</p>
         </div>
 
-        <div class="row"><div class="span12 clearfix">&nbsp;</div></div>
-        <div class="row"><div class="span12 clearfix">&nbsp;</div></div>
-        <div class="row">
-          <div class="span3">&nbsp;</div>
-          <div class="span6">
+        <div className="row"><div className="span12 clearfix">&nbsp;</div></div>
+        <div className="row"><div className="span12 clearfix">&nbsp;</div></div>
+        <div className="row">
+          <div className="span3">&nbsp;</div>
+          <div className="span6">
             <div id="disqus_thread"></div>
             <script type="text/javascript">
                 
             </script>
             <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-            <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+            <a href="http://disqus.com" className="dsq-brlink">comments powered by <span className="logo-disqus">Disqus</span></a>
           </div>
-          <div class="span3">&nbsp;</div>
+          <div className="span3">&nbsp;</div>
         </div>
 
       </div>

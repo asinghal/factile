@@ -17,20 +17,8 @@ const encrypt = (password) => {
 const randomPassword = () => 
     Math.random().toString(36).substring(2, 8) + Math.random().toString(36).substring(2, 8);
 
-const login = (email, password) => db.findOne('users', { email, password: encrypt(password) });
+const login = (email, password) => db.findOne('users', { email, password: encrypt(password) }, { password: 0 });
 
 const resetPassword = () => randomPassword();
 
-const registerRoutes = (app) => {
-    app.post('/login', (req, res) => {
-        const { email, password } = req.body;
-        return login(email, password).then((data) => {
-            if (!data) {
-                res.status(403);
-            }
-            return res.send(data || {});
-        })
-    });
-};
-
-module.exports = { findByEmail, findById, login, resetPassword, registerRoutes };
+module.exports = { findByEmail, findById, login, resetPassword };

@@ -4,9 +4,4 @@ const findByOwner = (owner) => db.find('surveys', { owner }, {}, { name: 1, surv
 
 const findById = (surveyId) => db.findOne('surveys', { surveyId });
 
-const registerRoutes = (app) => {
-    app.get('/surveys', (req, res) => findByOwner('a@a.com').then((data) => res.send(data)));
-    app.get('/surveys/:id', (req, res) => findById(req.params.id).then((data) => res.send(data)));
-};
-
-module.exports = { findByOwner, findById, registerRoutes };
+module.exports = { findByOwner, findById };

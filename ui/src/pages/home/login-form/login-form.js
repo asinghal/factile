@@ -18,7 +18,7 @@ export default function LoginForm() {
 
     const initiateLogin = (user, event) => {
         login(user).then((data) => {
-            if (!data || !data.email) {
+            if (!data || !data.token) {
                 setErrorMessage('Login failed');
                 return;
             }

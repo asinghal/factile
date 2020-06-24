@@ -55,7 +55,7 @@ const _find = (client, collectionName, query, sort, projection, limit) => {
     return new Promise(resolve => {
         collection.find(query, { sort, projection, limit }).toArray((err, data) => {
             assert.equal(err, null);
-            console.log(`Found ${data.length} records`);
+            console.log(`Found ${data.length} records in ${collectionName}`);
 
             close(client);
             resolve(data);

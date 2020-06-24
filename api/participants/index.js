@@ -1,5 +1,5 @@
 const db = require('../db');
 
-const findBySurveyId = (surveyId) => db.findOne('participants', { surveyId });
+const findBySurveyId = (surveyId) => db.find('participants', { surveyId });
 
-module.exports = { findByOwner, findBySurveyId };
+module.exports = { findBySurveyId };

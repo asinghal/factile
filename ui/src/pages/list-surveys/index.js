@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import { getSurveys } from './api.js';
 
@@ -13,9 +13,10 @@ function ShowSurveyRow({ survey }) {
 
 export default function ListSurveys() {
     const [surveys, setSurveys] = useState([]);
+    const history = useHistory();
 
     useEffect(() => {
-        getSurveys().then(setSurveys)
+        getSurveys().then(setSurveys).catch(() => history.replace('/'))
     }, []);
 
     return (

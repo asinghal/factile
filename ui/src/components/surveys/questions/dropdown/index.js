@@ -7,7 +7,7 @@ export default function Dropdown({ question }) {
 
     return (
         <div>
-            <div dangerouslySetInnerHTML={{ __html: question.texts[0].text }}></div>
+            <div><strong dangerouslySetInnerHTML={{ __html: question.texts[0].text }}></strong></div>
             <div>
                 <select name={question.questionId}>
                     {question.options.map(option => (

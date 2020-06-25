@@ -7,7 +7,7 @@ export default function Ranking({ question }) {
 
     return (
         <div>
-            <div dangerouslySetInnerHTML={{ __html: question.texts[0].text }}></div>
+            <div><strong dangerouslySetInnerHTML={{ __html: question.texts[0].text }}></strong></div>
             <div>
                 {question.options.map(option => (
                     <div key={question.questionId + "-" + option.value }>

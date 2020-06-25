@@ -7,7 +7,7 @@ export default function TextBox({ question }) {
 
     return (
         <div>
-            <div dangerouslySetInnerHTML={{ __html: question.texts[0].text }}></div>
+            <div><strong dangerouslySetInnerHTML={{ __html: question.texts[0].text }}></strong></div>
             <div><input type="text" name={question.questionId} /></div>
         </div>
     );

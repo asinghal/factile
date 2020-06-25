@@ -43,12 +43,12 @@ export default function LoginForm() {
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <input type="text" id="email" name="email" value={user.email} onChange={handleInputChange} />
+                        <input type="text" id="email" name="email" value={user.email} placeholder="email" onChange={handleInputChange} />
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <input type="password" id="password" name="password" value={user.password} onChange={handleInputChange} />
+                        <input type="password" id="password" name="password" value={user.password} placeholder="password" onChange={handleInputChange} />
                     </div>
                 </div>
                 <div className="row">

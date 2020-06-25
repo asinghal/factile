@@ -6,7 +6,7 @@ import { getSurveys } from './api.js';
 function ShowSurveyRow({ survey }) {
     return (
     <div>
-        <Link to={"/surveys/" + survey.surveyId + "/preview"}>{survey.name}</Link>
+        <Link to={"/surveys/" + survey.surveyId}>{survey.name}</Link>
     </div>
     );
 }

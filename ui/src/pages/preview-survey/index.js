@@ -6,7 +6,7 @@ import { useParams, useHistory } from "react-router-dom";
 import Question from '../../components/surveys/questions/index.js';
 
 export default function PreviewSurvey() {
-    const [survey, setSurvey] = useState({questions: []});
+    const [survey, setSurvey] = useState({});
     const { id } = useParams();
     const history = useHistory();
 
@@ -17,8 +17,8 @@ export default function PreviewSurvey() {
     return (
         <div className="container">
             <h2>{survey.name}</h2>
-            <div></div>{survey.intro_text}
-            {survey.questions.map(q => 
+            <div>{survey.intro_text}</div>
+            {survey.questions && survey.questions.map(q => 
                 <Question question={q} key={q.questionId} />
             )}
 

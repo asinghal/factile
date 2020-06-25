@@ -7,12 +7,15 @@ import {
   import Home from './pages/home/index.js';
   import ListSurveys from './pages/list-surveys/index.js';
   import NewSurvey from './pages/new-survey/index.js';
+  import SurveyDashboard from './pages/dashboard/index.js';
   import PreviewSurvey from './pages/preview-survey/index.js';
-  import FAQ from './pages/faq/index.js';
-  import Help from './pages/help/index.js';
-  import ContactUs from './pages/contactus/index.js';
-  import Features from './pages/features/index.js';
-  import TermsAndConditions from './pages/termsandconditions/index.js';
+  import SurveyResponses from './pages/survey-responses/index.js';
+  import Participants from './pages/participants/index.js';
+  import FAQ from './pages/static/faq/index.js';
+  import Help from './pages/static/help/index.js';
+  import ContactUs from './pages/static/contactus/index.js';
+  import Features from './pages/static/features/index.js';
+  import TermsAndConditions from './pages/static/termsandconditions/index.js';
 
   export default function Routes() {
     return (
@@ -34,8 +37,17 @@ import {
             <Route exact path="/surveys/new">
                 <NewSurvey />
             </Route>
+            <Route exact path="/surveys/:id">
+                <SurveyDashboard />
+            </Route>
             <Route exact path="/surveys/:id/preview">
                 <PreviewSurvey />
+            </Route>
+            <Route exact path="/surveys/:id/responses">
+                <SurveyResponses />
+            </Route>
+            <Route exact path="/surveys/:id/participants">
+                <Participants />
             </Route>
 
             {/* Static files */}

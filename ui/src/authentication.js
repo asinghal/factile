@@ -11,9 +11,11 @@ const store = window.sessionStorage || window.localStorage || localDB;
 
 const getToken = () => store.getItem(TOKEN_KEY);
 
+const isLoggedIn = () => !!getToken();
+
 const getAuthHeader = () => new Headers({ 'Authorization': 'Bearer ' + getToken() })
 
 const setToken = (value) => store.setItem(TOKEN_KEY, value);
 const removeToken = () => store.removeItem(TOKEN_KEY);
 
-module.exports = { getAuthHeader, setToken, removeToken };
+module.exports = { getAuthHeader, setToken, removeToken, isLoggedIn };

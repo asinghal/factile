@@ -1,0 +1,9 @@
+.survey-responses .block {
+    margin: 3em 0;
+    border-bottom: 2px solid #dddddd;
+    line-height: 2em;
+}
+
+.survey-responses .answer {
+    border-bottom: 1px solid #dddddd;
+}

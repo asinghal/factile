@@ -15,10 +15,16 @@ export default function Checkboxes({ question }) {
             <div>
                 {question.options.map(option => (
                     <div key={getKey(question, option)}>
-                        <input type="checkbox" name={question.questionId} value={option.value} id={getKey(question, option)} /> <label for={getKey(question, option)}>{option.texts[0].text}</label>
+                        <input type="checkbox" name={question.questionId} value={option.value} id={getKey(question, option)} /> <label htmlFor={getKey(question, option)}>{option.texts[0].text}</label>
                     </div>
                 ))}
             </div>
+            {question.hasOther && 
+                <div>
+                    <div>{question.otherBox[0].text}</div>
+                    <div><input type="text" name={question.questionId + "-other"} /></div>
+                </div>
+            }
         </div>
     );
 };

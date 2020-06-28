@@ -1,7 +1,9 @@
 .hero {
     background-image: url(./bradcam.png);
+    background-size: cover;
+    background-repeat: no-repeat;
     width: 100%;
-    height: 500px;
+    min-height: 500px;
     margin-top: -30px;
 }
 

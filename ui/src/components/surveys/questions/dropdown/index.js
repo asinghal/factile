@@ -15,6 +15,13 @@ export default function Dropdown({ question }) {
                     ))}
                 </select>
             </div>
+
+            {question.hasOther && 
+                <div>
+                    <div>{question.otherBox[0].text}</div>
+                    <div><input type="text" name={question.questionId + "-other"} /></div>
+                </div>
+            }
         </div>
     );
 };

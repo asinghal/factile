@@ -41,7 +41,7 @@
     border-color: #4CA9FD;
 }
 
-.radio input {
+.radio input[type="radio"] {
     width: 32px;
     height: 32px;
     order: 1;

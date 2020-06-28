@@ -1,7 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { isLoggedIn } from '../../authentication.js';
+
 import './header.css';
+
+const SecureAccess = (props) => {
+    if (!isLoggedIn()) {
+        return null;
+    }
+    return props.children;
+};
 
 export default function Header() {
     return (
@@ -19,15 +28,21 @@ export default function Header() {
                             <div className="main-menu d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li>
-                                            <Link to="/surveys">My Surveys</Link>
-                                        </li>
-                                        <li>
-                                            <Link to="/surveys/new">New Survey</Link>
-                                        </li>
+                                        <SecureAccess>
+                                            <li>
+                                                <Link to="/surveys">My Surveys</Link>
+                                            </li>
+                                        </SecureAccess>
+                                        <SecureAccess>
+                                            <li>
+                                                <Link to="/surveys/new">New Survey</Link>
+                                            </li>
+                                        </SecureAccess>
+                                        <SecureAccess>
                                         <li>
                                             <Link to="/user/preferences">Settings</Link>
                                         </li>
+                                        </SecureAccess>
                                         <li>
                                             <Link to="/static/help">Help</Link>
                                         </li>

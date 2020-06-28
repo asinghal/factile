@@ -5,24 +5,62 @@ import { useParams, useHistory } from "react-router-dom";
 
 import Question from '../../components/surveys/questions/index.js';
 
+const Page = ({ page }) => (
+    <div>
+        {page.questions && page.questions.map(q =>
+            <Question question={q} key={q.questionId} />
+        )}
+    </div>
+);
+
 export default function PreviewSurvey() {
     const [survey, setSurvey] = useState({});
+    const [pageNum, setPageNum] = useState(0);
     const { id } = useParams();
     const history = useHistory();
 
+    const NextPage = (event) => {
+        if (survey.pages && pageNum <= survey.pages.length) {
+            setPageNum(pageNum + 1);
+        }
+        event.preventDefault();
+    };
+
+    const hasSurveyFinished = () => {
+        return survey.pages && pageNum > survey.pages.length;
+    };
+
     useEffect(() => {
-        findSurvey(id).then(setSurvey).catch(() => history.replace('/'));
-    }, []);
+        findSurvey(id).then((survey) => {
+            if (survey && !survey.intro_text) {
+                setPageNum(1);
+            }
+            setSurvey(survey);
+        }).catch(() => history.replace('/'));
+    }, [id, history]);
 
     return (
         <div className="container">
             <h2>{survey.name}</h2>
-            <div>{survey.intro_text}</div>
-            {survey.questions && survey.questions.map(q => 
-                <Question question={q} key={q.questionId} />
-            )}
+            {survey.intro_text &&
+                <div>
+                    <div>{survey.intro_text}</div>
+                    <button onClick={(event) => NextPage(event)}>Next</button>
+                </div>
+            }
+            <div>
+                {pageNum > 0 && survey.pages && survey.pages[pageNum-1] && 
+                <div>
+                    <Page page={survey.pages[pageNum-1]} />
+                    <button onClick={(event) => NextPage(event)}>Next</button>
+                </div>
+                }
+            </div>
 
-            <div dangerouslySetInnerHTML={{ __html: survey.thank_you_text }}></div>
+            {hasSurveyFinished() &&
+                <div dangerouslySetInnerHTML={{ __html: survey.thank_you_text }}></div>
+            }
+
         </div>
     );
 };

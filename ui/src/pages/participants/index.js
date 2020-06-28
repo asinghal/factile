@@ -3,8 +3,6 @@ import { findSurvey } from './api.js';
 
 import { useParams, useHistory } from "react-router-dom";
 
-import Question from '../../components/surveys/questions/index.js';
-
 export default function Participants() {
     const [participants, setParticipants] = useState([]);
     const { id } = useParams();
@@ -12,7 +10,7 @@ export default function Participants() {
 
     useEffect(() => {
         findSurvey(id).then(setParticipants).catch(() => history.replace('/'));
-    }, []);
+    }, [id, history]);
 
     return (
         <div className="container">

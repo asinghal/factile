@@ -17,7 +17,7 @@ export default function ListSurveys() {
 
     useEffect(() => {
         getSurveys().then(setSurveys).catch(() => history.replace('/'))
-    }, []);
+    }, [history]);
 
     return (
         <div className="container">

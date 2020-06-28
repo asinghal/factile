@@ -11,7 +11,7 @@ export default function ListSurveys() {
 
     useEffect(() => {
         findSurvey(id).then(setSurvey).catch(() => history.replace('/'));
-    }, []);
+    }, [id, history]);
 
     return (
         <div className="container dashboard">

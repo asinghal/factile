@@ -3,8 +3,6 @@ import { findSurvey } from './api.js';
 
 import { useParams, useHistory } from "react-router-dom";
 
-import Question from '../../components/surveys/questions/index.js';
-
 export default function SurveyResponses() {
     const [surveyResponses, setSurveyResponses] = useState([]);
     const { id } = useParams();
@@ -12,7 +10,7 @@ export default function SurveyResponses() {
 
     useEffect(() => {
         findSurvey(id).then(setSurveyResponses).catch(() => history.replace('/'));
-    }, []);
+    }, [id, history]);
 
     return (
         <div className="container">

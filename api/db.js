@@ -24,7 +24,6 @@ const connect = () => {
     return new Promise(resolve => {
         client.connect(function(err) {
             assert.equal(null, err);
-            // console.log("Connected successfully to server");
             resolve(client);
         });
     });
@@ -55,7 +54,6 @@ const _find = (client, collectionName, query, sort, projection, limit) => {
     return new Promise(resolve => {
         collection.find(query, { sort, projection, limit }).toArray((err, data) => {
             assert.equal(err, null);
-            console.log(`Found ${data.length} records in ${collectionName}`);
 
             close(client);
             resolve(data);

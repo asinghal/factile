@@ -1,23 +1,42 @@
+const mongodb = require('mongodb');
+const sinon = require('sinon');
+
 const db = require('../db');
 
-test('list', done => {
-    db.list('users').then(users => {
-        expect(users.length).not.toBe(0);
-        done();
-    });
-});
+describe('db tests', () => {
 
-test('find', done => {
-    db.find('users', { email: 'a@a.com'}).then(users => {
-        expect(users.length).not.toBe(0);
-        expect(users[0].email).toBe('a@a.com');
-        done();
-    });
-});
+    test('list', done => {
+        const findStub = sinon.stub(mongodb.Collection.prototype, 'find').returns({
+            toArray: sinon.stub().yields(null, [{a: 1}])
+        });
 
-test('findOne', done => {
-    db.findOne('users', { email: 'a@a.com'}).then(users => {
-        expect(users.email).toBe('a@a.com');
-        done();
+        db.list('somecollection').then(d => {
+            expect(d.length).toBe(1);
+            findStub.restore();
+            done();
+        });
+    });
+
+    test('find', done => {
+        const findStub = sinon.stub(mongodb.Collection.prototype, 'find').returns({
+            toArray: sinon.stub().yields(null, [{a: 1}])
+        });
+
+        db.find('somecollection').then(d => {
+            expect(d.length).toBe(1);
+            findStub.restore();
+            done();
+        });
+    });
+
+    test('findOne', done => {
+        const findStub = sinon.stub(mongodb.Collection.prototype, 'findOne').yields(null, {a: 1});
+
+        db.findOne('somecollection').then(d => {
+            expect(d).not.toBeNull();
+            expect(d.a).toBe(1);
+            findStub.restore();
+            done();
+        });
     });
 });

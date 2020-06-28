@@ -14,7 +14,22 @@ export default function Participants() {
 
     return (
         <div className="container">
-            Found {participants.length} participants
+            <table>
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {participants.map((participant, index) => (
+                        <tr key={"participant" + index}>
+                            <td>{participant.email}</td>
+                            <td>{participant.status}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     );
 };

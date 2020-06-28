@@ -6,8 +6,12 @@
 }
 
 .login-form input {
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid #dddddd;
+    font-size: 1.2em;
     height: 3em;
-    border: 1px solid #dddddd;
     width: 100%;
 }
 

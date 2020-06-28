@@ -6,7 +6,8 @@ export default function PlainText({ question }) {
     }
 
     return (
-        <div dangerouslySetInnerHTML={{ __html: question.texts[0].text }}>
+        <div>
+            <i className="fas fa-chevron-circle-right"></i>&nbsp;<span dangerouslySetInnerHTML={{ __html: question.texts[0].text }}></span>
         </div>
     );
 };

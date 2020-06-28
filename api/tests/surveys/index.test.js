@@ -63,4 +63,109 @@ describe('survey model tests', () => {
             done();
         });
     });
+
+    test('groupByPages', done => {
+
+        const survey = {
+            surveyId: 'abc-123-456-789',
+            questions: [
+                { qType: 'radio' },
+                { qType: 'text' },
+                { qType: 'page', conditions: [ { a: 1 } ] },
+                { qType: 'textarea' },
+                { qType: 'ranking' },
+                { qType: 'rating' },
+                { qType: 'page', conditions: [ { b: 1 } ] },
+                { qType: 'plaintext' }
+            ]
+        };
+
+        const another = surveys.groupByPages(survey);
+
+        expect(another).not.toBeNull();
+        expect(another.surveyId).toBe(survey.surveyId);
+        expect(survey.pages).toBeUndefined();
+        expect(another.pages).not.toBeUndefined();
+        expect(another.questions).toBeUndefined();
+        expect(another.pages.length).toBe(3);
+        expect(another.pages[0].questions.length).toBe(2);
+        expect(another.pages[1].questions.length).toBe(3);
+        expect(another.pages[1].conditions).toBe(survey.questions[2].conditions);
+        expect(another.pages[2].questions.length).toBe(1);
+        expect(another.pages[2].conditions).toBe(survey.questions[6].conditions);
+
+        done();
+    });
+
+    test('groupByPages when no page breaks present', done => {
+
+        const survey = {
+            surveyId: 'abc-123-456-789',
+            questions: [
+                { qType: 'radio' },
+                { qType: 'text' },
+                { qType: 'textarea' },
+                { qType: 'ranking' },
+                { qType: 'rating' },
+                { qType: 'plaintext' }
+            ]
+        };
+
+        const another = surveys.groupByPages(survey);
+
+        expect(another).not.toBeNull();
+        expect(another.surveyId).toBe(survey.surveyId);
+        expect(survey.pages).toBeUndefined();
+        expect(another.pages).not.toBeUndefined();
+        expect(another.questions).toBeUndefined();
+        expect(another.pages.length).toBe(1);
+        expect(another.pages[0].questions.length).toBe(6);
+
+        done();
+    });
+
+    test('groupByPages with only 1 question', done => {
+
+        const survey = {
+            surveyId: 'abc-123-456-789',
+            questions: [
+                { qType: 'radio' }
+            ]
+        };
+
+        const another = surveys.groupByPages(survey);
+
+        expect(another).not.toBeNull();
+        expect(another.surveyId).toBe(survey.surveyId);
+        expect(survey.pages).toBeUndefined();
+        expect(another.pages).not.toBeUndefined();
+        expect(another.questions).toBeUndefined();
+        expect(another.pages.length).toBe(1);
+        expect(another.pages[0].questions.length).toBe(1);
+
+        done();
+    });
+
+    test('groupByPages with only 1 page break and no questions', done => {
+
+        const survey = {
+            surveyId: 'abc-123-456-789',
+            questions: [
+                { qType: 'page' }
+            ]
+        };
+
+        const another = surveys.groupByPages(survey);
+
+        expect(another).not.toBeNull();
+        expect(another.surveyId).toBe(survey.surveyId);
+        expect(survey.pages).toBeUndefined();
+        expect(another.pages).not.toBeUndefined();
+        expect(another.questions).toBeUndefined();
+        expect(another.pages.length).toBe(2);
+        expect(another.pages[0].questions.length).toBe(0);
+        expect(another.pages[1].questions.length).toBe(0);
+
+        done();
+    });
 });

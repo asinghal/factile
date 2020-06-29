@@ -11,11 +11,18 @@ const assignValues = (array, prefix) => array.map((o, index) => {
     return o;
 })
 
+const prefixes = {
+    options: 'o',
+    dimensions: 'd'
+};
+
+const foldTexts = (arr) => arr ? arr.map((item) => item.texts[0].text).reduce((s, o) => s + "\n" + o, "").trim() : "";
+
 export default function QuestionDesigner({question, language}) {
     const qTypeMetaInfo = questionTypes.find(q => q.value === question.qType);
     const text = question.texts && question.texts.length > 0 ? question.texts[0].text : '';
-    const options = question.options ? question.options.map((option) => option.texts[0].text).reduce((s, o) => s + "\n" + o, "").trim() : "";
-    const dimensions = question.dimensions ? question.dimensions.map((d) => d.texts[0].text).reduce((s, o) => s + "\n" + o, "").trim() : "";
+    const options = foldTexts(question.options);
+    const dimensions = foldTexts(question.dimensions);
     const [questionData, setQuestionData] = useState({text, options, dimensions});
 
     const handleInputChange = (event) => {
@@ -24,15 +31,9 @@ export default function QuestionDesigner({question, language}) {
 
         if (event.target.name === 'options' || event.target.name === 'dimensions') {
             question[event.target.name] = toArray(event.target.value.trim()).map((t) => toTextArray(t, language));
+            question[event.target.name] = assignValues(question[event.target.name], prefixes[event.target.name]);
         } else {
             question.texts = toTextArray(event.target.value.trim(), language).texts;
-        }
-
-        if (event.target.name === 'options') {
-            question.options = assignValues(question.options, 'o');
-        }
-        if (event.target.name === 'dimensions') {
-            question.dimensions = assignValues(question.dimensions, 'd');
         }
     };
 

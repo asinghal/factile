@@ -168,4 +168,50 @@ describe('survey model tests', () => {
 
         done();
     });
+
+    test('insert a survey', done => {
+        const name = 'Test Survey';
+        const owner = 'a@a.com';
+        const survey = { _id: new ObjectID(), name};
+        mockDB.expects('save').once().resolves("ok");
+
+        surveys.saveOrUpdate(owner, survey).then(d => {
+            expect(d).toBe("ok");
+            expect(survey.surveyId).not.toBeUndefined();
+            expect(survey.owner).not.toBeUndefined();
+            expect(survey.owner.length).toBe(1);
+            expect(survey.owner[0]).toBe(owner);
+            done();
+        });
+    });
+
+    test('insert a survey and retain owner', done => {
+        const name = 'Test Survey';
+        const owner = 'a@a.com';
+        const anotherOwner = 'b@a.com';
+        const survey = { _id: new ObjectID(), name, owner: [anotherOwner]};
+        mockDB.expects('save').once().resolves("ok");
+
+        surveys.saveOrUpdate(owner, survey).then(d => {
+            expect(d).toBe("ok");
+            expect(survey.surveyId).not.toBeUndefined();
+            expect(survey.owner).not.toBeUndefined();
+            expect(survey.owner.length).toBe(1);
+            expect(survey.owner[0]).toBe(anotherOwner);
+            done();
+        });
+    });
+
+    test('update a survey', done => {
+        const name = 'Test Survey';
+        const surveyId = 'abc1-2345-6789';
+        const owner = 'a@a.com';
+        const survey = { _id: new ObjectID(), name, surveyId, owner};
+        mockDB.expects('save').once().resolves("ok");
+
+        surveys.saveOrUpdate(owner, survey).then(d => {
+            expect(d).toBe("ok");
+            done();
+        });
+    });
 });

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import './new-survey.css';
 
@@ -6,6 +7,7 @@ import { save } from './api.js';
 
 export default function NewSurvey() {
     const [survey, setSurvey] = useState({});
+    const history = useHistory();
 
     const handleInputChange = (event) => {
         event.persist();
@@ -13,7 +15,10 @@ export default function NewSurvey() {
     };
 
     const SaveDetails = () => {
-        save(survey).then(console.log);
+        save(survey).then((d) => {
+            survey.surveyId = survey.surveyId || d.surveyId;
+            history.replace('/surveys/' + survey.surveyId + '/questions');
+        });
     };
 
     return (

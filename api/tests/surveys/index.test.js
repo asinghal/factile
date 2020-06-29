@@ -214,4 +214,19 @@ describe('survey model tests', () => {
             done();
         });
     });
+
+    test('update a survey and assign question numbers', done => {
+        const name = 'Test Survey';
+        const surveyId = 'abc1-2345-6789';
+        const owner = 'a@a.com';
+        const survey = { _id: new ObjectID(), name, surveyId, owner, questions: [ {questionId: 'q0001', qType: 'plaintext'}, {qType: 'radio'}]};
+        mockDB.expects('save').once().resolves("ok");
+
+        surveys.saveOrUpdate(owner, survey).then(d => {
+            expect(d).toBe("ok");
+            expect(survey.questions[0].questionId).toBe('q0001');
+            expect(survey.questions[1].questionId).toBe('q0002');
+            done();
+        });
+    });
 });

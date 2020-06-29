@@ -6,7 +6,8 @@ import {
 
   import Home from './pages/home/index.js';
   import ListSurveys from './pages/list-surveys/index.js';
-  import NewSurvey from './pages/new-survey/index.js';
+  import NewSurvey from './pages/survey-editor/new-survey/index.js';
+  import Questionnaire from './pages/survey-editor/questionnaire/index.js';
   import SurveyDashboard from './pages/dashboard/index.js';
   import PreviewSurvey from './pages/preview-survey/index.js';
   import SurveyResponses from './pages/survey-responses/index.js';
@@ -36,6 +37,9 @@ import {
             </Route>
             <Route exact path="/surveys/new">
                 <NewSurvey />
+            </Route>
+            <Route exact path="/surveys/:id/questions">
+                <Questionnaire />
             </Route>
             <Route exact path="/surveys/:id">
                 <SurveyDashboard />

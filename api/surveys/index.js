@@ -33,12 +33,33 @@ const groupByPages = (survey) => {
 
 const generateNewSurveyId = () => uuid();
 
+const findMaxQuestionId = (questions) => questions.map(q => q.questionId ? parseInt(q.questionId.substr(1), 10): 0).sort().reverse().shift();
+const padLeft = (num, size) => {
+    const str = '' + num;
+    let s = str;
+    for (var i=str.length; i<size; i++) {
+        s = '0' + s;
+    }
+    return s;
+}
+
 const saveOrUpdate = (owner, survey) => {
     if (!survey.surveyId) {
         survey.surveyId = generateNewSurveyId();
     }
 
     survey.owner = survey.owner || [ owner ];
+
+    if (survey.questions) {
+        const baseQuestionNum = findMaxQuestionId(survey.questions) + 1;
+        let count = 0;
+        survey.questions.forEach(q => {
+            if (!q.questionId) {
+                q.questionId = 'q' + padLeft(baseQuestionNum + count, 4);
+                count++;
+            }
+        });
+    }
 
     return db.save('surveys', survey, 'surveyId');
 }

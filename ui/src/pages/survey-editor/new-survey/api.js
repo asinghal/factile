@@ -1,4 +1,4 @@
-import { getAuthHeader } from '../../authentication.js';
+import { getAuthHeader } from '../../../authentication.js';
 
 const save = async (survey) => {
     const headers = getAuthHeader();

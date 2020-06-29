@@ -121,8 +121,11 @@ const saveOrUpdate = (client, collectionName, data, key) => {
     return new Promise(async (resolve) => {
         await collection.replaceOne(query, data, { upsert: true });
 
+        let result = {};
+        result[key] = data[key];
+
         close(client);
-        resolve({ok: 1});
+        resolve(result);
     });
 }
 

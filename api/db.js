@@ -41,6 +41,11 @@ const close = (client) => {
 };
 
 /**
+ * Get collection object from the client
+ */
+const getCollection = (client, collectionName) => client.db(dbName).collection(collectionName);
+
+/**
  * Base function to query the database
  * 
  * private function to be used only inside this file
@@ -48,8 +53,7 @@ const close = (client) => {
  * @returns promise which resolves into query results
  */
 const _find = (client, collectionName, query, sort, projection, limit) => {
-    const db = client.db(dbName);
-    const collection = db.collection(collectionName);
+    const collection = getCollection(client, collectionName);
 
     return new Promise(resolve => {
         collection.find(query, { sort, projection, limit }).toArray((err, data) => {
@@ -69,8 +73,7 @@ const _find = (client, collectionName, query, sort, projection, limit) => {
  * @returns promise which resolves into query results
  */
 const _findOne = (client, collectionName, query, projection) => {
-    const db = client.db(dbName);
-    const collection = db.collection(collectionName);
+    const collection = getCollection(client, collectionName);
 
     return new Promise(resolve => {
         collection.findOne(query, { projection }, ((err, data) => {
@@ -109,4 +112,22 @@ const findOne = async (collectionName, query, projection = {}) => {
     return connect().then(client => _findOne(client, collectionName, query, projection));
 }
 
-module.exports = { list, find, findOne };
+const saveOrUpdate = (client, collectionName, data, key) => {
+    const collection = getCollection(client, collectionName);
+
+    const query = {};
+    query[key] = data[key];
+
+    return new Promise(async (resolve) => {
+        await collection.replaceOne(query, data, { upsert: true });
+
+        close(client);
+        resolve({ok: 1});
+    });
+}
+
+const save = async (collectionName, data, key) => {
+    return connect().then((client) => saveOrUpdate(client, collectionName, data, key));
+}
+
+module.exports = { list, find, findOne, save };

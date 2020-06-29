@@ -14,3 +14,7 @@
     position: relative;
     margin: 0 10px;
 }
+
+.header ul {
+    padding: 0;
+}

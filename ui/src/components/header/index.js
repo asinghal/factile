@@ -20,14 +20,14 @@ export default function Header() {
         <header>
         <div className="header">
             <div id="sticky-header" className="main-header-area">
-                <div className="container-fluid">
+                <div className="container">
                     <div className="row align-items-center">
-                        <div className="col-xl-3 col-lg-2">
+                        <div className="col-md-1">
                             <div className="logo">
                                 <a href="/">Factile</a>
                             </div>
                         </div>
-                        <div className="col-xl-6 col-lg-7">
+                        <div className="col-md-9">
                             <div className="main-menu d-none d-lg-block">
                                 <nav>
                                     <ul id="navigation">
@@ -53,7 +53,7 @@ export default function Header() {
                                 </nav>
                             </div>
                         </div>
-                        <div className="col-xl-3 col-lg-3 d-none d-lg-block">
+                        <div className="col-md-2 d-none d-lg-block">
                             <div className="Appointment">
                                 <div className="book_btn d-none d-lg-block">
                                     {!isLoggedIn() && 

@@ -39,4 +39,14 @@ describe('db tests', () => {
             done();
         });
     });
+
+    test('save', done => {
+        const replaceStub = sinon.stub(mongodb.Collection.prototype, 'replaceOne').resolves({});
+
+        db.save('somecollection', {a: 1, b: 2}, 'a').then(d => {
+            expect(d).not.toBeNull();
+            replaceStub.restore();
+            done();
+        });
+    });
 });

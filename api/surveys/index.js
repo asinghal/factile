@@ -1,4 +1,5 @@
 const db = require('../db');
+const uuid = require('uuid').v1;
 
 const findByOwner = (owner) => db.find('surveys', { owner }, {}, { name: 1, surveyId: 1, status: 1 });
 
@@ -30,4 +31,16 @@ const groupByPages = (survey) => {
     return another;
 };
 
-module.exports = { findByOwner, findById, groupByPages };
+const generateNewSurveyId = () => uuid();
+
+const saveOrUpdate = (owner, survey) => {
+    if (!survey.surveyId) {
+        survey.surveyId = generateNewSurveyId();
+    }
+
+    survey.owner = survey.owner || [ owner ];
+
+    return db.save('surveys', survey, 'surveyId');
+}
+
+module.exports = { findByOwner, findById, groupByPages, saveOrUpdate };

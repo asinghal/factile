@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+
 const localDB = {
     DB: {},
     getItem: (key) => localDB.DB[key],
@@ -11,7 +13,18 @@ const store = window.sessionStorage || window.localStorage || localDB;
 
 const getToken = () => store.getItem(TOKEN_KEY);
 
-const isLoggedIn = () => !!getToken();
+const isLoggedIn = () => {
+    const token = getToken();
+
+    const decoded = jwt.decode(token);
+    const expired = decoded && (Date.now() >= decoded.exp * 1000);
+
+    if (expired) {
+        removeToken();
+    }
+
+    return !!decoded && !expired;
+};
 
 const getAuthHeader = () => new Headers({ 'Authorization': 'Bearer ' + getToken() })
 

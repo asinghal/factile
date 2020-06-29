@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { isLoggedIn } from '../../authentication.js';
+import { isLoggedIn, removeToken } from '../../authentication.js';
 
 import './header.css';
 
@@ -13,6 +13,9 @@ const SecureAccess = (props) => {
 };
 
 export default function Header() {
+
+    const Logout = () => removeToken();
+    
     return (
         <header>
         <div className="header">
@@ -53,7 +56,12 @@ export default function Header() {
                         <div className="col-xl-3 col-lg-3 d-none d-lg-block">
                             <div className="Appointment">
                                 <div className="book_btn d-none d-lg-block">
-                                    <a href="/">Login/ Logout</a>
+                                    {!isLoggedIn() && 
+                                        <Link to="/"><i className="fas fa-user"></i>&nbsp;Login</Link>
+                                    }
+                                    {isLoggedIn() && 
+                                        <Link to="/" onClick={Logout}><i className="fas fa-user"></i>&nbsp;Logout</Link>
+                                    }
                                 </div>
                             </div>
                         </div>

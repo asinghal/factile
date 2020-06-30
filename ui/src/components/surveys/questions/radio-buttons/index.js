@@ -18,13 +18,18 @@ export default function RadioButtons({ question }) {
                         <input type="radio" name={question.questionId} value={option.value} id={getKey(question, option)} /><label htmlFor={getKey(question, option)}>{option.texts[0].text}</label>
                     </div>
                 ))}
+
+                {question.hasOther &&
+                    <div>
+                        <input type="radio" name={question.questionId} value='other' id={getKey(question, 'other')} /> <label htmlFor={getKey(question, 'other')}>{question.otherBox[0].text}</label>
+                    </div>
+                }
             </div>
 
-            {question.hasOther && 
-                <div>
-                    <div>{question.otherBox[0].text}</div>
-                    <div><input type="text" name={question.questionId + "-other"} /></div>
-                </div>
+            {question.hasOther &&
+            <div>
+                <div><input type="text" name={question.questionId + "-other"} /></div>
+            </div>
             }
         </div>
     );

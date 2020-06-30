@@ -13,10 +13,14 @@ export default function Dropdown({ question }) {
                     {question.options.map(option => (
                         <option key={question.questionId + "-" + option.value} value={option.value}>{option.texts[0].text}</option>
                     ))}
+
+                    {question.hasOther &&
+                        <option value='other'></option>
+                    }
                 </select>
             </div>
 
-            {question.hasOther && 
+            {question.hasOther &&
                 <div>
                     <div>{question.otherBox[0].text}</div>
                     <div><input type="text" name={question.questionId + "-other"} /></div>

@@ -18,12 +18,17 @@ export default function Checkboxes({ question }) {
                         <input type="checkbox" name={question.questionId} value={option.value} id={getKey(question, option)} /> <label htmlFor={getKey(question, option)}>{option.texts[0].text}</label>
                     </div>
                 ))}
-            </div>
-            {question.hasOther && 
+
+                {question.hasOther &&
                 <div>
-                    <div>{question.otherBox[0].text}</div>
-                    <div><input type="text" name={question.questionId + "-other"} /></div>
+                    <input type="checkbox" name={question.questionId} value='other' id={getKey(question, 'other')} /> <label htmlFor={getKey(question, 'other')}>{question.otherBox[0].text}</label>
                 </div>
+                }
+            </div>
+            {question.hasOther &&
+            <div>
+                <div><input type="text" name={question.questionId + "-other"} /></div>
+            </div>
             }
         </div>
     );

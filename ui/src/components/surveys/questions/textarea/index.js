@@ -1,4 +1,5 @@
 import React from "react";
+import '../../../forms/inputs.css';
 
 export default function TextArea({ question }) {
     if (question.qType !== 'textarea') {
@@ -6,9 +7,9 @@ export default function TextArea({ question }) {
     }
 
     return (
-        <div>
+        <div className="form-group field">
             <div><i className="fas fa-chevron-circle-right"></i>&nbsp;<strong dangerouslySetInnerHTML={{ __html: question.texts[0].text }}></strong></div>
-            <div><textarea name={question.questionId} rows="5" cols="100" /></div>
+            <div><textarea name={question.questionId} rows="5" /></div>
         </div>
     );
 };

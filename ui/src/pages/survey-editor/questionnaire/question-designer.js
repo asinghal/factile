@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { questionTypes } from './question-types.js';
 
+import '../../../components/forms/choices.css';
+import '../../../components/forms/inputs.css';
+
 import './questionnaire.css';
 
 const toTextArray = (text, language) => ({ texts: [ { text, language } ]});
@@ -18,7 +21,7 @@ const prefixes = {
 
 const foldTexts = (arr) => arr ? arr.map((item) => item.texts[0].text).reduce((s, o) => s + "\n" + o, "").trim() : "";
 
-export default function QuestionDesigner({question, language}) {
+export default function QuestionDesigner({question, questionId, language}) {
     const qTypeMetaInfo = questionTypes.find(q => q.value === question.qType);
     const text = question.texts && question.texts.length > 0 ? question.texts[0].text : '';
     const otherBox = question.otherBox && question.otherBox.length > 0 ? question.otherBox[0].text : '';
@@ -80,7 +83,9 @@ export default function QuestionDesigner({question, language}) {
 
             <div className="row">
                 <div className="col-md-12">
-                    <input type="checkbox" name="mandatory" value="true" defaultChecked={questionData.mandatory} onChange={handleChangeCheckbox} /><label htmlFor="mandatory">Mandatory?</label>
+                    <div className="choices">
+                        <input type="checkbox" id={questionId + "-mandatory"} name="mandatory" value="true" defaultChecked={questionData.mandatory} onChange={handleChangeCheckbox} /><label htmlFor={questionId + "-mandatory"}>Mandatory?</label>
+                    </div>
                 </div>
             </div>
 
@@ -88,7 +93,9 @@ export default function QuestionDesigner({question, language}) {
             <>
                 <div className="row">
                     <div className="col-md-12">
-                        <input type="checkbox" name="hasOther" value="true" defaultChecked={questionData.hasOther} onChange={handleChangeCheckbox} /><label htmlFor="hasOther">Add an "other" option and text field for user to answer?</label>
+                        <div className="choices">
+                            <input type="checkbox" id={questionId + "-hasOther"} name="hasOther" value="true" defaultChecked={questionData.hasOther} onChange={handleChangeCheckbox} /><label htmlFor={questionId + "-hasOther"}>Add an "other" option and text field for user to answer?</label>
+                        </div>
                     </div>
                 </div>
                 {questionData.hasOther &&

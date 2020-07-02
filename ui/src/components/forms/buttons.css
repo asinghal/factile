@@ -1,0 +1,17 @@
+button.base-btn {
+    height: 3em;
+    padding: 5px 10px;
+    min-width: 20em;
+}
+
+button.submit-btn {
+    background-color: #4CA9FD;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+}
+
+button.cancel-btn {
+    background-color: #FFFFFF;
+    border: 1px solid #4CA9FD;
+    color: #4CA9FD;
+}

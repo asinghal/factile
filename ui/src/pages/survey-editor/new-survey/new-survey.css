@@ -2,78 +2,9 @@
     margin: 1em 0;
 }
 
-
 .new-survey button {
     background-color: #4CA9FD;
     border: 1px solid #FFFFFF;
     color: #FFFFFF;
     height: 3em;
-}
-
-.new-survey .form-group {
-    position: relative;
-    padding: 15px 0 0;
-    margin-top: 10px;
-    width: 50%;
-}
-
-.new-survey .form-field {
-    font-family: inherit;
-    width: 100%;
-    border: 0;
-    border-bottom: 1px solid;
-    outline: 0;
-    font-size: 1.3rem;
-    padding: 7px 0;
-    background: transparent;
-    transition: border-color 0.2s;
-}
-
-.new-survey .form-field::placeholder {
-    color: transparent;
-}
-  
-.new-survey .form-field:placeholder-shown ~ .form-label {
-    font-size: 1.3rem;
-    cursor: text;
-    top: 20px;
-}
-
-.new-survey .form-label {
-    position: absolute;
-    top: 0;
-    display: block;
-    transition: 0.2s;
-    font-size: 1rem;
-    color: #9b9b9b;
-}
-  
-.new-survey .form-field:focus ~ .form-label {
-    position: absolute;
-    top: 0;
-    display: block;
-    transition: 0.2s;
-    font-size: 1rem;
-    color: #4CA9FD;
-    font-weight:700;    
-}
-
-.new-survey .form-field:focus {
-    padding-bottom: 6px;  
-    font-weight: 700;
-    border-width: 3px;
-    border-image: linear-gradient(to right, #4CA9FD,#4CA9FD);
-    border-image-slice: 1;
-}
-
-/* reset input */
-.new-survey .form-field:required, .new-survey .form-field:invalid { box-shadow:none; }
-
-.new-survey textarea {
-    border: 0; 
-    border-bottom: 1px solid #888; 
-    outline: none;
-    overflow: auto;
-    resize: none;
-    width: 100%;
 }

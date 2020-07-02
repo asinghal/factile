@@ -5,6 +5,8 @@ import { useParams, useHistory } from "react-router-dom";
 
 import Question from '../../components/surveys/questions/index.js';
 
+import '../../components/forms/buttons.css';
+
 const Page = ({ page }) => (
     <div>
         {page.questions && page.questions.map(q =>
@@ -52,7 +54,7 @@ export default function PreviewSurvey() {
                 {pageNum > 0 && survey.pages && survey.pages[pageNum-1] && 
                 <div>
                     <Page page={survey.pages[pageNum-1]} />
-                    <button onClick={(event) => NextPage(event)}>Next</button>
+                    <button onClick={(event) => NextPage(event)} className="base-btn submit-btn">Next</button>
                 </div>
                 }
             </div>

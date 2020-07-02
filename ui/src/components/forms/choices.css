@@ -1,12 +1,11 @@
-.radio {
-    background-color: #fff;
+.choices {
     display: block;
     margin: 10px 0;
     position: relative;
 }
 
-.radio label {
-    padding: 12px 60px;
+.choices label {
+    padding: 12px 50px;
     width: 100%;
     display: block;
     text-align: left;
@@ -15,9 +14,10 @@
     z-index: 2;
     transition: color 200ms ease-in;
     overflow: hidden;
+    font-weight: 400;
 }
 
-.radio label:after {
+.choices label:after {
     width: 32px;
     height: 32px;
     content: '';
@@ -26,7 +26,6 @@
     background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5.414 11L4 12.414l5.414 5.414L20.828 6.414 19.414 5l-10 10z' fill='%23fff' fill-rule='nonzero'/%3E%3C/svg%3E ");
     background-repeat: no-repeat;
     background-position: 2px 3px;
-    border-radius: 50%;
     z-index: 2;
     position: absolute;
     left: 0px;
@@ -36,12 +35,17 @@
     transition: all 200ms ease-in;
 }
 
-.radio input:checked ~ label:after {
+.choices.radio label:after {
+    border-radius: 50%;
+}
+
+.choices input:checked ~ label:after {
     background-color: #4CA9FD;
     border-color: #4CA9FD;
 }
 
-.radio input[type="radio"] {
+.choices input[type="checkbox"],
+.choices input[type="radio"] {
     width: 32px;
     height: 32px;
     order: 1;

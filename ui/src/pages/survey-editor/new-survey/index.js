@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
+import '../../../components/forms/inputs.css';
 import './new-survey.css';
 
 import { save } from './api.js';

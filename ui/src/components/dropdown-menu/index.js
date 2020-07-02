@@ -2,18 +2,18 @@ import React, { useState } from "react";
 
 import './dropdown-menu.css';
 
-export default function DropdownMenu({ options, onSelection }) {
+export default function DropdownMenu({ buttonText, options, onSelection }) {
     const [menuDisplayed, setMenuDisplayed] = useState(false);
     const selectOption = (value) => {
         onSelection(value);
-        ToggleQuestionsMenu();
+        ToggleMenu();
     };
 
-    const ToggleQuestionsMenu = () => setMenuDisplayed(!menuDisplayed);
+    const ToggleMenu = () => setMenuDisplayed(!menuDisplayed);
 
     return (
         <div className="button-dropdown">
-            <button onClick={ToggleQuestionsMenu}>Add a question</button>
+            <button onClick={ToggleMenu}>{buttonText}</button>
             {menuDisplayed && 
                 <div className="button-dropdown-menu">
                     <ul>

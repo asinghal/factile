@@ -1,6 +1,6 @@
 import React from "react";
 
-import './checkbox.css';
+import '../../../forms/choices.css';
 
 export default function Checkboxes({ question }) {
     if (question.qType !== 'checkbox') {
@@ -10,7 +10,7 @@ export default function Checkboxes({ question }) {
     const getKey = (question, option) => question.questionId + "-" + option.value;
 
     return (
-        <div className="checkbox">
+        <div className="choices checkbox">
             <div><i className="fas fa-chevron-circle-right"></i>&nbsp;<strong dangerouslySetInnerHTML={{ __html: question.texts[0].text }}></strong></div>
             <div>
                 {question.options.map(option => (

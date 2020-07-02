@@ -35,7 +35,7 @@ export default function Questionnaire() {
 
             <div className="row">
                 <div className="offset-8 col-md-2">
-                    <DropdownMenu options={questionTypes} onSelection={(value) => onSelection(value)} />
+                    <DropdownMenu buttonText="Add a question" options={questionTypes} onSelection={(value) => onSelection(value)} />
                 </div>
                 <div className="col-md-2">
                     <button onClick={SaveDetails}>Save Details</button>
@@ -43,7 +43,7 @@ export default function Questionnaire() {
             </div>
             <div>
             {survey.questions && survey.questions.map((question, index) => 
-                <QuestionDesigner key={index} question={question} language="1" />
+                <QuestionDesigner key={index} questionId={question.questionId || ('q' + (index + 1))} question={question} language="1" />
             )}
             </div>
         </div>

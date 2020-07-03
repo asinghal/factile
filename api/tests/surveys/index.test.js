@@ -181,6 +181,7 @@ describe('survey model tests', () => {
             expect(survey.owner).not.toBeUndefined();
             expect(survey.owner.length).toBe(1);
             expect(survey.owner[0]).toBe(owner);
+            expect(survey.history).not.toBeNull();
             done();
         });
     });
@@ -198,6 +199,7 @@ describe('survey model tests', () => {
             expect(survey.owner).not.toBeUndefined();
             expect(survey.owner.length).toBe(1);
             expect(survey.owner[0]).toBe(anotherOwner);
+            expect(survey.history).not.toBeNull();
             done();
         });
     });
@@ -211,6 +213,7 @@ describe('survey model tests', () => {
 
         surveys.saveOrUpdate(owner, survey).then(d => {
             expect(d).toBe("ok");
+            expect(survey.history).not.toBeNull();
             done();
         });
     });
@@ -226,7 +229,20 @@ describe('survey model tests', () => {
             expect(d).toBe("ok");
             expect(survey.questions[0].questionId).toBe('q0001');
             expect(survey.questions[1].questionId).toBe('q0002');
+            expect(survey.history).not.toBeNull();
             done();
         });
+    });
+
+    test('recordChangeHistory', done => {
+        const survey = {};
+        const owner = 'a@a.com';
+        const history = surveys.recordChangeHistory(survey, owner);
+        expect(history).not.toBeNull();
+        expect(history.created_at).not.toBeUndefined();
+        expect(history.created_by).toBe(owner);
+        expect(history.updated_at).not.toBeUndefined();
+        expect(history.updated_by).toBe(owner);
+        done();
     });
 });

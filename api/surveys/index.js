@@ -1,7 +1,7 @@
 const db = require('../db');
 const uuid = require('uuid').v1;
 
-const findByOwner = (owner) => db.find('surveys', { owner }, {}, { name: 1, surveyId: 1, status: 1 });
+const findByOwner = (owner) => db.find('surveys', { owner }, {}, { name: 1, surveyId: 1, status: 1, history: 1 });
 
 const findById = (owner, surveyId) => db.findOne('surveys', { owner, surveyId });
 
@@ -43,12 +43,22 @@ const padLeft = (num, size) => {
     return s;
 }
 
+const recordChangeHistory = (survey, email) => {
+    const now = new Date();
+    let history = survey.history || { created_at: now, created_by: email };
+    const updated = { updated_at: now, updated_by: email };
+    history = { ...history, ...updated };
+    return history;
+};
+
 const saveOrUpdate = (owner, survey) => {
     if (!survey.surveyId) {
         survey.surveyId = generateNewSurveyId();
     }
 
     survey.owner = survey.owner || [ owner ];
+    survey.status = survey.status || 'Draft';
+    survey.history = recordChangeHistory(survey, owner);
 
     if (survey.questions) {
         const baseQuestionNum = findMaxQuestionId(survey.questions) + 1;
@@ -64,4 +74,4 @@ const saveOrUpdate = (owner, survey) => {
     return db.save('surveys', survey, 'surveyId');
 }
 
-module.exports = { findByOwner, findById, groupByPages, saveOrUpdate };
+module.exports = { findByOwner, findById, groupByPages, saveOrUpdate, recordChangeHistory };

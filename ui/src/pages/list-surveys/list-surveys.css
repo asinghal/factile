@@ -1,0 +1,13 @@
+.my-surveys .survey-header-row {
+    margin: 10px 5px;
+    padding: 5px;
+    font-weight: 900;
+    border-bottom: 1px solid #aed0f0;
+}
+
+.my-surveys .survey-row {
+    margin: 10px 5px;
+    padding: 5px;
+    background-color: #E9F4FE;
+    border-bottom: 1px dotted #aed0f0;
+}

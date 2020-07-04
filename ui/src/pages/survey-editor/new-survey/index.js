@@ -5,6 +5,7 @@ import '../../../components/forms/inputs.css';
 import './new-survey.css';
 
 import { save } from './api.js';
+import { languages } from './languages.js';
 
 export default function NewSurvey() {
     const [survey, setSurvey] = useState({ layout: {} });
@@ -48,7 +49,15 @@ export default function NewSurvey() {
 
             <div className="row">
                 <div className="col-md-12">
-                    Language
+                    <div className="form-group field">
+                        <select id="language" name="language" className="form-field" onChange={handleInputChange}>
+                            <option value=""></option>
+                            {languages.map((language, index) => 
+                            <option key={index} value={language.value}>{language.name}</option>
+                            )}
+                        </select>
+                        <label htmlFor="language" className="form-label">Language</label>
+                    </div>
                 </div>
             </div>
 
@@ -60,7 +69,13 @@ export default function NewSurvey() {
 
             <div className="row">
                 <div className="col-md-12">
-                    Share mode
+                    <div>
+                        <strong>Who can take this survey?</strong>
+                    </div>
+                    <div className="choices radio">
+                        <div><input name="accessType" type="radio" id="openAccess" value="open" onChange={handleInputChange} /><label htmlFor="openAccess" >Anyone with the link</label></div>
+                        <div><input name="accessType" type="radio" id="emailAccess" value="email" onChange={handleInputChange} /><label htmlFor="emailAccess" >By invitation</label></div>
+                    </div>
                 </div>
             </div>
 

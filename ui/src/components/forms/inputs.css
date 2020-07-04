@@ -17,6 +17,12 @@
     transition: border-color 0.2s;
 }
 
+input[type="color"].form-field {
+    padding: 0;
+    height: 50px;
+    cursor: pointer;
+}
+
 .form-field::placeholder {
     color: transparent;
 }

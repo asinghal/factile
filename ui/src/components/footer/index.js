@@ -17,8 +17,7 @@ export default function Footer() {
                                 </a>
                             </div>
                             <p>
-                                Firmament morning sixth subdue darkness
-                                creeping gathered divide.
+                                Free and opensource survey tool. Made with <i className="fa fa-heart-o" aria-hidden="true"></i> by <a href="http://asinghal.github.io/" target="_blank">Aishwarya Singhal</a> 
                             </p>
                             <div className="social_links">
                                 <ul>
@@ -45,7 +44,7 @@ export default function Footer() {
                     <div className="col-xl-2 offset-xl-1 col-md-6 col-lg-3">
                         <div className="footer_widget">
                             <h3 className="footer_title">
-                                    Services
+                                    About Factile
                             </h3>
                             <ul>
                                 <li><Link to="/static/features">Features</Link></li>

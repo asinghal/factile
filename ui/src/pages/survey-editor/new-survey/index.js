@@ -8,8 +8,12 @@ import { save } from './api.js';
 import { languages } from './languages.js';
 
 export default function NewSurvey() {
-    const [survey, setSurvey] = useState({ layout: {} });
+    const [survey, setSurvey] = useState({ language: '1', layout: {} });
     const history = useHistory();
+
+
+    const defaultBgColor = '#FFFFFF';
+    const defaultTextColor = '#333333';
 
     const handleInputChange = (event) => {
         event.persist();
@@ -21,6 +25,12 @@ export default function NewSurvey() {
         const layout = {...survey.layout, [event.target.name]: event.target.value};
         setSurvey(survey => ({...survey, layout}));
     };
+
+    const handleChangeLayoutCheckbox = (event) => {
+        event.persist();
+        const layout = {...survey.layout, [event.target.name]: !survey.layout[event.target.name]};
+        setSurvey(survey => ({...survey, layout}));
+    }
 
     const SaveDetails = () => {
         save(survey).then((d) => {
@@ -50,8 +60,7 @@ export default function NewSurvey() {
             <div className="row">
                 <div className="col-md-12">
                     <div className="form-group field">
-                        <select id="language" name="language" className="form-field" onChange={handleInputChange}>
-                            <option value=""></option>
+                        <select id="language" name="language" value={survey.language} className="form-field" onChange={handleInputChange}>
                             {languages.map((language, index) => 
                             <option key={index} value={language.value}>{language.name}</option>
                             )}
@@ -63,7 +72,10 @@ export default function NewSurvey() {
 
             <div className="row">
                 <div className="col-md-12">
-                    Logo image
+                    <div className="form-group field">
+                        <input type="file" className="form-field" name="logoFile" />
+                        <label htmlFor="logoFile" className="form-label">Logo image</label>
+                    </div>
                 </div>
             </div>
 
@@ -81,20 +93,29 @@ export default function NewSurvey() {
 
             <div className="row">
                 <div className="col-md-12">
-                    Logo position
+                    <div>
+                        <strong>Logo position</strong>
+                    </div>
+                    <div className="choices radio">
+                        <div><input name="logoAlignment" type="radio" id="leftPos" value="left" onChange={handleInputChange} /><label htmlFor="leftPos" >Left</label></div>
+                        <div><input name="logoAlignment" type="radio" id="centerPos" value="center" onChange={handleInputChange} /><label htmlFor="centerPos" >Center</label></div>
+                        <div><input name="logoAlignment" type="radio" id="rightPos" value="right" onChange={handleInputChange} /><label htmlFor="rightPos" >Right</label></div>
+                    </div>
                 </div>
             </div>
 
             <div className="row">
                 <div className="col-md-12">
-                    Show Progress Bar
+                    <div className="choices">
+                        <input type="checkbox" id="includeProgress" name="includeProgress" value="true" defaultChecked={survey.layout.includeProgress} onChange={handleChangeLayoutCheckbox} /><label htmlFor="includeProgress">Show Progress Bar</label>
+                    </div>
                 </div>
             </div>
 
             <div className="row">
                 <div className="col-md-12">
                     <div className="form-group field">
-                        <input type="text" name="bodycolor" className="form-field" value={survey.layout.bodycolor || ''} onChange={handleLayoutInputChange} placeholder="Page Background Color" />
+                        <input type="color" className="form-field" name="bodycolor" value={survey.layout.bodycolor || defaultBgColor} onChange={handleLayoutInputChange} placeholder="Page Background Color" />
                         <label htmlFor="bodycolor" className="form-label">Page Background Color</label>
                     </div>
                 </div>
@@ -103,7 +124,7 @@ export default function NewSurvey() {
             <div className="row">
                 <div className="col-md-12">
                     <div className="form-group field">
-                        <input type="text" name="containercolor" className="form-field" value={survey.layout.containercolor || ''} onChange={handleLayoutInputChange} placeholder="Survey Name" />
+                        <input type="color" className="form-field" name="containercolor" value={survey.layout.containercolor || defaultBgColor} onChange={handleLayoutInputChange} placeholder="Survey Name" />
                         <label htmlFor="containercolor" className="form-label">Survey Box Color</label>
                     </div>
                 </div>
@@ -112,7 +133,7 @@ export default function NewSurvey() {
             <div className="row">
                 <div className="col-md-12">
                     <div className="form-group field">
-                        <input type="text" name="logoBgColor" className="form-field" value={survey.layout.logoBgColor || ''} onChange={handleLayoutInputChange} placeholder="Logo Background Color" />
+                        <input type="color" className="form-field" name="logoBgColor" value={survey.layout.logoBgColor || defaultBgColor} onChange={handleLayoutInputChange} placeholder="Logo Background Color" />
                         <label htmlFor="logoBgColor" className="form-label">Logo Background Color</label>
                     </div>
                 </div>
@@ -121,7 +142,7 @@ export default function NewSurvey() {
             <div className="row">
                 <div className="col-md-12">
                     <div className="form-group field">
-                        <input type="text" name="textColor" className="form-field" value={survey.layout.textColor || ''} onChange={handleLayoutInputChange} placeholder="Text Color" />
+                        <input type="color" className="form-field" name="textColor" value={survey.layout.textColor || defaultTextColor} onChange={handleLayoutInputChange} placeholder="Text Color" />
                         <label htmlFor="textColor" className="form-label">Text Color</label>
                     </div>
                 </div>

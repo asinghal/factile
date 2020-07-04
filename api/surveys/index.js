@@ -51,6 +51,9 @@ const recordChangeHistory = (survey, email) => {
     return history;
 };
 
+const generateRandomString = () => Math.random().toString(36).substring(2, 10);
+const generateHashString = () => ['', ''].map(generateRandomString).join('');
+
 const saveOrUpdate = (owner, survey) => {
     if (!survey.surveyId) {
         survey.surveyId = generateNewSurveyId();
@@ -59,6 +62,7 @@ const saveOrUpdate = (owner, survey) => {
     survey.owner = survey.owner || [ owner ];
     survey.status = survey.status || 'Draft';
     survey.history = recordChangeHistory(survey, owner);
+    survey.hash_string = survey.hash_string || generateHashString();
 
     if (survey.questions) {
         const baseQuestionNum = findMaxQuestionId(survey.questions) + 1;

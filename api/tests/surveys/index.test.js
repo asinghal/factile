@@ -234,6 +234,39 @@ describe('survey model tests', () => {
         });
     });
 
+    test('insert a survey and add a hash_string', done => {
+        const name = 'Test Survey';
+        const owner = 'a@a.com';
+        const survey = { _id: new ObjectID(), name, owner };
+        mockDB.expects('save').once().resolves("ok");
+
+        surveys.saveOrUpdate(owner, survey).then(d => {
+            expect(d).toBe("ok");
+            expect(survey.surveyId).not.toBeUndefined();
+            expect(survey.hash_string).not.toBeUndefined();
+            expect(survey.hash_string).not.toBeNull();
+            expect(survey.hash_string.length).toBe(16);
+            expect(survey.history).not.toBeNull();
+            done();
+        });
+    });
+
+    test('update a survey and retain the hash_string', done => {
+        const name = 'Test Survey';
+        const surveyId = 'abc1-2345-6789';
+        const owner = 'a@a.com';
+        const hash_string = 'abcdefgh01234567'
+        const survey = { _id: new ObjectID(), name, surveyId, owner, hash_string};
+        mockDB.expects('save').once().resolves("ok");
+
+        surveys.saveOrUpdate(owner, survey).then(d => {
+            expect(d).toBe("ok");
+            expect(survey.hash_string).toBe(hash_string);
+            expect(survey.history).not.toBeNull();
+            done();
+        });
+    });
+
     test('recordChangeHistory', done => {
         const survey = {};
         const owner = 'a@a.com';

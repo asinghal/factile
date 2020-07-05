@@ -58,16 +58,18 @@ export default function QuestionDesigner({question, questionId, language, delete
                 <div className="col-sm-1 col-md-1">
                     <a className="delete-btn" onClick={deleteQuestion} title="delete this question" ><i className="far fa-trash-alt"></i></a>
                 </div>
-                </div>
-            <div className="row">
-                <div className="col-md-12">
-                    <div className="form-group field">
-                        <input type="text" name="text" className="form-field" value={questionData.text} onChange={handleInputChange} placeholder="Question text" />
-                        <label className="form-label" htmlFor="text">Question text</label>
+            </div>
+            {question.qType !== 'page' &&
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="form-group field">
+                            <input type="text" name="text" className="form-field" value={questionData.text} onChange={handleInputChange} placeholder="Question text" />
+                            <label className="form-label" htmlFor="text">Question text</label>
+                        </div>
                     </div>
                 </div>
-            </div>
-            {qTypeMetaInfo.options && 
+            }
+            {qTypeMetaInfo.options &&
                 <div className="row">
                     <div className="col-md-12">
                         <div className="form-group field">
@@ -77,7 +79,7 @@ export default function QuestionDesigner({question, questionId, language, delete
                     </div>
                 </div>
             }
-            {qTypeMetaInfo.dimensions && 
+            {qTypeMetaInfo.dimensions &&
             <div className="row">
                 <div className="col-md-12">
                     <div className="form-group field">
@@ -88,14 +90,15 @@ export default function QuestionDesigner({question, questionId, language, delete
             </div>
             }
 
-            <div className="row">
-                <div className="col-md-12">
-                    <div className="choices">
-                        <input type="checkbox" id={questionId + "-mandatory"} name="mandatory" value="true" defaultChecked={questionData.mandatory} onChange={handleChangeCheckbox} /><label htmlFor={questionId + "-mandatory"}>Mandatory?</label>
+            {question.qType !== 'page' &&
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="choices">
+                            <input type="checkbox" id={questionId + "-mandatory"} name="mandatory" value="true" defaultChecked={questionData.mandatory} onChange={handleChangeCheckbox} /><label htmlFor={questionId + "-mandatory"}>Mandatory?</label>
+                        </div>
                     </div>
                 </div>
-            </div>
-
+            }
             {qTypeMetaInfo.options &&
             <>
                 <div className="row">

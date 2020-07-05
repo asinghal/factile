@@ -19,6 +19,11 @@ export default function ListSurveys() {
             
             <div className="row">
                 <div className="col-md-12">
+                    <Link to={"/surveys/" + survey.surveyId + "/questions"}>Questions Editor</Link>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-md-12">
                     <Link to={"/surveys/" + survey.surveyId + "/preview"}>Preview</Link>
                 </div>
             </div>

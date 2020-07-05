@@ -21,7 +21,7 @@ const prefixes = {
 
 const foldTexts = (arr) => arr ? arr.map((item) => item.texts[0].text).reduce((s, o) => s + "\n" + o, "").trim() : "";
 
-export default function QuestionDesigner({question, questionId, language}) {
+export default function QuestionDesigner({question, questionId, language, deleteQuestion}) {
     const qTypeMetaInfo = questionTypes.find(q => q.value === question.qType);
     const text = question.texts && question.texts.length > 0 ? question.texts[0].text : '';
     const otherBox = question.otherBox && question.otherBox.length > 0 ? question.otherBox[0].text : '';
@@ -51,7 +51,14 @@ export default function QuestionDesigner({question, questionId, language}) {
 
     return (
         <div className="question-block">
-            <h4>{qTypeMetaInfo.name}</h4>
+            <div className="row">
+                <div className="col-sm-11 col-md-11">
+                <h4>{qTypeMetaInfo.name}</h4>
+                </div>
+                <div className="col-sm-1 col-md-1">
+                    <a className="delete-btn" onClick={deleteQuestion} title="delete this question" ><i className="far fa-trash-alt"></i></a>
+                </div>
+                </div>
             <div className="row">
                 <div className="col-md-12">
                     <div className="form-group field">

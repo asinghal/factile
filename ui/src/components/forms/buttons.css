@@ -1,17 +1,44 @@
 button.base-btn {
-    height: 3em;
-    padding: 5px 10px;
     min-width: 20em;
+
+    display:inline-block;
+    padding:0.35em 1.2em;
+    margin:0 0.3em 0.3em 0;
+    border: 0.1em solid #FFFFFF;
+    border-radius:0.12em;
+    box-sizing: border-box;
+    text-decoration:none;
+    text-align:center;
+    transition: all 0.2s;
 }
 
-button.submit-btn {
+button.submit-btn:hover {
     background-color: #4CA9FD;
-    border: 1px solid #FFFFFF;
+    border-color: #FFFFFF;
     color: #FFFFFF;
 }
 
-button.cancel-btn {
+button.submit-btn {
     background-color: #FFFFFF;
-    border: 1px solid #4CA9FD;
+    border-color: #4CA9FD;
     color: #4CA9FD;
+}
+
+button.secondary-btn:hover {
+    background-color: #4CA9FD;
+    border-color: #FFFFFF;
+    color: #FFFFFF;
+}
+
+button.secondary-btn {
+    background-color: #E9F4FE;
+    border-color: #4CA9FD;
+    color: #4CA9FD;
+}
+
+@media all and (max-width:30em){
+    .base-btn {
+      display:block;
+      margin:0.4em auto;
+    }
 }

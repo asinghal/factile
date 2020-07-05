@@ -2,24 +2,18 @@
     position: relative;
 }
 
-.button-dropdown button {
-    background-color: #4CA9FD;
-    border: 1px solid #FFFFFF;
-    color: #FFFFFF;
-    height: 3em;
-}
-
 .button-dropdown-menu {
     position: absolute;
     background: #1F1F1F;
     color: #C7C7C7;
-    z-index: 2;
+    z-index: 3;
     opacity: 1;
 }
 
 .button-dropdown-menu ul {
     list-style-type: none;
     padding: 1em;
+    min-width: 20em;
 }
 
 .button-dropdown-menu ul li {

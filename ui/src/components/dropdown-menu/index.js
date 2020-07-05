@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
 import './dropdown-menu.css';
+import '../forms/buttons.css';
+
 
 export default function DropdownMenu({ buttonText, options, onSelection }) {
     const [menuDisplayed, setMenuDisplayed] = useState(false);
@@ -13,7 +15,7 @@ export default function DropdownMenu({ buttonText, options, onSelection }) {
 
     return (
         <div className="button-dropdown">
-            <button onClick={ToggleMenu}>{buttonText}</button>
+            <button className="base-btn secondary-btn" onClick={ToggleMenu}>{buttonText}</button>
             {menuDisplayed && 
                 <div className="button-dropdown-menu">
                     <ul>

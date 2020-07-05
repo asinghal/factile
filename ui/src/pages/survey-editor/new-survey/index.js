@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import '../../../components/forms/inputs.css';
+import '../../../components/forms/buttons.css';
 import './new-survey.css';
 
 import { save } from './api.js';
@@ -45,7 +46,7 @@ export default function NewSurvey() {
 
             <div className="row">
                 <div className="offset-10 col-md-2">
-                    <button onClick={SaveDetails}>Save Details</button>
+                    <button className="base-btn submit-btn" onClick={SaveDetails}>Save Details</button>
                 </div>
             </div>
             <div className="row">

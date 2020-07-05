@@ -18,7 +18,7 @@ import {
   import Features from './pages/static/features/index.js';
   import TermsAndConditions from './pages/static/termsandconditions/index.js';
 
-  export default function Routes() {
+  export default function Routes(userLoggedIn, setUserLoggedIn) {
     return (
     <div>
         {/*
@@ -30,7 +30,7 @@ import {
         */}
         <Switch>
             <Route exact path="/">
-                <Home />
+                <Home setUserLoggedIn={setUserLoggedIn} />
             </Route>
             <Route exact path="/surveys">
                 <ListSurveys />

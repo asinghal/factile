@@ -5,7 +5,7 @@ import { login } from '../api.js';
 
 import './login-form.css';
 
-export default function LoginForm() {
+export default function LoginForm({setUserLoggedIn}) {
     const [user, setUser] = useState({ email: '', password: ''});
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -23,6 +23,7 @@ export default function LoginForm() {
                 return;
             }
             setErrorMessage('');
+            setUserLoggedIn(true);
             return history.replace('/surveys')
         });
         event.preventDefault();

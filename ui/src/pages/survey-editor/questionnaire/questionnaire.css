@@ -8,3 +8,19 @@
 .delete-btn {
     cursor: pointer;
 }
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #333333;
+    opacity: 0.6;
+    z-index: 99;
+    visibility: hidden;
+}
+
+.overlay.visible {
+    visibility: visible;
+}

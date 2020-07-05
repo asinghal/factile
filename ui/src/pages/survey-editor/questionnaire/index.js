@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
+import classNames from "classnames";
 
 import DropdownMenu from '../../../components/dropdown-menu';
 import QuestionDesigner from "./question-designer";
@@ -8,14 +9,20 @@ import { save, findSurvey } from './api.js';
 import { questionTypes } from './question-types.js';
 
 import '../../../components/forms/buttons.css';
+import './questionnaire.css';
 
 export default function Questionnaire() {
     const [survey, setSurvey] = useState({});
+    const [overlayVisible, setOverlayVisibility] = useState(false);
     const { id } = useParams();
     const history = useHistory();
 
     const SaveDetails = () => {
-        save(survey);
+        setOverlayVisibility(true);
+        save(survey).then(() => setTimeout(() => {
+            // slow down the save to avoid flicker on screen that may only confuse the user
+            setOverlayVisibility(false);
+        }, 300));
     };
 
     const onSelection = (value) => {
@@ -40,6 +47,8 @@ export default function Questionnaire() {
     return (
         <div className="new-survey container">
             <h2>{survey.name}</h2>
+
+            <div className={classNames('overlay', { 'visible': overlayVisible })}></div>
 
             <div className="row">
                 <div className="col-md-6">

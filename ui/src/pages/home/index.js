@@ -3,7 +3,7 @@ import LoginForm from './login-form/login-form.js';
 
 import './home.css';
 
-export default function Home() {
+export default function Home({setUserLoggedIn}) {
     return (
         <div>
             <div className="hero">
@@ -17,7 +17,7 @@ export default function Home() {
                     </div>
                     <div className="col-xl-5 col-md-6">
                         <div>
-                            <LoginForm />
+                            <LoginForm setUserLoggedIn={setUserLoggedIn} />
                         </div>
                     </div>
                 </div>

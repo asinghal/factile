@@ -5,17 +5,24 @@ import { isLoggedIn, removeToken } from '../../authentication.js';
 
 import './header.css';
 
-const SecureAccess = (props) => {
-    if (!isLoggedIn()) {
-        return null;
-    }
-    return props.children;
-};
+export default function Header({userLoggedIn, setUserLoggedIn}) {
 
-export default function Header() {
+    const Logout = () => {
+        removeToken();
+        setUserLoggedIn(false);
+    };
 
-    const Logout = () => removeToken();
-    
+    const isUserLoggedIn = () => userLoggedIn && isLoggedIn();
+
+    const SecureAccess = (props) => {
+        if (!userLoggedIn || !isLoggedIn()) {
+            // in case the token has expired, we would best record a logout
+            setUserLoggedIn(false);
+            return null;
+        }
+        return props.children;
+    };
+
     return (
         <header>
         <div className="header">
@@ -56,10 +63,10 @@ export default function Header() {
                         <div className="col-md-2 d-none d-lg-block">
                             <div className="Appointment">
                                 <div className="book_btn d-none d-lg-block">
-                                    {!isLoggedIn() && 
+                                    {!isUserLoggedIn() &&
                                         <Link to="/"><i className="fas fa-user"></i>&nbsp;Login</Link>
                                     }
-                                    {isLoggedIn() && 
+                                    {isUserLoggedIn() &&
                                         <Link to="/" onClick={Logout}><i className="fas fa-user"></i>&nbsp;Logout</Link>
                                     }
                                 </div>

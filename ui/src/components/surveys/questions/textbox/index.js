@@ -9,7 +9,6 @@ export default function TextBox({ question, handleInputChange }) {
 
     return (
         <div className="form-group field">
-            <div><i className="fas fa-chevron-circle-right"></i>&nbsp;<strong dangerouslySetInnerHTML={{ __html: question.texts[0].text }}></strong></div>
             <div><input type="text" name={question.questionId} className="form-field" onChange={handleInputChange} /></div>
         </div>
     );

@@ -5,6 +5,7 @@ import Question from '../questions/index.js';
 import ProgressBar from '../progress-bar/index.js';
 
 import '../../forms/buttons.css';
+import './survey-view.css';
 
 const Page = ({ page, saveResponse }) => (
     <div>
@@ -14,15 +15,20 @@ const Page = ({ page, saveResponse }) => (
     </div>
 );
 
-export default function SurveyView({ survey, addResponse, onPageSubmit }) {
+export default function SurveyView({ survey, addResponse, onPageSubmit, answersAreValid }) {
     const [pageNum, setPageNum] = useState(0);
 
     const NextPage = (event) => {
+        if (pageNum > 0) {
+            if (!onPageSubmit(pageNum - 1)) {
+                return false;
+            }
+        }
         if (survey.pages && pageNum <= survey.pages.length) {
             setPageNum(pageNum + 1);
         }
-        onPageSubmit();
         event.preventDefault();
+        return true;
     };
 
     const hasSurveyFinished = () => {
@@ -42,8 +48,12 @@ export default function SurveyView({ survey, addResponse, onPageSubmit }) {
     }, [survey.surveyId]);
 
     return (
-        <div className="container">
+        <div className="container survey">
             <h2>{survey.name}</h2>
+
+            {!answersAreValid &&
+            <div className="error">Please answer all questions marked with **</div>
+            }
             {survey.intro_text && pageNum === 0 &&
                 <div>
                     <div>{survey.intro_text}</div>
@@ -53,6 +63,7 @@ export default function SurveyView({ survey, addResponse, onPageSubmit }) {
             <div>
                 {pageNum > 0 && survey.pages && survey.pages[pageNum-1] && 
                 <div>
+                    <p><i>Questions marked with ** are mandatory</i></p>
                     <Page page={survey.pages[pageNum-1]} saveResponse={saveResponse} />
                     <button onClick={(event) => NextPage(event)} className="base-btn submit-btn">Next</button>
                 </div>

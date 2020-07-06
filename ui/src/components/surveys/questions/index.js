@@ -40,6 +40,16 @@ export default function Question({ question, saveResponse }) {
 
     return (
         <div className="questions">
+            { question.qType !== 'page' &&
+            <div>
+                <i className="fas fa-chevron-circle-right"></i>&nbsp;
+                {question.mandatory && 
+                <strong>**&nbsp;</strong>
+                }
+                <strong dangerouslySetInnerHTML={{ __html: question.texts[0].text }}></strong>
+            </div>
+            }
+
             <Checkboxes question={question} persistResponse={persistResponse} />
             <Dropdown question={question} handleInputChange={handleInputChange} />
             <PageBreak question={question} />

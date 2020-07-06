@@ -7,6 +7,7 @@ import SurveyView from '../../components/surveys/survey-view/index.js';
 
 export default function PreviewSurvey() {
     const [survey, setSurvey] = useState({ layout: {} });
+    const [answersAreValid, setAnswersAreValid] = useState(true);
     const [ response, setResponse ] = useState({});
     const { id } = useParams();
     const history = useHistory();
@@ -18,8 +19,24 @@ export default function PreviewSurvey() {
         }).catch(() => history.replace('/'));
     }, [id, history]);
 
-    const onPageSubmit = () => {
+    const isPageValid = (pageNum) => {
+        const questions = survey.pages[pageNum].questions.filter(q => q.mandatory).map(q => q.questionId);
+        const valid = questions.map(q => {
+            const index = response.responses.findIndex(r => r.question === q && ((r.answers && r.answers.length > 0) || r.other));
+            return index !== -1;
+        }).reduce((s, a) => s && a, true);
+        return valid;
+    }
+
+    const onPageSubmit = (pageNum) => {
+        if (!isPageValid(pageNum)) {
+            setAnswersAreValid(false);
+            return false;
+        } else {
+            setAnswersAreValid(true);
+        }
         console.log(response);
+        return true;
     };
 
     const addResponse = (res) => {
@@ -35,6 +52,6 @@ export default function PreviewSurvey() {
     };
 
     return (
-        <SurveyView survey={survey} addResponse={addResponse} onPageSubmit={onPageSubmit} />
+        <SurveyView survey={survey} addResponse={addResponse} onPageSubmit={onPageSubmit} answersAreValid={answersAreValid} />
     );
 };

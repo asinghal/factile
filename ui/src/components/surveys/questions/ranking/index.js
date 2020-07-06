@@ -42,7 +42,6 @@ export default function Ranking({ question, persistResponse }) {
 
     return (
         <div className="ranking">
-            <div><i className="fas fa-chevron-circle-right"></i>&nbsp;<strong dangerouslySetInnerHTML={{ __html: question.texts[0].text }}></strong></div>
             <div>
                 <ul onDragOver={dragOver}>
                 {question.options.map((option, i) => (

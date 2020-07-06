@@ -1,23 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { findSurvey } from './api.js';
-
-import { useParams, useHistory } from "react-router-dom";
 
 import SurveyView from '../../components/surveys/survey-view/index.js';
 
-export default function PreviewSurvey() {
-    const [survey, setSurvey] = useState({ layout: {} });
+export default function BaseRespondentView({ survey, onSuccessfulSubmit }) {
     const [answersAreValid, setAnswersAreValid] = useState(true);
     const [ response, setResponse ] = useState({});
-    const { id } = useParams();
-    const history = useHistory();
 
-    useEffect(() => {
-        findSurvey(id).then((survey) => {
-            setSurvey(survey);
-            setResponse({ surveyId: survey.surveyId, responses: [] });
-        }).catch(() => history.replace('/'));
-    }, [id, history]);
+    useEffect(() => setResponse({ surveyId: survey.surveyId, responses: [] }), 
+    [survey.surveyId]);
 
     const isPageValid = (pageNum) => {
         const questions = survey.pages[pageNum].questions.filter(q => q.mandatory).map(q => q.questionId);
@@ -26,7 +16,7 @@ export default function PreviewSurvey() {
             return index !== -1;
         }).reduce((s, a) => s && a, true);
         return valid;
-    }
+    };
 
     const onPageSubmit = (pageNum) => {
         if (!isPageValid(pageNum)) {
@@ -35,7 +25,7 @@ export default function PreviewSurvey() {
         } else {
             setAnswersAreValid(true);
         }
-        console.log(response);
+        onSuccessfulSubmit(response);
         return true;
     };
 

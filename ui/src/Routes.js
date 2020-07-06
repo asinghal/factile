@@ -9,7 +9,7 @@ import {
   import NewSurvey from './pages/survey-editor/new-survey/index.js';
   import Questionnaire from './pages/survey-editor/questionnaire/index.js';
   import SurveyDashboard from './pages/dashboard/index.js';
-  import PreviewSurvey from './pages/preview-survey/index.js';
+  import PreviewSurvey from './pages/respondents/preview-survey/index.js';
   import SurveyResponses from './pages/survey-responses/index.js';
   import Participants from './pages/participants/index.js';
   import FAQ from './pages/static/faq/index.js';

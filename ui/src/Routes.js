@@ -18,7 +18,7 @@ import {
   import Features from './pages/static/features/index.js';
   import TermsAndConditions from './pages/static/termsandconditions/index.js';
 
-  export default function Routes(userLoggedIn, setUserLoggedIn) {
+  export default function Routes(setUserLoggedIn, setRespondentView) {
     return (
     <div>
         {/*
@@ -52,6 +52,11 @@ import {
             </Route>
             <Route exact path="/surveys/:id/participants">
                 <Participants />
+            </Route>
+
+            {/* Respondent view */}
+            <Route exact path="/s/:id">
+                <Home setUserLoggedIn={setUserLoggedIn} />
             </Route>
 
             {/* Static files */}

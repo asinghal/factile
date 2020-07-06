@@ -9,12 +9,17 @@ import './App.css';
 
 function App() {
   const [userLoggedIn, setUserLoggedIn] = useState(isLoggedIn());
+  const [isRespondentView, setRespondentView] = useState(false);
 
   return (
     <Router>
-      <Header userLoggedIn={userLoggedIn} setUserLoggedIn={setUserLoggedIn} />
-      {Routes(userLoggedIn, setUserLoggedIn)}
-      <Footer />
+      {!isRespondentView &&
+        <Header userLoggedIn={userLoggedIn} setUserLoggedIn={setUserLoggedIn} />
+      }
+      {Routes(setUserLoggedIn, setRespondentView)}
+      {!isRespondentView &&
+        <Footer />
+      }
     </Router>
   );
 }

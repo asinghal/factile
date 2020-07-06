@@ -12,25 +12,24 @@ export default function NewSurvey() {
     const [survey, setSurvey] = useState({ language: '1', layout: {} });
     const history = useHistory();
 
-
     const defaultBgColor = '#FFFFFF';
     const defaultTextColor = '#333333';
 
     const handleInputChange = (event) => {
         event.persist();
-        setSurvey(survey => ({...survey, [event.target.name]: event.target.value}));
+        setSurvey({...survey, [event.target.name]: event.target.value});
     };
 
     const handleLayoutInputChange = (event) => {
         event.persist();
         const layout = {...survey.layout, [event.target.name]: event.target.value};
-        setSurvey(survey => ({...survey, layout}));
+        setSurvey({...survey, layout});
     };
 
     const handleChangeLayoutCheckbox = (event) => {
         event.persist();
         const layout = {...survey.layout, [event.target.name]: !survey.layout[event.target.name]};
-        setSurvey(survey => ({...survey, layout}));
+        setSurvey({...survey, layout});
     }
 
     const SaveDetails = () => {

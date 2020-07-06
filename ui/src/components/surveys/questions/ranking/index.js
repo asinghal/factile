@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import './ranking.css';
 
-export default function Ranking({ question }) {
+export default function Ranking({ question, persistResponse }) {
     const [ data, setData ] = useState({ data: question.options });
 
     if (question.qType !== 'ranking') {
@@ -27,12 +27,18 @@ export default function Ranking({ question }) {
         if(from < to) to--;
         d.splice(to, 0, d.splice(from, 1)[0]);
         setData({ data: d });
+        persistResponse({ answers: d.map(x => x.value) })
     };
     const dragOver = function(e) {
         e.preventDefault();
         dragged.style.display = 'none';
         over = e.target;
     };
+
+    const handleTextChange = (event) => {
+        event.persist();
+        persistResponse({ other: event.target.value });
+    }
 
     return (
         <div className="ranking">
@@ -44,6 +50,13 @@ export default function Ranking({ question }) {
                     onDragStart={dragStart}>{option.texts[0].text}</li>
                 ))}
                 </ul>
+
+                {question.hasOther &&
+                <div className="form-group field" >
+                    <div>{question.otherBox[0].text}</div>
+                    <div><input type="text" name={question.questionId + "-other"} onChange={handleTextChange} className="form-field"  /></div>
+                </div>
+                }
             </div>
         </div>
     );

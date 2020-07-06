@@ -5,18 +5,20 @@ import { useParams, useHistory } from "react-router-dom";
 
 import Question from '../../components/surveys/questions/index.js';
 
+import ProgressBar from '../../components/surveys/progress-bar/index.js';
+
 import '../../components/forms/buttons.css';
 
-const Page = ({ page }) => (
+const Page = ({ page, saveResponse }) => (
     <div>
         {page.questions && page.questions.map(q =>
-            <Question question={q} key={q.questionId} />
+            <Question question={q} key={q.questionId} saveResponse={(response) => saveResponse(response)} />
         )}
     </div>
 );
 
 export default function PreviewSurvey() {
-    const [survey, setSurvey] = useState({});
+    const [survey, setSurvey] = useState({ layout: {} });
     const [pageNum, setPageNum] = useState(0);
     const { id } = useParams();
     const history = useHistory();
@@ -30,6 +32,10 @@ export default function PreviewSurvey() {
 
     const hasSurveyFinished = () => {
         return survey.pages && pageNum > survey.pages.length;
+    };
+
+    const saveResponse = (answer) => {
+        console.log(answer);
     };
 
     useEffect(() => {
@@ -53,11 +59,17 @@ export default function PreviewSurvey() {
             <div>
                 {pageNum > 0 && survey.pages && survey.pages[pageNum-1] && 
                 <div>
-                    <Page page={survey.pages[pageNum-1]} />
+                    <Page page={survey.pages[pageNum-1]} saveResponse={saveResponse} />
                     <button onClick={(event) => NextPage(event)} className="base-btn submit-btn">Next</button>
                 </div>
                 }
             </div>
+
+            {survey.layout.includeProgress && 
+            <div>
+                <ProgressBar percentage="50" />
+            </div>
+            }
 
             {hasSurveyFinished() &&
                 <div dangerouslySetInnerHTML={{ __html: survey.thank_you_text }}></div>

@@ -26,7 +26,6 @@ export default function Question({ question, saveResponse }) {
         const isMainAnswer = event.target.name === question.questionId;
 
         const name = isMainAnswer ? 'answers' : event.target.name.replace(question.questionId + '-', '');
-        console.log(event.target.name, name);
         const value = isMainAnswer ? [ event.target.value ] : event.target.value;
         const newResponse = {...response, [ name ]: value};
         setResponse(newResponse);

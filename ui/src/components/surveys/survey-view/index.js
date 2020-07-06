@@ -14,13 +14,14 @@ const Page = ({ page, saveResponse }) => (
     </div>
 );
 
-export default function SurveyView({ survey }) {
+export default function SurveyView({ survey, addResponse, onPageSubmit }) {
     const [pageNum, setPageNum] = useState(0);
 
     const NextPage = (event) => {
         if (survey.pages && pageNum <= survey.pages.length) {
             setPageNum(pageNum + 1);
         }
+        onPageSubmit();
         event.preventDefault();
     };
 
@@ -29,7 +30,7 @@ export default function SurveyView({ survey }) {
     };
 
     const saveResponse = (answer) => {
-        console.log(answer);
+        addResponse(answer);
     };
 
     useEffect(() => {

@@ -16,16 +16,18 @@ const groupByPages = (survey) => {
 
     pages.push(page);
 
-    another.questions.forEach((q) => {
-        if (q.qType != 'page') {
-            page.questions.push(q);
-        } else {
-            page = { conditions: q.conditions, questions: [] };
-            pages.push(page);
-        }
-    });
-
-    delete another.questions;
+    if (another.questions) {
+        another.questions.forEach((q) => {
+            if (q.qType != 'page') {
+                page.questions.push(q);
+            } else {
+                page = { conditions: q.conditions, questions: [] };
+                pages.push(page);
+            }
+        });
+    
+        delete another.questions;
+    }
 
     another.pages = pages;
 

@@ -5,12 +5,13 @@ import { useParams, useHistory } from "react-router-dom";
 
 import BaseRespondentView from '../index.js';
 
-export default function PreviewSurvey() {
+export default function PreviewSurvey({ setRespondentView }) {
     const [survey, setSurvey] = useState({ layout: {} });
     const { id } = useParams();
     const history = useHistory();
 
     useEffect(() => {
+        setRespondentView(true);
         findSurvey(id).then((survey) => {
             setSurvey(survey);
         }).catch(() => history.replace('/'));

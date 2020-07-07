@@ -46,10 +46,10 @@ import {
                 <SurveyDashboard />
             </Route>
             <Route exact path="/surveys/:id/preview">
-                <PreviewSurvey />
+                <PreviewSurvey setRespondentView={setRespondentView} />
             </Route>
             <Route exact path="/s/:id">
-                <LiveSurvey />
+                <LiveSurvey setRespondentView={setRespondentView} />
             </Route>
             <Route exact path="/surveys/:id/responses">
                 <SurveyResponses />

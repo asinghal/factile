@@ -6,6 +6,7 @@ import Routes from './Routes.js';
 import { isLoggedIn } from './authentication.js';
 
 import './App.css';
+import RespondentFooter from './components/respondent-footer/index.js';
 
 function App() {
   const [userLoggedIn, setUserLoggedIn] = useState(isLoggedIn());
@@ -19,6 +20,10 @@ function App() {
       {Routes(setUserLoggedIn, setRespondentView)}
       {!isRespondentView &&
         <Footer />
+      }
+
+      {isRespondentView &&
+        <RespondentFooter />
       }
     </Router>
   );

@@ -5,7 +5,7 @@ import classNames from "classnames";
 import DropdownMenu from '../../../components/dropdown-menu';
 import QuestionDesigner from "./question-designer";
 
-import { save, findSurvey } from './api.js';
+import { update, findSurvey } from '../api.js';
 import { questionTypes } from './question-types.js';
 
 import '../../../components/forms/buttons.css';
@@ -19,7 +19,7 @@ export default function Questionnaire() {
 
     const SaveDetails = () => {
         setOverlayVisibility(true);
-        save(survey).then(() => setTimeout(() => {
+        update(survey).then(() => setTimeout(() => {
             // slow down the save to avoid flicker on screen that may only confuse the user
             setOverlayVisibility(false);
         }, 300));

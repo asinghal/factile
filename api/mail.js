@@ -15,7 +15,7 @@ const send = (to, cc, bcc, replyTo, subject, text) => {
         to, cc, bcc, replyTo, subject, text
     };
     
-    transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, (error) => {
         if (error) {
             throw error;
         }

@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useParams, useHistory } from "react-router-dom";
 
 import '../../../components/forms/inputs.css';
 import '../../../components/forms/buttons.css';
 import './new-survey.css';
 
-import { save } from './api.js';
+import { save, update, findSurvey } from '../api.js';
 import { languages } from './languages.js';
 
 export default function NewSurvey() {
     const [survey, setSurvey] = useState({ language: '1', layout: {} });
+    const { id } = useParams();
     const history = useHistory();
 
     const defaultBgColor = '#FFFFFF';
@@ -33,15 +34,38 @@ export default function NewSurvey() {
     }
 
     const SaveDetails = () => {
-        save(survey).then((d) => {
-            survey.surveyId = survey.surveyId || d.surveyId;
-            history.replace('/surveys/' + survey.surveyId + '/questions');
-        });
+        const nextPath = () => '/surveys/' + survey.surveyId + '/questions';
+        if (!survey.surveyId) {
+            save(survey).then((d) => {
+                survey.surveyId = survey.surveyId || d.surveyId;
+                history.replace(nextPath());
+            });
+        } else {
+            update(survey).then((d) => {
+                history.replace(nextPath());
+            });
+        }
     };
+
+    useEffect(() => {
+        if (id) {
+            findSurvey(id).then((survey) => {
+                survey.questions = survey.questions || [];
+                setSurvey({...survey});
+            }).catch(() => history.replace('/'));
+        } else {
+            setSurvey({ language: '1', layout: {} });
+        }
+    }, [id, history]);
 
     return (
         <div className="new-survey container">
-            <h2>New Survey</h2>
+            {!id && 
+                <h2>New Survey</h2>
+            }
+            {id && 
+                <h2>Edit Survey</h2>
+            }
 
             <div className="row">
                 <div className="offset-10 col-md-2">

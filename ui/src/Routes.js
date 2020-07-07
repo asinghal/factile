@@ -48,6 +48,11 @@ import PublicErrorPage from "./pages/respondents/error-page/index.js";
                     <NewSurvey />
                 </EditorBase>
             </Route>
+            <Route exact path="/surveys/:id/edit">
+                <EditorBase>
+                    <NewSurvey />
+                </EditorBase>
+            </Route>
             <Route exact path="/surveys/:id/questions">
                 <EditorBase>
                     <Questionnaire />

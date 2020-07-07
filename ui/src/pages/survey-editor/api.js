@@ -1,13 +1,11 @@
-import { getAuthHeader } from '../../../authentication.js';
+import { getAuthHeader } from '../../authentication.js';
 
-const save = async (survey) => {
+const saveOrUpdate = async (url, httpMethod, survey) => {
     const headers = getAuthHeader();
     headers.append('Content-Type', 'application/json');
 
-    delete survey._id;
-
-    let response = await fetch('http://localhost:9000/surveys/'+ survey.surveyId, {
-        method: 'PUT',
+    let response = await fetch(url, {
+        method: httpMethod,
         headers,
         body: JSON.stringify(survey)
     });
@@ -18,6 +16,15 @@ const save = async (survey) => {
     }
     
     return data;
+};
+
+const save = async (survey) => {
+    return saveOrUpdate('http://localhost:9000/surveys', 'POST', survey);
+};
+
+const update = async (survey) => {
+    delete survey._id;
+    return saveOrUpdate('http://localhost:9000/surveys/'+ survey.surveyId, 'PUT', survey);
 };
 
 const findSurvey = async (id) => {
@@ -32,4 +39,4 @@ const findSurvey = async (id) => {
     return data;
 };
 
-export { save, findSurvey };
+export { save, update, findSurvey };

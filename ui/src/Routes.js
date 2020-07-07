@@ -10,6 +10,7 @@ import {
   import Questionnaire from './pages/survey-editor/questionnaire/index.js';
   import SurveyDashboard from './pages/dashboard/index.js';
   import PreviewSurvey from './pages/respondents/preview-survey/index.js';
+  import LiveSurvey from "./pages/respondents/live-survey/index.js";
   import SurveyResponses from './pages/survey-responses/index.js';
   import Participants from './pages/participants/index.js';
   import FAQ from './pages/static/faq/index.js';
@@ -46,6 +47,9 @@ import {
             </Route>
             <Route exact path="/surveys/:id/preview">
                 <PreviewSurvey />
+            </Route>
+            <Route exact path="/s/:id">
+                <LiveSurvey />
             </Route>
             <Route exact path="/surveys/:id/responses">
                 <SurveyResponses />

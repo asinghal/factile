@@ -16,7 +16,7 @@ export default function Question({ question, saveResponse }) {
     const [ response, setResponse ] = useState({
         question : question.questionId,
         answers : [],
-        other : null,
+        other : '',
         ranking : question.qType === 'ranking'
     });
 

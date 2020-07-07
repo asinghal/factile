@@ -18,8 +18,10 @@ import {
   import ContactUs from './pages/static/contactus/index.js';
   import Features from './pages/static/features/index.js';
   import TermsAndConditions from './pages/static/termsandconditions/index.js';
+import EditorBase from "./pages/base-pages/editor-base/index.js";
+import RespondentBase from "./pages/base-pages/respondent-base/index.js";
 
-  export default function Routes(setUserLoggedIn, setRespondentView) {
+  export default function Routes() {
     return (
     <div>
         {/*
@@ -31,53 +33,78 @@ import {
         */}
         <Switch>
             <Route exact path="/">
-                <Home setUserLoggedIn={setUserLoggedIn} />
+                <EditorBase>
+                    <Home />
+                </EditorBase>
             </Route>
             <Route exact path="/surveys">
-                <ListSurveys />
+                <EditorBase>
+                    <ListSurveys />
+                </EditorBase>
             </Route>
             <Route exact path="/surveys/new">
-                <NewSurvey />
+                <EditorBase>
+                    <NewSurvey />
+                </EditorBase>
             </Route>
             <Route exact path="/surveys/:id/questions">
-                <Questionnaire />
+                <EditorBase>
+                    <Questionnaire />
+                </EditorBase>
             </Route>
             <Route exact path="/surveys/:id">
-                <SurveyDashboard />
-            </Route>
-            <Route exact path="/surveys/:id/preview">
-                <PreviewSurvey setRespondentView={setRespondentView} />
-            </Route>
-            <Route exact path="/s/:id">
-                <LiveSurvey setRespondentView={setRespondentView} />
+                <EditorBase>
+                    <SurveyDashboard />
+                </EditorBase>
             </Route>
             <Route exact path="/surveys/:id/responses">
-                <SurveyResponses />
+                <EditorBase>
+                    <SurveyResponses />
+                </EditorBase>
             </Route>
             <Route exact path="/surveys/:id/participants">
-                <Participants />
+                <EditorBase>
+                    <Participants />
+                </EditorBase>
             </Route>
 
             {/* Respondent view */}
+            <Route exact path="/surveys/:id/preview">
+                <RespondentBase>
+                    <PreviewSurvey />
+                </RespondentBase>
+            </Route>
             <Route exact path="/s/:id">
-                <Home setUserLoggedIn={setUserLoggedIn} />
+                <RespondentBase>
+                    <LiveSurvey />
+                </RespondentBase>
             </Route>
 
             {/* Static files */}
             <Route exact path="/static/faq">
-                <FAQ />
+                <EditorBase>
+                    <FAQ />
+                </EditorBase>
             </Route>
             <Route exact path="/static/help">
-                <Help />
+                <EditorBase>
+                    <Help />
+                </EditorBase>
             </Route>
             <Route exact path="/static/contactus">
-                <ContactUs />
+                <EditorBase>
+                    <ContactUs />
+                </EditorBase>
             </Route>
             <Route exact path="/static/features">
-                <Features />
+                <EditorBase>
+                    <Features />
+                </EditorBase>
             </Route>
             <Route exact path="/static/termsandconditions">
-                <TermsAndConditions />
+                <EditorBase>
+                    <TermsAndConditions />
+                </EditorBase>
             </Route>
         </Switch>
     </div>

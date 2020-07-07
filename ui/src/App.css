@@ -1,5 +1,10 @@
-body {
+html, body {
+  height: 100%;
   font-family: 'Poppins', sans-serif;
+}
+
+#root {
+  height: 100%;
 }
 
 table {

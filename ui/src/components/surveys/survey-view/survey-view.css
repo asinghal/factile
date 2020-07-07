@@ -9,3 +9,7 @@
     /* account for the footer */
     margin-bottom: 5em;
 }
+
+.main-wrapper {
+    min-height: 100%;
+}

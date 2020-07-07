@@ -90,7 +90,7 @@ export default function QuestionDesigner({question, questionId, language, delete
             </div>
             }
 
-            {question.qType !== 'page' &&
+            {question.qType !== 'page' && question.qType !== 'plaintext' &&
                 <div className="row">
                     <div className="col-md-12">
                         <div className="choices">

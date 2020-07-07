@@ -97,9 +97,9 @@ export default function NewSurvey() {
                         <strong>Logo position</strong>
                     </div>
                     <div className="choices radio">
-                        <div><input name="logoAlignment" type="radio" id="leftPos" value="left" onChange={handleInputChange} /><label htmlFor="leftPos" >Left</label></div>
-                        <div><input name="logoAlignment" type="radio" id="centerPos" value="center" onChange={handleInputChange} /><label htmlFor="centerPos" >Center</label></div>
-                        <div><input name="logoAlignment" type="radio" id="rightPos" value="right" onChange={handleInputChange} /><label htmlFor="rightPos" >Right</label></div>
+                        <div><input name="logoAlignment" type="radio" id="leftPos" value="left" onChange={handleLayoutInputChange} /><label htmlFor="leftPos" >Left</label></div>
+                        <div><input name="logoAlignment" type="radio" id="centerPos" value="center" onChange={handleLayoutInputChange} /><label htmlFor="centerPos" >Center</label></div>
+                        <div><input name="logoAlignment" type="radio" id="rightPos" value="right" onChange={handleLayoutInputChange} /><label htmlFor="rightPos" >Right</label></div>
                     </div>
                 </div>
             </div>

@@ -66,6 +66,7 @@ input[type="color"].form-field {
 .form-group textarea {
     border: 0; 
     border-bottom: 1px solid #888; 
+    background: transparent;
     outline: none;
     overflow: auto;
     resize: none;

@@ -48,41 +48,43 @@ export default function SurveyView({ survey, addResponse, onPageSubmit, answersA
     }, [survey.surveyId]);
 
     return (
-        <div className="container survey">
-            <h2>{survey.name}</h2>
+        <div class="main-wrapper" style={{ backgroundColor: survey.layout.bodycolor }}>
+            <div className="container survey" style={{ backgroundColor: survey.layout.containercolor, color: survey.layout.textColor }}>
+                <h2>{survey.name}</h2>
 
-            {!answersAreValid &&
-            <div className="error">Please answer all questions marked with **</div>
-            }
-            {survey.intro_text && pageNum === 0 &&
+                {!answersAreValid &&
+                <div className="error">Please answer all questions marked with **</div>
+                }
+                {survey.intro_text && pageNum === 0 &&
+                    <div>
+                        <div>{survey.intro_text}</div>
+                        <button onClick={(event) => NextPage(event)} className="base-btn submit-btn">Next</button>
+                    </div>
+                }
                 <div>
-                    <div>{survey.intro_text}</div>
-                    <button onClick={(event) => NextPage(event)} className="base-btn submit-btn">Next</button>
+                    {pageNum > 0 && survey.pages && survey.pages[pageNum-1] && 
+                    <div>
+                        <p><i>Questions marked with ** are mandatory</i></p>
+                        <Page page={survey.pages[pageNum-1]} saveResponse={saveResponse} />
+                        <button onClick={(event) => NextPage(event)} className="base-btn submit-btn">Next</button>
+                    </div>
+                    }
                 </div>
-            }
-            <div>
-                {pageNum > 0 && survey.pages && survey.pages[pageNum-1] && 
+
+                {hasSurveyFinished() &&
+                <>
+                    <div dangerouslySetInnerHTML={{ __html: survey.thank_you_text }}></div>
+                    <div><i>You can safely close this window now</i></div>
+                </>
+                }
+
+                {survey.layout.includeProgress && 
                 <div>
-                    <p><i>Questions marked with ** are mandatory</i></p>
-                    <Page page={survey.pages[pageNum-1]} saveResponse={saveResponse} />
-                    <button onClick={(event) => NextPage(event)} className="base-btn submit-btn">Next</button>
+                    <ProgressBar percentage="50" />
                 </div>
                 }
+
             </div>
-
-            {survey.layout.includeProgress && 
-            <div>
-                <ProgressBar percentage="50" />
-            </div>
-            }
-
-            {hasSurveyFinished() &&
-            <>
-                <div dangerouslySetInnerHTML={{ __html: survey.thank_you_text }}></div>
-                <div><i>You can safely close this window now</i></div>
-            </>
-            }
-
         </div>
     );
 };

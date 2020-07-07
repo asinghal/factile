@@ -48,7 +48,7 @@ export default function SurveyView({ survey, addResponse, onPageSubmit, answersA
     }, [survey.surveyId]);
 
     return (
-        <div class="main-wrapper" style={{ backgroundColor: survey.layout.bodycolor }}>
+        <div className="main-wrapper" style={{ backgroundColor: survey.layout.bodycolor }}>
             <div className="container survey" style={{ backgroundColor: survey.layout.containercolor, color: survey.layout.textColor }}>
                 <h2>{survey.name}</h2>
 

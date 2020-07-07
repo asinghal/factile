@@ -20,6 +20,7 @@ import {
   import TermsAndConditions from './pages/static/termsandconditions/index.js';
 import EditorBase from "./pages/base-pages/editor-base/index.js";
 import RespondentBase from "./pages/base-pages/respondent-base/index.js";
+import PublicErrorPage from "./pages/respondents/error-page/index.js";
 
   export default function Routes() {
     return (
@@ -105,6 +106,12 @@ import RespondentBase from "./pages/base-pages/respondent-base/index.js";
                 <EditorBase>
                     <TermsAndConditions />
                 </EditorBase>
+            </Route>
+
+            <Route exact path="/error">
+                <RespondentBase>
+                    <PublicErrorPage />
+                </RespondentBase>
             </Route>
         </Switch>
     </div>

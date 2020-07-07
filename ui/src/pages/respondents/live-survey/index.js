@@ -13,7 +13,7 @@ export default function LiveSurvey() {
     useEffect(() => {
         findSurvey(id).then((survey) => {
             setSurvey(survey);
-        }).catch(() => history.replace('/'));
+        }).catch(() => history.replace('/error'));
     }, [id, history]);
 
     const onPageSubmit = (response) => {

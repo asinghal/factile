@@ -9,6 +9,11 @@ const config = {
     },
     auth: {
         jwt_secret: process.env.FACTILE_JWT_SECRET || 'eDc61952@8E1k82!ek'
+    },
+    mail: {
+        smtp: 'smtp.gmail.com',
+        user: process.env.FACTILE_MAIL_USER || 'factilenet@gmail.com',
+        password: process.env.FACTILE_MAIL_PASSWORD
     }
 };
 

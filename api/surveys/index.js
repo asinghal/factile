@@ -3,7 +3,8 @@ const uuid = require('uuid').v1;
 
 const findByOwner = (owner) => db.find('surveys', { owner }, {}, { name: 1, surveyId: 1, status: 1, history: 1 });
 
-const findById = (owner, surveyId) => db.findOne('surveys', { owner, surveyId });
+const findByIdAndOwner = (owner, surveyId) => db.findOne('surveys', { owner, surveyId });
+const findById = (surveyId) => db.findOne('surveys', { surveyId });
 
 /*
  * consolidate questions by pages - by default it is a flat list for legacy reasons
@@ -54,6 +55,21 @@ const recordChangeHistory = (survey, email) => {
 const generateRandomString = () => Math.random().toString(36).substring(2, 10);
 const generateHashString = () => ['', ''].map(generateRandomString).join('');
 
+const assignQuestionIds = (questions) => {
+    if (questions) {
+        const baseQuestionNum = findMaxQuestionId(questions) + 1;
+        let count = 0;
+        questions.forEach(q => {
+            if (!q.questionId) {
+                q.questionId = 'q' + padLeft(baseQuestionNum + count, 4);
+                count++;
+            }
+        });
+    }
+
+    return questions;
+};
+
 const saveOrUpdate = (owner, survey) => {
     if (!survey.surveyId) {
         survey.surveyId = generateNewSurveyId();
@@ -65,17 +81,10 @@ const saveOrUpdate = (owner, survey) => {
     survey.hash_string = survey.hash_string || generateHashString();
 
     if (survey.questions) {
-        const baseQuestionNum = findMaxQuestionId(survey.questions) + 1;
-        let count = 0;
-        survey.questions.forEach(q => {
-            if (!q.questionId) {
-                q.questionId = 'q' + padLeft(baseQuestionNum + count, 4);
-                count++;
-            }
-        });
+        survey.questions = assignQuestionIds(survey.questions);
     }
 
     return db.save('surveys', survey, 'surveyId');
 }
 
-module.exports = { findByOwner, findById, groupByPages, saveOrUpdate, recordChangeHistory };
+module.exports = { findByOwner, findByIdAndOwner, findById, groupByPages, saveOrUpdate, recordChangeHistory };

@@ -59,4 +59,74 @@ describe('survey responses model tests', () => {
             done();
         });
     });
+
+    test('insert a survey response', done => {
+        const email = 'a@a.com';
+        const surveyId = 'abc1-2345-6789';
+        const surveyResponse = {
+            question : 'q0001',
+            answers : [ 'o1' ],
+            other : '',
+            ranking : false
+        };
+        const response = { _id: new ObjectID(), email, responses: [surveyResponse]};
+        mockDB.expects('findOne').once().resolves({ status: 'Live' });
+        mockDB.expects('save').once().resolves("ok");
+
+        surveyResponses.save(surveyId, null, response).then(d => {
+            expect(d).toBe("ok");
+            expect(response.surveyId).not.toBeUndefined();
+            expect(response.surveyId).toBe(surveyId);
+            expect(response.responseId).not.toBeUndefined();
+            expect(response.responseId).not.toBeNull();
+            expect(response.created_at).not.toBeUndefined();
+            done();
+        });
+    });
+
+    test('attempting to insert a survey response for a survey in Draft should fail', done => {
+        const email = 'a@a.com';
+        const surveyId = 'abc1-2345-6789';
+        const surveyResponse = {
+            question : 'q0001',
+            answers : [ 'o1' ],
+            other : '',
+            ranking : false
+        };
+        const response = { _id: new ObjectID(), email, responses: [surveyResponse]};
+        mockDB.expects('findOne').once().resolves({ status: 'Draft' });
+
+        surveyResponses.save(surveyId, null, response).catch(e => {
+            expect(e).not.toBeUndefined();
+            expect(response.surveyId).toBeUndefined();
+            expect(response.responseId).toBeUndefined();
+            expect(response.created_at).toBeUndefined();
+            done();
+        });
+    });
+
+    test('update a survey response', done => {
+        const email = 'a@a.com';
+        const surveyId = 'abc1-2345-6789';
+        const responseId = 'xyz1-2345-6789';
+        const surveyResponse = {
+            question : 'q0001',
+            answers : [ 'o1' ],
+            other : '',
+            ranking : false
+        };
+        const response = { _id: new ObjectID(), email, responses: [surveyResponse]};
+        mockDB.expects('findOne').once().resolves({ status: 'Live' });
+        mockDB.expects('save').once().resolves("ok");
+
+        surveyResponses.save(surveyId, null, response).then(d => {
+            expect(d).toBe("ok");
+            expect(response.surveyId).not.toBeUndefined();
+            expect(response.surveyId).not.toBeNull();
+            expect(response.responseId).not.toBeUndefined();
+            expect(response.responseId).not.toBeNull();
+            done();
+        });
+    });
+
 });

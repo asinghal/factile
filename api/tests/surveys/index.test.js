@@ -41,7 +41,31 @@ describe('survey model tests', () => {
         });
     });
     
-    test('findByID success', done => {
+    test('findByIdAndOwner success', done => {
+        const name = 'Test Survey';
+        const surveyId = 'abc1-2345-6789';
+        const owner = 'a@a.com';
+        const dummySurvey = { _id: new ObjectID(), name, surveyId, owner};
+        mockDB.expects('findOne').once().resolves(dummySurvey);
+    
+        surveys.findByIdAndOwner(owner, surveyId).then(found => {
+            expect(found).toBe(dummySurvey);
+            done();
+        });
+    });
+
+    test('findByIdAndOwner failure', done => {
+        const surveyId = 'xyz1-2345-6789';
+        const owner = 'a@a.com';
+        mockDB.expects('findOne').once().resolves(null);
+    
+        surveys.findByIdAndOwner(owner, surveyId).then(found => {
+            expect(found).toBeNull();
+            done();
+        });
+    });
+
+    test('findById success', done => {
         const name = 'Test Survey';
         const surveyId = 'abc1-2345-6789';
         const owner = 'a@a.com';
@@ -54,7 +78,7 @@ describe('survey model tests', () => {
         });
     });
 
-    test('findByID failure', done => {
+    test('findById failure', done => {
         const surveyId = 'xyz1-2345-6789';
         mockDB.expects('findOne').once().resolves(null);
     

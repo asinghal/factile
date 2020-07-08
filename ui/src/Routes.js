@@ -21,6 +21,7 @@ import TermsAndConditions from './pages/static/termsandconditions/index.js';
 import EditorBase from "./pages/base-pages/editor-base/index.js";
 import RespondentBase from "./pages/base-pages/respondent-base/index.js";
 import PublicErrorPage from "./pages/respondents/error-page/index.js";
+import InviteSurveyUsers from "./pages/survey-editor/invitations/index.js";
 
 export default function Routes() {
     return (
@@ -56,6 +57,11 @@ export default function Routes() {
             <Route exact path="/surveys/:id/questions">
                 <EditorBase>
                     <Questionnaire />
+                </EditorBase>
+            </Route>
+            <Route exact path="/surveys/:id/invite">
+                <EditorBase>
+                    <InviteSurveyUsers />
                 </EditorBase>
             </Route>
             <Route exact path="/surveys/:id">

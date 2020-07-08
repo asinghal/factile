@@ -39,4 +39,22 @@ const findSurvey = async (id) => {
     return data;
 };
 
-export { save, update, findSurvey };
+const sendEmails = async (id, formData) => {
+    const headers = getAuthHeader();
+    headers.append('Content-Type', 'application/json');
+
+    let response = await fetch('http://localhost:9000/surveys/' + id + '/invite', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(formData)
+    });
+    let data = await response.json();
+    let status = await response.status;
+    if (status !== 200) {
+        console.log('something went wrong');
+    }
+    
+    return data;
+};
+
+export { save, update, findSurvey, sendEmails };

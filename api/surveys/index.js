@@ -1,4 +1,6 @@
 const db = require('../db');
+const mail = require('../mail');
+const { config } = require('../config');
 const uuid = require('uuid').v1;
 
 const findByOwner = (owner) => db.find('surveys', { owner }, {}, { name: 1, surveyId: 1, status: 1, history: 1 });
@@ -87,6 +89,17 @@ const saveOrUpdate = (owner, survey) => {
     }
 
     return db.save('surveys', survey, 'surveyId');
-}
+};
 
-module.exports = { findByOwner, findByIdAndOwner, findById, groupByPages, saveOrUpdate, recordChangeHistory };
+const inviteParticipant = (owner, surveyId, to, emailSubject, emailBody) => {
+    // TODO handle 'email' surveys
+    const body = emailBody.replace('{{SURVEY_LINK DO_NOT_DELETE}}', config.baseURL + '/s/' + surveyId);
+    mail.send(to, owner, null, owner, emailSubject, body);
+};
+
+const invite = (owner, surveyId, meta) => {
+    const { toAddresses, emailSubject, emailBody } = meta;
+    toAddresses.forEach(to => inviteParticipant(owner, surveyId, to, emailSubject, emailBody));
+};
+
+module.exports = { findByOwner, findByIdAndOwner, findById, groupByPages, saveOrUpdate, recordChangeHistory, invite };

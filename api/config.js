@@ -1,4 +1,5 @@
 const config = {
+    baseURL: "http://www.factile.net",
     server: {
         port: process.env.FACTILE_SERVER_PORT || '9000'
     },

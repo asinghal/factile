@@ -27,7 +27,7 @@ export default function RatingsScale({ question, saveResponse }) {
 
     return (
         <div>
-            <table class="table table-sm">
+            <table className="table table-sm">
                 <thead>
                 <tr>
                     <th></th>

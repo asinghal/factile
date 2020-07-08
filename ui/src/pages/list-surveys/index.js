@@ -13,7 +13,7 @@ const formatDateTime = (dateTime) => {
 function ShowSurveyRow({ survey }) {
     return (
     <div className="row survey-row">
-        <div className="col-md-4"><Link to={"/surveys/" + survey.surveyId}>{survey.name}</Link></div>
+        <div className="col-md-4"><Link to={"/surveys/" + survey.surveyId + '/edit'}>{survey.name}</Link></div>
         <div className="col-md-2">{survey.status}</div>
         <div className="col-md-2">{formatDateTime(survey.history.created_at)}</div>
         <div className="col-md-2">{survey.history.created_by}</div>

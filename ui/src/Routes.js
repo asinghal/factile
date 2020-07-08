@@ -2,27 +2,27 @@ import React from "react";
 import {
     Switch,
     Route
-  } from "react-router-dom";
+} from "react-router-dom";
 
-  import Home from './pages/home/index.js';
-  import ListSurveys from './pages/list-surveys/index.js';
-  import NewSurvey from './pages/survey-editor/new-survey/index.js';
-  import Questionnaire from './pages/survey-editor/questionnaire/index.js';
-  import SurveyDashboard from './pages/dashboard/index.js';
-  import PreviewSurvey from './pages/respondents/preview-survey/index.js';
-  import LiveSurvey from "./pages/respondents/live-survey/index.js";
-  import SurveyResponses from './pages/survey-responses/index.js';
-  import Participants from './pages/participants/index.js';
-  import FAQ from './pages/static/faq/index.js';
-  import Help from './pages/static/help/index.js';
-  import ContactUs from './pages/static/contactus/index.js';
-  import Features from './pages/static/features/index.js';
-  import TermsAndConditions from './pages/static/termsandconditions/index.js';
+import Home from './pages/home/index.js';
+import ListSurveys from './pages/list-surveys/index.js';
+import NewSurvey from './pages/survey-editor/new-survey/index.js';
+import Questionnaire from './pages/survey-editor/questionnaire/index.js';
+import SurveyDashboard from './pages/dashboard/index.js';
+import PreviewSurvey from './pages/respondents/preview-survey/index.js';
+import LiveSurvey from "./pages/respondents/live-survey/index.js";
+import SurveyResponses from './pages/survey-responses/index.js';
+import Participants from './pages/participants/index.js';
+import FAQ from './pages/static/faq/index.js';
+import Help from './pages/static/help/index.js';
+import ContactUs from './pages/static/contactus/index.js';
+import Features from './pages/static/features/index.js';
+import TermsAndConditions from './pages/static/termsandconditions/index.js';
 import EditorBase from "./pages/base-pages/editor-base/index.js";
 import RespondentBase from "./pages/base-pages/respondent-base/index.js";
 import PublicErrorPage from "./pages/respondents/error-page/index.js";
 
-  export default function Routes() {
+export default function Routes() {
     return (
     <div>
         {/*
@@ -121,5 +121,5 @@ import PublicErrorPage from "./pages/respondents/error-page/index.js";
         </Switch>
     </div>
     );
-  }
+}
   

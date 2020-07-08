@@ -7,6 +7,7 @@ require('./passport');
 
 const { config } = require('./config.js');
 const surveys = require('./surveys/routes');
+const unsecureSurveyRoutes = require('./surveys/unsecure-routes');
 const surveyResponses = require('./surveyresponses/routes');
 const participants = require('./participants/routes');
 const auth = require('./users/auth');
@@ -21,6 +22,7 @@ app.use(bodyParser.json());
 app.use('/surveys', passport.authenticate('jwt', {session: false}), surveys);
 app.use('/surveyresponses', passport.authenticate('jwt', {session: false}), surveyResponses);
 app.use('/participants', passport.authenticate('jwt', {session: false}), participants);
+app.use('/public/surveys', unsecureSurveyRoutes);
 app.use('/', auth);
 
 app.get('/', (req, res) => res.send('OK'))

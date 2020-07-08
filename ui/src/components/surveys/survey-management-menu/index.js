@@ -8,7 +8,7 @@ export default function SurveyManagementMenu({ surveyId }) {
         return null;
     }
     return (
-        <div class="survey-menu">
+        <div className="survey-menu">
             <ul>
                 <li>
                     <Link to={"/surveys/" + surveyId + "/edit"}>Edit Survey Data</Link>
@@ -27,7 +27,7 @@ export default function SurveyManagementMenu({ surveyId }) {
                 </li>
 
                 <li>
-                    <Link to={"/surveys/" + surveyId + "/preview"}>Preview</Link>
+                    <Link to={"/surveys/" + surveyId + "/preview"} target="_blank">Preview</Link>
                 </li>
 
                 <li>

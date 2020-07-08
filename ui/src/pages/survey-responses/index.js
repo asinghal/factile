@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { findSurvey } from './api.js';
-
 import { useParams, useHistory } from "react-router-dom";
+import SurveyManagementMenu from "../../components/surveys/survey-management-menu/index.js";
 
+import { findSurvey } from './api.js';
 import './survey-responses.css';
 
 export default function SurveyResponses() {
@@ -16,14 +16,21 @@ export default function SurveyResponses() {
 
     return (
         <div className="container survey-responses">
-            {surveyResponses.map(surveyResponse => (
-                <div className="block" key={surveyResponse.question}>
-                    <div><strong>{surveyResponse.question}</strong></div>
-                    {surveyResponse.answers.map((answerList, index) => ( answerList.map((answer, index2) => (
-                        <div className="answer" key={surveyResponse.question + "-" + index}>{answer}</div>
-                    ))))}
+            <div className="row">
+                <div className="col-md-3 col-sm-12">
+                    <SurveyManagementMenu surveyId={id} />
                 </div>
-            ))}
+                <div className="col-md-9 col-sm-12">
+                    {surveyResponses.map(surveyResponse => (
+                        <div className="block" key={surveyResponse.question}>
+                            <div><strong>{surveyResponse.question}</strong></div>
+                            {surveyResponse.answers.map((answerList, index) => ( answerList.map((answer, index2) => (
+                                <div className="answer" key={surveyResponse.question + "-" + index}>{answer}</div>
+                            ))))}
+                        </div>
+                    ))}
+                </div>
+            </div>
         </div>
     );
 };

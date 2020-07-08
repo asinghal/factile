@@ -2,7 +2,7 @@
     position: relative;
     padding: 15px 0 0;
     margin-top: 10px;
-    width: 50%;
+    width: 100%;
 }
 
 .form-field {
@@ -65,7 +65,7 @@ input[type="color"].form-field {
 
 .form-group textarea {
     border: 0; 
-    border-bottom: 1px solid #888; 
+    border-bottom: 1px solid; 
     background: transparent;
     outline: none;
     overflow: auto;

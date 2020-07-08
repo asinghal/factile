@@ -14,7 +14,7 @@ export default function Participants() {
 
     return (
         <div className="container">
-            <table>
+            <table class="table">
                 <thead>
                     <tr>
                         <th>Email</th>

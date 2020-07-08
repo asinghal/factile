@@ -27,14 +27,14 @@ export default function RatingsScale({ question, saveResponse }) {
 
     return (
         <div>
-            <table>
+            <table class="table table-sm">
                 <thead>
                 <tr>
-                    <td></td>
+                    <th></th>
                     {question.options.map(option => (
-                    <td key={question.questionId + "-" + option.value}>
+                    <th key={question.questionId + "-" + option.value}>
                         {option.texts[0].text}
-                    </td>
+                    </th>
                     ))}
                 </tr>
                 </thead>

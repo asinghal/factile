@@ -7,16 +7,6 @@ html, body {
   height: 100%;
 }
 
-table {
-  border: 1px solid;
-  width: 100%;
-}
-
-table td, table th {
-  border: 1px solid #cccccc;
-  padding: 0 5px;
-}
-
 .error-message {
   color: red;
 }

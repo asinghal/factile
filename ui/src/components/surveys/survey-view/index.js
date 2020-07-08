@@ -53,7 +53,7 @@ export default function SurveyView({ survey, addResponse, onPageSubmit, answersA
                 <h2>{survey.name}</h2>
 
                 {!answersAreValid &&
-                <div className="error">Please answer all questions marked with **</div>
+                <div className="alert alert-danger">Please answer all questions marked with **</div>
                 }
                 {survey.intro_text && pageNum === 0 &&
                     <div>

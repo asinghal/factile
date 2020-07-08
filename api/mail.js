@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
 
 const send = (to, cc, bcc, replyTo, subject, text) => {
     const mailOptions = {
-        from: config.mail.user,
+        from: `"${config.mail.senderName}" ${config.mail.user}`,
         to, cc, bcc, replyTo, subject, text
     };
     

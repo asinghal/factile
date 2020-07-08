@@ -13,6 +13,7 @@ const config = {
     },
     mail: {
         smtp: 'smtp.gmail.com',
+        senderName: process.env.FACTILE_MAIL_SENDER || 'Factile Surveys',
         user: process.env.FACTILE_MAIL_USER || 'factilenet@gmail.com',
         password: process.env.FACTILE_MAIL_PASSWORD
     }

@@ -16,8 +16,6 @@ export default function Header({userLoggedIn, setUserLoggedIn}) {
 
     const SecureAccess = (props) => {
         if (!userLoggedIn || !isLoggedIn()) {
-            // in case the token has expired, we would best record a logout
-            setUserLoggedIn(false);
             return null;
         }
         return props.children;

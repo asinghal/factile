@@ -41,14 +41,14 @@ export default function InviteSurveyUsers({ question }) {
     const isValidEmail = (email) => !!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
 
     const SendEmails = () => {
-        formData.toAddresses = formData.participants.trim().split('\n');
+        formData.toAddresses = formData.participants.trim().split('\n').map(a => a.trim()).filter(a => !!a);
         const isValid = formData.toAddresses.map((e) => !e || !e.trim() || isValidEmail(e)).reduce((a, b) => a && b, true);
         if (!isValid) {
             setError(true);
             return false;
         }
 
-        sendEmails(survey.surveyId, formData).then(console.log);
+        sendEmails(survey.surveyId, formData).then(history.replace('/surveys'));
     };
 
     return (

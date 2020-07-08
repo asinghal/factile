@@ -1,7 +1,7 @@
 const db = require('../db');
 const Surveys = require('../surveys');
 const ObjectID = require('mongodb').ObjectID;
-const uuid = require('uuid').v1;
+const uuid = require('uuid').v4;
 
 const findBySurveyId = (surveyId) => db.find('surveyresponses', { surveyId });
 const findById = (surveyId, id) => db.findOne('surveyresponses', { surveyId, _id: new ObjectID(id) });

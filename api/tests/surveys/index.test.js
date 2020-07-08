@@ -1,18 +1,22 @@
 const db = require('../../db');
+const mail = require('../../mail');
 const surveys = require('../../surveys');
 const sinon = require('sinon');
 const ObjectID = require('mongodb').ObjectID;
 
 describe('survey model tests', () => {
-    let mockDB;
+    let mockDB, mockMail;
 
     beforeEach(() => {
         mockDB = sinon.mock(db);
+        mockMail = sinon.mock(mail);
     });
     
     afterEach(() => {
         mockDB.verify();
         mockDB.restore();
+        mockMail.verify();
+        mockMail.restore();
     });
     
     test('findByOwner where owner matches the input', done => {
@@ -302,4 +306,69 @@ describe('survey model tests', () => {
         expect(history.updated_by).toBe(owner);
         done();
     });
+
+    test('invite users to open survey', done => {
+        const owner = 'a@a.com';
+        const surveyId = 'abc1-2345-6789';
+        mockMail.expects('send').twice().returns(null);
+
+        surveys.invite(owner, surveyId, true, {
+            toAddresses: [ 'a@a.com', 'b@a.com' ],
+            emailSubject: 'Survey',
+            emailBody: 'Test mail'
+        });
+
+        setTimeout(() => {
+            done();
+        }, 300);
+    });
+
+    test('invite users to open survey but remove duplicates', done => {
+        const owner = 'a@a.com';
+        const surveyId = 'abc1-2345-6789';
+        mockMail.expects('send').twice().returns(null);
+
+        surveys.invite(owner, surveyId, true, {
+            toAddresses: [ 'a@a.com', 'a@a.com', 'b@a.com', 'b@a.com', 'a@a.com', 'a@a.com' ],
+            emailSubject: 'Survey',
+            emailBody: 'Test mail'
+        });
+
+        setTimeout(() => {
+            done();
+        }, 300);
+    });
+
+    test('invite users to email survey', done => {
+        const owner = 'a@a.com';
+        const surveyId = 'abc1-2345-6789';
+        mockDB.expects('save').twice().resolves("ok");
+        mockMail.expects('send').twice().returns(null);
+
+        surveys.invite(owner, surveyId, false, {
+            toAddresses: [ 'a@a.com', 'b@a.com' ],
+            emailSubject: 'Survey',
+            emailBody: 'Test mail'
+        });
+
+        setTimeout(() => {
+            done();
+        }, 300);
+    });
+
+    test('invite users to open survey and handle case when no participant emails defined', done => {
+        const owner = 'a@a.com';
+        const surveyId = 'abc1-2345-6789';
+
+        surveys.invite(owner, surveyId, true, {
+            toAddresses: null,
+            emailSubject: 'Survey',
+            emailBody: 'Test mail'
+        });
+
+        setTimeout(() => {
+            done();
+        }, 300);
+    });
+
 });

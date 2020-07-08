@@ -18,7 +18,7 @@ router.post('/:id/invite', (req, res) => Surveys.findByIdAndOwner(req.user.email
         res.status(401);
         return res.send('error');
     }
-    Surveys.invite(req.user.email, req.params.id, req.body);
+    Surveys.invite(req.user.email, req.params.id, data.accessType === 'open', req.body);
     return res.send({ message: 'sent' });
 }).catch(e => {
     res.status(500);

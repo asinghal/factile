@@ -37,4 +37,28 @@ describe('participants model tests', () => {
             done();
         });
     });
+
+    test('insert a survey participant', done => {
+        const email = 'a@a.com';
+        const surveyId = 'abc1-2345-6789';
+        mockDB.expects('save').once().resolves("ok");
+
+        participants.save(surveyId, email).then(d => {
+            expect(d).not.toBeNull();
+            done();
+        });
+    });
+
+    test('update a survey participant', done => {
+        const email = 'a@a.com';
+        const surveyId = 'abc1-2345-6789';
+        const respId = 'xyz-2345-6789';
+        mockDB.expects('save').once().resolves("ok");
+
+        participants.update(surveyId, email, respId, 'Completed').then(d => {
+            expect(d).toBe("ok");
+            done();
+        });
+    });
+
 });

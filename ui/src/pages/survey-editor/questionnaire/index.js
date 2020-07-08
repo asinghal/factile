@@ -4,6 +4,7 @@ import classNames from "classnames";
 
 import DropdownMenu from '../../../components/dropdown-menu';
 import QuestionDesigner from "./question-designer";
+import SurveyManagementMenu from "../../../components/surveys/survey-management-menu";
 
 import { update, findSurvey } from '../api.js';
 import { questionTypes } from './question-types.js';
@@ -43,13 +44,9 @@ export default function Questionnaire() {
             setSurvey({...survey});
         }).catch(() => history.replace('/'));
     }, [id, history]);
-
-    return (
-        <div className="new-survey container">
-            <h2>{survey.name}</h2>
-
-            <div className={classNames('overlay', { 'visible': overlayVisible })}></div>
-
+    
+    const KeyActions = () => {
+        return (
             <div className="row">
                 <div className="col-md-6">
                     <DropdownMenu buttonText="Add a question" options={questionTypes} onSelection={(value) => onSelection(value)} />
@@ -58,10 +55,30 @@ export default function Questionnaire() {
                     <button className="base-btn submit-btn" onClick={SaveDetails}>Save Details</button>
                 </div>
             </div>
-            <div>
-            {survey.questions && survey.questions.map((question, index) => 
-                <QuestionDesigner key={index} questionId={question.questionId || ('q' + (index + 1))} question={question} language="1" deleteQuestion={() => deleteQuestion(index)} />
-            )}
+        );
+    };
+
+    return (
+        <div className="new-survey container">
+            <div className="row">
+                <div className="col-md-3 col-sm-12">
+                    <SurveyManagementMenu surveyId={survey.surveyId} />
+                </div>
+                <div className="col-md-9 col-sm-12">
+                    <h2>{survey.name}</h2>
+
+                    <div className={classNames('overlay', { 'visible': overlayVisible })}></div>
+
+                    <KeyActions />
+                    <div>
+                    {survey.questions && survey.questions.map((question, index) => 
+                        <QuestionDesigner key={index} questionId={question.questionId || ('q' + (index + 1))} question={question} language="1" deleteQuestion={() => deleteQuestion(index)} />
+                    )}
+                    </div>
+                    {survey.questions && survey.questions.length &&
+                        <KeyActions />
+                    }
+                </div>
             </div>
         </div>
     );

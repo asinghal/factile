@@ -1,0 +1,16 @@
+.survey-menu {
+    background: #1F1F1F;
+    color: #C7C7C7;
+    padding: 2em;
+    line-height: 2em;
+}
+
+.survey-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.survey-menu a, .survey-menu a:hover {
+    color: inherit;
+}

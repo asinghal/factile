@@ -3,6 +3,9 @@ const surveyResponses = require('../../surveyresponses');
 const sinon = require('sinon');
 const ObjectID = require('mongodb').ObjectID;
 
+const DUMMY_SURVEY = require('./data/survey.json');
+const DUMMY_SURVEY_RESPONSES = require('./data/surveyresponses.json');
+
 describe('survey responses model tests', () => {
     let mockDB;
 
@@ -127,6 +130,32 @@ describe('survey responses model tests', () => {
             expect(response.responseId).not.toBeNull();
             done();
         });
+    });
+
+    test('format a survey response for download', done => {
+        const formatted = surveyResponses.formatForDownload(DUMMY_SURVEY, DUMMY_SURVEY_RESPONSES);
+        expect(formatted).not.toBeNull();
+        expect(formatted.surveyName).toBe('Test');
+        expect(formatted.headers).not.toBeUndefined();
+        expect(formatted.rows).not.toBeUndefined();
+        expect(formatted.headers.length).toBe(6);
+        expect(formatted.rows.length).toBe(3);
+        expect(formatted.headers[0].key).not.toBeUndefined();
+        done();
+    });
+
+    test('group survey responses by questions', done => {
+        const formatted = surveyResponses.groupByQuestions(DUMMY_SURVEY, DUMMY_SURVEY_RESPONSES);
+        expect(formatted).not.toBeNull();
+        expect(formatted.length).toBe(6);
+        expect(formatted[0].hasOptions).toBe(false);
+        expect(formatted[1].hasOptions).toBe(true);
+        expect(formatted[1].answers).not.toBeUndefined();
+        expect(formatted[0].answers.length).toBe(3);
+        expect(formatted[1].answers.length).toBe(2);
+        expect(formatted[1].answers[0].name).toBe('b');
+        expect(formatted[1].answers[0].value).toBe(2);
+        done();
     });
 
 });

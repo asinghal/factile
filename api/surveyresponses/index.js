@@ -50,7 +50,7 @@ const groupByQuestions = (survey, surveyResponses) => {
 
 const flatten = (arr) => (arr || []).reduce((all, o) => ({ ...all, ...o }), {});
 
-const buildQuestionTexts = (survey) => flatten(survey.questions.map(q => {
+const buildQuestionTexts = (survey) => flatten(survey.questions.filter(q => q.qType !== 'page').map(q => {
     const text = (obj) => (obj && obj.texts && obj.texts.length) ? obj.texts[0].text : null;
     const questionData = {
         question: text(q),

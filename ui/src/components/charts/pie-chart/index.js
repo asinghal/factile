@@ -6,17 +6,19 @@ import './pie-chart.css';
 const getArc = () => d3.arc().innerRadius(0).outerRadius(100);
 const midAngle = (d) => d.startAngle + (d.endAngle - d.startAngle)/2;
 
+const COLORS = [ '#f69e7b', '#f5b0cb', '#679b9b', '#726a95', '#7d5a5a', '#f5b971', '#e36387', '#889e81', '#5d5b6a', '#bd574e', '#39375b', '#445c3c'];
+
 const Slice = ({ pie }) => {
     const arc = getArc();
     const interpolate = d3.interpolateRgb('#f4eeff', '#424874');
 
     return pie.map((slice, index) => {
-        const sliceColor = interpolate(index / (pie.length - 1));
+        const sliceColor = index < COLORS.length ? COLORS[index] : interpolate(index / (pie.length - 1));
         return <path key={index} d={arc(slice)} fill={sliceColor} />;
     });
 };
 
-const Label = ({ pie }) => {
+const Label = ({ pie, labels }) => {
     const radius = 150;
     const arc = getArc();
 
@@ -24,7 +26,7 @@ const Label = ({ pie }) => {
         const pos = arc.centroid(slice);
         pos[0] = radius * (midAngle(slice) < Math.PI ? 1 : -1);
         pos[1] = 2 * radius * (pos[1]/ 100);
-        return <text key={index} textAnchor="middle" transform={`translate(${pos})`}>A</text>;
+        return <text key={index} dy="0.35em" textAnchor="middle" transform={`translate(${pos})`}>{labels[index]}</text>;
     });
 };
 
@@ -34,7 +36,7 @@ const Line = ({ pie }) => {
 
     return pie.map((slice, index) => {
         const labelPos = arc.centroid(slice);
-		labelPos[0] = radius * 0.95 * (midAngle(slice) < Math.PI ? 1 : -1);
+		labelPos[0] = radius * 0.9 * (midAngle(slice) < Math.PI ? 1 : -1);
         labelPos[1] = 2 * radius * (labelPos[1]/ 100);
 
         const outerArcPos = arc.centroid(slice);
@@ -53,7 +55,7 @@ export default function PieChart({ data }) {
     let pie = d3.pie()(data.map(d => d.value));
 
     const height = 400;
-    const width = 400;
+    const width = 600;
 
     return (
         <svg height={height} width={width}>

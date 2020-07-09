@@ -13,8 +13,6 @@ export default function SurveyResponses() {
     const { id } = useParams();
     const history = useHistory();
 
-    const data = [ ];
-
     useEffect(() => {
         findSurvey(id).then(setSurveyResponses).catch(() => history.replace('/'));
     }, [id, history]);
@@ -37,16 +35,34 @@ export default function SurveyResponses() {
                     <div>
                         {surveyResponses.map(surveyResponse => (
                             <div className="block" key={surveyResponse.question}>
-                                <div><strong>{surveyResponse.question}</strong></div>
-                                {surveyResponse.answers.map((answerList, index) => ( answerList.map((answer, index2) => (
+                                <div><strong>{surveyResponse.texts.question}</strong></div>
+                                {!surveyResponse.hasOptions && surveyResponse.answers.map((answer, index) => (
                                     <div className="answer" key={surveyResponse.question + "-" + index}>{answer}</div>
-                                ))))}
+                                ))}
+                                {surveyResponse.hasOptions && 
+                                <div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Option</th>
+                                                <th>Count</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {surveyResponse.answers.map((answer, index) => (
+                                            <tr key={surveyResponse.question + "-" + index}>
+                                                <td>{answer.name}</td>
+                                                <td>{answer.value}</td>
+                                            </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                    <PieChart data={surveyResponse.answers} key={`${surveyResponse.question}-pie`} />
+                                </div>
+                                }
                             </div>
                         ))}
                     </div>
-                </div>
-                <div>
-                    <PieChart data={data} />
                 </div>
             </div>
         </div>

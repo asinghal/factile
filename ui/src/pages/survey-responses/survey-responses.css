@@ -1,6 +1,7 @@
 .survey-responses .block {
     margin: 3em 0;
-    border-bottom: 2px solid #dddddd;
+    padding: 1em;
+    background-color: #E9F4FE;
     line-height: 2em;
 }
 

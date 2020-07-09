@@ -6,7 +6,26 @@ const uuid = require('uuid').v4;
 const findBySurveyId = (surveyId) => db.find('surveyresponses', { surveyId });
 const findById = (surveyId, id) => db.findOne('surveyresponses', { surveyId, _id: new ObjectID(id) });
 
-const groupByQuestions = (surveyResponses) => {
+
+const toArray = (obj) => Object.keys(obj).map(k => ({ name: k, value: obj[k] }));
+
+const addCounts = (arr) => arr.map(q => {
+    if (!q.hasOptions) {
+        return q;
+    }
+
+    const addOrIncrement = (a, b) => {
+        a[b] = a[b] ? a[b] + 1 : 1;
+        return a;
+    };
+
+    const answers = q.answers.reduce((groupedAnswers, ans) => addOrIncrement(groupedAnswers, ans), {});
+
+    return { ...q, answers: toArray(answers) };
+});
+
+const groupByQuestions = (survey, surveyResponses) => {
+    const questionTexts = buildQuestionTexts(survey);
     const grouped = {};
     surveyResponses.forEach(surveyResponse => {
         surveyResponse.responses.forEach(response => {
@@ -21,10 +40,12 @@ const groupByQuestions = (surveyResponses) => {
 
     const arranged = Object.keys(grouped).map(key => ({
         question: key,
-        answers: grouped[key]
+        texts: questionTexts[key],
+        hasOptions: !!Object.keys(questionTexts[key].options).length,
+        answers: grouped[key].reduce((a,b) => [ ...a, ...b ], []).map(x => questionTexts[key].options[x] || x )
     }));
 
-    return arranged;
+    return addCounts(arranged);
 };
 
 const flatten = (arr) => (arr || []).reduce((all, o) => ({ ...all, ...o }), {});

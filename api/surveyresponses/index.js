@@ -80,11 +80,7 @@ const formatForDownload = (survey, surveyResponses) => {
             ({
                 [r.question]: r.answers.map(a => {
                     const q = questionTexts[r.question];
-                    if (q && q.options) {
-                        return q.options[a] || a;
-                    }
-
-                    return a;
+                    return q.options[a] || a;
                 }).join('; ')
             })
         )));

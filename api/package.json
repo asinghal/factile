@@ -21,7 +21,7 @@
   },
   "scripts": {
     "start": "node index.js",
-    "test": "jest tests --detectOpenHandles"
+    "test": "jest tests --detectOpenHandles --collect-coverage"
   },
   "author": "",
   "license": "MIT"

@@ -4,7 +4,7 @@ const authorize = (req, res, fn) => Surveys.findByIdAndOwner(req.user.email, req
     if (!survey || !survey.surveyId) {
         return res.status(403).send({error: 'Unauthorized access'});
     }
-    return fn();
+    return fn(survey);
 });
 
 module.exports = { authorize };

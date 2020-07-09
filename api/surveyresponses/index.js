@@ -14,9 +14,9 @@ const groupByQuestions = (surveyResponses) => {
             grouped[response.question] = question;
             const allAnswers = response.answers;
             allAnswers.push(response.other)
-            const answers = allAnswers.filter(ans => ans !== null && ans !== undefined && ans !== "");
+            const answers = allAnswers.filter(ans => !!ans);
             question.push(answers);
-        })
+        });
     });
 
     const arranged = Object.keys(grouped).map(key => ({
@@ -25,6 +25,50 @@ const groupByQuestions = (surveyResponses) => {
     }));
 
     return arranged;
+};
+
+const flatten = (arr) => (arr || []).reduce((all, o) => ({ ...all, ...o }), {});
+
+const buildQuestionTexts = (survey) => flatten(survey.questions.map(q => {
+    const text = (obj) => (obj && obj.texts && obj.texts.length) ? obj.texts[0].text : null;
+    const questionData = {
+        question: text(q),
+        options: flatten((q.options || []).map( o => ({ [o.value]: text(o) }))),
+        other: text(q.otherBox)
+    };
+
+    if (q.dimensions && q.dimensions.length) {
+        return flatten((q.dimensions || []).map( d => ({ [`${q.questionId}_${d.value}`]: ({
+            question: text(d) || questionData.question,
+            options: questionData.options
+        }) })));
+    } else {
+        return ({
+            [q.questionId]: questionData
+        });
+    }
+}));
+
+const formatForDownload = (survey, surveyResponses) => {
+    const questionTexts = buildQuestionTexts(survey);
+
+    const data = { surveyName: survey.name, headers: [], rows: [] };
+    data.headers = Object.keys(questionTexts).map(key => ({ key, header: questionTexts[key].question }));
+    data.rows = surveyResponses.map(response => 
+        flatten(response.responses.map(r => 
+            ({
+                [r.question]: r.answers.map(a => {
+                    const q = questionTexts[r.question];
+                    if (q && q.options) {
+                        return q.options[a] || a;
+                    }
+
+                    return a;
+                }).join('; ')
+            })
+        )));
+
+    return data;
 };
 
 const generateNewResponseId = () => uuid();
@@ -45,4 +89,4 @@ const save = (surveyId, responseIdFromReq, surveyResponse) => {
     });
 };
 
-module.exports = { findById, findBySurveyId, groupByQuestions, save };
+module.exports = { findById, findBySurveyId, groupByQuestions, save, formatForDownload };

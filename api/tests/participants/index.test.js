@@ -1,5 +1,5 @@
-const db = require('../../db');
-const participants = require('../../participants');
+const db = require('../../lib/db');
+const participants = require('../../lib/participants');
 const sinon = require('sinon');
 
 describe('participants model tests', () => {

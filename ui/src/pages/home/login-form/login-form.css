@@ -5,6 +5,12 @@
     padding: 1em;
 }
 
+@media all and (max-width: 800px){
+    .login-form {
+        margin: 1em 0 12em 0;
+    }
+}
+
 .login-form input {
     border-top: 0;
     border-left: 0;

@@ -9,19 +9,32 @@ const findById = (surveyId, id) => db.findOne('surveyresponses', { surveyId, _id
 
 const toArray = (obj) => Object.keys(obj).map(k => ({ name: k, value: obj[k] }));
 
-const addCounts = (arr) => arr.map(q => {
-    if (!q.hasOptions) {
-        return q;
-    }
-
+const count = (arr) => {
     const addOrIncrement = (a, b) => {
         a[b] = a[b] ? a[b] + 1 : 1;
         return a;
     };
 
-    const answers = q.answers.reduce((groupedAnswers, ans) => addOrIncrement(groupedAnswers, ans), {});
+    return arr.reduce((grouped, item) => addOrIncrement(grouped, item), {});
+}
 
-    return { ...q, answers: toArray(answers).sort((a, b) => b.value - a.value) };
+const addCounts = (arr) => arr.map(q => {
+    if (!q.hasOptions) {
+        return q;
+    }
+
+    return { ...q, answers: toArray(count(q.answers)).sort((a, b) => b.value - a.value) };
+});
+
+const addWordCounts = (arr) => arr.map(q => {
+    if (q.hasOptions) {
+        return q;
+    }
+
+    const words = q.answers.map(a => a.split(' ')).reduce((a,b) => [...a, ...b], []);
+    q.words = toArray(count(words)).map(w => ({ text: w.name, value: w.value }));
+
+    return q;
 });
 
 const addActualTexts = (responses, questionTexts) => Object.keys(responses).filter(key => !!questionTexts[key]).map(key => ({
@@ -60,7 +73,7 @@ const groupByQuestions = (survey, surveyResponses) => {
 
     const arranged = chain(() => addActualTexts(grouped, questionTexts)).then((arr) => sortByKey(arr, 'question'));
 
-    return addCounts(arranged);
+    return chain(() => addCounts(arranged)).then((arr) => addWordCounts(arr));
 };
 
 const flatten = (arr) => (arr || []).reduce((all, o) => ({ ...all, ...o }), {});

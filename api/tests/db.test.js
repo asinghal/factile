@@ -1,7 +1,7 @@
 const mongodb = require('mongodb');
 const sinon = require('sinon');
 
-const db = require('../db');
+const db = require('../lib/db');
 
 describe('db tests', () => {
 

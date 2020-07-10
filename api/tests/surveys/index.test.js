@@ -1,6 +1,6 @@
-const db = require('../../db');
-const mail = require('../../mail');
-const surveys = require('../../surveys');
+const db = require('../../lib/db');
+const mail = require('../../lib/mail');
+const surveys = require('../../lib/surveys');
 const sinon = require('sinon');
 const ObjectID = require('mongodb').ObjectID;
 

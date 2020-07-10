@@ -1,18 +1,23 @@
-const db = require('../../db');
-const users = require('../../users');
+const db = require('../../lib/db');
+const users = require('../../lib/users');
+const mail = require('../../lib/mail');
+
 const sinon = require('sinon');
 const ObjectID = require('mongodb').ObjectID;
 
 describe('user model tests', () => {
-    let mockDB;
+    let mockDB, mockMail;
 
     beforeEach(() => {
         mockDB = sinon.mock(db);
+        mockMail = sinon.mock(mail);
     });
     
     afterEach(() => {
         mockDB.verify();
         mockDB.restore();
+        mockMail.verify();
+        mockMail.restore();
     });
     
     test('findByEmail', done => {
@@ -63,11 +68,27 @@ describe('user model tests', () => {
         });
     });
 
-    test('resetPassword dummy placeholder', done => {
-        const newPassword = users.resetPassword();
-        expect(newPassword).not.toBe(null);
-        expect(newPassword.length).toBe(12);
-        expect(/[A-Za-z0-9]*/.test(newPassword)).toBeTruthy();
-        done();
+    test('resetPassword', done => {
+        const email = 'a@test.com';
+        const dummyUser = { _id: new ObjectID(), email};
+        mockDB.expects('findOne').once().resolves(dummyUser);
+        mockDB.expects('save').once().resolves({message: 'OK'});
+        mockMail.expects('send').once().returns(null);
+
+        users.resetPassword(email).then((data) => {
+            expect(data).not.toBe(null);
+            done();
+        });
+    });
+
+    test('create a new user', done => {
+        const user = { email: 'a@test.com', password: 'password' };
+        mockDB.expects('save').once().resolves({message: 'OK'});
+        mockMail.expects('send').once().returns(null);
+
+        users.create(user).then((data) => {
+            expect(data).not.toBe(null);
+            done();
+        });
     });
 });

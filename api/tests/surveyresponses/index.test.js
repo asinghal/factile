@@ -1,5 +1,5 @@
-const db = require('../../db');
-const surveyResponses = require('../../surveyresponses');
+const db = require('../../lib/db');
+const surveyResponses = require('../../lib/surveyresponses');
 const sinon = require('sinon');
 const ObjectID = require('mongodb').ObjectID;
 

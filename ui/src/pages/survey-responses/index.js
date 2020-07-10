@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
+import ReactWordcloud from 'react-wordcloud';
+
 import SurveyManagementMenu from "../../components/surveys/survey-management-menu/index.js";
 
 import { findSurvey, getExcelData } from './api.js';
@@ -36,6 +38,11 @@ export default function SurveyResponses() {
                         {surveyResponses.map(surveyResponse => (
                             <div className="block" key={surveyResponse.question}>
                                 <div><strong>{surveyResponse.texts.question}</strong></div>
+                                {!surveyResponse.hasOptions &&
+                                <div style={{ height: 400, width: 600 }}>
+                                    <ReactWordcloud words={surveyResponse.words} />
+                                </div>
+                                }
                                 {!surveyResponse.hasOptions && surveyResponse.answers.map((answer, index) => (
                                     <div className="answer" key={surveyResponse.question + "-" + index}>{answer}</div>
                                 ))}

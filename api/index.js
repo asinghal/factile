@@ -1,17 +1,17 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
 const passport = require('passport');
 
-require('./passport');
+require('./lib/passport');
 
-const { config } = require('./config.js');
-const surveys = require('./surveys/routes');
-const unsecureSurveyRoutes = require('./surveys/unsecure-routes');
-const surveyResponses = require('./surveyresponses/routes');
-const participants = require('./participants/routes');
-const auth = require('./users/auth');
-const Users = require('./users');
+const { config } = require('./lib/config.js');
+const surveys = require('./lib/surveys/routes');
+const unsecureSurveyRoutes = require('./lib/surveys/unsecure-routes');
+const surveyResponses = require('./lib/surveyresponses/routes');
+const participants = require('./lib/participants/routes');
+const auth = require('./lib/users/auth');
+const Users = require('./lib/users');
 
 const app = express()
 app.use(cors());

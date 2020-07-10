@@ -31,11 +31,6 @@ export default function Footer() {
                                             <i className="ti-twitter-alt"></i>
                                         </a>
                                     </li>
-                                    <li>
-                                        <a href="#">
-                                            <i className="fa fa-instagram"></i>
-                                        </a>
-                                    </li>
                                 </ul>
                             </div>
 
@@ -63,25 +58,6 @@ export default function Footer() {
                                 <li><Link to="/static/contactus">Contact Us</Link></li>
                                 <li><Link to="/static/termsandconditions">Terms and conditions</Link></li>
                             </ul>
-                        </div>
-                    </div>
-                    <div className="col-xl-3 col-md-6 col-lg-3">
-                        <div className="footer_widget">
-                            <h3 className="footer_title">
-                                    Downloads
-                            </h3>
-                            <ul>
-                                <li>
-                                    <a href="#">
-                                        Download from Apple Store
-
-                                    </a>
-                                </li>
-                                <li><a href="#">
-                                        Download from Play Store
-                                    </a>
-                                </li>
-                                </ul>
                         </div>
                     </div>
                 </div>

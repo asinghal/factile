@@ -8,7 +8,7 @@ The only thing I must ask for is that you give the due credits to Factile when u
 
 ## License
 
-The tool and its source code are available under the LGPL license (http://www.gnu.org/copyleft/lesser.html). However, your contributions are welcome and I'll be happy to discuss if you have a need to use the code/ application outside of the LGPL license. You can reach me at asinghal79 at gmail dot com.
+The tool and its source code are available under MIT license (https://opensource.org/licenses/MIT). Your contributions are most welcome.
 
 ## Features
 
@@ -38,16 +38,37 @@ The tool and its source code are available under the LGPL license (http://www.gn
 
 ## Technology Stack
 
-The application code is written in Scala and uses the Play framework. The database used is MongoDB.
+The application code is written in JavaScript
+
+* **APIs**: Node JS and Express JS
+* **Frontend**: React JS
+* **Database**: MongoDB.
 
 ## Installation
 
 1. Git clone this repository
-1. You must have play, scala 2.9 and sbt installed.
+1. You must have the latest Node JS (v14 onwards) installed.
 1. Install MongoDB and run mongod
-1. Install RabbitMQ
-1. Start this application by going into the directory and running "play". On the console that opens, type "run".
-1. Open http://localhost:9000 !
+1. To start the API server, run the following:
 
-*PS:* If you get an error 'Mongo db "can't call something"', check https://github.com/asinghal/factile/issues/2
+	```
+	cd api
+	npm install
+	npm start
+	```
+1. To start the frontend, run the following:
 
+	```
+	cd ui
+	npm install
+	npm start
+	```
+1. Once the frontend has been started, it will automatically open `http://localhost:3000` in your default browser. Alternatively, you can use the URL to open it yourself
+1. For the APIs, you can run tests using `npm test`
+
+## Contributing to the source code
+
+1. Fork the project into your github account
+2. Make the modifications
+3. Submit a pull request
+4. Please note: pull requests will only be accepted when they contain appropriate unit tests

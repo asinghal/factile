@@ -3,6 +3,8 @@ const Surveys = require('../surveys');
 const ObjectID = require('mongodb').ObjectID;
 const uuid = require('uuid').v4;
 
+const { removeStopWords } = require('./stop-words');
+
 const findBySurveyId = (surveyId) => db.find('surveyresponses', { surveyId });
 const findById = (surveyId, id) => db.findOne('surveyresponses', { surveyId, _id: new ObjectID(id) });
 
@@ -26,12 +28,12 @@ const addCounts = (arr) => arr.map(q => {
     return { ...q, answers: toArray(count(q.answers)).sort((a, b) => b.value - a.value) };
 });
 
-const addWordCounts = (arr) => arr.map(q => {
+const addWordCounts = (arr, language) => arr.map(q => {
     if (q.hasOptions) {
         return q;
     }
 
-    const words = q.answers.map(a => a.split(' ')).reduce((a,b) => [...a, ...b], []);
+    const words = q.answers.map(a => removeStopWords(language, a).trim().split(' ').filter(x=> !!x.trim())).reduce((a,b) => [...a, ...b], []);
     q.words = toArray(count(words)).map(w => ({ text: w.name, value: w.value }));
 
     return q;
@@ -73,7 +75,7 @@ const groupByQuestions = (survey, surveyResponses) => {
 
     const arranged = chain(() => addActualTexts(grouped, questionTexts)).then((arr) => sortByKey(arr, 'question'));
 
-    return chain(() => addCounts(arranged)).then((arr) => addWordCounts(arr));
+    return chain(() => addCounts(arranged)).then((arr) => addWordCounts(arr, survey.language));
 };
 
 const flatten = (arr) => (arr || []).reduce((all, o) => ({ ...all, ...o }), {});

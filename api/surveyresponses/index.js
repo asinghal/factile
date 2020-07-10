@@ -24,26 +24,41 @@ const addCounts = (arr) => arr.map(q => {
     return { ...q, answers: toArray(answers).sort((a, b) => b.value - a.value) };
 });
 
+const addActualTexts = (responses, questionTexts) => Object.keys(responses).filter(key => !!questionTexts[key]).map(key => ({
+    question: key,
+    texts: questionTexts[key],
+    hasOptions: !!Object.keys(questionTexts[key].options).length,
+    answers: responses[key].reduce((a,b) => [ ...a, ...b ], []).map(x => questionTexts[key].options[x] || x )
+}));
+
+const sortByKey = (arr, key) => arr.sort((a, b) => {
+    if (a[key] > b[key]) return 1;
+    if (a[key] < b[key]) return -1;
+    return 0;
+});
+
+const chain = (fn) => ({ then: (fn2) => fn2(fn()) });
+
 const groupByQuestions = (survey, surveyResponses) => {
     const questionTexts = buildQuestionTexts(survey);
     const grouped = {};
     surveyResponses.forEach(surveyResponse => {
         surveyResponse.responses.forEach(response => {
-            const question = grouped[response.question] || [];
-            grouped[response.question] = question;
-            const allAnswers = response.answers;
-            allAnswers.push(response.other)
-            const answers = allAnswers.filter(ans => !!ans);
-            question.push(answers);
+            const accumulate = (key, answers) => {
+                const question = grouped[key] || [];
+                grouped[key] = question;
+                question.push(answers);
+            };
+
+            accumulate(response.question, response.answers.filter(ans => !!ans));
+
+            if (response.other) {
+                accumulate(`${response.question}_other`, [response.other]);
+            }
         });
     });
 
-    const arranged = Object.keys(grouped).filter(key => !!questionTexts[key]).map(key => ({
-        question: key,
-        texts: questionTexts[key],
-        hasOptions: !!Object.keys(questionTexts[key].options).length,
-        answers: grouped[key].reduce((a,b) => [ ...a, ...b ], []).map(x => questionTexts[key].options[x] || x )
-    }));
+    const arranged = chain(() => addActualTexts(grouped, questionTexts)).then((arr) => sortByKey(arr, 'question'));
 
     return addCounts(arranged);
 };
@@ -55,7 +70,7 @@ const buildQuestionTexts = (survey) => flatten(survey.questions.filter(q => q.qT
     const questionData = {
         question: text(q),
         options: flatten((q.options || []).map( o => ({ [o.value]: text(o) }))),
-        other: text(q.otherBox)
+        other: text(q.otherBox) || 'Other'
     };
 
     if (q.dimensions && q.dimensions.length) {
@@ -64,9 +79,12 @@ const buildQuestionTexts = (survey) => flatten(survey.questions.filter(q => q.qT
             options: questionData.options
         }) })));
     } else {
-        return ({
-            [q.questionId]: questionData
-        });
+        const updated = { [q.questionId]: questionData };
+
+        if (q.hasOther) {
+            updated[`${q.questionId}_other`] = { ...questionData, options: [], question: `${questionData.question} (${questionData.other})`};
+        }
+        return updated;
     }
 }));
 
@@ -81,7 +99,8 @@ const formatForDownload = (survey, surveyResponses) => {
                 [r.question]: r.answers.map(a => {
                     const q = questionTexts[r.question];
                     return q.options[a] || a;
-                }).join('; ')
+                }).join('; '),
+                [`${r.question}_other`]: r.other
             })
         )));
 

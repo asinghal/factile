@@ -20,7 +20,7 @@ export default function Participants() {
                     <SurveyManagementMenu surveyId={id} />
                 </div>
                 <div className="col-md-9 col-sm-12">
-                    <table class="table">
+                    <table className="table">
                         <thead>
                             <tr>
                                 <th>Email</th>

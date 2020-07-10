@@ -86,7 +86,7 @@
                     "language": "1"
                 }
             ],
-            "hasOther": false,
+            "hasOther": true,
             "mandatory": false,
             "qType": "radio"
         },
@@ -135,11 +135,11 @@
             ],
             "otherBox": [
                 {
-                    "text": "",
+                    "text": "Other",
                     "language": "1"
                 }
             ],
-            "hasOther": false,
+            "hasOther": true,
             "mandatory": false,
             "qType": "checkbox"
         },

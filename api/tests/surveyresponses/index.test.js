@@ -138,7 +138,7 @@ describe('survey responses model tests', () => {
         expect(formatted.surveyName).toBe('Test');
         expect(formatted.headers).not.toBeUndefined();
         expect(formatted.rows).not.toBeUndefined();
-        expect(formatted.headers.length).toBe(6);
+        expect(formatted.headers.length).toBe(8);
         expect(formatted.rows.length).toBe(3);
         expect(formatted.headers[0].key).not.toBeUndefined();
         done();
@@ -147,14 +147,14 @@ describe('survey responses model tests', () => {
     test('group survey responses by questions', done => {
         const formatted = surveyResponses.groupByQuestions(DUMMY_SURVEY, DUMMY_SURVEY_RESPONSES);
         expect(formatted).not.toBeNull();
-        expect(formatted.length).toBe(6);
+        expect(formatted.length).toBe(7);
         expect(formatted[0].hasOptions).toBe(false);
-        expect(formatted[1].hasOptions).toBe(true);
-        expect(formatted[1].answers).not.toBeUndefined();
+        expect(formatted[2].hasOptions).toBe(true);
+        expect(formatted[2].answers).not.toBeUndefined();
         expect(formatted[0].answers.length).toBe(3);
-        expect(formatted[1].answers.length).toBe(2);
-        expect(formatted[1].answers[0].name).toBe('b');
-        expect(formatted[1].answers[0].value).toBe(2);
+        expect(formatted[2].answers.length).toBe(2);
+        expect(formatted[2].answers[0].name).toBe('b');
+        expect(formatted[2].answers[0].value).toBe(2);
         done();
     });
 

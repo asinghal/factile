@@ -23,7 +23,7 @@
                 "answers" : [ 
                     "o2"
                 ],
-                "other" : null,
+                "other" : "Some other",
                 "ranking" : false
             }, 
             {

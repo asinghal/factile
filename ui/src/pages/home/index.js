@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import LoginForm from './login-form/login-form.js';
 
 import './home.css';
+import RegistrationForm from "./registration/registration-form.js";
 
 export default function Home({setUserLoggedIn}) {
+    const [showLoginForm, setShowLoginForm] = useState(true);
     return (
         <div>
             <div className="hero">
@@ -17,7 +19,12 @@ export default function Home({setUserLoggedIn}) {
                     </div>
                     <div className="col-xl-5 col-md-6">
                         <div>
-                            <LoginForm setUserLoggedIn={setUserLoggedIn} />
+                            { showLoginForm && 
+                                <LoginForm setUserLoggedIn={setUserLoggedIn} setShowLoginForm={setShowLoginForm} />
+                            }
+                            { !showLoginForm && 
+                                <RegistrationForm setUserLoggedIn={setUserLoggedIn} setShowLoginForm={setShowLoginForm} />
+                            }
                         </div>
                     </div>
                 </div>

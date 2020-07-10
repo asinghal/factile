@@ -1,11 +1,12 @@
 const passport = require('passport');
 const express = require('express');
 const router  = express.Router();
+const Users = require('./');
 
 const { generateJWT } = require('../passport');
 
 /* POST login. */
-router.post('/login', function (req, res, next) {
+router.post('/login', function (req, res) {
     passport.authenticate('local', {session: false}, (err, user, info) => {
         if (err || !user) {
             return res.status(400).json({
@@ -24,5 +25,12 @@ router.post('/login', function (req, res, next) {
         });
     })(req, res);
 });
+
+router.post('/users', (req, res) => Users.create(req.body).then(() => {
+    res.status(201);
+    return res.send({ message: 'OK'});
+}));
+
+router.post('/users/forgotpassword', (req, res) => Users.resetPassword(req.body.email).then(() => res.send({ message: 'OK'})));
 
 module.exports = router;

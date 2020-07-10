@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-import { login, forgotPassword } from '../api.js';
+import { login, register } from '../api.js';
 
-import './login-form.css';
+import '../login-form/login-form.css';
 
-export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
+export default function RegistrationForm({setUserLoggedIn, setShowLoginForm}) {
     const [user, setUser] = useState({ email: '', password: ''});
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -17,7 +17,7 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
     };
 
     const initiateLogin = (event) => {
-        login(user).then((data) => {
+        register(user).then(() => login(user)).then((data) => {
             if (!data || !data.token) {
                 setErrorMessage('Login failed');
                 return;
@@ -28,17 +28,13 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
         });
         event.preventDefault();
     };
-
-    const resetPassword = (event) => {
-        forgotPassword(user.email).then(console.log);
-    };
     
     return (
         <div className="login-form">
             <form>
                 <div className="row">
                     <div className="col-md-12">
-                        <h3>Login to get started</h3>
+                        <h3>Sign up</h3>
                     </div>
                 </div>
                 <div className="row">
@@ -58,17 +54,12 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <button onClick={initiateLogin}>Login</button>
+                        <button onClick={initiateLogin}>Register</button>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        Not a user yet? <a onClick={() => setShowLoginForm(false)}>Click here to register</a>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-12">
-                        Forgot password? <a onClick={() => resetPassword(false)}>Click here to reset</a>
+                    Already a user? <a onClick={() => setShowLoginForm(true)}>Click here to login</a>
                     </div>
                 </div>
             </form>

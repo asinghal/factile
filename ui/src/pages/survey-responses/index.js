@@ -41,7 +41,7 @@ export default function SurveyResponses() {
                                 ))}
                                 {surveyResponse.hasOptions && 
                                 <div>
-                                    <table class="table">
+                                    <table className="table">
                                         <thead>
                                             <tr>
                                                 <th>Option</th>

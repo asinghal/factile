@@ -11,6 +11,14 @@
                 "ranking" : false
             }, 
             {
+                "question" : "NON_EXISTENT_DELETED_QUESTION",
+                "answers" : [ 
+                    "o2"
+                ],
+                "other" : null,
+                "ranking" : false
+            }, 
+            {
                 "question" : "q0004",
                 "answers" : [ 
                     "o2"

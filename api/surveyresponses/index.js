@@ -21,7 +21,7 @@ const addCounts = (arr) => arr.map(q => {
 
     const answers = q.answers.reduce((groupedAnswers, ans) => addOrIncrement(groupedAnswers, ans), {});
 
-    return { ...q, answers: toArray(answers) };
+    return { ...q, answers: toArray(answers).sort((a, b) => b.value - a.value) };
 });
 
 const groupByQuestions = (survey, surveyResponses) => {
@@ -38,7 +38,7 @@ const groupByQuestions = (survey, surveyResponses) => {
         });
     });
 
-    const arranged = Object.keys(grouped).map(key => ({
+    const arranged = Object.keys(grouped).filter(key => !!questionTexts[key]).map(key => ({
         question: key,
         texts: questionTexts[key],
         hasOptions: !!Object.keys(questionTexts[key].options).length,
@@ -76,7 +76,7 @@ const formatForDownload = (survey, surveyResponses) => {
     const data = { surveyName: survey.name, headers: [], rows: [] };
     data.headers = Object.keys(questionTexts).map(key => ({ key, header: questionTexts[key].question }));
     data.rows = surveyResponses.map(response => 
-        flatten(response.responses.map(r => 
+        flatten(response.responses.filter(r => !!questionTexts[r.question]).map(r => 
             ({
                 [r.question]: r.answers.map(a => {
                     const q = questionTexts[r.question];

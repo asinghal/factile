@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 
 import './pie-chart.css';
 
-const getArc = () => d3.arc().innerRadius(0).outerRadius(100);
+const getArc = () => d3.arc().innerRadius(0).outerRadius(150);
 const midAngle = (d) => d.startAngle + (d.endAngle - d.startAngle)/2;
 
 const COLORS = [ '#f69e7b', '#f5b0cb', '#679b9b', '#726a95', '#7d5a5a', '#f5b971', '#e36387', '#889e81', '#5d5b6a', '#bd574e', '#39375b', '#445c3c'];
@@ -19,19 +19,19 @@ const Slice = ({ pie }) => {
 };
 
 const Label = ({ pie, labels }) => {
-    const radius = 150;
+    const radius = 175;
     const arc = getArc();
 
     return pie.map((slice, index) => {
         const pos = arc.centroid(slice);
         pos[0] = radius * (midAngle(slice) < Math.PI ? 1 : -1);
         pos[1] = 2 * radius * (pos[1]/ 100);
-        return <text key={index} dy="0.35em" textAnchor="middle" transform={`translate(${pos})`}>{labels[index]}</text>;
+        return <text key={index} dy="0.35em" textAnchor="middle" transform={`translate(${pos})`} fontSize="0.7em">{labels[index]}</text>;
     });
 };
 
 const Line = ({ pie }) => {
-    const radius = 150;
+    const radius = 175;
     const arc = getArc();
 
     return pie.map((slice, index) => {
@@ -54,7 +54,7 @@ export default function PieChart({ data }) {
 
     let pie = d3.pie()(data.map(d => d.value));
 
-    const height = 400;
+    const height = 600;
     const width = 600;
 
     return (

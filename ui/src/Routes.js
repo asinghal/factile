@@ -22,6 +22,7 @@ import EditorBase from "./pages/base-pages/editor-base/index.js";
 import RespondentBase from "./pages/base-pages/respondent-base/index.js";
 import PublicErrorPage from "./pages/respondents/error-page/index.js";
 import InviteSurveyUsers from "./pages/survey-editor/invitations/index.js";
+import Settings from "./pages/settings/index.js";
 
 export default function Routes() {
     return (
@@ -77,6 +78,12 @@ export default function Routes() {
             <Route exact path="/surveys/:id/participants">
                 <EditorBase>
                     <Participants />
+                </EditorBase>
+            </Route>
+
+            <Route exact path="/user/preferences">
+                <EditorBase>
+                    <Settings />
                 </EditorBase>
             </Route>
 

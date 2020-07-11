@@ -24,3 +24,8 @@
 .overlay.visible {
     visibility: visible;
 }
+
+.page-break {
+    background-color: #b9ceeb;
+    border-color: #a6b1e1;
+}

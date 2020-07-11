@@ -44,7 +44,7 @@ export default function SurveyResponses() {
                         <button onClick={Download} className="base-btn submit-btn">Download in Excel</button>
                     </div>
                     <div>
-                        {surveyResponses.map(surveyResponse => (
+                        {surveyResponses && surveyResponses.map(surveyResponse => (
                             <div className="block" key={surveyResponse.question}>
                                 <div><strong>{surveyResponse.texts.question}</strong></div>
                                 {!surveyResponse.hasOptions &&

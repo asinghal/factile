@@ -11,11 +11,11 @@ export default function SurveyManagementMenu({ surveyId }) {
         <div className="survey-menu">
             <ul>
                 <li>
-                    <Link to={"/surveys/" + surveyId + "/edit"}>Edit Survey Data</Link>
+                    <Link to={"/surveys/" + surveyId + "/edit"}>Basic Survey Data</Link>
                 </li>
 
                 <li>
-                    <Link to={"/surveys/" + surveyId + "/questions"}>Edit Questions</Link>
+                    <Link to={"/surveys/" + surveyId + "/questions"}>Questions</Link>
                 </li>
 
                 <li>
@@ -23,11 +23,11 @@ export default function SurveyManagementMenu({ surveyId }) {
                 </li>
 
                 <li>
-                    <Link to={"/surveys/" + surveyId + "/responses"}>Responses</Link>
+                    <Link to={"/surveys/" + surveyId + "/preview"} target="_blank">Preview</Link>
                 </li>
 
                 <li>
-                    <Link to={"/surveys/" + surveyId + "/preview"} target="_blank">Preview</Link>
+                    <Link to={"/surveys/" + surveyId + "/responses"}>Responses Captured</Link>
                 </li>
 
                 <li>

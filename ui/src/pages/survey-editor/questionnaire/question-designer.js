@@ -50,7 +50,7 @@ export default function QuestionDesigner({question, questionId, language, delete
     }
 
     return (
-        <div className="question-block">
+        <div className={'question-block ' + (question.qType === 'page' ? 'page-break': '')}>
             <div className="row">
                 <div className="col-sm-11 col-md-11">
                 <h4>{qTypeMetaInfo.name}</h4>

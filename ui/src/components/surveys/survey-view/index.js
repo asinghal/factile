@@ -18,6 +18,18 @@ const Page = ({ page, saveResponse }) => (
 export default function SurveyView({ survey, addResponse, onPageSubmit, answersAreValid }) {
     const [pageNum, setPageNum] = useState(0);
 
+    const findNextDisplayablePage = (totalPages) => {
+        let nextPageNum = pageNum + 1;
+
+        for (; nextPageNum <= totalPages; nextPageNum++) {
+            if (!survey.pages[nextPageNum - 1].conditions || survey.pages[nextPageNum - 1].conditions.map(c => c.result === undefined || c.result).reduce((a, b) => a && b, true)) {
+                break;
+            }
+        }
+
+        return nextPageNum;
+    };
+
     const NextPage = (event) => {
         event.preventDefault();
         if (pageNum > 0) {
@@ -26,7 +38,7 @@ export default function SurveyView({ survey, addResponse, onPageSubmit, answersA
             }
         }
         if (survey.pages && pageNum <= survey.pages.length) {
-            setPageNum(pageNum + 1);
+            setPageNum(findNextDisplayablePage(survey.pages.length));
         }
         return true;
     };
@@ -41,6 +53,7 @@ export default function SurveyView({ survey, addResponse, onPageSubmit, answersA
 
     useEffect(() => {
         if (survey && !survey.intro_text) {
+            // if there is a page with intro text, first page with questions needs to be pushed out
             setPageNum(1);
         } else {
             setPageNum(0);

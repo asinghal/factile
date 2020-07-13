@@ -19,6 +19,7 @@ export default function SurveyView({ survey, addResponse, onPageSubmit, answersA
     const [pageNum, setPageNum] = useState(0);
 
     const NextPage = (event) => {
+        event.preventDefault();
         if (pageNum > 0) {
             if (!onPageSubmit(pageNum - 1)) {
                 return false;
@@ -27,7 +28,6 @@ export default function SurveyView({ survey, addResponse, onPageSubmit, answersA
         if (survey.pages && pageNum <= survey.pages.length) {
             setPageNum(pageNum + 1);
         }
-        event.preventDefault();
         return true;
     };
 

@@ -13,12 +13,12 @@ const findSurvey = async (id, respId) => {
     return data;
 };
 
-const saveResponse = async (surveyId, surveyResponse) => {
+const sendResponseData = async (url, httpMethod, surveyResponse) => {
     const headers = getAuthHeader();
     headers.append('Content-Type', 'application/json');
 
-    let response = await fetch('http://localhost:9000/surveyresponses/surveys/' + surveyId + '/responses', {
-        method: 'POST',
+    let response = await fetch(url, {
+        method: httpMethod,
         headers,
         body: JSON.stringify(surveyResponse)
     });
@@ -27,8 +27,16 @@ const saveResponse = async (surveyId, surveyResponse) => {
     if (status !== 200) {
         console.log('something went wrong');
     }
-    
+
     return data;
+}
+
+const saveResponse = (surveyId, responseId, surveyResponse) => {
+    if (!responseId) {
+        return sendResponseData(`http://localhost:9000/surveyresponses/surveys/${surveyId}/responses`, 'POST', surveyResponse);
+    }
+
+    return sendResponseData(`http://localhost:9000/surveyresponses/surveys/${surveyId}/responses/${responseId}`, 'PUT', surveyResponse);
 };
 
 export { findSurvey, saveResponse };

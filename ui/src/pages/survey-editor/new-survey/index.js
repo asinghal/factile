@@ -117,8 +117,8 @@ export default function NewSurvey() {
                                 <strong>Who can take this survey?</strong>
                             </div>
                             <div className="choices radio">
-                                <div><input name="accessType" type="radio" id="openAccess" value="open" onChange={handleInputChange} /><label htmlFor="openAccess" >Anyone with the link</label></div>
-                                <div><input name="accessType" type="radio" id="emailAccess" value="email" onChange={handleInputChange} /><label htmlFor="emailAccess" >By invitation</label></div>
+                                <div><input name="accessType" type="radio" id="openAccess" value="open" onChange={handleInputChange} checked={survey.accessType === 'open'} /><label htmlFor="openAccess" >Anyone with the link</label></div>
+                                <div><input name="accessType" type="radio" id="emailAccess" value="email" onChange={handleInputChange} checked={survey.accessType === 'email'} /><label htmlFor="emailAccess" >By invitation</label></div>
                             </div>
                         </div>
                     </div>
@@ -129,9 +129,9 @@ export default function NewSurvey() {
                                 <strong>Logo position</strong>
                             </div>
                             <div className="choices radio">
-                                <div><input name="logoAlignment" type="radio" id="leftPos" value="left" onChange={handleLayoutInputChange} /><label htmlFor="leftPos" >Left</label></div>
-                                <div><input name="logoAlignment" type="radio" id="centerPos" value="center" onChange={handleLayoutInputChange} /><label htmlFor="centerPos" >Center</label></div>
-                                <div><input name="logoAlignment" type="radio" id="rightPos" value="right" onChange={handleLayoutInputChange} /><label htmlFor="rightPos" >Right</label></div>
+                                <div><input name="logoAlignment" type="radio" id="leftPos" value="left" onChange={handleLayoutInputChange} checked={survey.layout.logoAlignment === 'left'} /><label htmlFor="leftPos" >Left</label></div>
+                                <div><input name="logoAlignment" type="radio" id="centerPos" value="center" onChange={handleLayoutInputChange} checked={survey.layout.logoAlignment === 'center'} /><label htmlFor="centerPos" >Center</label></div>
+                                <div><input name="logoAlignment" type="radio" id="rightPos" value="right" onChange={handleLayoutInputChange} checked={survey.layout.logoAlignment === 'right'} /><label htmlFor="rightPos" >Right</label></div>
                             </div>
                         </div>
                     </div>

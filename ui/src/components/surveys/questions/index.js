@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Checkboxes from "./checkboxes/index.js";
 import Dropdown from "./dropdown/index.js";
-import PageBreak from "./pagebreak/index.js";
 import PlainText from "./plain-text/index.js";
 import RadioButtons from "./radio-buttons/index.js";
 import Ranking from "./ranking/index.js";
@@ -52,7 +51,6 @@ export default function Question({ question, saveResponse }) {
 
             <Checkboxes question={question} persistResponse={persistResponse} />
             <Dropdown question={question} handleInputChange={handleInputChange} />
-            <PageBreak question={question} />
             <PlainText question={question} />
             <RadioButtons question={question} handleInputChange={handleInputChange} />
             <Ranking question={question} persistResponse={persistResponse} />

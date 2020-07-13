@@ -72,7 +72,7 @@ export default function Questionnaire() {
                     <KeyActions />
                     <div>
                     {survey.questions && survey.questions.map((question, index) => 
-                        <QuestionDesigner key={index} questionId={question.questionId || ('q' + (index + 1))} question={question} language="1" deleteQuestion={() => deleteQuestion(index)} />
+                        <QuestionDesigner key={index} questionId={question.questionId || ('q' + (index + 1))} question={question} allQuestions={survey.questions} language={survey.language || '1'} deleteQuestion={() => deleteQuestion(index)} />
                     )}
                     </div>
                     {survey.questions && survey.questions.length &&

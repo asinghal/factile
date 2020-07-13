@@ -2,7 +2,7 @@ import { getAuthHeader } from '../../authentication.js';
 
 const findSurvey = async (id, respId) => {
     const queryString = respId ? `?respId=${respId}` : '';
-    let response = await fetch(`http://localhost:9000/public/surveys/${id}/render${queryString}`, {
+    let response = await fetch(`/api/public/surveys/${id}/render${queryString}`, {
         headers: getAuthHeader()
     });
     let status = await response.status;
@@ -33,10 +33,10 @@ const sendResponseData = async (url, httpMethod, surveyResponse) => {
 
 const saveResponse = (surveyId, responseId, surveyResponse) => {
     if (!responseId) {
-        return sendResponseData(`http://localhost:9000/public/surveyresponses/surveys/${surveyId}/responses`, 'POST', surveyResponse);
+        return sendResponseData(`/api/public/surveyresponses/surveys/${surveyId}/responses`, 'POST', surveyResponse);
     }
 
-    return sendResponseData(`http://localhost:9000/public/surveyresponses/surveys/${surveyId}/responses/${responseId}`, 'PUT', surveyResponse);
+    return sendResponseData(`/api/public/surveyresponses/surveys/${surveyId}/responses/${responseId}`, 'PUT', surveyResponse);
 };
 
 export { findSurvey, saveResponse };

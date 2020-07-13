@@ -13,7 +13,7 @@ const post = async (url, payload) => {
 }
 
 const login = async (user) => {
-    let data = await post('http://localhost:9000/login', user);
+    let data = await post('/api/login', user);
 
     if (data.token) {
         setToken(data.token);
@@ -24,13 +24,13 @@ const login = async (user) => {
 };
 
 const register = async (user) => {
-    let data = await post('http://localhost:9000/users', user);
+    let data = await post('/api/users', user);
 
     return data;
 };
 
 const forgotPassword = async (email) => {
-    let data = await post('http://localhost:9000/users/forgotpassword', { email });
+    let data = await post('/api/users/forgotpassword', { email });
 
     return data;
 };

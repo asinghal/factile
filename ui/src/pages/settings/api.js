@@ -4,7 +4,7 @@ const update = async (password) => {
     const headers = getAuthHeader();
     headers.append('Content-Type', 'application/json');
 
-    let response = await fetch('http://localhost:9000/userdetails/password', {
+    let response = await fetch('/api/userdetails/password', {
         method: 'PUT',
         headers,
         body: JSON.stringify({

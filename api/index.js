@@ -20,13 +20,13 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.use('/surveys', passport.authenticate('jwt', {session: false}), surveys);
-app.use('/surveyresponses', passport.authenticate('jwt', {session: false}), surveyResponses);
-app.use('/participants', passport.authenticate('jwt', {session: false}), participants);
-app.use('/userdetails', passport.authenticate('jwt', {session: false}), users);
-app.use('/public/surveys', unsecureSurveyRoutes);
-app.use('/public/surveyresponses', unsecureSurveyResponseRoutes);
-app.use('/', auth);
+app.use('/api/surveys', passport.authenticate('jwt', {session: false}), surveys);
+app.use('/api/surveyresponses', passport.authenticate('jwt', {session: false}), surveyResponses);
+app.use('/api/participants', passport.authenticate('jwt', {session: false}), participants);
+app.use('/api/userdetails', passport.authenticate('jwt', {session: false}), users);
+app.use('/api/public/surveys', unsecureSurveyRoutes);
+app.use('/api/public/surveyresponses', unsecureSurveyResponseRoutes);
+app.use('/api/', auth);
 
 app.get('/', (req, res) => res.send('OK'))
 

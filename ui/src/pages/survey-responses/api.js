@@ -1,7 +1,7 @@
 import { getAuthHeader } from '../../authentication.js';
 
 const findSurvey = async (id) => {
-    let response = await fetch('http://localhost:9000/surveyresponses/surveys/' + id, {
+    let response = await fetch('/api/surveyresponses/surveys/' + id, {
         headers: getAuthHeader()
     });
     let status = await response.status;
@@ -13,7 +13,7 @@ const findSurvey = async (id) => {
 };
 
 const getExcelData = async (id) => {
-    let response = await fetch('http://localhost:9000/surveyresponses/surveys/' + id + '/excel', {
+    let response = await fetch('/api/surveyresponses/surveys/' + id + '/excel', {
         headers: getAuthHeader()
     });
     let status = await response.status;

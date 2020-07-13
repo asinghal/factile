@@ -19,16 +19,16 @@ const saveOrUpdate = async (url, httpMethod, survey) => {
 };
 
 const save = async (survey) => {
-    return saveOrUpdate('http://localhost:9000/surveys', 'POST', survey);
+    return saveOrUpdate('/api/surveys', 'POST', survey);
 };
 
 const update = async (survey) => {
     delete survey._id;
-    return saveOrUpdate('http://localhost:9000/surveys/'+ survey.surveyId, 'PUT', survey);
+    return saveOrUpdate('/api/surveys/'+ survey.surveyId, 'PUT', survey);
 };
 
 const findSurvey = async (id) => {
-    let response = await fetch('http://localhost:9000/surveys/' + id, {
+    let response = await fetch('/api/surveys/' + id, {
         headers: getAuthHeader()
     });
     let status = await response.status;
@@ -43,7 +43,7 @@ const sendEmails = async (id, formData) => {
     const headers = getAuthHeader();
     headers.append('Content-Type', 'application/json');
 
-    let response = await fetch('http://localhost:9000/surveys/' + id + '/invite', {
+    let response = await fetch('/api/surveys/' + id + '/invite', {
         method: 'POST',
         headers,
         body: JSON.stringify(formData)

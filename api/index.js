@@ -9,6 +9,7 @@ const { config } = require('./lib/config.js');
 const surveys = require('./lib/surveys/routes');
 const unsecureSurveyRoutes = require('./lib/surveys/unsecure-routes');
 const surveyResponses = require('./lib/surveyresponses/routes');
+const unsecureSurveyResponseRoutes = require('./lib/surveyresponses/unsecure-routes');
 const participants = require('./lib/participants/routes');
 const auth = require('./lib/users/auth');
 const Users = require('./lib/users');
@@ -23,6 +24,7 @@ app.use('/surveys', passport.authenticate('jwt', {session: false}), surveys);
 app.use('/surveyresponses', passport.authenticate('jwt', {session: false}), surveyResponses);
 app.use('/participants', passport.authenticate('jwt', {session: false}), participants);
 app.use('/public/surveys', unsecureSurveyRoutes);
+app.use('/public/surveyresponses', unsecureSurveyResponseRoutes);
 app.use('/', auth);
 
 app.get('/', (req, res) => res.send('OK'))

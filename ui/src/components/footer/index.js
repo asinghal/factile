@@ -17,18 +17,18 @@ export default function Footer() {
                                 </a>
                             </div>
                             <p>
-                                Free and opensource survey tool. Made with <i className="fa fa-heart-o" aria-hidden="true"></i> by <a href="http://asinghal.github.io/" target="_blank">Aishwarya Singhal</a> 
+                                Free and opensource survey tool. <br />Made with <i className="fa fa-heart-o" aria-hidden="true"></i> by <a href="http://asinghal.github.io/" target="_blank">Aishwarya Singhal</a> 
                             </p>
                             <div className="social_links">
                                 <ul>
                                     <li>
-                                        <a href="#">
-                                            <i className="ti-facebook"></i>
+                                        <a href="https://www.facebook.com/Factile/" target="_blank">
+                                         <i className="fab fa-facebook"></i> Facebook
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="#">
-                                            <i className="ti-twitter-alt"></i>
+                                        <a href="https://github.com/asinghal/factile">
+                                         <i className="fab fa-github"></i> Github
                                         </a>
                                     </li>
                                 </ul>
@@ -57,6 +57,7 @@ export default function Footer() {
                                 <li><Link to="/static/help">Help</Link></li>
                                 <li><Link to="/static/contactus">Contact Us</Link></li>
                                 <li><Link to="/static/termsandconditions">Terms and conditions</Link></li>
+                                <li><a href="https://github.com/asinghal/factile" target="_blank">Github</a></li>
                             </ul>
                         </div>
                     </div>

@@ -28,6 +28,13 @@ const resetPassword = (email) => {
     });
 };
 
+const updatePassword = (email, password) => {
+    return findByEmail(email).then(user => db.save('users', { ...user, password: encrypt(password) }, 'email') ).then((data) => {
+        mail.send(email, null, null, null, 'Your password has been changed', `We have changed your password as requested. If you did not change your password, your account may have been hacked and we recommend in that case to reset the password again.`);
+        return { message: 'OK' };
+    });
+};
+
 const create = (user) => {
     return db.save('users', { ...user, password: encrypt(user.password) }, 'email').then((data) => {
         mail.send(user.email, null, null, null, 'Welcome to Factile', `Your account has been created`);
@@ -35,4 +42,4 @@ const create = (user) => {
     });
 };
 
-module.exports = { findByEmail, findById, login, resetPassword, create };
+module.exports = { findByEmail, findById, login, resetPassword, updatePassword, create };

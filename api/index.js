@@ -12,7 +12,7 @@ const surveyResponses = require('./lib/surveyresponses/routes');
 const unsecureSurveyResponseRoutes = require('./lib/surveyresponses/unsecure-routes');
 const participants = require('./lib/participants/routes');
 const auth = require('./lib/users/auth');
-const Users = require('./lib/users');
+const users = require('./lib/users/routes');
 
 const app = express()
 app.use(cors());
@@ -23,6 +23,7 @@ app.use(bodyParser.json());
 app.use('/surveys', passport.authenticate('jwt', {session: false}), surveys);
 app.use('/surveyresponses', passport.authenticate('jwt', {session: false}), surveyResponses);
 app.use('/participants', passport.authenticate('jwt', {session: false}), participants);
+app.use('/userdetails', passport.authenticate('jwt', {session: false}), users);
 app.use('/public/surveys', unsecureSurveyRoutes);
 app.use('/public/surveyresponses', unsecureSurveyResponseRoutes);
 app.use('/', auth);

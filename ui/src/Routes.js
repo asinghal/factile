@@ -8,6 +8,8 @@ import Home from './pages/home/index.js';
 import ListSurveys from './pages/list-surveys/index.js';
 import NewSurvey from './pages/survey-editor/new-survey/index.js';
 import Questionnaire from './pages/survey-editor/questionnaire/index.js';
+import InviteSurveyUsers from "./pages/survey-editor/invitations/index.js";
+import SurveyCollaborators from "./pages/survey-editor/collaborators/index.js";
 import SurveyDashboard from './pages/dashboard/index.js';
 import PreviewSurvey from './pages/respondents/preview-survey/index.js';
 import LiveSurvey from "./pages/respondents/live-survey/index.js";
@@ -21,7 +23,6 @@ import TermsAndConditions from './pages/static/termsandconditions/index.js';
 import EditorBase from "./pages/base-pages/editor-base/index.js";
 import RespondentBase from "./pages/base-pages/respondent-base/index.js";
 import PublicErrorPage from "./pages/respondents/error-page/index.js";
-import InviteSurveyUsers from "./pages/survey-editor/invitations/index.js";
 import Settings from "./pages/settings/index.js";
 
 export default function Routes() {
@@ -78,6 +79,11 @@ export default function Routes() {
             <Route exact path="/surveys/:id/participants">
                 <EditorBase>
                     <Participants />
+                </EditorBase>
+            </Route>
+            <Route exact path="/surveys/:id/collaborators">
+                <EditorBase>
+                    <SurveyCollaborators />
                 </EditorBase>
             </Route>
 

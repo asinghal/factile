@@ -21,6 +21,12 @@ export default function PreviewSurvey() {
     };
 
     return (
-        <BaseRespondentView survey={survey} onSuccessfulSubmit={onPageSubmit} />
+        <>
+            <div className="container">
+                <div>&nbsp;</div>
+                <div className="alert alert-info">This is a preview mode. Responses will not be saved.</div>
+            </div>
+            <BaseRespondentView survey={survey} onSuccessfulSubmit={onPageSubmit} />
+        </>
     );
 };

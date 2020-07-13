@@ -98,6 +98,11 @@ export default function Routes() {
                     <LiveSurvey />
                 </RespondentBase>
             </Route>
+            <Route exact path="/s/:id/:respId">
+                <RespondentBase>
+                    <LiveSurvey />
+                </RespondentBase>
+            </Route>
 
             {/* Static files */}
             <Route exact path="/static/faq">

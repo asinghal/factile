@@ -38,6 +38,30 @@ describe('participants model tests', () => {
         });
     });
 
+    test('findBySurveyIdAndRespId where data is found', done => {
+        const surveyId = 'abc1-2345-6789';
+        const respId = 'qwert-2345-6789';
+        const participant = { email: 'a@a.com' };
+        mockDB.expects('findOne').once().resolves(participant);
+    
+        participants.findBySurveyIdAndRespId(surveyId, respId).then(found => {
+            expect(found).not.toBeNull();
+            expect(found).toBe(participant);
+            done();
+        });
+    });
+    
+    test('findBySurveyIdAndRespId where data is not found', done => {
+        const surveyId = 'abc1-2345-6789';
+        const respId = 'qwerty-233445-6789';
+        mockDB.expects('findOne').once().resolves(null);
+    
+        participants.findBySurveyIdAndRespId(surveyId, respId).then(found => {
+            expect(found).toBeNull();
+            done();
+        });
+    });
+
     test('insert a survey participant', done => {
         const email = 'a@a.com';
         const surveyId = 'abc1-2345-6789';

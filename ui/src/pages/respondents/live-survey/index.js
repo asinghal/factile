@@ -7,11 +7,11 @@ import BaseRespondentView from '../index.js';
 
 export default function LiveSurvey() {
     const [survey, setSurvey] = useState({ layout: {} });
-    const { id } = useParams();
+    const { id, respId } = useParams();
     const history = useHistory();
 
     useEffect(() => {
-        findSurvey(id).then((survey) => {
+        findSurvey(id, respId).then((survey) => {
             setSurvey(survey);
         }).catch(() => history.replace('/error'));
     }, [id, history]);

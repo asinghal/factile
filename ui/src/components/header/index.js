@@ -33,7 +33,7 @@ export default function Header({userLoggedIn, setUserLoggedIn}) {
             <div id="sticky-header" className="main-header-area">
                 <div className="container">
                     <div className="row align-items-center">
-                        <div className="col-xs-4">
+                        <div className="col-xs-4 hidden-sm hidden-md hidden-lg">
                             <i className="fas fa-bars" onClick={toggleMenu}></i>
                         </div>
                         <div className="col-xs-8 col-sm-1 col-md-1">

@@ -1,7 +1,8 @@
 import { getAuthHeader } from '../../authentication.js';
 
-const findSurvey = async (id) => {
-    let response = await fetch('http://localhost:9000/public/surveys/' + id + '/render', {
+const findSurvey = async (id, respId) => {
+    const queryString = respId ? `?respId=${respId}` : '';
+    let response = await fetch(`http://localhost:9000/public/surveys/${id}/render${queryString}`, {
         headers: getAuthHeader()
     });
     let status = await response.status;

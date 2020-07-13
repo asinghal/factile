@@ -2,6 +2,7 @@ const db = require('../db');
 const uuid = require('uuid').v4;
 
 const findBySurveyId = (surveyId) => db.find('participants', { surveyId });
+const findBySurveyIdAndRespId = (surveyId, respId) => db.findOne('participants', { surveyId, respId });
 
 const generateId = () => uuid();
 
@@ -23,4 +24,4 @@ const update = (surveyId, email, respId, status) => db.save('participants', {
     status
 }, 'respId');
 
-module.exports = { findBySurveyId, save, update };
+module.exports = { findBySurveyId, save, update, findBySurveyIdAndRespId };

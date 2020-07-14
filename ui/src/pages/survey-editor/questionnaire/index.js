@@ -75,7 +75,7 @@ export default function Questionnaire() {
                         <QuestionDesigner key={index} questionId={question.questionId || ('q' + (index + 1))} question={question} allQuestions={survey.questions} language={survey.language || '1'} deleteQuestion={() => deleteQuestion(index)} />
                     )}
                     </div>
-                    {survey.questions && survey.questions.length &&
+                    {survey.questions && !!survey.questions.length &&
                         <KeyActions />
                     }
                 </div>

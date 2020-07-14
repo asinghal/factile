@@ -57,4 +57,23 @@ const sendEmails = async (id, formData) => {
     return data;
 };
 
-export { save, update, findSurvey, sendEmails };
+const upload = async (id, fieldName, file) => {
+    const headers = getAuthHeader();
+    const formData = new FormData();
+    formData.append(fieldName, file);
+    let response = await fetch('/api/uploads/surveys/' + id, {
+        method: 'POST',
+        headers,
+        body: formData
+    });
+
+    let data = await response.json();
+    let status = await response.status;
+    if (status !== 200) {
+        console.log('something went wrong');
+    }
+    
+    return data;
+};
+
+export { save, update, findSurvey, sendEmails, upload };

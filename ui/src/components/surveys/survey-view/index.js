@@ -63,6 +63,11 @@ export default function SurveyView({ survey, addResponse, onPageSubmit, answersA
     return (
         <div className="main-wrapper" style={{ backgroundColor: survey.layout.bodycolor }}>
             <div className="container survey" style={{ backgroundColor: survey.layout.containercolor, color: survey.layout.textColor }}>
+                {!!survey.logo && 
+                    <div className={"survey-logo" + (!!survey.layout.logoAlignment ? ` img-${survey.layout.logoAlignment}` : '')} style={{backgroundColor: survey.layout.logoBgColor}}>
+                        <img src={`/uploads/${survey.hash_string}/${survey.logo}`} alt={survey.name} />
+                    </div>
+                }
                 <h2>{survey.name}</h2>
 
                 {!answersAreValid &&

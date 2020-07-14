@@ -13,3 +13,25 @@
 .main-wrapper {
     min-height: 100%;
 }
+
+.survey-logo {
+    width: 100%;
+    display: flex;
+    padding: 1em;
+}
+
+.survey-logo.img-left {
+    justify-content: flex-start;
+}
+
+.survey-logo.img-center {
+    justify-content: space-around;
+}
+
+.survey-logo.img-right {
+    justify-content: flex-end;
+}
+
+.survey-logo img {
+    max-width: 80%;
+}

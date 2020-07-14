@@ -5,7 +5,7 @@ import '../../../components/forms/inputs.css';
 import '../../../components/forms/buttons.css';
 import './new-survey.css';
 
-import { save, update, findSurvey } from '../api.js';
+import { save, update, findSurvey, upload } from '../api.js';
 import { languages } from './languages.js';
 import SurveyManagementMenu from "../../../components/surveys/survey-management-menu";
 
@@ -13,6 +13,8 @@ const DEFAULT_SURVEY = { language: '1', layout: {}, thank_you_text: 'Thank you f
 
 export default function NewSurvey() {
     const [survey, setSurvey] = useState(DEFAULT_SURVEY);
+    const [logoImg, setLogoImg] = useState(null);
+
     const { id } = useParams();
     const history = useHistory();
 
@@ -36,16 +38,29 @@ export default function NewSurvey() {
         setSurvey({...survey, layout});
     }
 
+    const onFileChange = (event) => {
+        event.persist();
+        setLogoImg(event.target.files[0]);
+    };
+
+    const uploadLogo = (surveyId) => {
+        if (!logoImg) {
+            // hack! unfortunately a simple promise as a return is not good and there seems to be no simple solution
+            return { then: (fn) => fn() };
+        }
+        return upload(surveyId, 'logoImg', logoImg);
+    };
+
     const SaveDetails = () => {
         const nextPath = () => '/surveys/' + survey.surveyId + '/questions';
         if (!survey.surveyId) {
             save(survey).then((d) => {
-                survey.surveyId = survey.surveyId || d.surveyId;
-                history.replace(nextPath());
+                survey.surveyId = d.surveyId;
+                uploadLogo(d.surveyId).then(() => history.replace(nextPath()));
             });
         } else {
-            update(survey).then((d) => {
-                history.replace(nextPath());
+            update(survey).then(() => {
+                uploadLogo(survey.surveyId).then(() => history.replace(nextPath()));
             });
         }
     };
@@ -105,7 +120,7 @@ export default function NewSurvey() {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="form-group field">
-                                <input type="file" className="form-field" name="logoFile" />
+                                <input type="file" className="form-field" name="logoFile" onChange={onFileChange} />
                                 <label htmlFor="logoFile" className="form-label">Logo image</label>
                             </div>
                         </div>

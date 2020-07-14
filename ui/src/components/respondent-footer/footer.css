@@ -1,0 +1,15 @@
+.public-footer {
+    width: 100%;
+    padding: 1em;
+    background: #1F1F1F;
+    color: #C7C7C7;
+    margin-top: 3em;
+    text-align: center;
+    position: fixed;
+    z-index: 100;
+    bottom: 0;
+}
+
+.public-footer a, .public-footer a:hover {
+    color: inherit;
+}

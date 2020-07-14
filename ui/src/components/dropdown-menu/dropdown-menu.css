@@ -1,0 +1,27 @@
+.button-dropdown {
+    position: relative;
+}
+
+.button-dropdown-menu {
+    position: absolute;
+    background: #1F1F1F;
+    color: #C7C7C7;
+    z-index: 3;
+    opacity: 1;
+}
+
+.button-dropdown-menu ul {
+    list-style-type: none;
+    padding: 1em;
+    min-width: 20em;
+}
+
+.button-dropdown-menu ul li {
+    cursor: pointer;
+    padding: 0.5em 0;
+    border-bottom: 1px dotted;
+}
+
+.button-dropdown-menu ul li:hover {
+    color: #4CA9FD;
+}

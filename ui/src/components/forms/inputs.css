@@ -1,0 +1,74 @@
+.form-group {
+    position: relative;
+    padding: 15px 0 0;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.form-field {
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid;
+    outline: 0;
+    font-size: 1.3rem;
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+}
+
+input[type="color"].form-field {
+    padding: 0;
+    height: 50px;
+    cursor: pointer;
+}
+
+.form-field::placeholder {
+    color: transparent;
+}
+  
+.form-field:placeholder-shown ~ .form-label {
+    font-size: 1.3rem;
+    cursor: text;
+    top: 20px;
+}
+
+.form-label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #9b9b9b;
+}
+  
+.form-field:focus ~ .form-label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: #4CA9FD;
+    font-weight:700;    
+}
+
+.form-field:focus {
+    padding-bottom: 6px;  
+    font-weight: 700;
+    border-width: 3px;
+    border-image: linear-gradient(to right, #4CA9FD,#4CA9FD);
+    border-image-slice: 1;
+}
+
+/* reset input */
+.form-field:required, .form-field:invalid { box-shadow: none; }
+
+.form-group textarea {
+    border: 0; 
+    border-bottom: 1px solid; 
+    background: transparent;
+    outline: none;
+    overflow: auto;
+    resize: none;
+    width: 100%;
+}

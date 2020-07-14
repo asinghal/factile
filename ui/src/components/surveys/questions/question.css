@@ -1,0 +1,15 @@
+.questions {
+    margin: 2em 0;
+    padding-bottom: 1em;
+    font-size: 1.5em;
+    /* border-bottom: 1px solid #4CA9FD; */
+}
+
+.questions input[type="text"] {
+    border: 0;
+    border-bottom: 1px solid;
+}
+
+.margin-on-top {
+    margin-top: 2em;
+}

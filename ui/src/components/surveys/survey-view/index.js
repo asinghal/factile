@@ -1,0 +1,108 @@
+import React, { useState, useEffect } from "react";
+
+import Question from '../questions/index.js';
+
+import ProgressBar from '../progress-bar/index.js';
+
+import '../../forms/buttons.css';
+import './survey-view.css';
+
+const Page = ({ page, saveResponse }) => (
+    <div>
+        {page.questions && page.questions.map(q =>
+            <Question question={q} key={q.questionId} saveResponse={(response) => saveResponse(response)} />
+        )}
+    </div>
+);
+
+export default function SurveyView({ survey, addResponse, onPageSubmit, answersAreValid }) {
+    const [pageNum, setPageNum] = useState(0);
+
+    const findNextDisplayablePage = (totalPages) => {
+        let nextPageNum = pageNum + 1;
+
+        for (; nextPageNum <= totalPages; nextPageNum++) {
+            if (!survey.pages[nextPageNum - 1].conditions || survey.pages[nextPageNum - 1].conditions.map(c => c.result === undefined || c.result).reduce((a, b) => a && b, true)) {
+                break;
+            }
+        }
+
+        return nextPageNum;
+    };
+
+    const NextPage = (event) => {
+        event.preventDefault();
+        if (pageNum > 0) {
+            if (!onPageSubmit(pageNum - 1)) {
+                return false;
+            }
+        }
+        if (survey.pages && pageNum <= survey.pages.length) {
+            setPageNum(findNextDisplayablePage(survey.pages.length));
+        }
+        return true;
+    };
+
+    const hasSurveyFinished = () => {
+        return survey.pages && pageNum > survey.pages.length;
+    };
+
+    const saveResponse = (answer) => {
+        addResponse(answer);
+    };
+
+    useEffect(() => {
+        if (survey && !survey.intro_text) {
+            // if there is a page with intro text, first page with questions needs to be pushed out
+            setPageNum(1);
+        } else {
+            setPageNum(0);
+        }
+    }, [survey.surveyId]);
+
+    return (
+        <div className="main-wrapper" style={{ backgroundColor: survey.layout.bodycolor }}>
+            <div className="container survey" style={{ backgroundColor: survey.layout.containercolor, color: survey.layout.textColor }}>
+                {!!survey.logo && 
+                    <div className={"survey-logo" + (!!survey.layout.logoAlignment ? ` img-${survey.layout.logoAlignment}` : '')} style={{backgroundColor: survey.layout.logoBgColor}}>
+                        <img src={`/uploads/${survey.hash_string}/${survey.logo}`} alt={survey.name} />
+                    </div>
+                }
+                <h2>{survey.name}</h2>
+
+                {!answersAreValid &&
+                <div className="alert alert-danger">Please answer all questions marked with **</div>
+                }
+                {survey.intro_text && pageNum === 0 &&
+                    <div>
+                        <div>{survey.intro_text}</div>
+                        <button onClick={(event) => NextPage(event)} className="base-btn submit-btn">Next</button>
+                    </div>
+                }
+                <div>
+                    {pageNum > 0 && survey.pages && survey.pages[pageNum-1] && 
+                    <div>
+                        <p><i>Questions marked with ** are mandatory</i></p>
+                        <Page page={survey.pages[pageNum-1]} saveResponse={saveResponse} />
+                        <button onClick={(event) => NextPage(event)} className="base-btn submit-btn">Next</button>
+                    </div>
+                    }
+                </div>
+
+                {hasSurveyFinished() &&
+                <>
+                    <div dangerouslySetInnerHTML={{ __html: survey.thank_you_text }}></div>
+                    <div><i>You can safely close this window now</i></div>
+                </>
+                }
+
+                {survey.layout.includeProgress && 
+                <div>
+                    <ProgressBar percentage="50" />
+                </div>
+                }
+
+            </div>
+        </div>
+    );
+};

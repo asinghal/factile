@@ -1,0 +1,44 @@
+.hero {
+    background-image: url(./bradcam.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 100%;
+    min-height: 500px;
+    margin-top: -30px;
+}
+
+.hero h3 {
+    color: #FFF;
+    font-size: 60px;
+    text-transform: capitalize;
+    letter-spacing: 2px;
+    font-weight: 300;
+    line-height: 74px;
+}
+
+.hero p {
+    font-size: 20px;
+    font-weight: 400;
+    color: #FFFFFF;
+    margin-bottom: 48px;
+    margin-top: 16px;
+}
+
+.slider_text {
+    padding-top: 50px;
+}
+
+.features h3 {
+    font-size: 30px;
+    line-height: 40px;
+    font-weight: 300;
+    color: #2C2C2C;
+}
+
+.features p {
+    font-size: 14px;
+    color: #727272;
+    line-height: 25px;
+    margin-top: 20px;
+    margin-bottom: 32px;
+}

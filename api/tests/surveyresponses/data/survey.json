@@ -1,0 +1,255 @@
+{
+    "accessType": "email",
+    "hash_string": "abcdxyzqwerty",
+    "history": {
+        "created_at": "2020-06-12T22:04:31.551Z",
+        "created_by": "a@a.com",
+        "updated_at": "2020-07-09T19:47:00.990Z",
+        "updated_by": "a@a.com"
+    },
+    "intro_text": "",
+    "language": "1",
+    "layout": {
+        "logoAlignment": "left",
+        "includeProgress": true,
+        "bodycolor": "#FFFFFF",
+        "containercolor": "#FFFFFF",
+        "textColor": "#555555",
+        "logoBgColor": "#FFFFFF"
+    },
+    "logo": null,
+    "name": "Test",
+    "owner": [
+        "a@a.com"
+    ],
+    "questions": [
+        {
+            "questionId": "q0001",
+            "texts": [
+                {
+                    "text": "test",
+                    "language": "1"
+                }
+            ],
+            "mandatory": false,
+            "qType": "textbox"
+        },
+        {
+            "questionId": "q0004",
+            "texts": [
+                {
+                    "text": "test q",
+                    "language": "1"
+                }
+            ],
+            "options": [
+                {
+                    "texts": [
+                        {
+                            "text": "a",
+                            "language": "1"
+                        }
+                    ],
+                    "value": "o1"
+                },
+                {
+                    "texts": [
+                        {
+                            "text": "b",
+                            "language": "1"
+                        }
+                    ],
+                    "value": "o2"
+                },
+                {
+                    "texts": [
+                        {
+                            "text": "c",
+                            "language": "1"
+                        }
+                    ],
+                    "value": "o3"
+                },
+                {
+                    "texts": [
+                        {
+                            "text": "d",
+                            "language": "1"
+                        }
+                    ],
+                    "value": "o4"
+                }
+            ],
+            "otherBox": [
+                {
+                    "text": "",
+                    "language": "1"
+                }
+            ],
+            "hasOther": true,
+            "mandatory": false,
+            "qType": "radio"
+        },
+        {
+            "questionId": "q0002",
+            "conditions": [],
+            "qType": "page",
+            "texts": null
+        },
+        {
+            "questionId": "q0003",
+            "texts": [
+                {
+                    "text": "test",
+                    "language": "1"
+                }
+            ],
+            "options": [
+                {
+                    "texts": [
+                        {
+                            "text": "a",
+                            "language": "1"
+                        }
+                    ],
+                    "value": "o1"
+                },
+                {
+                    "texts": [
+                        {
+                            "text": "b",
+                            "language": "1"
+                        }
+                    ],
+                    "value": "o2"
+                },
+                {
+                    "texts": [
+                        {
+                            "text": "c",
+                            "language": "1"
+                        }
+                    ],
+                    "value": "o3"
+                }
+            ],
+            "otherBox": [
+                {
+                    "text": "Other",
+                    "language": "1"
+                }
+            ],
+            "hasOther": true,
+            "mandatory": false,
+            "qType": "checkbox"
+        },
+        {
+            "qType": "rating",
+            "texts": [
+                {
+                    "text": "please rate",
+                    "language": "1"
+                }
+            ],
+            "options": [
+                {
+                    "texts": [
+                        {
+                            "text": "1",
+                            "language": "1"
+                        }
+                    ],
+                    "value": "o1"
+                },
+                {
+                    "texts": [
+                        {
+                            "text": "2",
+                            "language": "1"
+                        }
+                    ],
+                    "value": "o2"
+                },
+                {
+                    "texts": [
+                        {
+                            "text": "3",
+                            "language": "1"
+                        }
+                    ],
+                    "value": "o3"
+                },
+                {
+                    "texts": [
+                        {
+                            "text": "4",
+                            "language": "1"
+                        }
+                    ],
+                    "value": "o4"
+                },
+                {
+                    "texts": [
+                        {
+                            "text": "5",
+                            "language": "1"
+                        }
+                    ],
+                    "value": "o5"
+                },
+                {
+                    "texts": [
+                        {
+                            "text": "6",
+                            "language": "1"
+                        }
+                    ],
+                    "value": "o6"
+                },
+                {
+                    "texts": [
+                        {
+                            "text": "7",
+                            "language": "1"
+                        }
+                    ],
+                    "value": "o7"
+                }
+            ],
+            "dimensions": [
+                {
+                    "texts": [
+                        {
+                            "text": "question 1",
+                            "language": "1"
+                        }
+                    ],
+                    "value": "d1"
+                },
+                {
+                    "texts": [
+                        {
+                            "text": "question 2",
+                            "language": "1"
+                        }
+                    ],
+                    "value": "d2"
+                },
+                {
+                    "texts": [
+                        {
+                            "text": "question 3",
+                            "language": "1"
+                        }
+                    ],
+                    "value": "d3"
+                }
+            ],
+            "questionId": "q0005"
+        }
+    ],
+    "status": "Live",
+    "surveyId": "abcde-fghijk-123456-xyzab",
+    "thank_you_text": "<p>\r\n\tThank you for participating.</p>\r\n",
+    "uri": ""
+}

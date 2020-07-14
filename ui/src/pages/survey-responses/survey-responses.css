@@ -1,0 +1,19 @@
+.survey-responses .block {
+    margin: 3em 0;
+    padding: 1em;
+    background-color: #E9F4FE;
+    line-height: 2em;
+}
+
+.survey-responses .block .question-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.survey-responses .block .question-header .icon {
+    cursor: pointer;
+}
+
+.survey-responses .answer {
+    border-bottom: 1px solid #dddddd;
+}

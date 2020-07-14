@@ -1,0 +1,38 @@
+#progress-bar-wrapper {
+    margin:  2em 0;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    animation: out .3s forwards ease;
+    animation-delay: 5s;
+    transform: scale(1);
+    opacity: 1;
+    transform-origin: center -80%;
+}
+  
+.loading-bar {
+    width: 300px;
+    height: 10px;
+    background: #dfe6e9;
+    border-radius: 5px;
+}
+
+.loading-bar .progress-bar {
+    animation: progress 3.5s forwards;
+    width: 0%;
+    height: 100%;
+    background: #808080;
+    border-radius: 5px;
+    border: 0;
+}
+
+#progress-bar-wrapper .status .percentage {
+    padding-left: 1em;
+    float: right;
+    font-size: 0.8em;
+    color: #808080;
+}

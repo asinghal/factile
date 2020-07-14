@@ -1,0 +1,169 @@
+[
+    {
+        "surveyId": "abcde-fghijk-123456-xyzab",
+        "responses" : [ 
+            {
+                "question" : "q0001",
+                "answers" : [ 
+                    "some text"
+                ],
+                "other" : null,
+                "ranking" : false
+            }, 
+            {
+                "question" : "NON_EXISTENT_DELETED_QUESTION",
+                "answers" : [ 
+                    "o2"
+                ],
+                "other" : null,
+                "ranking" : false
+            }, 
+            {
+                "question" : "q0004",
+                "answers" : [ 
+                    "o2"
+                ],
+                "other" : "Some other",
+                "ranking" : false
+            }, 
+            {
+                "question" : "q0003",
+                "answers" : [ 
+                    "o1", "o3"
+                ],
+                "other" : null,
+                "ranking" : false
+            }, 
+            {
+                "question" : "q0005_d1",
+                "answers" : [ 
+                    "o1"
+                ],
+                "other" : null,
+                "ranking" : false
+            }, 
+            {
+                "question" : "q0005_d2",
+                "answers" : [ 
+                    "o3"
+                ],
+                "other" : null,
+                "ranking" : false
+            }, 
+            {
+                "question" : "q0005_d3",
+                "answers" : [ 
+                    "6"
+                ],
+                "other" : null,
+                "ranking" : false
+            }
+        ]
+    },
+    {
+        "surveyId": "abcde-fghijk-123456-xyzab",
+        "responses" : [ 
+            {
+                "question" : "q0001",
+                "answers" : [ 
+                    "some text 2"
+                ],
+                "other" : null,
+                "ranking" : false
+            }, 
+            {
+                "question" : "q0004",
+                "answers" : [ 
+                    "o1"
+                ],
+                "other" : null,
+                "ranking" : false
+            }, 
+            {
+                "question" : "q0003",
+                "answers" : [ 
+                    "o2"
+                ],
+                "other" : null,
+                "ranking" : false
+            }, 
+            {
+                "question" : "q0005_d1",
+                "answers" : [ 
+                    "o7"
+                ],
+                "other" : null,
+                "ranking" : false
+            }, 
+            {
+                "question" : "q0005_d2",
+                "answers" : [ 
+                    "o3"
+                ],
+                "other" : null,
+                "ranking" : false
+            }, 
+            {
+                "question" : "q0005_d3",
+                "answers" : [ 
+                    "o7"
+                ],
+                "other" : null,
+                "ranking" : false
+            }
+        ]
+    },
+    {
+        "surveyId": "abcde-fghijk-123456-xyzab",
+        "responses" : [ 
+            {
+                "question" : "q0001",
+                "answers" : [ 
+                    "some text 3"
+                ],
+                "other" : null,
+                "ranking" : false
+            }, 
+            {
+                "question" : "q0004",
+                "answers" : [ 
+                    "o2"
+                ],
+                "other" : null,
+                "ranking" : false
+            }, 
+            {
+                "question" : "q0003",
+                "answers" : [ 
+                    "o3"
+                ],
+                "other" : null,
+                "ranking" : false
+            }, 
+            {
+                "question" : "q0005_d1",
+                "answers" : [ 
+                    "o5"
+                ],
+                "other" : null,
+                "ranking" : false
+            }, 
+            {
+                "question" : "q0005_d2",
+                "answers" : [ 
+                    "o6"
+                ],
+                "other" : null,
+                "ranking" : false
+            }, 
+            {
+                "question" : "q0005_d3",
+                "answers" : [ 
+                    "o6"
+                ],
+                "other" : null,
+                "ranking" : false
+            }
+        ]
+    }
+]

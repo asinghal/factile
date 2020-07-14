@@ -1,0 +1,13 @@
+.ranking ul {
+    list-style: none;
+    margin: 0;
+    padding: 0
+}
+
+.ranking li {
+    margin: 10px 5px;
+    padding: 5px;
+    border: 1px solid;
+    cursor: pointer;
+    width: 100%;
+}

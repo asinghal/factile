@@ -1,0 +1,14 @@
+.question {
+    margin: 1em 0;
+    padding-bottom: 1em;
+    border-bottom: 1px dotted;
+}
+
+.heading {
+    color: #4CA9FD;
+    border-bottom: 1px solid;
+}
+
+.section {
+    margin: 4em 0;
+}

@@ -2,3 +2,5 @@
 node_modules
 coverage
 ui/src/Untitled.code-workspace
+api/api.tar.gz
+api/uploads

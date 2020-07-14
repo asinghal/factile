@@ -7,6 +7,7 @@ require('./lib/passport');
 
 const { config } = require('./lib/config.js');
 const surveys = require('./lib/surveys/routes');
+const surveyUploads = require('./lib/surveys/upload');
 const unsecureSurveyRoutes = require('./lib/surveys/unsecure-routes');
 const surveyResponses = require('./lib/surveyresponses/routes');
 const unsecureSurveyResponseRoutes = require('./lib/surveyresponses/unsecure-routes');
@@ -26,6 +27,7 @@ app.use('/api/participants', passport.authenticate('jwt', {session: false}), par
 app.use('/api/userdetails', passport.authenticate('jwt', {session: false}), users);
 app.use('/api/public/surveys', unsecureSurveyRoutes);
 app.use('/api/public/surveyresponses', unsecureSurveyResponseRoutes);
+app.use('/api/uploads', passport.authenticate('jwt', {session: false}), surveyUploads);
 app.use('/api/', auth);
 
 app.get('/', (req, res) => res.send('OK'))

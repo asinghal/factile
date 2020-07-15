@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const pino = require('pino-http')()
 
 require('./lib/passport');
 
@@ -17,6 +18,7 @@ const users = require('./lib/users/routes');
 
 const app = express()
 app.use(cors());
+app.use(pino);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

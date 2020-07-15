@@ -24,6 +24,7 @@ import EditorBase from "./pages/base-pages/editor-base/index.js";
 import RespondentBase from "./pages/base-pages/respondent-base/index.js";
 import PublicErrorPage from "./pages/respondents/error-page/index.js";
 import Settings from "./pages/settings/index.js";
+import OAuthInterstitial from "./pages/oauth-interstitial/index.js";
 
 export default function Routes() {
     return (
@@ -91,6 +92,10 @@ export default function Routes() {
                 <EditorBase>
                     <Settings />
                 </EditorBase>
+            </Route>
+
+            <Route exact path="/oauth/:token">
+                <OAuthInterstitial />
             </Route>
 
             {/* Respondent view */}

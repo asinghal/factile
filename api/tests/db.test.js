@@ -18,10 +18,17 @@ describe('db tests', () => {
             toArray: sinon.stub().yields(null, [{a: 1}])
         });
 
-        db.list('somecollection').then(d => {
-            expect(d.length).toBe(1);
-            done();
-        });
+        try {
+            db.list('somecollection').then(d => {
+                console.log('here ------->');
+                expect(d.length).toBe(1);
+                done();
+            });
+        } catch (e) {
+            console.log(e);
+            done()
+        };
+
     });
 
     test('find', done => {

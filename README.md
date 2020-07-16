@@ -1,6 +1,8 @@
 ### Welcome to Factile!
 
 [![Join the chat at https://gitter.im/asinghal/factile](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/asinghal/factile?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![CircleCI](https://circleci.com/gh/asinghal/factile.svg?style=shield)](https://circleci.com/github/asinghal/factile)
+
 
 Factile is an online survey platform that enables market research and insights into data. This is an open source tool and available for free for all purposes. 
 

@@ -39,4 +39,17 @@ const saveResponse = (surveyId, responseId, surveyResponse) => {
     return sendResponseData(`/api/public/surveyresponses/surveys/${surveyId}/responses/${responseId}`, 'PUT', surveyResponse);
 };
 
-export { findSurvey, saveResponse };
+const applyResponse = async (surveyId, responseId) => {
+
+    let response = await fetch(`/api/public/surveys/${surveyId}/apply/responses/${responseId}`, {
+        headers: getAuthHeader()
+    });
+    let status = await response.status;
+    if (status === 401) {
+        throw new Error("unauthorized access");
+    }
+    let data = await response.json();
+    return data;
+};
+
+export { findSurvey, saveResponse, applyResponse };

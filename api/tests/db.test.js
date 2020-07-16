@@ -5,12 +5,20 @@ const db = require('../lib/db');
 
 describe('db tests', () => {
 
-    let methodStub;
+    let methodStub, clientConnectStub, clientDbStub;
+
+    beforeEach(() => {
+        clientConnectStub = sinon.stub(mongodb.MongoClient.prototype, 'connect').yields(null);
+        clientDbStub = sinon.stub(mongodb.MongoClient.prototype, 'db').returns({collection: (name) => mongodb.Collection.prototype});
+    });
 
     afterEach(() => {
         if (methodStub) {
             methodStub.restore();
         }
+
+        clientConnectStub.restore();
+        clientDbStub.restore();
     });
 
     test('list', done => {
@@ -18,17 +26,10 @@ describe('db tests', () => {
             toArray: sinon.stub().yields(null, [{a: 1}])
         });
 
-        try {
-            db.list('somecollection').then(d => {
-                console.log('here ------->');
-                expect(d.length).toBe(1);
-                done();
-            });
-        } catch (e) {
-            console.log(e);
-            done()
-        };
-
+        db.list('somecollection').then(d => {
+            expect(d.length).toBe(1);
+            done();
+        });
     });
 
     test('find', done => {

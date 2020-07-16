@@ -17,12 +17,12 @@ const config = {
     },
     oauth: {
         google: {
-            clientId: process.env.FACTILE_GOOGLE_CLIENT_ID,
-            secret: process.env.FACTILE_GOOGLE_SECRET
+            clientId: process.env.FACTILE_GOOGLE_CLIENT_ID || 'client id',
+            secret: process.env.FACTILE_GOOGLE_SECRET || 'secret'
         },
         facebook: {
-            clientId: process.env.FACTILE_FACEBOOK_APP_ID,
-            secret: process.env.FACTILE_FACEBOOK_SECRET
+            clientId: process.env.FACTILE_FACEBOOK_APP_ID || 'app id',
+            secret: process.env.FACTILE_FACEBOOK_SECRET || 'secret'
         }
     },
     mail: {

@@ -35,12 +35,12 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
 
     const initiateGoogleAuth = (event) => {
         event.preventDefault();
-        window.open('http://localhost:9000/api/auth/google', '_self');
+        window.open('/api/auth/google', '_self');
     };
 
     const initiateFacebookAuth = (event) => {
         event.preventDefault();
-        window.open('http://localhost:9000/api/auth/facebook', '_self');
+        window.open('/api/auth/facebook', '_self');
     };
 
     return (

@@ -17,12 +17,12 @@ export default function Footer() {
                                 </a>
                             </div>
                             <p>
-                                Free and opensource survey tool. <br />Made with <i className="fa fa-heart-o" aria-hidden="true"></i> by <a href="http://asinghal.github.io/" target="_blank">Aishwarya Singhal</a> 
+                                Free and opensource survey tool. <br />Made with <i className="fa fa-heart-o" aria-hidden="true"></i> by <a href="http://asinghal.github.io/" target="_blank" rel="noopener noreferrer">Aishwarya Singhal</a> 
                             </p>
                             <div className="social_links">
                                 <ul>
                                     <li>
-                                        <a href="https://www.facebook.com/Factile/" target="_blank">
+                                        <a href="https://www.facebook.com/Factile/" target="_blank" rel="noopener noreferrer">
                                          <i className="fab fa-facebook"></i> Facebook
                                         </a>
                                     </li>
@@ -57,7 +57,7 @@ export default function Footer() {
                                 <li><Link to="/static/help">Help</Link></li>
                                 <li><Link to="/static/contactus">Contact Us</Link></li>
                                 <li><Link to="/static/termsandconditions">Terms and conditions</Link></li>
-                                <li><a href="https://github.com/asinghal/factile" target="_blank">Github</a></li>
+                                <li><a href="https://github.com/asinghal/factile" target="_blank" rel="noopener noreferrer">Github</a></li>
                             </ul>
                         </div>
                     </div>
@@ -70,7 +70,7 @@ export default function Footer() {
                 <div className="row">
                     <div className="col-xl-12">
                         <p className="copy_right text-center">
-Copyright ©<script>document.write(new Date().getFullYear());</script>2020 All rights reserved | This template is made with <i className="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" rel="noopener noreferrer">Colorlib</a>
+Copyright ©<script>document.write(new Date().getFullYear());</script>2020 All rights reserved | This template is made with <i className="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer">Colorlib</a>
                         </p>
                     </div>
                 </div>

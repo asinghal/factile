@@ -1,6 +1,8 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const passportJWT = require("passport-jwt");
+const GoogleStrategy   = require('passport-google-oauth20').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
+const passportJWT   = require('passport-jwt');
 const JWTStrategy   = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 const jwt = require('jsonwebtoken');
@@ -40,4 +42,44 @@ passport.use(new JWTStrategy({
     }
 ));
 
-module.exports.generateJWT = (user) => jwt.sign(user, config.auth.jwt_secret, { expiresIn: '1h' });
+passport.use(new GoogleStrategy({
+    clientID: config.oauth.google.clientId,
+    clientSecret: config.oauth.google.secret,
+    callbackURL: `${config.baseURL.api}/api/google`
+  },
+  function(accessToken, refreshToken, profile, done) {
+      return done(null, profile)
+  }
+));
+
+passport.use(new FacebookStrategy({
+    clientID: config.oauth.facebook.clientId,
+    clientSecret: config.oauth.facebook.secret,
+    callbackURL: `${config.baseURL.api}/api/facebook`,
+    profileFields: ['email']
+  },
+  function(accessToken, refreshToken, profile, done) {
+    return done(null, profile)
+  }
+));
+
+passport.serializeUser(function(user, done) {
+    done(null, user)
+});
+
+passport.deserializeUser(function(obj, done) {
+    done(null, obj)
+});
+
+const generateJWT = (user) => jwt.sign(user, config.auth.jwt_secret, { expiresIn: '1h' });
+
+const findOrCreateUser = (email) => {
+    return User.findByEmail(email).then(user => {
+        if (!user) {
+            return User.create({ email, password: User.randomPassword() }).then(() => generateJWT({ email }));
+        }
+        return generateJWT({ email });
+    });
+};
+
+module.exports = { generateJWT, findOrCreateUser };

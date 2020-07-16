@@ -41,3 +41,9 @@
 .login-form a {
     cursor: pointer;
 }
+
+.login-form .oauth-button {
+    font-size: 2em;
+    padding: 5px 15px;
+    cursor: pointer;
+}

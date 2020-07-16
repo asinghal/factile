@@ -5,6 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
+    "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
@@ -12,8 +14,12 @@
     "multer": "^1.4.2",
     "nodemailer": "^6.4.10",
     "passport": "^0.4.1",
+    "passport-facebook": "^3.0.0",
+    "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "pino": "^6.3.2",
+    "pino-http": "^5.2.0",
     "uuid": "^8.2.0"
   },
   "devDependencies": {

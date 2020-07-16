@@ -42,4 +42,4 @@ const create = (user) => {
     });
 };
 
-module.exports = { findByEmail, findById, login, resetPassword, updatePassword, create };
+module.exports = { findByEmail, findById, login, resetPassword, updatePassword, create, randomPassword };

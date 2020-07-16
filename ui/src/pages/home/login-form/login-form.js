@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 import { login, forgotPassword } from '../api.js';
@@ -32,7 +32,17 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
     const resetPassword = (event) => {
         forgotPassword(user.email).then(console.log);
     };
-    
+
+    const initiateGoogleAuth = (event) => {
+        event.preventDefault();
+        window.open('http://localhost:9000/api/auth/google', '_self');
+    };
+
+    const initiateFacebookAuth = (event) => {
+        event.preventDefault();
+        window.open('http://localhost:9000/api/auth/facebook', '_self');
+    };
+
     return (
         <div className="login-form">
             <form>
@@ -59,6 +69,12 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
                 <div className="row">
                     <div className="col-md-12">
                         <button onClick={initiateLogin}>Login</button>
+                        <span className="oauth-button">
+                            <i onClick={initiateGoogleAuth} className="fab fa-google"></i>
+                        </span>
+                        <span className="oauth-button">
+                            <i onClick={initiateFacebookAuth} className="fab fa-facebook"></i>
+                        </span>
                     </div>
                 </div>
                 <div className="row">

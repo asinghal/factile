@@ -43,21 +43,23 @@ describe('survey responses model tests', () => {
     });
     
     test('findByID success', done => {
-        const id = 'abc1-2345-6789';
+        const surveyId = 'abc1-2345-6789';
+        const id = 'xyz1-2345-6789';
         const dummySurveyResponse = { _id: new ObjectID(), data: []};
         mockDB.expects('findOne').once().resolves(dummySurveyResponse);
     
-        surveyResponses.findById(id).then(found => {
+        surveyResponses.findById(surveyId, id).then(found => {
             expect(found).toBe(dummySurveyResponse);
             done();
         });
     });
 
     test('findByID failure', done => {
-        const id = 'xyz1-2345-6789';
+        const surveyId = 'xyz1-2345-6789';
+        const id = 'abc1-2345-6789';
         mockDB.expects('findOne').once().resolves(null);
     
-        surveyResponses.findById(id).then(found => {
+        surveyResponses.findById(surveyId, id).then(found => {
             expect(found).toBeNull();
             done();
         });

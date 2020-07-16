@@ -3,15 +3,14 @@ orbs:
   node: circleci/node@1.1.6
 jobs:
   build-and-test-api:
-    working_directory: ./api
     executor:
       name: node/default
     steps:
       - checkout
       - node/with-cache:
           steps:
-            - run: npm install
-            - run: npm test
+            - run: cd api && npm install
+            - run: cd api && npm test
 workflows:
     build-and-test:
       jobs:

@@ -4,6 +4,7 @@ const sinon = require('sinon');
 const ObjectID = require('mongodb').ObjectID;
 
 const DUMMY_SURVEY = require('./data/survey.json');
+const DUMMY_SURVEY_WITH_VARS = require('./data/survey_with_vars.json');
 const DUMMY_SURVEY_RESPONSES = require('./data/surveyresponses.json');
 
 describe('survey responses model tests', () => {
@@ -157,6 +158,25 @@ describe('survey responses model tests', () => {
         expect(formatted[2].answers.length).toBe(2);
         expect(formatted[2].answers[0].name).toBe('b');
         expect(formatted[2].answers[0].value).toBe(2);
+        done();
+    });
+
+    test('apply response data to survey with no piping variables', done => {
+        const updatedSurvey = surveyResponses.applyToSurveyTexts(DUMMY_SURVEY, DUMMY_SURVEY_RESPONSES[0]);
+        expect(updatedSurvey).not.toBeNull();
+        expect(JSON.stringify(updatedSurvey)).toBe(JSON.stringify(DUMMY_SURVEY));
+        done();
+    });
+
+    test('apply response data to survey with piping variables', done => {
+        const original = JSON.stringify(DUMMY_SURVEY_WITH_VARS);
+        const updatedSurvey = surveyResponses.applyToSurveyTexts(DUMMY_SURVEY_WITH_VARS, DUMMY_SURVEY_RESPONSES[0]);
+        expect(updatedSurvey).not.toBeNull();
+        expect(JSON.stringify(updatedSurvey)).not.toBe(original);
+        expect(updatedSurvey.questions[1].texts[0].text).toBe('test some text');
+        expect(updatedSurvey.questions[3].options[0].texts[0].text).toBe('b');
+        expect(updatedSurvey.questions[4].options[0].texts[0].text).toBe('b');
+        expect(updatedSurvey.questions[4].dimensions[1].texts[0].text).toBe('question b');
         done();
     });
 

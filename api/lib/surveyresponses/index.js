@@ -139,15 +139,15 @@ const save = (surveyId, responseIdFromReq, surveyResponse) => {
 };
 
 const applyToSurveyTexts = (surveyData, surveyResponse) => {
-    let survey = surveyData;
+    let survey = {...surveyData};
     if (surveyResponse && surveyResponse.responses && surveyResponse.responses.length) {
         const questionTexts = buildQuestionTexts(surveyData);
         surveyResponse.responses.forEach(r => {
-            const questionOptionTexts = questionTexts[r.question].options || {};
+            const questionOptionTexts = (questionTexts[r.question] || {}).options || {};
             const answer = r.answers.map(a => questionOptionTexts[a] || a).join(', ');
             const searchParam = '{{' + r.question + '}}';
             survey.questions = survey.questions.map(q => {
-                if (q.qtype === 'page') {
+                if (q.qType === 'page') {
                     return q;
                 }
 

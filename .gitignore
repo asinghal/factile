@@ -7,3 +7,4 @@ ui/public/uploads
 build.sh
 api.tar.gz
 ui.tar.gz
+ec2

@@ -1,13 +1,11 @@
 const db = require('../db');
 const Surveys = require('../surveys');
-const ObjectID = require('mongodb').ObjectID;
 const uuid = require('uuid').v4;
 
 const { removeStopWords } = require('./stop-words');
 
 const findBySurveyId = (surveyId) => db.find('surveyresponses', { surveyId });
-const findById = (surveyId, id) => db.findOne('surveyresponses', { surveyId, _id: new ObjectID(id) });
-
+const findById = (surveyId, responseId) => db.findOne('surveyresponses', { surveyId, responseId });
 
 const toArray = (obj) => Object.keys(obj).map(k => ({ name: k, value: obj[k] }));
 
@@ -140,4 +138,48 @@ const save = (surveyId, responseIdFromReq, surveyResponse) => {
     });
 };
 
-module.exports = { findById, findBySurveyId, groupByQuestions, save, formatForDownload };
+const applyToSurveyTexts = (surveyData, surveyResponse) => {
+    let survey = {...surveyData};
+    if (surveyResponse && surveyResponse.responses && surveyResponse.responses.length) {
+        const questionTexts = buildQuestionTexts(surveyData);
+        surveyResponse.responses.forEach(r => {
+            const questionOptionTexts = (questionTexts[r.question] || {}).options || {};
+            const answer = r.answers.map(a => questionOptionTexts[a] || a).join(', ');
+            const searchParam = '{{' + r.question + '}}';
+            survey.questions = survey.questions.map(q => {
+                if (q.qType === 'page') {
+                    return q;
+                }
+
+                const replaceVariable = (input) => {
+                    if (input && input.indexOf(searchParam) !== -1) {
+                        return input.replace(new RegExp(searchParam, 'g'), answer);
+                    }
+
+                    return input;
+                };
+
+                const updateText = (obj) => {
+                    if (obj && obj.texts && obj.texts.length) {
+                        obj.texts[0].text = replaceVariable(obj.texts[0].text);
+                    }
+                    return obj;
+                };
+
+                if (q.options) {
+                    q.options = q.options.map(updateText);
+                }
+
+                if (q.dimensions) {
+                    q.dimensions = q.dimensions.map(updateText);
+                }
+
+                return updateText(q);
+            });
+        });
+    }
+
+    return survey;
+};
+
+module.exports = { findById, findBySurveyId, groupByQuestions, save, formatForDownload, applyToSurveyTexts };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { questionTypes } from './question-types.js';
 
 import '../../../components/forms/choices.css';
@@ -29,35 +29,77 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
     const options = foldTexts(question.options);
     const dimensions = foldTexts(question.dimensions);
     const [questionData, setQuestionData] = useState({text, options, dimensions, otherBox, mandatory: !!question.mandatory});
+    const [answerPipingData, setAnswerPipingData] = useState({ questions: [], display: false, field: null });
+
+    useEffect(() => {
+        if (allQuestions && question && question.questionId && question.qType !== 'page') {
+            const thisIndex = allQuestions.findIndex(q => q.questionId === question.questionId);
+            const questionsUntilThis = allQuestions.slice(0, thisIndex);
+            const pagesUntilThis = questionsUntilThis.filter(q => q.qType === 'page');
+            if (pagesUntilThis.length) {
+                const lastPage = pagesUntilThis[pagesUntilThis.length -1];
+                const lastPageIndex = questionsUntilThis.findIndex(q => q.questionId === lastPage.questionId);
+                const qsForPipiping = questionsUntilThis.slice(0, lastPageIndex).filter(q => q.qType !== 'page');
+                setAnswerPipingData({...answerPipingData, questions: qsForPipiping});
+            }
+        }
+    }, [ question.questionId, allQuestions ]);
+
+    const updateQuestionData = (name, value) => {
+        setQuestionData({...questionData, [name]: value});
+
+        if (name === 'options' || name === 'dimensions') {
+            question[name] = toArray(value.trim()).map((t) => toTextArray(t, language));
+            question[name] = assignValues(question[name], prefixes[name]);
+        } else if (name === 'text') {
+            question.texts = toTextArray(value.trim(), language).texts;
+        } else if (name === 'otherBox') {
+            question.otherBox = toTextArray(value.trim(), language).texts;
+        }
+    };
+
+    const showPipingOptions = (field) => {
+        setAnswerPipingData({...answerPipingData, display: true, field});
+    };
+
+    const hidePipingOptions = () => setAnswerPipingData({...answerPipingData, display: false});
+
+    const addAnswerPipingToQuestion = (event) => {
+        event.persist();
+        const text = `${questionData[answerPipingData.field].trim()} {{${event.target.value}}}`;
+        updateQuestionData(answerPipingData.field, text);
+        setAnswerPipingData({...answerPipingData, display: false});
+    };
 
     const handleInputChange = (event) => {
         event.persist();
-        setQuestionData(q => ({...q, [event.target.name]: event.target.value}));
-
-        if (event.target.name === 'options' || event.target.name === 'dimensions') {
-            question[event.target.name] = toArray(event.target.value.trim()).map((t) => toTextArray(t, language));
-            question[event.target.name] = assignValues(question[event.target.name], prefixes[event.target.name]);
-        } else if (event.target.name === 'text') {
-            question.texts = toTextArray(event.target.value.trim(), language).texts;
-        } else if (event.target.name === 'otherBox') {
-            question.otherBox = toTextArray(event.target.value.trim(), language).texts;
-        }
+        updateQuestionData(event.target.name, event.target.value);
     };
 
     const handleChangeCheckbox = (event) => {
         event.persist();
         setQuestionData(q => ({...q, [event.target.name]: !questionData[event.target.name]}));
         question[event.target.name] = !questionData[event.target.name];
-    }
+    };
 
     return (
         <div className={'question-block ' + (question.qType === 'page' ? 'page-break': '')}>
+            {answerPipingData.display &&
+                <div className="answer-piping form-group" onMouseOut={hidePipingOptions} onBlur={hidePipingOptions}>
+                    <select className="form-field" onChange={addAnswerPipingToQuestion}>
+                        <option>Please select the question to pipe</option>
+                        {answerPipingData.questions.map((q, index) => 
+                            <option key={index} value={q.questionId}>{q.texts[0].text}</option>
+                        )}
+                    </select>
+                </div>
+            }
             <div className="row">
                 <div className="col-sm-11 col-md-11">
                 <h4>{qTypeMetaInfo.name}</h4>
                 </div>
                 <div className="col-sm-1 col-md-1">
-                    <a className="delete-btn" onClick={deleteQuestion} title="delete this question" ><i className="far fa-trash-alt"></i></a>
+                    <span className="delete-btn" onClick={deleteQuestion} title="delete this question" ><i className="far fa-trash-alt"></i></span>
                 </div>
             </div>
             {question.qType === 'page' &&
@@ -65,21 +107,31 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
             }
             {question.qType !== 'page' &&
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-md-11">
                         <div className="form-group field">
-                            <input type="text" name="text" className="form-field" value={questionData.text} onChange={handleInputChange} placeholder="Question text" />
+                            <input type="text" name="text" className="form-field" value={questionData.text || ''} onChange={handleInputChange} placeholder="Question text" />
                             <label className="form-label" htmlFor="text">Question text</label>
                         </div>
+                    </div>
+                    <div className="col-md-1">
+                        {answerPipingData.questions.length > 0 &&
+                            <span className="answer-piping-icon" onClick={() => showPipingOptions('text')}><i className="fas fa-chevron-left"></i></span>
+                        }
                     </div>
                 </div>
             }
             {qTypeMetaInfo.options &&
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-md-11">
                         <div className="form-group field">
                             <textarea name="options" className="form-field" value={questionData.options} rows={questionData.options.split('\n').length} onChange={handleInputChange} placeholder="Options" />
                             <label className="form-label" htmlFor="options">Options</label>
                         </div>
+                    </div>
+                    <div className="col-md-1">
+                        {answerPipingData.questions.length > 0 &&
+                            <span className="answer-piping-icon" onClick={() => showPipingOptions('options')}><i className="fas fa-chevron-left"></i></span>
+                        }
                     </div>
                 </div>
             }
@@ -90,6 +142,11 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
                         <textarea name="dimensions" className="form-field" value={questionData.dimensions} rows={questionData.dimensions.split('\n').length} onChange={handleInputChange} placeholder="Dimensions/ sub questions" />
                         <label className="form-label" htmlFor="dimensions">Dimensions/ sub questions</label>
                     </div>
+                </div>
+                <div className="col-md-1">
+                    {answerPipingData.questions.length > 0 &&
+                        <span className="answer-piping-icon" onClick={() => showPipingOptions('dimensions')}><i className="fas fa-chevron-left"></i></span>
+                    }
                 </div>
             </div>
             }
@@ -116,7 +173,7 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
                     <div className="row">
                         <div className="col-md-12">
                             <div className="form-group field">
-                                <input type="text" name="otherBox" className="form-field" value={questionData.otherBox} onChange={handleInputChange} placeholder="'Other' box label" />
+                                <input type="text" name="otherBox" className="form-field" value={questionData.otherBox || ''} onChange={handleInputChange} placeholder="'Other' box label" />
                                 <label className="form-label" htmlFor="otherBox">'Other' box label</label>
                             </div>
                         </div>

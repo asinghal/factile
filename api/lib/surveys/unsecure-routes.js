@@ -2,7 +2,7 @@ const express = require('express');
 const router  = express.Router();
 const Surveys = require('./');
 const Participants = require('../participants');
-const participants = require('../participants');
+const SurveyResponses = require('../surveyresponses');
 
 router.get('/:id/render', (req, res) => Surveys.findById(req.params.id).then((data) => {
     if (!data) {
@@ -27,6 +27,18 @@ router.get('/:id/render', (req, res) => Surveys.findById(req.params.id).then((da
     }
 
     return sendSurvey();
+}));
+
+router.get('/:id/apply/responses/:responseId', (req, res) => Surveys.findById(req.params.id).then((data) => {
+    if (!data) {
+        res.status(404);
+        return res.send('error');
+    }
+
+    return SurveyResponses.findById(req.params.id, req.params.responseId).then((surveyResponse) => {
+        const survey = SurveyResponses.applyToSurveyTexts(data, surveyResponse);
+        return res.send(Surveys.groupByPages(survey));
+    });
 }));
 
 module.exports = router;

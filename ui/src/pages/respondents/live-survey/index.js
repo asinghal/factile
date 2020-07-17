@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { findSurvey, saveResponse } from '../api.js';
+import { findSurvey, saveResponse, applyResponse } from '../api.js';
 
 import { useParams, useHistory } from "react-router-dom";
 
@@ -23,6 +23,9 @@ export default function LiveSurvey() {
     const onPageSubmit = (response) => {
         saveResponse(id, responseId, response).then((data) => {
             setResponseId(data.responseId);
+            applyResponse(id, data.responseId).then(d => {
+                setSurvey(d);
+            });
         });
     };
 

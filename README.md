@@ -72,9 +72,35 @@ The application code is written in JavaScript
 1. Once the frontend has been started, it will automatically open `http://localhost:3000` in your default browser. Alternatively, you can use the URL to open it yourself
 1. For the APIs, you can run tests using `npm test`
 
+## Production set up
+
+1. You can choose for a bare metal or a Docker installation
+2. With Docker containers, Kubernetes or AWS Fargate will be natural choices at the time of writing these instructions
+3. The UI is hosted on Nginx
+4. API is run via PM2
+5. Appropriate environment variables need to be set in the target environment for the API to work. Following is the list as of now:
+
+```
+NODE_ENV: production
+FACTILE_API_BASE_URL
+FACTILE_UI_BASE_URL
+FACTILE_API_BASE_URL
+FACTILE_UI_BASE_URL
+FACTILE_COOKIE_SECRET
+FACTILE_GOOGLE_CLIENT_ID
+FACTILE_GOOGLE_SECRET
+FACTILE_FACEBOOK_APP_ID
+FACTILE_FACEBOOK_SECRET
+FACTILE_JWT_SECRET
+FACTILE_MAIL_PASSWORD
+```
+
+
+
 ## Contributing to the source code
 
 1. Fork the project into your github account
 2. Make the modifications
 3. Submit a pull request
-4. Please note: pull requests will only be accepted when they contain appropriate unit tests
+4. Be nice and respectful
+5. Please note: pull requests will only be accepted when they contain appropriate unit tests

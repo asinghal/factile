@@ -57,7 +57,7 @@ export default function Settings () {
                 </div>
             </div>
             <div className="row">
-                <div className="col-md-12">
+                <div className="col-xs-6 col-sm-4 col-md-4">
                     <button className="base-btn submit-btn" onClick={Save}>Save</button>
                 </div>
             </div>

@@ -8,12 +8,14 @@
     color: #C7C7C7;
     z-index: 3;
     opacity: 1;
+    top: 4.5em;
+    left: 0;
+    width: 90%;
 }
 
 .button-dropdown-menu ul {
     list-style-type: none;
     padding: 1em;
-    min-width: 20em;
 }
 
 .button-dropdown-menu ul li {

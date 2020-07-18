@@ -20,6 +20,7 @@
     "passport-local": "^1.0.0",
     "pino": "^6.3.2",
     "pino-http": "^5.2.0",
+    "pug": "^3.0.0",
     "uuid": "^8.2.0"
   },
   "devDependencies": {

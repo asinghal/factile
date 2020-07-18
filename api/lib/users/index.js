@@ -23,21 +23,21 @@ const login = (email, password) => db.findOne('users', { email, password: encryp
 const resetPassword = (email) => {
     const newPass = randomPassword();
     return findByEmail(email).then(user => db.save('users', { ...user, password: encrypt(newPass) }, 'email') ).then((data) => {
-        mail.send(email, null, null, null, 'Your temporary password', `Your temporary password is ${newPass}`);
+        mail.send(email, null, null, null, 'Your temporary password', 'forgotPassword', { newPass });
         return data;
     });
 };
 
 const updatePassword = (email, password) => {
     return findByEmail(email).then(user => db.save('users', { ...user, password: encrypt(password) }, 'email') ).then((data) => {
-        mail.send(email, null, null, null, 'Your password has been changed', `We have changed your password as requested. If you did not change your password, your account may have been hacked and we recommend in that case to reset the password again.`);
+        mail.send(email, null, null, null, 'Your password has been changed', 'changePassword', {});
         return { message: 'OK' };
     });
 };
 
 const create = (user) => {
     return db.save('users', { ...user, password: encrypt(user.password) }, 'email').then((data) => {
-        mail.send(user.email, null, null, null, 'Welcome to Factile', `Your account has been created`);
+        mail.send(user.email, null, null, null, 'Welcome to Factile', 'newUser', {});
         return data;
     });
 };

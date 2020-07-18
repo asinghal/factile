@@ -95,18 +95,18 @@ const saveOrUpdate = (owner, survey) => {
 
 const sendMail = (owner, surveyURL, to, emailSubject, emailBody) => {
     const body = emailBody.replace('{{SURVEY_LINK DO_NOT_DELETE}}', surveyURL);
-    mail.send(to, owner, null, owner, emailSubject, body);
+    mail.send(to, owner, null, owner, emailSubject, 'invite', { body });
 };
 
 const inviteParticipant = (owner, surveyId, surveyIsOpenAccess, to, emailSubject, emailBody) => {
     let surveyURL = '';
     if (!surveyIsOpenAccess) {
         Participants.save(surveyId, to).then((respondentId) => {
-            surveyURL = config.baseURL + '/s/' + surveyId + '/' + respondentId;
+            surveyURL = config.baseURL.ui + '/s/' + surveyId + '/' + respondentId;
             sendMail(owner, surveyURL, to, emailSubject, emailBody);
         });
     } else {
-        surveyURL = config.baseURL + '/s/' + surveyId;
+        surveyURL = config.baseURL.ui + '/s/' + surveyId;
         sendMail(owner, surveyURL, to, emailSubject, emailBody);
     }
 };

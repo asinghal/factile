@@ -1,5 +1,6 @@
 const nodemailer = require('nodemailer');
 const { config } = require('./config.js');
+const emailTemplates = require('./email-templates');
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -9,12 +10,13 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const send = (to, cc, bcc, replyTo, subject, text) => {
+const send = (to, cc, bcc, replyTo, subject, templateName, context) => {
+    const { text, html } = emailTemplates.build(templateName, context);
     const mailOptions = {
         from: `"${config.mail.senderName}" ${config.mail.fromAddress}`,
-        to, cc, bcc, replyTo, subject, text
+        to, cc, bcc, replyTo, subject, text, html
     };
-    
+
     transporter.sendMail(mailOptions, (error) => {
         if (error) {
             throw error;

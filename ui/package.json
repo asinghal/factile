@@ -13,6 +13,7 @@
     "file-saver": "^2.0.2",
     "jsonwebtoken": "^8.5.1",
     "react": "^16.13.1",
+    "react-cookie-consent": "^5.1.2",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",

@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
-import SurveyManagementMenu from "../../components/surveys/survey-management-menu/index.js";
+import SurveyManagementMenu from "../../../components/surveys/survey-management-menu/index.js";
 
-import { findSurvey, getExcelData } from './api.js';
+import { findSurvey, getExcelData } from '../api.js';
 import './survey-responses.css';
 import { writeXlsx } from "./excel.js";
 import SurveyResponseBlock from "./response-block.js";

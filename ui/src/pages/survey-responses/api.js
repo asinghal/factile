@@ -24,4 +24,21 @@ const getExcelData = async (id) => {
     return data;
 };
 
-export { findSurvey, getExcelData };
+const generateReport = async (id, formData) => {
+    const headers = getAuthHeader();
+    headers.append('Content-Type', 'application/json');
+
+    let response = await fetch('/api/surveyresponses/surveys/' + id + '/analytics', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(formData)
+    });
+    let status = await response.status;
+    if (status === 401) {
+        throw new Error("unauthorized access");
+    }
+    let data = await response.json();
+    return data;
+};
+
+export { findSurvey, getExcelData, generateReport };

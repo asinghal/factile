@@ -23,6 +23,10 @@ export default function SurveyManagementMenu({ surveyId }) {
                 </li>
 
                 <li>
+                    <Link to={"/surveys/" + surveyId + "/settings"}>Advanced Survey Settings</Link>
+                </li>
+
+                <li>
                     <Link to={"/surveys/" + surveyId + "/collaborators"}>Manage collaborators</Link>
                 </li>
 

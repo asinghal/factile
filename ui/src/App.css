@@ -4,6 +4,10 @@ html, body {
   font-size: 14px;
 }
 
+h1 {
+  margin-bottom: 1em;
+}
+
 #root {
   height: 100%;
 }
@@ -14,4 +18,8 @@ html, body {
 
 .blue {
   color: #4CA9FD;
+}
+
+.vertical-margin {
+  margin-bottom: 30px;
 }

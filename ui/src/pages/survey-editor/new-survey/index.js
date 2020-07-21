@@ -15,6 +15,7 @@ export default function NewSurvey() {
     const [survey, setSurvey] = useState(DEFAULT_SURVEY);
     const [logoImg, setLogoImg] = useState(null);
     const [statusAlert, setStatusAlert] = useState({});
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const { id } = useParams();
     const history = useHistory();
@@ -52,7 +53,12 @@ export default function NewSurvey() {
         return upload(surveyId, 'logoImg', logoImg);
     };
 
-    const SaveDetails = () => {
+    const SaveDetails = (event) => {
+        event.preventDefault();
+        if (!survey.name || !survey.name.trim()) {
+            setErrorMessage('Please provide a survey name');
+            return;
+        }
         const nextPath = () => '/surveys/' + survey.surveyId + '/questions';
         if (!survey.surveyId) {
             save(survey).then((d) => {
@@ -109,6 +115,10 @@ export default function NewSurvey() {
                     }
                     {id && 
                         <h2>Edit Survey</h2>
+                    }
+
+                    {!!errorMessage &&
+                        <div className="alert alert-danger">{errorMessage}</div>
                     }
 
                     <div className="row">

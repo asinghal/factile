@@ -13,6 +13,11 @@ export default function Participants() {
         findSurvey(id).then(setParticipants).catch(() => history.replace('/'));
     }, [id, history]);
 
+    const invite = (event) => {
+        event.preventDefault();
+        history.replace('/surveys/' + id + '/invite');
+    };
+
     return (
         <div className="container">
             <div className="row">
@@ -20,22 +25,31 @@ export default function Participants() {
                     <SurveyManagementMenu surveyId={id} />
                 </div>
                 <div className="col-md-9 col-sm-12">
-                    <table className="table">
-                        <thead>
-                            <tr>
-                                <th>Email</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {participants.map((participant, index) => (
-                                <tr key={"participant" + index}>
-                                    <td>{participant.email}</td>
-                                    <td>{participant.status}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
+                    <div className="row">
+                        <div className="col-3">
+                            <button className="base-btn submit-btn" onClick={invite}>Invite audience</button>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-12">
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th>Email</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {participants.map((participant, index) => (
+                                        <tr key={"participant" + index}>
+                                            <td>{participant.email}</td>
+                                            <td>{participant.status}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

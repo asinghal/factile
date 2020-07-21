@@ -33,15 +33,15 @@ export default function Header({userLoggedIn, setUserLoggedIn}) {
             <div id="sticky-header" className="main-header-area">
                 <div className="container">
                     <div className="row align-items-center">
-                        <div className="col-xs-4 hidden-sm hidden-md hidden-lg">
+                        <div className="col-4 d-sm-none d-md-none d-lg-none">
                             <i className="fas fa-bars" onClick={toggleMenu}></i>
                         </div>
-                        <div className="col-xs-8 col-sm-1 col-md-1">
+                        <div className="col-8 col-sm-1 col-md-1">
                             <div className="logo">
                                 <a href="/">Factile</a>
                             </div>
                         </div>
-                        <div className="hidden-xs col-sm-9 col-md-9">
+                        <div className="d-none d-sm-block col-sm-9 col-md-9">
                             <div className="main-menu">
                                 <nav>
                                     <ul id="navigation">
@@ -67,7 +67,7 @@ export default function Header({userLoggedIn, setUserLoggedIn}) {
                                 </nav>
                             </div>
                         </div>
-                        <div className="hidden-xs col-sm-2 col-md-2">
+                        <div className="d-none d-sm-block col-sm-2 col-md-2">
                             <div>
                                 <div>
                                     {!isUserLoggedIn() &&

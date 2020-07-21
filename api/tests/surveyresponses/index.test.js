@@ -6,6 +6,7 @@ const ObjectID = require('mongodb').ObjectID;
 const DUMMY_SURVEY = require('./data/survey.json');
 const DUMMY_SURVEY_WITH_VARS = require('./data/survey_with_vars.json');
 const DUMMY_SURVEY_RESPONSES = require('./data/surveyresponses.json');
+const surveyresponses = require('../../lib/surveyresponses');
 
 describe('survey responses model tests', () => {
     let mockDB;
@@ -178,6 +179,104 @@ describe('survey responses model tests', () => {
         expect(updatedSurvey.questions[4].options[0].texts[0].text).toBe('b');
         expect(updatedSurvey.questions[4].dimensions[1].texts[0].text).toBe('question b');
         done();
+    });
+
+    test('apply generate report when constraints provided and matched', done => {
+        const questions = ['q0003', 'q0005_d2'];
+        const constraints = [{
+            question: 'q0004',
+            value: 'o2'
+        }, {
+            question: 'q0005_d1',
+            value: 'o5'
+        }];
+        mockDB.expects('find').once().resolves(DUMMY_SURVEY_RESPONSES);
+
+        surveyResponses.generateReport(DUMMY_SURVEY, questions, constraints).then(d => {
+            expect(d).not.toBeNull();
+            expect(d.length).toBe(questions.length);
+            expect(d[0].answers[0].name).toBe('c');
+            expect(d[0].answers[0].value).toBe(1);
+            expect(d[1].answers[0].name).toBe('6');
+            expect(d[1].answers[0].value).toBe(1);
+            done();
+        });
+    });
+
+    test('apply generate report when constraints provided and but not matched', done => {
+        const questions = ['q0003', 'q0005_d2'];
+        const constraints = [{
+            question: 'q0004',
+            value: 'o1'
+        }, {
+            question: 'q0005_d1',
+            value: 'o5'
+        }];
+        mockDB.expects('find').once().resolves(DUMMY_SURVEY_RESPONSES);
+
+        surveyResponses.generateReport(DUMMY_SURVEY, questions, constraints).then(d => {
+            expect(d).not.toBeNull();
+            expect(d.length).toBe(0);
+            done();
+        });
+    });
+
+    test('apply generate report when constraints not provided', done => {
+        const questions = ['q0003', 'q0005_d2'];
+        const constraints = [];
+        mockDB.expects('find').once().resolves(DUMMY_SURVEY_RESPONSES);
+
+        surveyResponses.generateReport(DUMMY_SURVEY, questions, constraints).then(d => {
+            expect(d).not.toBeNull();
+            expect(d.length).toBe(questions.length);
+            expect(d[0].answers[0].name).toBe('c');
+            expect(d[0].answers[0].value).toBe(2);
+            expect(d[0].answers[1].name).toBe('a');
+            expect(d[0].answers[1].value).toBe(1);
+            expect(d[1].answers[0].name).toBe('3');
+            expect(d[1].answers[0].value).toBe(2);
+            expect(d[1].answers[1].name).toBe('6');
+            expect(d[1].answers[1].value).toBe(1);
+            done();
+        });
+    });
+
+    test('apply generate report when constraints is null', done => {
+        const questions = ['q0003', 'q0005_d2'];
+        const constraints = null;
+        mockDB.expects('find').once().resolves(DUMMY_SURVEY_RESPONSES);
+
+        surveyResponses.generateReport(DUMMY_SURVEY, questions, constraints).then(d => {
+            expect(d).not.toBeNull();
+            expect(d.length).toBe(questions.length);
+            expect(d[0].answers[0].name).toBe('c');
+            expect(d[0].answers[0].value).toBe(2);
+            expect(d[0].answers[1].name).toBe('a');
+            expect(d[0].answers[1].value).toBe(1);
+            expect(d[1].answers[0].name).toBe('3');
+            expect(d[1].answers[0].value).toBe(2);
+            expect(d[1].answers[1].name).toBe('6');
+            expect(d[1].answers[1].value).toBe(1);
+            done();
+        });
+    });
+
+    test('apply generate report when not responses exist', done => {
+        const questions = ['q0003', 'q0005_d2'];
+        const constraints = [{
+            question: 'q0004',
+            value: 'o1'
+        }, {
+            question: 'q0005_d1',
+            value: 'o5'
+        }];
+        mockDB.expects('find').once().resolves([]);
+
+        surveyResponses.generateReport(DUMMY_SURVEY, questions, constraints).then(d => {
+            expect(d).not.toBeNull();
+            expect(d.length).toBe(0);
+            done();
+        });
     });
 
 });

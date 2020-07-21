@@ -6,7 +6,7 @@ import './footer.css';
 export default function Footer() {
     return (
         <footer className="footer">
-        <div class="container">
+        <div className="container">
             <div className="row">
                 <div className="col-md-4">
                     <div className="footer_logo">

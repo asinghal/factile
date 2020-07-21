@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { login, forgotPassword } from '../api.js';
 
 import './login-form.css';
+import { isValidEmail } from "../../../utils.js";
 
 export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
     const [user, setUser] = useState({ email: '', password: ''});
@@ -17,6 +18,11 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
     };
 
     const initiateLogin = (event) => {
+        event.preventDefault();
+        if (!user || !user.email || !user.password || !isValidEmail(user.email)) {
+            setErrorMessage('Please enter a valid email address and password');
+            return;
+        }
         login(user).then((data) => {
             if (!data || !data.token) {
                 setErrorMessage('Login failed');
@@ -26,10 +32,14 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
             setUserLoggedIn(true);
             return history.replace('/surveys')
         });
-        event.preventDefault();
     };
 
     const resetPassword = (event) => {
+        event.preventDefault();
+        if (!user || !user.email || !isValidEmail(user.email)) {
+            setErrorMessage('Please enter a valid email address');
+            return;
+        }
         forgotPassword(user.email).then(console.log);
     };
 
@@ -51,11 +61,13 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
                         <h3>Login to get started</h3>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className="error-message">{errorMessage}</div>
+                {!!errorMessage &&
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="alert alert-danger">{errorMessage}</div>
+                        </div>
                     </div>
-                </div>
+                }
                 <div className="row">
                     <div className="col-md-12">
                         <input type="text" id="email" name="email" value={user.email} placeholder="email" onChange={handleInputChange} />
@@ -84,7 +96,7 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        Forgot password? <a onClick={() => resetPassword(false)}>Click here to reset</a>
+                        Forgot password? <a onClick={resetPassword}>Click here to reset</a>
                     </div>
                 </div>
             </form>

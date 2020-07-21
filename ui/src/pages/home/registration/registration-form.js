@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import { login, register } from '../api.js';
 
 import '../login-form/login-form.css';
+import { isValidEmail } from "../../../utils.js";
 
 export default function RegistrationForm({setUserLoggedIn, setShowLoginForm}) {
     const [user, setUser] = useState({ email: '', password: ''});
@@ -16,7 +17,12 @@ export default function RegistrationForm({setUserLoggedIn, setShowLoginForm}) {
         setUser(user => ({...user, [event.target.name]: event.target.value}));
     };
 
-    const initiateLogin = (event) => {
+    const submitForm = (event) => {
+        event.preventDefault();
+        if (!user || !user.email || !user.password || !isValidEmail(user.email)) {
+            setErrorMessage('Please enter a valid email address and password');
+            return;
+        }
         register(user).then(() => login(user)).then((data) => {
             if (!data || !data.token) {
                 setErrorMessage('Login failed');
@@ -26,7 +32,6 @@ export default function RegistrationForm({setUserLoggedIn, setShowLoginForm}) {
             setUserLoggedIn(true);
             return history.replace('/surveys')
         });
-        event.preventDefault();
     };
     
     return (
@@ -37,11 +42,13 @@ export default function RegistrationForm({setUserLoggedIn, setShowLoginForm}) {
                         <h3>Sign up</h3>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className="error-message">{errorMessage}</div>
+                {!!errorMessage &&
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="alert alert-danger">{errorMessage}</div>
+                        </div>
                     </div>
-                </div>
+                }
                 <div className="row">
                     <div className="col-md-12">
                         <input type="text" id="email" name="email" value={user.email} placeholder="email" onChange={handleInputChange} />
@@ -54,7 +61,7 @@ export default function RegistrationForm({setUserLoggedIn, setShowLoginForm}) {
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <button onClick={initiateLogin}>Register</button>
+                        <button onClick={submitForm}>Register</button>
                     </div>
                 </div>
                 <div className="row">

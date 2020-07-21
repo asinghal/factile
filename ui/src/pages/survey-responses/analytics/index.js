@@ -41,27 +41,33 @@ export default function SurveyAnalytics() {
                     <SurveyManagementMenu surveyId={id} />
                 </div>
                 <div className="col-md-9 col-sm-12">
-                    <div className="row">
-                        <h3>Questions</h3>
-                        <p className="alert alert-info">Select the questions below to form groups and generate most preferred answer combinations.</p>
-                        <TargetQuestions questions={questions} selectedQuestions={selectedQuestions} setSelectedQuestions={setSelectedQuestions} />
+                    <div className="row vertical-margin">
+                        <div className="col-12">
+                            <h3>Questions</h3>
+                            <p className="alert alert-info">Select the questions below to form groups and generate most preferred answer combinations.</p>
+                            <TargetQuestions questions={questions} selectedQuestions={selectedQuestions} setSelectedQuestions={setSelectedQuestions} />
+                        </div>
                     </div>
 
-                    <div className="row">
-                        <h3>Filters/ Constraints</h3>
-                        <p className="alert alert-info">Build constraints to be applied on the data set, <em>before</em> it is aggregated to generate the report.</p>
-                        <strong>When</strong>
-                        {constraints.map( (c, index) =>
-                            <Constraint questions={questions} first={index === 0} addConstraint={addConstraint} key={'constraint_' + index}/>
-                        )}
+                    <div className="row vertical-margin">
+                        <div className="col-12">
+                            <h3>Filters/ Constraints</h3>
+                            <p className="alert alert-info">Build constraints to be applied on the data set, <em>before</em> it is aggregated to generate the report.</p>
+                            <strong>When</strong>
+                            {constraints.map( (c, index) =>
+                                <Constraint questions={questions} first={index === 0} addConstraint={addConstraint} key={'constraint_' + index}/>
+                            )}
+                        </div>
                     </div>
 
-                    <div className="row">
-                        <button className="base-btn submit-btn" onClick={generate}>Generate</button>
+                    <div className="row vertical-margin">
+                        <div className="col-12">
+                            <button className="base-btn submit-btn" onClick={generate}>Generate</button>
+                        </div>
                     </div>
 
-                    <div className="row">
-                        <div className="col-12 col-md-12">
+                    <div className="row vertical-margin">
+                        <div className="col-12">
                             {surveyResponses && surveyResponses.map(surveyResponse => (
                                 <SurveyResponseBlock surveyResponse={surveyResponse} chartWidth={600} key={surveyResponse.question} />
                             ))}

@@ -26,6 +26,7 @@ import PublicErrorPage from "./pages/respondents/error-page/index.js";
 import Settings from "./pages/settings/index.js";
 import OAuthInterstitial from "./pages/oauth-interstitial/index.js";
 import SurveyAnalytics from "./pages/survey-responses/analytics/index.js";
+import SurveySettings from "./pages/survey-editor/survey-settings/index.js";
 
 export default function Routes() {
     return (
@@ -91,6 +92,11 @@ export default function Routes() {
             <Route exact path="/surveys/:id/collaborators">
                 <EditorBase>
                     <SurveyCollaborators />
+                </EditorBase>
+            </Route>
+            <Route exact path="/surveys/:id/settings">
+                <EditorBase>
+                    <SurveySettings />
                 </EditorBase>
             </Route>
 

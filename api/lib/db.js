@@ -92,7 +92,7 @@ const _findOne = (client, collectionName, query, projection) => {
  */
 const list = async (collectionName) => {
     return connect().then(client => _find(client, collectionName));
-}
+};
 
 /**
  * List all objects in the given collection that match the given criteria
@@ -101,7 +101,7 @@ const list = async (collectionName) => {
  */
 const find = async (collectionName, query, sort = {}, projection = {}, limit = 0) => {
     return connect().then(client => _find(client, collectionName, query, sort, projection, limit));
-}
+};
 
 /**
  * Find exactly one object that matches the given criteria
@@ -110,7 +110,7 @@ const find = async (collectionName, query, sort = {}, projection = {}, limit = 0
  */
 const findOne = async (collectionName, query, projection = {}) => {
     return connect().then(client => _findOne(client, collectionName, query, projection));
-}
+};
 
 const saveOrUpdate = (client, collectionName, data, key) => {
     const collection = getCollection(client, collectionName);
@@ -127,10 +127,23 @@ const saveOrUpdate = (client, collectionName, data, key) => {
         close(client);
         resolve(result);
     });
-}
+};
 
 const save = async (collectionName, data, key) => {
     return connect().then((client) => saveOrUpdate(client, collectionName, data, key));
-}
+};
 
-module.exports = { list, find, findOne, save };
+const del = async (collectionName, filters) => {
+    if (!filters || !Object.keys(filters).length) {
+        throw Error('can not delete all documents without a specified filter');
+    }
+
+    return connect().then(async client => {
+        const collection = getCollection(client, collectionName);
+        await collection.deleteMany(filters);
+        close(client);
+        return { message: 'OK' };
+    });
+};
+
+module.exports = { list, find, findOne, save, del };

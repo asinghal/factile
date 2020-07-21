@@ -182,6 +182,8 @@ const applyToSurveyTexts = (surveyData, surveyResponse) => {
     return survey;
 };
 
+const deleteAll = (surveyId) => db.del('surveyresponses', { surveyId });
+
 const satisfies = (response, constraints) => {
     const hasResponseForConstraint = (c) => !!response.responses.find(r => r.question === c.question && r.answers.indexOf(c.value) !== -1);
     return !constraints || !constraints.length || constraints.reduce((result, c) => result && hasResponseForConstraint(c), true);
@@ -193,4 +195,4 @@ const generateReport = (survey, targetQuestions, constraints) => {
             then((responses) => groupByQuestions(survey, responses).filter(q => targetQuestions.indexOf(q.question) !== -1 ));
 };
 
-module.exports = { findById, findBySurveyId, groupByQuestions, save, formatForDownload, applyToSurveyTexts, generateReport };
+module.exports = { findById, findBySurveyId, groupByQuestions, save, formatForDownload, applyToSurveyTexts, generateReport, deleteAll };

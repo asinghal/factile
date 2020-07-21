@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { findSurvey, update } from "../api";
+import { findSurvey, update, deleteResponses, deleteSurvey } from "../api";
 import SurveyManagementMenu from "../../../components/surveys/survey-management-menu";
 
 export default function SurveySettings() {
@@ -19,6 +19,14 @@ export default function SurveySettings() {
         update({...survey, status}).then(findSurvey(id).then((survey) => {
             setSurvey({...survey});
         })).catch(() => history.replace('/'));
+    };
+
+    const deleteAllResponses = (event) => {
+        deleteResponses(id).then(() => history.replace('/surveys')).catch(() => history.replace('/'));
+    };
+
+    const deleteThisSurvey = (event) => {
+        deleteResponses(id).then(() => deleteSurvey(id)).then(() => history.replace('/surveys')).catch(() => history.replace('/'));
     };
 
     return (
@@ -70,7 +78,7 @@ export default function SurveySettings() {
                             </div>
                         </div>
                         <div className="col-md-3">
-                            <button className="base-btn submit-btn">Delete</button>
+                            <button className="base-btn submit-btn" onClick={deleteAllResponses}>Delete</button>
                         </div>
                     </div>
 
@@ -82,7 +90,7 @@ export default function SurveySettings() {
                             </div>
                         </div>
                         <div className="col-md-3">
-                            <button className="base-btn submit-btn">Delete</button>
+                            <button className="base-btn submit-btn" onClick={deleteThisSurvey}>Delete</button>
                         </div>
                     </div>
 

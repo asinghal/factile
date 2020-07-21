@@ -123,4 +123,6 @@ const invite = (owner, surveyId, surveyIsOpenAccess, meta) => {
     uniq(toAddresses).forEach(to => inviteParticipant(owner, surveyId, surveyIsOpenAccess, to, emailSubject, emailBody));
 };
 
-module.exports = { findByOwner, findByIdAndOwner, findById, groupByPages, saveOrUpdate, recordChangeHistory, invite, generateHashString };
+const deleteMe = (surveyId) => db.del('surveys', { surveyId });
+
+module.exports = { findByOwner, findByIdAndOwner, findById, groupByPages, saveOrUpdate, recordChangeHistory, invite, generateHashString, deleteMe };

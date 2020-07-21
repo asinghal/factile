@@ -76,4 +76,36 @@ const upload = async (id, fieldName, file) => {
     return data;
 };
 
-export { save, update, findSurvey, sendEmails, upload };
+const deleteResponses = async (id) => {
+    const headers = getAuthHeader();
+    let response = await fetch('/api/surveyresponses/surveys/' + id, {
+        method: 'DELETE',
+        headers
+    });
+
+    let data = await response.json();
+    let status = await response.status;
+    if (status !== 200) {
+        console.log('something went wrong');
+    }
+    
+    return data;
+};
+
+const deleteSurvey = async (id) => {
+    const headers = getAuthHeader();
+    let response = await fetch('/api/surveys/' + id, {
+        method: 'DELETE',
+        headers
+    });
+
+    let data = await response.json();
+    let status = await response.status;
+    if (status !== 200) {
+        console.log('something went wrong');
+    }
+    
+    return data;
+};
+
+export { save, update, findSurvey, sendEmails, upload, deleteResponses, deleteSurvey };

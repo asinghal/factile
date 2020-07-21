@@ -4,6 +4,7 @@ import { useParams, useHistory } from "react-router-dom";
 
 import { findSurvey, update, sendEmails } from '../api.js';
 import '../../../components/forms/inputs.css';
+import { isValidEmail } from "../../../utils";
 
 export default function InviteSurveyUsers({ question }) {
     const [survey, setSurvey] = useState({});
@@ -37,8 +38,6 @@ export default function InviteSurveyUsers({ question }) {
             history.replace('/surveys');
         });
     };
-
-    const isValidEmail = (email) => !!email.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
 
     const SendEmails = () => {
         formData.toAddresses = formData.participants.trim().split('\n').map(a => a.trim()).filter(a => !!a);

@@ -48,10 +48,10 @@ export default function Questionnaire() {
     const KeyActions = () => {
         return (
             <div className="row">
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <DropdownMenu buttonText="Add a question" options={questionTypes} onSelection={(value) => onSelection(value)} />
                 </div>
-                <div className="col-md-6">
+                <div className="col-md-4">
                     <button className="base-btn submit-btn" onClick={SaveDetails}>Save Details</button>
                 </div>
             </div>
@@ -68,6 +68,10 @@ export default function Questionnaire() {
                     <h2>{survey.name}</h2>
 
                     <div className={classNames('overlay', { 'visible': overlayVisible })}></div>
+
+                    {survey.status === 'Draft' && 
+                        <div className="alert alert-warning">This survey must be activated on the Invitations page before it can be accessed by respondents</div>
+                    }
 
                     <KeyActions />
                     <div>

@@ -35,6 +35,10 @@ export default function SurveyManagementMenu({ surveyId }) {
                 </li>
 
                 <li>
+                    <Link to={"/surveys/" + surveyId + "/analytics"}>Insights</Link>
+                </li>
+
+                <li>
                     <Link to={"/surveys/" + surveyId + "/participants"}>Participants</Link>
                 </li>
             </ul>

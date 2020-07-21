@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 
-import SurveyManagementMenu from "../../components/surveys/survey-management-menu/index.js";
+import SurveyManagementMenu from "../../../components/surveys/survey-management-menu/index.js";
 
-import { findSurvey, getExcelData } from './api.js';
+import { findSurvey, getExcelData } from '../api.js';
 import './survey-responses.css';
 import { writeXlsx } from "./excel.js";
 import SurveyResponseBlock from "./response-block.js";
@@ -38,13 +38,17 @@ export default function SurveyResponses() {
                     <SurveyManagementMenu surveyId={id} />
                 </div>
                 <div ref={ref} className="col-md-9 col-sm-12">
-                    <div>
-                        <button onClick={Download} className="base-btn submit-btn">Download in Excel</button>
+                    <div className="row">
+                        <div className="col-xs-6 col-sm-4 col-md-4">
+                            <button onClick={Download} className="base-btn submit-btn">Download in Excel</button>
+                        </div>
                     </div>
-                    <div>
-                        {surveyResponses && surveyResponses.map(surveyResponse => (
-                            <SurveyResponseBlock surveyResponse={surveyResponse} chartWidth={chartWidth} key={surveyResponse.question} />
-                        ))}
+                    <div className="row">
+                        <div className="col-xs-12 col-md-12">
+                            {surveyResponses && surveyResponses.map(surveyResponse => (
+                                <SurveyResponseBlock surveyResponse={surveyResponse} chartWidth={chartWidth} key={surveyResponse.question} />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>

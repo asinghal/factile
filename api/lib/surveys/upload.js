@@ -31,7 +31,6 @@ router.post('/surveys/:surveyId', upload.single('logoImg'), (req, res, next) => 
 
     return Surveys.findByIdAndOwner(req.user.email, req.params.surveyId).then((survey) => {
         if (!survey || !survey.surveyId) {
-            console.log(survey);
             res.status(401);
             return res.send('unauthorized');
         }

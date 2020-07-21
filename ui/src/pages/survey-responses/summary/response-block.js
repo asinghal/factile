@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import ReactWordcloud from 'react-wordcloud';
 
-import PieChart from "../../components/charts/pie-chart/index.js";
-import BarChart from "../../components/charts/bar-chart/index.js";
+import PieChart from "../../../components/charts/pie-chart/index.js";
+import BarChart from "../../../components/charts/bar-chart/index.js";
 
 export default function SurveyResponseBlock({ surveyResponse, chartWidth }) {
 

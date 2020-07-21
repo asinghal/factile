@@ -13,7 +13,7 @@ import SurveyCollaborators from "./pages/survey-editor/collaborators/index.js";
 import SurveyDashboard from './pages/dashboard/index.js';
 import PreviewSurvey from './pages/respondents/preview-survey/index.js';
 import LiveSurvey from "./pages/respondents/live-survey/index.js";
-import SurveyResponses from './pages/survey-responses/index.js';
+import SurveyResponses from './pages/survey-responses/summary/index.js';
 import Participants from './pages/participants/index.js';
 import FAQ from './pages/static/faq/index.js';
 import Help from './pages/static/help/index.js';
@@ -25,6 +25,7 @@ import RespondentBase from "./pages/base-pages/respondent-base/index.js";
 import PublicErrorPage from "./pages/respondents/error-page/index.js";
 import Settings from "./pages/settings/index.js";
 import OAuthInterstitial from "./pages/oauth-interstitial/index.js";
+import SurveyAnalytics from "./pages/survey-responses/analytics/index.js";
 
 export default function Routes() {
     return (
@@ -75,6 +76,11 @@ export default function Routes() {
             <Route exact path="/surveys/:id/responses">
                 <EditorBase>
                     <SurveyResponses />
+                </EditorBase>
+            </Route>
+            <Route exact path="/surveys/:id/analytics">
+                <EditorBase>
+                    <SurveyAnalytics />
                 </EditorBase>
             </Route>
             <Route exact path="/surveys/:id/participants">

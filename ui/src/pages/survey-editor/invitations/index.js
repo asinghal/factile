@@ -61,6 +61,10 @@ export default function InviteSurveyUsers({ question }) {
                     <div className="row">
                         <div className="col-md-12">
                             <h1>{survey.name}</h1>
+
+                            {survey.status === 'Draft' && 
+                                <div className="alert alert-warning">This survey must be activated before it can be accessed by respondents</div>
+                            }
                         </div>
                     </div>
 
@@ -68,12 +72,12 @@ export default function InviteSurveyUsers({ question }) {
                     <>
                         <div className="row">
                             <div className="col-md-12">
-                                <div><i>This is an open survey and can be accessed directly by opening <a href={surveyLink}>{surveyLink}</a> from anywhere.</i></div>
+                                <div><i>This is an open survey and can be accessed directly by opening <a href={surveyLink}>{surveyLink}</a> from anywhere as long as it has been activated.</i></div>
                             </div>
                         </div>
 
                         <div className="row">
-                            <div className="col-md-offset-8 col-md-2">
+                            <div className="col-md-offset-8 col-md-4">
                                 <button className="base-btn submit-btn" onClick={Activate}>Activate this survey</button>
                             </div>
                         </div>
@@ -128,7 +132,7 @@ export default function InviteSurveyUsers({ question }) {
 
                     {formData.participants && formData.participants.length > 0 && 
                         <div className="row">
-                            <div className="col-md-offset-8 col-md-2">
+                            <div className="col-md-offset-8 col-md-4">
                                 <button className="base-btn submit-btn" onClick={SendEmails}>Send emails</button>
                             </div>
                         </div>

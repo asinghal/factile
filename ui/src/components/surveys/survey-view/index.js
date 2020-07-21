@@ -74,18 +74,34 @@ export default function SurveyView({ survey, addResponse, onPageSubmit, answersA
                 <div className="alert alert-danger">Please answer all questions marked with **</div>
                 }
                 {survey.intro_text && pageNum === 0 &&
-                    <div>
-                        <div>{survey.intro_text}</div>
-                        <button onClick={(event) => NextPage(event)} className="base-btn submit-btn">Next</button>
+                <>
+                    <div className="row">
+                        <div className="col-xs-12 col-md-12">
+                            <div>{survey.intro_text}</div>
+                        </div>
                     </div>
+                    <div className="row">
+                        <div className="col-xs-6 col-sm-4 col-md-4">
+                            <button onClick={(event) => NextPage(event)} className="base-btn submit-btn">Next</button>
+                        </div>
+                    </div>
+                </>
                 }
                 <div>
                     {pageNum > 0 && survey.pages && survey.pages[pageNum-1] && 
-                    <div>
-                        <p><i>Questions marked with ** are mandatory</i></p>
-                        <Page page={survey.pages[pageNum-1]} saveResponse={saveResponse} />
-                        <button onClick={(event) => NextPage(event)} className="base-btn submit-btn">Next</button>
-                    </div>
+                    <>
+                        <div className="row">
+                            <div className="col-xs-12 col-md-12">
+                                <p><i>Questions marked with ** are mandatory</i></p>
+                                <Page page={survey.pages[pageNum-1]} saveResponse={saveResponse} />
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-xs-6 col-sm-4 col-md-4">
+                                <button onClick={(event) => NextPage(event)} className="base-btn submit-btn">Next</button>
+                            </div>
+                        </div>
+                    </>
                     }
                 </div>
 

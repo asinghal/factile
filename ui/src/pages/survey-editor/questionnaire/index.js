@@ -69,6 +69,10 @@ export default function Questionnaire() {
 
                     <div className={classNames('overlay', { 'visible': overlayVisible })}></div>
 
+                    {survey.status === 'Draft' && 
+                        <div className="alert alert-warning">This survey must be activated on the Invitations page before it can be accessed by respondents</div>
+                    }
+
                     <KeyActions />
                     <div>
                     {survey.questions && survey.questions.map((question, index) => 

@@ -14,6 +14,7 @@ const DEFAULT_SURVEY = { language: '1', layout: {}, thank_you_text: 'Thank you f
 export default function NewSurvey() {
     const [survey, setSurvey] = useState(DEFAULT_SURVEY);
     const [logoImg, setLogoImg] = useState(null);
+    const [statusAlert, setStatusAlert] = useState({});
 
     const { id } = useParams();
     const history = useHistory();
@@ -65,11 +66,31 @@ export default function NewSurvey() {
         }
     };
 
+    const statusCssClasses = {
+        Draft: {
+            css: 'warning',
+            msg: 'This survey is in draft mode and is not accessible to respondents.'
+        },
+        Live: {
+            css: 'success',
+            msg: 'This survey is live and can be accessed by respondents.'
+        },
+        Closed: {
+            css: 'info',
+            msg: 'This survey has been closed and is not accepting responses any more.'
+        }
+    };
+
     useEffect(() => {
         if (id) {
             findSurvey(id).then((survey) => {
                 survey.questions = survey.questions || [];
                 setSurvey({...survey});
+                const surveyStatus = statusCssClasses[survey.status] || {};
+                setStatusAlert({
+                    css: surveyStatus.css || 'danger',
+                    msg: surveyStatus.msg || `Current status of this survey is ${survey.status}`
+                });
             }).catch(() => history.replace('/'));
         } else {
             setSurvey(DEFAULT_SURVEY);
@@ -93,6 +114,13 @@ export default function NewSurvey() {
                     <div className="row">
                         <div className="col-md-offset-8 col-md-4">
                             <button className="base-btn submit-btn" onClick={SaveDetails}>Save Details</button>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-md-12">
+                            {!!survey.surveyId && 
+                                <div className={'alert alert-' + statusAlert.css}>{statusAlert.msg}</div>
+                            }
                         </div>
                     </div>
                     <div className="row">

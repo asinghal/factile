@@ -61,6 +61,10 @@ export default function InviteSurveyUsers({ question }) {
                     <div className="row">
                         <div className="col-md-12">
                             <h1>{survey.name}</h1>
+
+                            {survey.status === 'Draft' && 
+                                <div className="alert alert-warning">This survey must be activated before it can be accessed by respondents</div>
+                            }
                         </div>
                     </div>
 

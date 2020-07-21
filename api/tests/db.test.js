@@ -61,4 +61,31 @@ describe('db tests', () => {
             done();
         });
     });
+
+    test('del', done => {
+        methodStub = sinon.stub(mongodb.Collection.prototype, 'deleteMany').resolves({});
+
+        db.del('somecollection', {a: 1, b: 2}).then(d => {
+            expect(d).not.toBeNull();
+            done();
+        });
+    });
+
+    test('del without filters should fail', done => {
+        methodStub = sinon.stub(mongodb.Collection.prototype, 'deleteMany').resolves({});
+
+        db.del('somecollection', {}).catch(e => {
+            expect(e).not.toBeNull();
+            done();
+        });
+    });
+
+    test('del with bad filters should fail', done => {
+        methodStub = sinon.stub(mongodb.Collection.prototype, 'deleteMany').resolves({});
+
+        db.del('somecollection', { a: null }).catch(e => {
+            expect(e).not.toBeNull();
+            done();
+        });
+    });
 });

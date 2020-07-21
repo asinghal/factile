@@ -2,6 +2,24 @@
     background-color: #4CA9FD;
 }
 
-.help .active a {
+.help .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1em 2em;
+}
+
+@media all and (min-width: 800px){
+    .help .navbar {
+        position: fixed;
+    }
+}
+
+.help a.nav-link {
     color: #ffffff;
+}
+
+.help .topic {
+    margin: 20px 0;
+    padding: 1em;
+    border-bottom: 1px dotted #AAAAAA;
 }

@@ -61,7 +61,7 @@ export default function SurveyAnalytics() {
                     </div>
 
                     <div className="row">
-                        <div className="col-xs-12 col-md-12">
+                        <div className="col-12 col-md-12">
                             {surveyResponses && surveyResponses.map(surveyResponse => (
                                 <SurveyResponseBlock surveyResponse={surveyResponse} chartWidth={600} key={surveyResponse.question} />
                             ))}

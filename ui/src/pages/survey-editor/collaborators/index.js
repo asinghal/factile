@@ -60,7 +60,7 @@ export default function SurveyCollaborators() {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-xs-6 col-sm-4 col-md-4">
+                        <div className="col-6 col-sm-4 col-md-4">
                             <button className="base-btn submit-btn" onClick={Save}>Add collaborator</button>
                         </div>
                     </div>

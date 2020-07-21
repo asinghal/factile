@@ -7,9 +7,9 @@ export default function TermsAndConditions() {
         <h1>Terms Of Use</h1>
         
         <h2> The License</h2>
-        <p>This is free software released under the <a href="http://www.gnu.org/copyleft/lesser.html" target="_blank" rel="noopener noreferrer">LGPL license</a>. Please do take a few minutes to read through the license. The LGPL license is provided as a supplement to the <a href="http://www.gnu.org/licenses/gpl-3.0.html" target="_blank" rel="noopener noreferrer">GPL license</a></p>
+        <p>This is free software released under the <a href="https://opensource.org/licenses/MIT" target="_blank" rel="noopener noreferrer">MIT license</a>. Please do take a few minutes to read through the license.</p>
         
-        <p>Other than the general LGPL license:
+        <p>Other than the license:
             <ol>
                 <li>Your are free to use this software, download it or install on your infrastructure.</li>
                 <li>You must give credits to the software and its author if you choose to download it.</li>

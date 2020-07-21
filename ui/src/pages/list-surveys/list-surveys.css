@@ -11,3 +11,7 @@
     background-color: #E9F4FE;
     border-bottom: 1px dotted #aed0f0;
 }
+
+.my-surveys .survey-row a, .my-surveys .survey-row a:hover, .my-surveys .survey-row a:visited {
+    color: #337ab7;
+}

@@ -39,12 +39,12 @@ export default function SurveyResponses() {
                 </div>
                 <div ref={ref} className="col-md-9 col-sm-12">
                     <div className="row">
-                        <div className="col-xs-6 col-sm-4 col-md-4">
+                        <div className="col-6 col-sm-4 col-md-4">
                             <button onClick={Download} className="base-btn submit-btn">Download in Excel</button>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-xs-12 col-md-12">
+                        <div className="col-12 col-md-12">
                             {surveyResponses && surveyResponses.map(surveyResponse => (
                                 <SurveyResponseBlock surveyResponse={surveyResponse} chartWidth={chartWidth} key={surveyResponse.question} />
                             ))}

@@ -6,73 +6,61 @@ import './footer.css';
 export default function Footer() {
     return (
         <footer className="footer">
-        <div className="footer_top">
-            <div className="container">
-                <div className="row">
-                    <div className="col-xl-4 col-md-6 col-lg-4">
-                        <div className="footer_widget">
-                            <div className="footer_logo">
-                                <a href="/">
-                                    Factile
+        <div class="container">
+            <div className="row">
+                <div className="col-md-4">
+                    <div className="footer_logo">
+                        <a href="/">
+                            Factile
+                        </a>
+                    </div>
+                    <p>
+                        Free and opensource survey tool. <br />Made with <i className="fa fa-heart-o" aria-hidden="true"></i> by <a href="http://asinghal.github.io/" target="_blank" rel="noopener noreferrer">Aishwarya Singhal</a> 
+                    </p>
+                    <div className="social_links">
+                        <ul>
+                            <li>
+                                <a href="https://www.facebook.com/Factile/" target="_blank" rel="noopener noreferrer">
+                                    <i className="fab fa-facebook"></i> Facebook
                                 </a>
-                            </div>
-                            <p>
-                                Free and opensource survey tool. <br />Made with <i className="fa fa-heart-o" aria-hidden="true"></i> by <a href="http://asinghal.github.io/" target="_blank" rel="noopener noreferrer">Aishwarya Singhal</a> 
-                            </p>
-                            <div className="social_links">
-                                <ul>
-                                    <li>
-                                        <a href="https://www.facebook.com/Factile/" target="_blank" rel="noopener noreferrer">
-                                         <i className="fab fa-facebook"></i> Facebook
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="https://github.com/asinghal/factile">
-                                         <i className="fab fa-github"></i> Github
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                        </div>
+                            </li>
+                            <li>
+                                <a href="https://github.com/asinghal/factile">
+                                    <i className="fab fa-github"></i> Github
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                    <div className="col-xl-2 offset-xl-1 col-md-6 col-lg-3">
-                        <div className="footer_widget">
-                            <h3 className="footer_title">
-                                    About Factile
-                            </h3>
-                            <ul>
-                                <li><Link to="/static/features">Features</Link></li>
-                                <li><Link to="/static/faq">FAQs</Link></li>
-                            </ul>
-
-                        </div>
-                    </div>
-                    <div className="col-xl-2 col-md-6 col-lg-2">
-                        <div className="footer_widget">
-                            <h3 className="footer_title">
-                                    Useful Links
-                            </h3>
-                            <ul>
-                                <li><Link to="/static/help">Help</Link></li>
-                                <li><Link to="/static/contactus">Contact Us</Link></li>
-                                <li><Link to="/static/termsandconditions">Terms and conditions</Link></li>
-                                <li><a href="https://github.com/asinghal/factile" target="_blank" rel="noopener noreferrer">Github</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                </div>
+                <div className="col-md-4">
+                    <h3 className="footer_title">
+                            About Factile
+                    </h3>
+                    <ul>
+                        <li><Link to="/static/features">Features</Link></li>
+                        <li><Link to="/static/faq">FAQs</Link></li>
+                    </ul>
+                </div>
+                <div className="col-md-4">
+                    <h3 className="footer_title">
+                            Useful Links
+                    </h3>
+                    <ul>
+                        <li><Link to="/static/help">Help</Link></li>
+                        <li><Link to="/static/contactus">Contact Us</Link></li>
+                        <li><Link to="/static/termsandconditions">Terms and conditions</Link></li>
+                        <li><a href="https://github.com/asinghal/factile" target="_blank" rel="noopener noreferrer">Github</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
-        <div className="copy-right_text">
-            <div className="container">
-                <div className="footer_border"></div>
-                <div className="row">
-                    <div className="col-xl-12">
-                        <p className="copy_right text-center">
+        <div className="container copy-right_text">
+            <div className="footer_border"></div>
+            <div className="row">
+                <div className="col-xl-12">
+                    <p className="copy_right text-center">
 Copyright ©<script>document.write(new Date().getFullYear());</script>2020 All rights reserved | This template is made with <i className="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer">Colorlib</a>
-                        </p>
-                    </div>
+                    </p>
                 </div>
             </div>
         </div>

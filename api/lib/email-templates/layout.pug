@@ -3,28 +3,36 @@ html
     title Factile
     style.
         .body {
-            background-color: #4CA9FD;
-            font-family: Georgia;
+            background-color: #FFFFFF;
+            color: #333333;
+            font-family: Helvetica;
         }
 
         .container {
             margin: 0 auto;
-            background-color: #FFFFFF;
-            color: #333333;
             font-size: 12px;
-            width: 80%;
+            width: 600px;
         }
 
         .content {
-            padding: 20px;
+            padding: 20px 40px;
+            background-color: #FFFFFF;
+            color: #333333;
         }
 
         .header {
-            background-color: #4CA9FD;
-            color: #ffffff;
             padding: 5px 20px;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             font-size: 18px;
+        }
+
+        .header h1 {
+            color: #4CA9FD;
+            border-bottom: 1px solid #AAAAAA;
+        }
+
+        .header .text_gray {
+            color: #AAAAAA;
         }
 
         .footer {
@@ -41,7 +49,9 @@ html
                 .container
                     div
                         .header
-                            p Factile: Online Surveys
+                            h1 Factile
+                                | 
+                                span(class="text_gray") : Online Surveys
                     
                     div
                         .content

@@ -15,6 +15,16 @@ export default function Constraint({ questions, first, addConstraint }) {
         addConstraint({ question: questionId, value: event.target.value });
     };
 
+    const Filter = ({ question }) => {
+        if (!question.dimensions) {
+            return <option value={question.questionId}>{question.texts[0].text}</option>;
+        }
+
+        return question.dimensions.map((d, i) =>
+            <option value={question.questionId + '_' + d.value} key={question.questionId + '_question_' + i + '_' + d.value}>{[question.texts[0].text, d.texts[0].text].join(': ')}</option>
+        );
+    };
+
     return (
         <div className="row form-group">
             <div className="col-md-1">
@@ -26,14 +36,7 @@ export default function Constraint({ questions, first, addConstraint }) {
                 <select className="form-field" onChange={handleFilterChange}>
                     <option></option>
                     {questions.map((q, i) =>
-                    <>
-                    {!q.dimensions &&
-                        <option value={q.questionId} key={q.questionId + '_question_' + i}>{q.texts[0].text}</option>
-                    }
-                    {q.dimensions && q.dimensions.map(d =>
-                        <option value={q.questionId + '_' + d.value} key={q.questionId + '_question_' + i + '_' + d.value}>{[q.texts[0].text, d.texts[0].text].join(': ')}</option>
-                    )}
-                    </>
+                        <Filter question={q} key={q.questionId + '_question_' + i} />
                     )}
                 </select>
             </div>

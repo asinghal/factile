@@ -13,9 +13,9 @@ export default function TargetQuestions({ questions, selectedQuestions, setSelec
     return (
         <div className="choices checkbox">
             {questions.map((q, index) => 
-                <>
+                <div key={'q_' + index}>
                     {!q.dimensions &&
-                    <div key={'q_' + index}>
+                    <div>
                         <input type="checkbox" id={'q_' + q.questionId} onChange={() => toggleCheckbox(q.questionId)} /><label htmlFor={'q_' + q.questionId}>{q.texts[0].text}</label>
                     </div>
                     }
@@ -27,7 +27,7 @@ export default function TargetQuestions({ questions, selectedQuestions, setSelec
                         <input type="checkbox" id={'q_' + q.questionId + '_' + d.value} onChange={() => toggleCheckbox(q.questionId + '_' + d.value)} /><label htmlFor={'q_' + q.questionId + '_' + d.value}>{d.texts[0].text || '...'}</label>
                     </div>
                     )}
-                </>
+                </div>
             )}
         </div>
     );

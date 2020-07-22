@@ -13,8 +13,7 @@ jobs:
             - run: cd api && npm install
             - run: cd api && npm test
       - slack/status:
-          # fail_only: true
-          webhook: webhook
+          fail_only: true
 workflows:
     build-and-test:
       jobs:

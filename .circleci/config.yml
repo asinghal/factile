@@ -14,8 +14,6 @@ jobs:
             - run: cd api && npm test
       - slack/status:
           fail_only: true
-      - slack/notify:
-          message: Hello from circle
 workflows:
     build-and-test:
       jobs:

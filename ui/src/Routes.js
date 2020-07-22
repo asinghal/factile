@@ -10,7 +10,6 @@ import NewSurvey from './pages/survey-editor/new-survey/index.js';
 import Questionnaire from './pages/survey-editor/questionnaire/index.js';
 import InviteSurveyUsers from "./pages/survey-editor/invitations/index.js";
 import SurveyCollaborators from "./pages/survey-editor/collaborators/index.js";
-import SurveyDashboard from './pages/dashboard/index.js';
 import PreviewSurvey from './pages/respondents/preview-survey/index.js';
 import LiveSurvey from "./pages/respondents/live-survey/index.js";
 import SurveyResponses from './pages/survey-responses/summary/index.js';
@@ -67,11 +66,6 @@ export default function Routes() {
             <Route exact path="/surveys/:id/invite">
                 <EditorBase>
                     <InviteSurveyUsers />
-                </EditorBase>
-            </Route>
-            <Route exact path="/surveys/:id">
-                <EditorBase>
-                    <SurveyDashboard />
                 </EditorBase>
             </Route>
             <Route exact path="/surveys/:id/responses">

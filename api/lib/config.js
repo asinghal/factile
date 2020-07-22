@@ -31,7 +31,8 @@ const config = {
         fromAddress: 'factilenet@gmail.com',
         user: process.env.FACTILE_MAIL_USER || 'factilenet@gmail.com',
         password: process.env.FACTILE_MAIL_PASSWORD
-    }
+    },
+    sentry: process.env.FACTILE_SENTRY_DSN || 'sentry_dsn'
 };
 
 module.exports = { config };

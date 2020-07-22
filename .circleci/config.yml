@@ -15,6 +15,9 @@ jobs:
       - slack/status:
           fail_only: false
           webhook: webhook
+      - slack/notify:
+          message: Hello from circle
+          webhook: webhook
 workflows:
     build-and-test:
       jobs:

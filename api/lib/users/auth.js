@@ -7,7 +7,7 @@ const { generateJWT } = require('../passport');
 const { sendResponse } = require('../utils/express-sugar');
 
 /**
- * @api {post} /login Login
+ * @api {post} /api/login Login
  * @apiDescription Login a user using email and password.
  * @apiName Login
  * @apiGroup User
@@ -15,7 +15,7 @@ const { sendResponse } = require('../utils/express-sugar');
  * @apiParam {String} email Email address
  * @apiParam {String} password Password
  *
- * @apiSuccess {String} token  JWT (Token) required for accessing protected resources
+ * @apiSuccess {String} token  JWT (Token) required for accessing protected resources. Note that the default token expires 60 minutes after issuance.
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 200 OK
@@ -23,7 +23,7 @@ const { sendResponse } = require('../utils/express-sugar');
  *       "token": "xxxxxxxx"
  *     }
  *
- * @apiError {String} Error message
+ * @apiError {String} 401 Login failure
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 401 Unauthorized
@@ -52,8 +52,8 @@ router.post('/login', function (req, res) {
 });
 
 /**
- * @api {post} /users Registration
- * @apiDescription Register a new user
+ * @api {post} /api/users Registration
+ * @apiDescription Register a new user. This will also trigger an email notification.
  * @apiName Registration
  * @apiGroup User
  *
@@ -68,7 +68,7 @@ router.post('/login', function (req, res) {
  *       "message": "OK"
  *     }
  *
- * @apiError {String} Error message
+ * @apiError {String} 400 Indicates validation failure of the inputs
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 400 Bad Request
@@ -81,8 +81,8 @@ router.post('/users', (req, res) => Users.create(req.body).
                                             catch(() => sendResponse(res, 400, { message: 'Bad inputs' })));
 
 /**
- * @api {post} /users/forgotpassword Reset password
- * @apiDescription Reset password for a given email address and set password to a temporary token
+ * @api {post} /api/users/forgotpassword Reset password
+ * @apiDescription Reset password for a given email address and set password to a temporary token. This will also trigger an email notification.
  * @apiName Forgot Password
  * @apiGroup User
  *
@@ -96,7 +96,7 @@ router.post('/users', (req, res) => Users.create(req.body).
  *       "message": "OK"
  *     }
  *
- * @apiError {String} Error message
+ * @apiError {String} 400 Indicates validation failure of the inputs
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 400 Bad Request

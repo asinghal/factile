@@ -36,7 +36,7 @@ const updatePassword = (email, password) => {
     return validateInputs([email, password], () => {
         return findByEmail(email).then(user => db.save('users', { ...user, password: encrypt(password) }, 'email') ).then((data) => {
             mail.send(email, null, null, null, 'Your password has been changed', 'changePassword', {});
-            return { message: 'OK' };
+            return data;
         });
     });
 };

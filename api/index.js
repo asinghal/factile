@@ -4,7 +4,8 @@ const bodyParser = require('body-parser');
 const cookieSession = require("cookie-session");
 const cookieParser = require("cookie-parser");
 const passport = require('passport');
-const pino = require('pino-http')()
+const pino = require('pino-http')();
+const Sentry = require('@sentry/node');
 
 require('./lib/passport');
 
@@ -19,6 +20,10 @@ const auth = require('./lib/users/auth');
 const users = require('./lib/users/routes');
 
 const { findOrCreateUser } = require('./lib/passport');
+
+if (process.env.NODE_ENV === 'production') {
+    Sentry.init({ dsn: config.sentry });
+}
 
 const app = express()
 app.use(cors());

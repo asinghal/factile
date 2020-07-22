@@ -8,16 +8,16 @@ export default function Help() {
 			<div className="row">
 				<div className="col-12 col-md-3">
 					<nav id="side-nav" className="navbar navbar-dark bg-dark">
-						<a class="navbar-brand" href="#">Index</a>
-						<nav class="nav nav-pills flex-column">
-							<a class="nav-link active" href="#designing">Designing a survey</a>
-							<a class="nav-link" href="#logic">Defining Logic</a>
-							<a class="nav-link" href="#preview">Preview the survey</a>
-							<a class="nav-link" href="#share">Distribute/ Share</a>
-							<a class="nav-link" href="#analyse">Analyse Data</a>
-							<a class="nav-link" href="#manage">Manage Surveys</a>
-							<a class="nav-link" href="#qtype">Question Types</a>
-							<a class="nav-link" href="#mobile">Mobile Devices</a>
+						<a className="navbar-brand" href="#">Index</a>
+						<nav className="nav nav-pills flex-column">
+							<a className="nav-link active" href="#designing">Designing a survey</a>
+							<a className="nav-link" href="#logic">Defining Logic</a>
+							<a className="nav-link" href="#preview">Preview the survey</a>
+							<a className="nav-link" href="#share">Distribute/ Share</a>
+							<a className="nav-link" href="#analyse">Analyse Data</a>
+							<a className="nav-link" href="#manage">Manage Surveys</a>
+							<a className="nav-link" href="#qtype">Question Types</a>
+							<a className="nav-link" href="#mobile">Mobile Devices</a>
 						</nav>
 					</nav>
 				</div>

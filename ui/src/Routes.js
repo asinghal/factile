@@ -121,6 +121,18 @@ export default function Routes() {
                 </RespondentBase>
             </Route>
 
+            {/* Deprecated URLs */}
+            <Route exact path="/surveys/:id/start">
+                <RespondentBase>
+                    <LiveSurvey />
+                </RespondentBase>
+            </Route>
+            <Route exact path="/surveys/:id/:respId/start">
+                <RespondentBase>
+                    <LiveSurvey />
+                </RespondentBase>
+            </Route>
+
             {/* Static files */}
             <Route exact path="/static/faq">
                 <EditorBase>

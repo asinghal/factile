@@ -5,7 +5,7 @@ const findSurvey = async (id) => {
         headers: getAuthHeader()
     });
     let status = await response.status;
-    if (status === 401) {
+    if (status === 403) {
         throw new Error("unauthorized access");
     }
     let data = await response.json();
@@ -17,7 +17,7 @@ const getExcelData = async (id) => {
         headers: getAuthHeader()
     });
     let status = await response.status;
-    if (status === 401) {
+    if (status === 403) {
         throw new Error("unauthorized access");
     }
     let data = await response.json();
@@ -34,7 +34,7 @@ const generateReport = async (id, formData) => {
         body: JSON.stringify(formData)
     });
     let status = await response.status;
-    if (status === 401) {
+    if (status === 403) {
         throw new Error("unauthorized access");
     }
     let data = await response.json();

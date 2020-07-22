@@ -6,7 +6,7 @@ const findSurvey = async (id, respId) => {
         headers: getAuthHeader()
     });
     let status = await response.status;
-    if (status === 401) {
+    if (status === 403) {
         throw new Error("unauthorized access");
     }
     let data = await response.json();
@@ -45,7 +45,7 @@ const applyResponse = async (surveyId, responseId) => {
         headers: getAuthHeader()
     });
     let status = await response.status;
-    if (status === 401) {
+    if (status === 403) {
         throw new Error("unauthorized access");
     }
     let data = await response.json();

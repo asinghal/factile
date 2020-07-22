@@ -51,6 +51,7 @@ router.post('/', (req, res) => Surveys.saveOrUpdate(req.user.email, req.body).th
  * @apiGroup Survey
  *
  * @apiHeader {String} Authorization "Bearer token" where token is the value returned by Login API
+ * @apiError {String} 403 The logged in user does not have access to this survey
  */
 router.put('/:surveyId', (req, res) => authorize(req, res, (() => Surveys.saveOrUpdate(req.user.email, req.body).then((data) => res.send(data)))));
 
@@ -61,6 +62,7 @@ router.put('/:surveyId', (req, res) => authorize(req, res, (() => Surveys.saveOr
  * @apiGroup Survey
  *
  * @apiHeader {String} Authorization "Bearer token" where token is the value returned by Login API
+ * @apiError {String} 403 The logged in user does not have access to this survey
  */
 router.delete('/:surveyId', (req, res) => authorize(req, res, (() => Surveys.deleteMe(req.params.surveyId).then((data) => res.send(data)))));
 
@@ -71,11 +73,11 @@ router.delete('/:surveyId', (req, res) => authorize(req, res, (() => Surveys.del
  * @apiGroup Survey
  *
  * @apiHeader {String} Authorization "Bearer token" where token is the value returned by Login API
+ * @apiError {String} 403 The logged in user does not have access to this survey
  */
 router.post('/:id/invite', (req, res) => Surveys.findByIdAndOwner(req.user.email, req.params.id).then((data) => {
     if (!data) {
-        res.status(401);
-        return res.send('error');
+        return sendResponse(res, 403, 'error');
     }
     Surveys.saveOrUpdate(req.user.email, {...data, status: 'Live' }).then(() => {
         Surveys.invite(req.user.email, req.params.id, data.accessType === 'open', req.body);

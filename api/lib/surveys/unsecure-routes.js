@@ -15,8 +15,8 @@ const { sendResponse } = require('../utils/express-sugar');
  *
  * @apiUse SurveyView
  * 
- * @apiError {String} 403 Error message
- * @apiError {String} 404 Error message
+ * @apiError {String} 403 The respondent does not have permissions to access this survey
+ * @apiError {String} 404 Survey not found
  *
  * @apiErrorExample Error-Response-403:
  *     HTTP/1.1 403 Forbidden
@@ -61,7 +61,7 @@ router.get('/:id/render', (req, res) => Surveys.findById(req.params.id).then((da
  *
  * @apiUse SurveyView
  *
- * @apiError {String} 404 Error message
+ * @apiError {String} 404 Survey not found
  *
  * @apiErrorExample Error-Response:
  *     HTTP/1.1 404 Not Found

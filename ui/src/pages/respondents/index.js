@@ -44,6 +44,9 @@ export default function BaseRespondentView({ survey, onSuccessfulSubmit }) {
             case 'notlike': 
                 result = res.answers.map(a => !a || a.indexOf(condition.value) === -1).reduce((a,b) => a && b, true);
                 break;
+            default:
+                console.log(`unknown operator ${condition.op}`);
+                break;
         }
         return result;
     };

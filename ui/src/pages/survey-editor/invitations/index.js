@@ -53,10 +53,10 @@ export default function InviteSurveyUsers({ question }) {
     return (
         <div className="new-survey container">
             <div className="row">
-                <div className="col-md-3 col-sm-12">
+                <div className="col-md-4 col-lg-3 col-sm-12">
                     <SurveyManagementMenu surveyId={survey.surveyId} />
                 </div>
-                <div className="col-md-9 col-sm-12">
+                <div className="col-md-8 col-lg-9 col-sm-12">
                     <div className="row">
                         <div className="col-md-12">
                             <h1>{survey.name}</h1>
@@ -76,7 +76,7 @@ export default function InviteSurveyUsers({ question }) {
                         </div>
 
                         <div className="row">
-                            <div className="col-md-offset-8 col-md-4">
+                            <div className="offset-md-4 col-md-8 offset-lg-8 col-lg-4">
                                 <button className="base-btn submit-btn" onClick={Activate}>Activate this survey</button>
                             </div>
                         </div>
@@ -131,7 +131,7 @@ export default function InviteSurveyUsers({ question }) {
 
                     {formData.participants && formData.participants.length > 0 && 
                         <div className="row">
-                            <div className="col-md-offset-8 col-md-4">
+                            <div className="offset-md-6 col-md-6 offset-lg-8 col-lg-4">
                                 <button className="base-btn submit-btn" onClick={SendEmails}>Send emails</button>
                             </div>
                         </div>

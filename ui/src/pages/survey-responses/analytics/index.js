@@ -37,10 +37,10 @@ export default function SurveyAnalytics() {
     return (
         <div className="container survey-responses">
             <div className="row">
-                <div className="col-md-3 col-sm-12">
+                <div className="col-md-4 col-lg-3 col-sm-12">
                     <SurveyManagementMenu surveyId={id} />
                 </div>
-                <div className="col-md-9 col-sm-12">
+                <div className="col-md-8 col-lg-9 col-sm-12">
                     <div className="row vertical-margin">
                         <div className="col-12">
                             <h3>Questions</h3>

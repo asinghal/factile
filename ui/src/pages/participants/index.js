@@ -21,12 +21,12 @@ export default function Participants() {
     return (
         <div className="container">
             <div className="row">
-                <div className="col-md-3 col-sm-12">
+                <div className="col-md-4 col-lg-3 col-sm-12">
                     <SurveyManagementMenu surveyId={id} />
                 </div>
-                <div className="col-md-9 col-sm-12">
+                <div className="col-md-8 col-lg-9 col-sm-12">
                     <div className="row">
-                        <div className="col-3">
+                        <div className="col-6 col-lg-4">
                             <button className="base-btn submit-btn" onClick={invite}>Invite audience</button>
                         </div>
                     </div>

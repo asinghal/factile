@@ -33,6 +33,11 @@ export default function RegistrationForm({setUserLoggedIn, setShowLoginForm}) {
             return history.replace('/surveys')
         });
     };
+
+    const showLoginForm = (event) => {
+        event.preventDefault();
+        setShowLoginForm(true);
+    };
     
     return (
         <div className="login-form">
@@ -66,7 +71,7 @@ export default function RegistrationForm({setUserLoggedIn, setShowLoginForm}) {
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                    Already a user? <a onClick={() => setShowLoginForm(true)}>Click here to login</a>
+                    Already a user? <a href="/" onClick={showLoginForm}>Click here to login</a>
                     </div>
                 </div>
             </form>

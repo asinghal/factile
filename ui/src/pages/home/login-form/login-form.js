@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { login, forgotPassword } from '../api.js';
@@ -41,6 +41,11 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
             return;
         }
         forgotPassword(user.email).then(console.log);
+    };
+
+    const showRegistrationForm = (event) => {
+        event.preventDefault();
+        setShowLoginForm(false);
     };
 
     const initiateGoogleAuth = (event) => {
@@ -91,12 +96,12 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        Not a user yet? <a onClick={() => setShowLoginForm(false)}>Click here to register</a>
+                        Not a user yet? <a href="/" onClick={showRegistrationForm}>Click here to register</a>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        Forgot password? <a onClick={resetPassword}>Click here to reset</a>
+                        Forgot password? <a href="/" onClick={resetPassword}>Click here to reset</a>
                     </div>
                 </div>
             </form>

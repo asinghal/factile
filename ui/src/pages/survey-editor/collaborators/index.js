@@ -30,10 +30,10 @@ export default function SurveyCollaborators() {
     return (
         <div className="container">
             <div className="row">
-                <div className="col-md-3 col-sm-12">
+                <div className="col-md-4 col-lg-3 col-sm-12">
                     <SurveyManagementMenu surveyId={survey.surveyId} />
                 </div>
-                <div className="col-md-9 col-sm-12">
+                <div className="col-md-8 col-lg-9 col-sm-12">
                     <div className="row">
                         <div className="col-md-12">
                             <h1>{survey.name}: Manage Collaborators</h1>
@@ -60,7 +60,7 @@ export default function SurveyCollaborators() {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-6 col-sm-4 col-md-4">
+                        <div className="col-6 col-lg-4">
                             <button className="base-btn submit-btn" onClick={Save}>Add collaborator</button>
                         </div>
                     </div>

@@ -59,7 +59,7 @@ export default function Footer() {
             <div className="row">
                 <div className="col-xl-12">
                     <p className="copy_right text-center">
-Copyright ©<script>document.write(new Date().getFullYear());</script>2020 All rights reserved | This template is made with <i className="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" rel="noopener noreferrer" rel="noopener noreferrer">Colorlib</a>
+                        Copyright © 2020 All rights reserved | This template is made with <i className="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" rel="noopener noreferrer">Colorlib</a>
                     </p>
                 </div>
             </div>

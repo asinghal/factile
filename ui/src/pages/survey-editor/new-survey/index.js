@@ -106,10 +106,10 @@ export default function NewSurvey() {
     return (
         <div className="new-survey container">
             <div className="row">
-                <div className="col-md-3 col-sm-12">
+                <div className="col-md-4 col-lg-3 col-sm-12">
                     <SurveyManagementMenu surveyId={survey.surveyId} />
                 </div>
-                <div className="col-md-9 col-sm-12">
+                <div className="col-md-8 col-lg-9 col-sm-12">
                     {!id && 
                         <h2>New Survey</h2>
                     }
@@ -122,7 +122,7 @@ export default function NewSurvey() {
                     }
 
                     <div className="row">
-                        <div className="col-md-offset-8 col-md-4">
+                        <div className="offset-md-6 offset-lg-8 col-md-6 col-lg-4">
                             <button className="base-btn submit-btn" onClick={SaveDetails}>Save Details</button>
                         </div>
                     </div>

@@ -144,7 +144,7 @@ export default function PageConditions({ question, allQuestions }) {
                         </select>
                     </div>
                     <div className="col-md-4">
-                        {conditionMeta.options && !!conditionMeta.options.length &&
+                        {(conditionMeta.options && !!conditionMeta.options.length) &&
                         <select name="selectedOptionIndex" onChange={handleSelectChange} value={conditionMeta.selectedOptionIndex} className="form-field">
                             <option value="-1"></option>
                             {conditionMeta.options.map((o, index) =>
@@ -152,7 +152,7 @@ export default function PageConditions({ question, allQuestions }) {
                             )}
                         </select>
                         }
-                        {!conditionMeta.options || !conditionMeta.options.length &&
+                        {(!conditionMeta.options || !conditionMeta.options.length) &&
                             <input type="text" name="valueText" value={conditionMeta.valueText} onChange={handleTextChange} className="form-field"/>
                         }
                     </div>

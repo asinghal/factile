@@ -19,7 +19,7 @@ export default function SurveyResponses() {
 
     useEffect(() => {
         setChartWidth(ref.current ? (ref.current.offsetWidth * 0.9) : 0);
-    }, [ref.current]);
+    }, []);
 
 
     useEffect(() => {
@@ -34,17 +34,17 @@ export default function SurveyResponses() {
     return (
         <div className="container survey-responses">
             <div className="row">
-                <div className="col-md-3 col-sm-12">
+                <div className="col-md-4 col-lg-3 col-sm-12">
                     <SurveyManagementMenu surveyId={id} />
                 </div>
-                <div ref={ref} className="col-md-9 col-sm-12">
+                <div ref={ref} className="col-md-8 col-lg-9 col-sm-12">
                     <div className="row">
-                        <div className="col-6 col-sm-4 col-md-4">
+                        <div className="col-6 col-lg-4">
                             <button onClick={Download} className="base-btn submit-btn">Download in Excel</button>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-12 col-md-12">
+                        <div className="col-12">
                             {surveyResponses && surveyResponses.map(surveyResponse => (
                                 <SurveyResponseBlock surveyResponse={surveyResponse} chartWidth={chartWidth} key={surveyResponse.question} />
                             ))}

@@ -58,7 +58,7 @@ export default function SurveyView({ survey, addResponse, onPageSubmit, answersA
         } else {
             setPageNum(0);
         }
-    }, [survey.surveyId]);
+    }, [survey]);
 
     return (
         <div className="main-wrapper" style={{ backgroundColor: survey.layout.bodycolor }}>

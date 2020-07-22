@@ -18,7 +18,7 @@ export default function LiveSurvey() {
             }
             setSurvey(survey);
         }).catch(() => history.replace('/error'));
-    }, [id, history]);
+    }, [id, history, respId]);
 
     const onPageSubmit = (response) => {
         saveResponse(id, responseId, response).then((data) => {

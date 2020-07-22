@@ -9,7 +9,7 @@ const { sendResponse } = require('../utils/express-sugar');
  * @apiName ChangePassword
  * @apiGroup User
  *
- * @apiHeader {String} Authorization "Bearer <token>" where <token> is the value returned by Login API
+ * @apiHeader {String} Authorization "Bearer token" where token is the value returned by Login API
  * @apiParam {String} password Password that should be set for the user profile
  *
  * @apiSuccess {String} message  static message confirming the change

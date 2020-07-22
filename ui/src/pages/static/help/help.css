@@ -11,6 +11,7 @@
 @media all and (min-width: 800px){
     .help .navbar {
         position: fixed;
+        z-index: 2;
     }
 }
 

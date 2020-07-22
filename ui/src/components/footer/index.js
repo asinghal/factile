@@ -39,6 +39,8 @@ export default function Footer() {
                     <ul>
                         <li><Link to="/static/features">Features</Link></li>
                         <li><Link to="/static/faq">FAQs</Link></li>
+                        <li><Link to="/static/help">Help</Link></li>
+                        <li><Link to="/static/termsandconditions">Terms and conditions</Link></li>
                     </ul>
                 </div>
                 <div className="col-md-4">
@@ -46,9 +48,9 @@ export default function Footer() {
                             Useful Links
                     </h3>
                     <ul>
-                        <li><Link to="/static/help">Help</Link></li>
                         <li><Link to="/static/contactus">Contact Us</Link></li>
-                        <li><Link to="/static/termsandconditions">Terms and conditions</Link></li>
+                        <li><Link to="/docs/index.html">API Docs</Link></li>
+                        <li><a href="https://status.factile.net">Service Status</a></li>
                         <li><a href="https://github.com/asinghal/factile" target="_blank" rel="noopener noreferrer">Github</a></li>
                     </ul>
                 </div>

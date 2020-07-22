@@ -13,11 +13,9 @@ jobs:
             - run: cd api && npm install
             - run: cd api && npm test
       - slack/status:
-          fail_only: false
-          webhook: webhook
+          fail_only: true
       - slack/notify:
           message: Hello from circle
-          webhook: webhook
 workflows:
     build-and-test:
       jobs:

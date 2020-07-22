@@ -61,10 +61,10 @@ export default function Questionnaire() {
     return (
         <div className="new-survey container">
             <div className="row">
-                <div className="col-md-3 col-sm-12">
+                <div className="col-md-4 col-lg-3 col-sm-12">
                     <SurveyManagementMenu surveyId={survey.surveyId} />
                 </div>
-                <div className="col-md-9 col-sm-12">
+                <div className="col-md-8 col-lg-9 col-sm-12">
                     <h2>{survey.name}</h2>
 
                     <div className={classNames('overlay', { 'visible': overlayVisible })}></div>

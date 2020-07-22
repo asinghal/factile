@@ -34,10 +34,10 @@ export default function SurveyResponses() {
     return (
         <div className="container survey-responses">
             <div className="row">
-                <div className="col-md-3 col-sm-12">
+                <div className="col-md-4 col-lg-3 col-sm-12">
                     <SurveyManagementMenu surveyId={id} />
                 </div>
-                <div ref={ref} className="col-md-9 col-sm-12">
+                <div ref={ref} className="col-md-8 col-lg-9 col-sm-12">
                     <div className="row">
                         <div className="col-6 col-sm-4 col-md-4">
                             <button onClick={Download} className="base-btn submit-btn">Download in Excel</button>

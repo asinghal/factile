@@ -6,9 +6,9 @@ export default function Help() {
     return (
         <div className="container help">
 			<div className="row">
-				<div className="col-12 col-md-3">
+				<div className="col-12 col-md-4 col-lg-3">
 					<nav id="side-nav" className="navbar navbar-dark bg-dark">
-						<a className="navbar-brand" href="#">Index</a>
+						<a className="navbar-brand" href="#top">Index</a>
 						<nav className="nav nav-pills flex-column">
 							<a className="nav-link active" href="#designing">Designing a survey</a>
 							<a className="nav-link" href="#logic">Defining Logic</a>
@@ -21,8 +21,8 @@ export default function Help() {
 						</nav>
 					</nav>
 				</div>
-				<div className="col-12 col-md-9">
-					<h1>Tutorials</h1>
+				<div className="col-12 col-md-8 col-lg-9">
+					<h1 id="top">Tutorials</h1>
 					<p>Watch a quick video</p>
 					<iframe width="560" height="315" title="factile introduction" src="http://www.youtube.com/embed/IXgl27L6mo4"
 						frameBorder="0" allowFullScreen></iframe>

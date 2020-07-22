@@ -19,7 +19,7 @@ export default function SurveyResponses() {
 
     useEffect(() => {
         setChartWidth(ref.current ? (ref.current.offsetWidth * 0.9) : 0);
-    }, [ref.current]);
+    }, []);
 
 
     useEffect(() => {

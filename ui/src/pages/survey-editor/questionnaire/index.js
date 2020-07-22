@@ -48,10 +48,10 @@ export default function Questionnaire() {
     const KeyActions = () => {
         return (
             <div className="row">
-                <div className="col-md-4">
+                <div className="col-md-6 col-lg-4">
                     <DropdownMenu buttonText="Add a question" options={questionTypes} onSelection={(value) => onSelection(value)} />
                 </div>
-                <div className="col-md-4">
+                <div className="col-md-6 col-lg-4">
                     <button className="base-btn submit-btn" onClick={SaveDetails}>Save Details</button>
                 </div>
             </div>

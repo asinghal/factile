@@ -122,7 +122,7 @@ export default function NewSurvey() {
                     }
 
                     <div className="row">
-                        <div className="col-md-offset-8 col-md-4">
+                        <div className="offset-md-6 offset-lg-8 col-md-6 col-lg-4">
                             <button className="base-btn submit-btn" onClick={SaveDetails}>Save Details</button>
                         </div>
                     </div>

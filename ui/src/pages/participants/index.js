@@ -26,7 +26,7 @@ export default function Participants() {
                 </div>
                 <div className="col-md-8 col-lg-9 col-sm-12">
                     <div className="row">
-                        <div className="col-3">
+                        <div className="col-6 col-lg-4">
                             <button className="base-btn submit-btn" onClick={invite}>Invite audience</button>
                         </div>
                     </div>

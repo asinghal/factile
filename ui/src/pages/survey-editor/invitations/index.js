@@ -76,7 +76,7 @@ export default function InviteSurveyUsers({ question }) {
                         </div>
 
                         <div className="row">
-                            <div className="col-md-offset-8 col-md-4">
+                            <div className="offset-md-4 col-md-8 offset-lg-8 col-lg-4">
                                 <button className="base-btn submit-btn" onClick={Activate}>Activate this survey</button>
                             </div>
                         </div>
@@ -131,7 +131,7 @@ export default function InviteSurveyUsers({ question }) {
 
                     {formData.participants && formData.participants.length > 0 && 
                         <div className="row">
-                            <div className="col-md-offset-8 col-md-4">
+                            <div className="offset-md-6 col-md-6 offset-lg-8 col-lg-4">
                                 <button className="base-btn submit-btn" onClick={SendEmails}>Send emails</button>
                             </div>
                         </div>

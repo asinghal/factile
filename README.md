@@ -1,7 +1,7 @@
 ### Welcome to Factile!
 
 [![Join the chat at https://gitter.im/asinghal/factile](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/asinghal/factile?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![CircleCI](https://circleci.com/gh/asinghal/factile.svg?style=shield)](https://circleci.com/github/asinghal/factile)
+[![CircleCI](https://circleci.com/gh/asinghal/factile.svg?style=shield)](https://app.circleci.com/pipelines/github/asinghal/factile)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/asinghal/factile/graphs/commit-activity)
 [![Uptime Robot status](https://img.shields.io/uptimerobot/status/m785566480-fb4f6c6bad50b3f63d62ec1a?label=website%20status)](https://status.factile.net/785566480)

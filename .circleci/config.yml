@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   node: circleci/node@1.1.6
+  slack: circleci/slack@3.4.2
 jobs:
   build-and-test-api:
     executor:
@@ -11,6 +12,9 @@ jobs:
           steps:
             - run: cd api && npm install
             - run: cd api && npm test
+      - slack/status:
+          # fail_only: true
+          webhook: webhook
 workflows:
     build-and-test:
       jobs:

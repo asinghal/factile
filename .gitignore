@@ -8,3 +8,4 @@ build.sh
 api.tar.gz
 ui.tar.gz
 ec2
+apidoc

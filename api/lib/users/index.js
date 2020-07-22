@@ -1,6 +1,8 @@
 const crypto = require('crypto');
 const db = require('../db');
 const mail = require('../mail');
+const assert = require('assert');
+const { validateInputs } = require('../utils/validation');
 
 const ObjectID = require('mongodb').ObjectID;
 
@@ -21,24 +23,30 @@ const randomPassword = () =>
 const login = (email, password) => db.findOne('users', { email, password: encrypt(password) }, { password: 0 });
 
 const resetPassword = (email) => {
-    const newPass = randomPassword();
-    return findByEmail(email).then(user => db.save('users', { ...user, password: encrypt(newPass) }, 'email') ).then((data) => {
-        mail.send(email, null, null, null, 'Your temporary password', 'forgotPassword', { newPass });
-        return data;
+    return validateInputs([email], () => {
+        const newPass = randomPassword();
+        return findByEmail(email).then(user => db.save('users', { ...user, password: encrypt(newPass) }, 'email') ).then((data) => {
+            mail.send(email, null, null, null, 'Your temporary password', 'forgotPassword', { newPass });
+            return data;
+        });
     });
 };
 
 const updatePassword = (email, password) => {
-    return findByEmail(email).then(user => db.save('users', { ...user, password: encrypt(password) }, 'email') ).then((data) => {
-        mail.send(email, null, null, null, 'Your password has been changed', 'changePassword', {});
-        return { message: 'OK' };
+    return validateInputs([email, password], () => {
+        return findByEmail(email).then(user => db.save('users', { ...user, password: encrypt(password) }, 'email') ).then((data) => {
+            mail.send(email, null, null, null, 'Your password has been changed', 'changePassword', {});
+            return { message: 'OK' };
+        });
     });
 };
 
 const create = (user) => {
-    return db.save('users', { ...user, password: encrypt(user.password) }, 'email').then((data) => {
-        mail.send(user.email, null, null, null, 'Welcome to Factile', 'newUser', {});
-        return data;
+    return validateInputs([user, user.email, user.password], () => {
+        return db.save('users', { ...user, password: encrypt(user.password) }, 'email').then((data) => {
+            mail.send(user.email, null, null, null, 'Welcome to Factile', 'newUser', {});
+            return data;
+        });
     });
 };
 

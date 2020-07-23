@@ -7,10 +7,10 @@ const { generateJWT } = require('../passport');
 const { sendResponse } = require('../utils/express-sugar');
 
 /**
- * @api {post} /api/login Login
+ * @api {post} /api/login Basic Login
  * @apiDescription Login a user using email and password.
  * @apiName Login
- * @apiGroup User
+ * @apiGroup Authentication
  *
  * @apiParam {String} email Email address
  * @apiParam {String} password Password

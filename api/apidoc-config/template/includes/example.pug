@@ -1,0 +1,7 @@
+div
+    strong Examples
+    each example in examples
+        .example
+            div #{example.title}
+            pre
+                code(class=example.type) !{example.content}

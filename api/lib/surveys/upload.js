@@ -2,6 +2,7 @@ const fs = require('fs');
 const router = require('express').Router();
 const multer = require('multer');
 const Surveys = require('./');
+const { sendResponse } = require('../utils/express-sugar');
 
 const DIR = `${__dirname}/../../uploads`;
 
@@ -27,12 +28,20 @@ var upload = multer({
     }
 });
 
+/**
+ * @api {post} /api/uploads/surveys/:surveyId Upload file
+ * @apiDescription Uploads a file to a survey. It expects Multipart form data as an input. Additionally, it only accepts PNG, JPEG and GIF file formats.
+ * @apiName Upload
+ * @apiGroup Survey
+ *
+ * @apiHeader {String} Authorization "Bearer token" where token is the value returned by Login API
+ * @apiError {String} 403 The logged in user does not have access to this survey
+ */
 router.post('/surveys/:surveyId', upload.single('logoImg'), (req, res, next) => {
 
     return Surveys.findByIdAndOwner(req.user.email, req.params.surveyId).then((survey) => {
         if (!survey || !survey.surveyId) {
-            res.status(403);
-            return res.send('unauthorized');
+            return sendResponse(res, 403, 'unauthorized');
         }
 
         const targetDirBase = `${DIR}/${survey.hash_string}`;

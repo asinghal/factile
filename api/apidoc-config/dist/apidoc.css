@@ -1,0 +1,82 @@
+* {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+}
+
+h1, h2 {
+    border-bottom: 1px solid #aaaaaa;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0 0 0 15px;
+}
+
+section {
+    padding: 1em 0;
+}
+
+footer {
+    border-top: 1px solid;
+    padding: 10px 0;
+}
+
+.api-block {
+    padding: 1em 0;
+}
+
+.side-nav {
+    background: #1F1F1F;
+    color: #4CA9FD;
+    padding: 1em;
+}
+
+.side-nav a {
+    color: inherit;
+}
+
+.side-nav li {
+    padding: 5px 0;
+}
+
+.side-nav .api-ref {
+    color: #C7C7C7;
+}
+
+.content {
+    padding: 20px 10px;
+}
+
+.api-block {
+    border-bottom: 1px dotted;
+}
+
+.api-block h3 {
+    margin: 20px 0;
+}
+
+.api-block .http-method {
+    background-color: #4CA9FD;
+    color: #ffffff;
+    padding: 5px 10px;
+}
+
+.api-block .api-url {
+    background-color: #dddddd;
+    color: #8f1212;
+    padding: 5px 10px;
+}
+
+.api-block .api-description {
+    padding: 15px;
+}
+
+.api-block .optional-field {
+    color: #74b7e4;
+    padding: 5px 10px;
+}
+
+.api-block .api-details {
+    margin: 10px 0;
+}

@@ -1,7 +1,6 @@
 const crypto = require('crypto');
 const db = require('../db');
 const mail = require('../mail');
-const assert = require('assert');
 const { validateInputs } = require('../utils/validation');
 
 const ObjectID = require('mongodb').ObjectID;

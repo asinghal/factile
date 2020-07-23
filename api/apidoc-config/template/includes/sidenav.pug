@@ -1,0 +1,10 @@
+.side-nav
+    ul
+        li #{project.header.title}
+        each apiGroup in api
+            li #{apiGroup.group}
+                ul
+                    each api in apiGroup.data
+                        li.api-ref 
+                            a(href='#' + api.name) #{api.title}
+        li #{project.footer.title}

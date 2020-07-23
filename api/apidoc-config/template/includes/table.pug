@@ -1,0 +1,15 @@
+h5 #{data[0].group}
+table.table.table-striped.table-bordered
+    tr
+        th Name
+        th Type
+        th Description
+    each header in data
+        tr
+            td
+                | #{header.field}
+                if header.optional
+                    span.optional-field (optional)
+            td #{header.type}
+            td !{header.description}
+

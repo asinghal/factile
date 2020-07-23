@@ -1,0 +1,31 @@
+html(lang="en")
+  head
+    title #{project.title}
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap")
+    link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css", integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk", crossorigin="anonymous")
+    link(rel="stylesheet", href="./apidoc.css")
+    link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/zenburn.min.css")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js")
+
+  body
+    .container
+        .row
+            .col-12.col-lg-3
+                include includes/sidenav.pug
+            .col-12.col-lg-9.content
+                h1 #{project.name}
+                p Version: #{project.version}
+                p #{project.description}
+                section.header !{project.header.content}
+                each apiGroup in api
+                    section.api-group
+                        h2 #{apiGroup.group}
+                        each api in apiGroup.data
+                            include includes/api.pug
+                section.footer !{project.footer.content}
+                footer
+                    | This documentation has been generated using 
+                    a(href=project.generator.url) #{project.generator.name}
+    script hljs.initHighlightingOnLoad()

@@ -1,0 +1,49 @@
+div.api-block(id=api.name)
+    .col-12
+        .row
+            .col-12
+                h3 #{api.title}
+        .row
+            .col-2
+                .http-method #{api.type}
+            .col-10
+                .api-url #{api.url}
+        .row
+            .col-12.api-description !{api.description}
+
+    if api.header
+        .row.api-details
+            .col-12
+                - var data = api.header.fields["Header"]
+                - var examples = api.header.examples
+                include table.pug
+                if examples
+                    include example.pug
+
+    if api.parameter
+        .row.api-details
+            .col-12
+                - var data = api.parameter.fields["Parameter"]
+                - var examples = api.parameter.examples
+                include table.pug
+                if examples
+                    include example.pug
+
+    if api.success
+        .row.api-details
+            .col-12
+                - var data = api.success.fields["Success 200"]
+                - var examples = api.success.examples
+                include table.pug
+                if examples
+                    include example.pug
+
+    if api.error
+        .row.api-details
+            .col-12
+                - var data = api.error.fields["Error 4xx"]
+                - var examples = api.error.examples
+                include table.pug
+                if examples
+                    include example.pug
+

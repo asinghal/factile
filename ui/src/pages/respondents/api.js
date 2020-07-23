@@ -52,4 +52,22 @@ const applyResponse = async (surveyId, responseId) => {
     return data;
 };
 
-export { findSurvey, saveResponse, applyResponse };
+const applyResponseForPreview = async (surveyId, surveyResponse) => {
+
+    const headers = getAuthHeader();
+    headers.append('Content-Type', 'application/json');
+
+    let response = await fetch(`/api/public/surveys/${surveyId}/apply/responses/preview`, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(surveyResponse)
+    });
+    let status = await response.status;
+    if (status === 403) {
+        throw new Error("unauthorized access");
+    }
+    let data = await response.json();
+    return data;
+};
+
+export { findSurvey, saveResponse, applyResponse, applyResponseForPreview };

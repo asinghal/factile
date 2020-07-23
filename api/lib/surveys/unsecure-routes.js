@@ -52,7 +52,7 @@ router.get('/:id/render', (req, res) => Surveys.findById(req.params.id).then((da
 
 /**
  * @api {get} /api/public/surveys/:id/apply/responses/:responseId Answer Piping
- * @apiDescription Applies the responses captures so far to fulfil any questions expecting answer piping. Delivers a renderable view of a survey with questions organized by pages.
+ * @apiDescription Applies the responses captured so far to fulfil any questions expecting answer piping. Delivers a renderable view of a survey with questions organized by pages.
  * @apiName Answer Piping
  * @apiGroup Survey
  *
@@ -79,6 +79,35 @@ router.get('/:id/apply/responses/:responseId', (req, res) => Surveys.findById(re
         const survey = SurveyResponses.applyToSurveyTexts(data, surveyResponse);
         return res.send(Surveys.groupByPages(survey));
     });
+}));
+
+/**
+ * @api {post} /api/public/surveys/:id/apply/responses/preview Preview Answer Piping
+ * @apiDescription Applies the responses in request body to fulfil any questions expecting answer piping. Delivers a renderable view of a survey with questions organized by pages. This performs an in-memory operation and the responses are not persisted.
+ * @apiName Preview Answer Piping
+ * @apiGroup Survey
+ *
+ * @apiParam {String} id Survey ID of the survey to be retrieved
+ * @apiParam {Object} response Survey response to be used to evaluate survey's texts
+ *
+ * @apiUse SurveyView
+ *
+ * @apiError {String} 404 Survey not found
+ *
+ * @apiErrorExample Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "error": "error"
+ *     }
+ */
+router.post('/:id/apply/responses/preview', (req, res) => Surveys.findById(req.params.id).then((data) => {
+    if (!data) {
+        res.status(404);
+        return res.send('error');
+    }
+    const survey = SurveyResponses.applyToSurveyTexts(data, req.body);
+
+    return res.send(Surveys.groupByPages(survey));
 }));
 
 module.exports = router;

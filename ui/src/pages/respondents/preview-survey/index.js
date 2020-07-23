@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { findSurvey } from '../api.js';
+import { findSurvey, applyResponseForPreview } from '../api.js';
 
 import { useParams, useHistory } from "react-router-dom";
 
@@ -11,13 +11,11 @@ export default function PreviewSurvey() {
     const history = useHistory();
 
     useEffect(() => {
-        findSurvey(id).then((survey) => {
-            setSurvey(survey);
-        }).catch(() => history.replace('/error'));
+        findSurvey(id).then(setSurvey).catch(() => history.replace('/error'));
     }, [id, history]);
 
     const onPageSubmit = (response) => {
-        console.log(response);
+        applyResponseForPreview(id, response).then(setSurvey).catch(() => history.replace('/error'));
     };
 
     return (

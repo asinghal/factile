@@ -17,6 +17,7 @@ const Page = ({ page, saveResponse }) => (
 
 export default function SurveyView({ survey, addResponse, onPageSubmit, answersAreValid }) {
     const [pageNum, setPageNum] = useState(0);
+    const [percentageCompletion, setPercentageCompletion] = useState(0);
 
     const findNextDisplayablePage = (totalPages) => {
         let nextPageNum = pageNum + 1;
@@ -38,7 +39,13 @@ export default function SurveyView({ survey, addResponse, onPageSubmit, answersA
             }
         }
         if (survey.pages && pageNum <= survey.pages.length) {
-            setPageNum(findNextDisplayablePage(survey.pages.length));
+            const nextPageNum = findNextDisplayablePage(survey.pages.length);
+            if (nextPageNum > survey.pages.length) {
+                setPercentageCompletion(100);
+            } else {
+                setPercentageCompletion((nextPageNum / survey.pages.length) * 100);
+            }
+            setPageNum(nextPageNum);
         }
         return true;
     };
@@ -58,7 +65,7 @@ export default function SurveyView({ survey, addResponse, onPageSubmit, answersA
         } else {
             setPageNum(0);
         }
-    }, [survey]);
+    }, [survey.surveyId]);
 
     return (
         <div className="main-wrapper" style={{ backgroundColor: survey.layout.bodycolor }}>
@@ -114,7 +121,7 @@ export default function SurveyView({ survey, addResponse, onPageSubmit, answersA
 
                 {survey.layout.includeProgress && 
                 <div>
-                    <ProgressBar percentage="50" />
+                    <ProgressBar percentage={percentageCompletion} />
                 </div>
                 }
 

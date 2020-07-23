@@ -19,8 +19,6 @@ const participants = require('./lib/participants/routes');
 const auth = require('./lib/users/auth');
 const users = require('./lib/users/routes');
 
-const { findOrCreateUser } = require('./lib/passport');
-
 if (process.env.NODE_ENV === 'production') {
     Sentry.init({ dsn: config.sentry });
 }
@@ -48,20 +46,7 @@ app.use('/api/public/surveyresponses', unsecureSurveyResponseRoutes);
 app.use('/api/uploads', passport.authenticate('jwt', {session: false}), surveyUploads);
 app.use('/api/', auth);
 
-
-const onOauthSuccess = (req, res) => {
-    if (req.user && req.user.emails && req.user.emails.length) {
-        const email = req.user.emails[0].value;
-        return findOrCreateUser(email).then(token => res.redirect(`${config.baseURL.ui}/oauth/${token}`));
-    }
-    return res.redirect(`${config.baseURL.ui}/`);
-};
-
-app.get('/api/auth/google',  passport.authenticate('google', { scope: ['email'] }));
-app.get('/api/google', passport.authenticate('google'), onOauthSuccess);
-
-app.get('/api/auth/facebook',  passport.authenticate('facebook', { scope: ['email'] }));
-app.get('/api/facebook', passport.authenticate('facebook'), onOauthSuccess);
+require('./lib/users/oauth-routes')(app);
 
 app.get('/api', (req, res) => res.send('OK'));
 app.get('/', (req, res) => res.send('OK'));

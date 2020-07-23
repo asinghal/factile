@@ -1,0 +1,14 @@
+{
+  "name": "Factile API",
+  "title": "Factile API Docs",
+  "version": "0.0.1",
+  "description": "API documentation for Factile Surveys",
+  "header": {
+    "title": "Introduction",
+    "filename": "./header.md"
+  },
+  "footer": {
+    "title": "Final notes",
+    "filename": "./footer.md"
+  }
+}

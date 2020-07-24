@@ -50,6 +50,8 @@ The application code is written in JavaScript
 * **Frontend**: React JS
 * **Database**: MongoDB.
 
+API docs are available at [https://www.factile.net:81/](https://www.factile.net:81/)
+
 ## Installation
 
 1. Git clone this repository

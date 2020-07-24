@@ -49,7 +49,7 @@ export default function Footer() {
                     </h3>
                     <ul>
                         <li><Link to="/static/contactus">Contact Us</Link></li>
-                        <li><Link to="/docs/index.html">API Docs</Link></li>
+                        <li><Link to="https://www.factile.net:81/">API Docs</Link></li>
                         <li><a href="https://status.factile.net">Service Status</a></li>
                         <li><a href="https://github.com/asinghal/factile" target="_blank" rel="noopener noreferrer">Github</a></li>
                     </ul>

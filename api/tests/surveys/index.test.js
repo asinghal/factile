@@ -294,6 +294,16 @@ describe('survey model tests', () => {
         });
     });
 
+    test('delete a survey', done => {
+        const surveyId = 'abc1-2345-6789';
+        mockDB.expects('del').once().resolves("ok");
+
+        surveys.deleteMe(surveyId).then(d => {
+            expect(d).toBe("ok");
+            done();
+        });
+    });
+
     test('recordChangeHistory', done => {
         const survey = {};
         const owner = 'a@a.com';

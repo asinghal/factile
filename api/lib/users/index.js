@@ -17,22 +17,25 @@ const randomPassword = () =>
 
 const login = (email, password) => db.findOne('users', { email, password: encrypt(password) }, { password: 0 });
 
-const resetPassword = (email) => {
-    return validateInputs([email], () => {
-        const newPass = randomPassword();
-        return findByEmail(email).then(user => db.save('users', { ...user, password: encrypt(newPass) }, 'email') ).then((data) => {
-            mail.send(email, null, null, null, 'Your temporary password', 'forgotPassword', { newPass });
+const _updatePassword = (email, password, sendMail) => {
+    return validateInputs([email, password], () => {
+        return findByEmail(email).then(user => db.save('users', { ...user, password: encrypt(password) }, 'email') ).then((data) => {
+            sendMail();
             return data;
         });
     });
 };
 
+const resetPassword = (email) => {
+    const newPass = randomPassword();
+    return _updatePassword(email, newPass, () => {
+        mail.send(email, null, null, null, 'Your temporary password', 'forgotPassword', { newPass });
+    });
+};
+
 const updatePassword = (email, password) => {
-    return validateInputs([email, password], () => {
-        return findByEmail(email).then(user => db.save('users', { ...user, password: encrypt(password) }, 'email') ).then((data) => {
-            mail.send(email, null, null, null, 'Your password has been changed', 'changePassword', {});
-            return data;
-        });
+    return _updatePassword(email, password, () => {
+        mail.send(email, null, null, null, 'Your password has been changed', 'changePassword', {});
     });
 };
 

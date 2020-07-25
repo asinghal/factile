@@ -83,6 +83,31 @@ describe('user model tests', () => {
         });
     });
 
+    describe('change password', () => {
+        test('updatePassword', done => {
+            const email = 'a@test.com';
+            const password = 'newPass01';
+            const dummyUser = { email };
+            mockDB.expects('findOne').once().resolves(dummyUser);
+            mockDB.expects('save').once().resolves({message: 'OK'});
+            mockMail.expects('send').once().returns(null);
+
+            users.updatePassword(email, password).then((data) => {
+                expect(data).not.toBe(null);
+                done();
+            });
+        });
+
+        test('updatePassword should fail without valid inputs', done => {
+            const email = 'a@test.com';
+
+            users.updatePassword(email, null).catch((e) => {
+                expect(e).not.toBe(null);
+                done();
+            });
+        });
+    });
+
     describe('create user', () => {
         test('create a new user', done => {
             const user = { email: 'a@test.com', password: 'password' };

@@ -133,6 +133,16 @@ describe('survey responses model tests', () => {
         });
     });
 
+    test('delete survey responses', done => {
+        const surveyId = 'abc1-2345-6789';
+        mockDB.expects('del').once().resolves("ok");
+
+        surveyResponses.deleteAll(surveyId).then(d => {
+            expect(d).toBe("ok");
+            done();
+        });
+    });
+
     test('format a survey response for download', done => {
         const formatted = surveyResponses.formatForDownload(DUMMY_SURVEY, DUMMY_SURVEY_RESPONSES);
         expect(formatted).not.toBeNull();

@@ -2,7 +2,6 @@ const db = require('../../lib/db');
 const mail = require('../../lib/mail');
 const surveys = require('../../lib/surveys');
 const sinon = require('sinon');
-const ObjectID = require('mongodb').ObjectID;
 
 describe('survey model tests', () => {
     let mockDB, mockMail;
@@ -23,7 +22,7 @@ describe('survey model tests', () => {
         const name = 'Test Survey';
         const owner = 'a@a.com';
         const surveyId = 'abc1-2345-6789';
-        const dummySurvey = { _id: new ObjectID(), name, surveyId, owner};
+        const dummySurvey = { name, surveyId, owner};
         mockDB.expects('find').once().resolves([ dummySurvey ]);
     
         surveys.findByOwner(owner).then(found => {
@@ -49,7 +48,7 @@ describe('survey model tests', () => {
         const name = 'Test Survey';
         const surveyId = 'abc1-2345-6789';
         const owner = 'a@a.com';
-        const dummySurvey = { _id: new ObjectID(), name, surveyId, owner};
+        const dummySurvey = { name, surveyId, owner};
         mockDB.expects('findOne').once().resolves(dummySurvey);
     
         surveys.findByIdAndOwner(owner, surveyId).then(found => {
@@ -73,7 +72,7 @@ describe('survey model tests', () => {
         const name = 'Test Survey';
         const surveyId = 'abc1-2345-6789';
         const owner = 'a@a.com';
-        const dummySurvey = { _id: new ObjectID(), name, surveyId, owner};
+        const dummySurvey = { name, surveyId, owner};
         mockDB.expects('findOne').once().resolves(dummySurvey);
     
         surveys.findById(surveyId).then(found => {
@@ -200,7 +199,7 @@ describe('survey model tests', () => {
     test('insert a survey', done => {
         const name = 'Test Survey';
         const owner = 'a@a.com';
-        const survey = { _id: new ObjectID(), name};
+        const survey = { name};
         mockDB.expects('save').once().resolves("ok");
 
         surveys.saveOrUpdate(owner, survey).then(d => {
@@ -218,7 +217,7 @@ describe('survey model tests', () => {
         const name = 'Test Survey';
         const owner = 'a@a.com';
         const anotherOwner = 'b@a.com';
-        const survey = { _id: new ObjectID(), name, owner: [anotherOwner]};
+        const survey = { name, owner: [anotherOwner]};
         mockDB.expects('save').once().resolves("ok");
 
         surveys.saveOrUpdate(owner, survey).then(d => {
@@ -236,7 +235,7 @@ describe('survey model tests', () => {
         const name = 'Test Survey';
         const surveyId = 'abc1-2345-6789';
         const owner = 'a@a.com';
-        const survey = { _id: new ObjectID(), name, surveyId, owner};
+        const survey = { name, surveyId, owner};
         mockDB.expects('save').once().resolves("ok");
 
         surveys.saveOrUpdate(owner, survey).then(d => {
@@ -250,7 +249,7 @@ describe('survey model tests', () => {
         const name = 'Test Survey';
         const surveyId = 'abc1-2345-6789';
         const owner = 'a@a.com';
-        const survey = { _id: new ObjectID(), name, surveyId, owner, questions: [ {questionId: 'q0001', qType: 'plaintext'}, {qType: 'radio'}]};
+        const survey = { name, surveyId, owner, questions: [ {questionId: 'q0001', qType: 'plaintext'}, {qType: 'radio'}]};
         mockDB.expects('save').once().resolves("ok");
 
         surveys.saveOrUpdate(owner, survey).then(d => {
@@ -265,7 +264,7 @@ describe('survey model tests', () => {
     test('insert a survey and add a hash_string', done => {
         const name = 'Test Survey';
         const owner = 'a@a.com';
-        const survey = { _id: new ObjectID(), name, owner };
+        const survey = { name, owner };
         mockDB.expects('save').once().resolves("ok");
 
         surveys.saveOrUpdate(owner, survey).then(d => {
@@ -284,7 +283,7 @@ describe('survey model tests', () => {
         const surveyId = 'abc1-2345-6789';
         const owner = 'a@a.com';
         const hash_string = 'abcdefgh01234567'
-        const survey = { _id: new ObjectID(), name, surveyId, owner, hash_string};
+        const survey = { name, surveyId, owner, hash_string};
         mockDB.expects('save').once().resolves("ok");
 
         surveys.saveOrUpdate(owner, survey).then(d => {

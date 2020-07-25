@@ -1,12 +1,10 @@
 const db = require('../../lib/db');
 const surveyResponses = require('../../lib/surveyresponses');
 const sinon = require('sinon');
-const ObjectID = require('mongodb').ObjectID;
 
 const DUMMY_SURVEY = require('./data/survey.json');
 const DUMMY_SURVEY_WITH_VARS = require('./data/survey_with_vars.json');
 const DUMMY_SURVEY_RESPONSES = require('./data/surveyresponses.json');
-const surveyresponses = require('../../lib/surveyresponses');
 
 describe('survey responses model tests', () => {
     let mockDB;
@@ -14,15 +12,15 @@ describe('survey responses model tests', () => {
     beforeEach(() => {
         mockDB = sinon.mock(db);
     });
-    
+
     afterEach(() => {
         mockDB.verify();
         mockDB.restore();
     });
-    
+
     test('findBySurveyId where owner matches the input', done => {
         const surveyId = 'abc1-2345-6789';
-        const dummySurveyResponse = { _id: new ObjectID(), data: []};
+        const dummySurveyResponse = { data: []};
         mockDB.expects('find').once().resolves([ dummySurveyResponse ]);
     
         surveyResponses.findBySurveyId(surveyId).then(found => {
@@ -47,7 +45,7 @@ describe('survey responses model tests', () => {
     test('findByID success', done => {
         const surveyId = 'abc1-2345-6789';
         const id = 'xyz1-2345-6789';
-        const dummySurveyResponse = { _id: new ObjectID(), data: []};
+        const dummySurveyResponse = { data: []};
         mockDB.expects('findOne').once().resolves(dummySurveyResponse);
     
         surveyResponses.findById(surveyId, id).then(found => {
@@ -76,7 +74,7 @@ describe('survey responses model tests', () => {
             other : '',
             ranking : false
         };
-        const response = { _id: new ObjectID(), email, responses: [surveyResponse]};
+        const response = { email, responses: [surveyResponse]};
         mockDB.expects('findOne').once().resolves({ status: 'Live' });
         mockDB.expects('save').once().resolves("ok");
 
@@ -100,7 +98,7 @@ describe('survey responses model tests', () => {
             other : '',
             ranking : false
         };
-        const response = { _id: new ObjectID(), email, responses: [surveyResponse]};
+        const response = { email, responses: [surveyResponse]};
         mockDB.expects('findOne').once().resolves({ status: 'Draft' });
 
         surveyResponses.save(surveyId, null, response).catch(e => {
@@ -115,14 +113,13 @@ describe('survey responses model tests', () => {
     test('update a survey response', done => {
         const email = 'a@a.com';
         const surveyId = 'abc1-2345-6789';
-        const responseId = 'xyz1-2345-6789';
         const surveyResponse = {
             question : 'q0001',
             answers : [ 'o1' ],
             other : '',
             ranking : false
         };
-        const response = { _id: new ObjectID(), email, responses: [surveyResponse]};
+        const response = { email, responses: [surveyResponse]};
         mockDB.expects('findOne').once().resolves({ status: 'Live' });
         mockDB.expects('save').once().resolves("ok");
 

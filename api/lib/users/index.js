@@ -3,11 +3,7 @@ const db = require('../db');
 const mail = require('../mail');
 const { validateInputs } = require('../utils/validation');
 
-const ObjectID = require('mongodb').ObjectID;
-
 const findByEmail = (email) => db.findOne('users', { email });
-
-const findById = (id) => db.findOne('users', { _id: new ObjectID(id) });
 
 const encrypt = (password) => {
     const hash = crypto.createHash('sha512');
@@ -49,4 +45,4 @@ const create = (user) => {
     });
 };
 
-module.exports = { findByEmail, findById, login, resetPassword, updatePassword, create, randomPassword };
+module.exports = { findByEmail, login, resetPassword, updatePassword, create, randomPassword };

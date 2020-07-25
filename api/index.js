@@ -18,6 +18,7 @@ const unsecureSurveyResponseRoutes = require('./lib/surveyresponses/unsecure-rou
 const participants = require('./lib/participants/routes');
 const auth = require('./lib/users/auth');
 const users = require('./lib/users/routes');
+const addressbooks = require('./lib/addressbooks/routes');
 
 if (process.env.NODE_ENV === 'production') {
     Sentry.init({ dsn: config.sentry });
@@ -41,6 +42,7 @@ app.use('/api/surveys', passport.authenticate('jwt', {session: false}), surveys)
 app.use('/api/surveyresponses', passport.authenticate('jwt', {session: false}), surveyResponses);
 app.use('/api/participants', passport.authenticate('jwt', {session: false}), participants);
 app.use('/api/userdetails', passport.authenticate('jwt', {session: false}), users);
+app.use('/api/addressbooks', passport.authenticate('jwt', {session: false}), addressbooks);
 app.use('/api/public/surveys', unsecureSurveyRoutes);
 app.use('/api/public/surveyresponses', unsecureSurveyResponseRoutes);
 app.use('/api/uploads', passport.authenticate('jwt', {session: false}), surveyUploads);

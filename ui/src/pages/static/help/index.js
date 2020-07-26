@@ -24,7 +24,7 @@ export default function Help() {
 				<div className="col-12 col-md-8 col-lg-9">
 					<h1 id="top">Tutorials</h1>
 					<p>Watch a quick video</p>
-					<iframe width="560" height="315" title="factile introduction" src="http://www.youtube.com/embed/IXgl27L6mo4"
+					<iframe width="560" height="315" title="factile introduction" src="//www.youtube.com/embed/IXgl27L6mo4"
 						frameBorder="0" allowFullScreen></iframe>
 					<div>
 						<div>

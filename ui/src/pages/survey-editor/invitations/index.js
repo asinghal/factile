@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from "react";
 import SurveyManagementMenu from "../../../components/surveys/survey-management-menu";
 import { useParams, useHistory } from "react-router-dom";
+import classNames from "classnames";
 
 import { findSurvey, update, sendEmails } from '../api.js';
 import '../../../components/forms/inputs.css';
 import { isValidEmail } from "../../../utils";
+import { getAddressbook } from "../../address-book/api";
+import AddressLookup from "../../../components/address-lookup";
 
 export default function InviteSurveyUsers({ question }) {
     const [survey, setSurvey] = useState({});
+    const [addressbook, setAddressbook] = useState({});
+    const [overlayVisible, setOverlayVisibility] = useState(false);
     const [error, setError] = useState(false);
     const [formData, setFormData] = useState({ 
         participants: '',
@@ -24,6 +29,10 @@ export default function InviteSurveyUsers({ question }) {
         findSurvey(id).then((survey) => {
             setSurvey({...survey});
         }).catch(() => history.replace('/'));
+    }, [id, history]);
+
+    useEffect(() => {
+        getAddressbook().then(setAddressbook).catch(() => history.replace('/'));
     }, [id, history]);
 
     const handleInputChange = (event) => {
@@ -50,6 +59,21 @@ export default function InviteSurveyUsers({ question }) {
         sendEmails(survey.surveyId, formData).then(history.replace('/surveys'));
     };
 
+    const showAddressLookUp = (event) => {
+        event.preventDefault();
+        setOverlayVisibility(true);
+    };
+
+    const hideAddressLookUp = (event) => {
+        event.preventDefault();
+        setOverlayVisibility(false);
+    };
+
+    const addAddressesFromAddressbook = (addresses) => {
+        const participants = `${formData.participants}\n${addresses.join('\n')}`;
+        setFormData({...formData, participants});
+    };
+
     return (
         <div className="new-survey container">
             <div className="row">
@@ -58,7 +82,7 @@ export default function InviteSurveyUsers({ question }) {
                 </div>
                 <div className="col-md-8 col-lg-9 col-sm-12">
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <h1>{survey.name}</h1>
 
                             {survey.status === 'Draft' && 
@@ -70,7 +94,7 @@ export default function InviteSurveyUsers({ question }) {
                     { survey.accessType === 'open' && 
                     <>
                         <div className="row">
-                            <div className="col-md-12">
+                            <div className="col-12">
                                 <div><i>This is an open survey and can be accessed directly by opening <a href={surveyLink}>{surveyLink}</a> from anywhere as long as it has been activated.</i></div>
                             </div>
                         </div>
@@ -84,14 +108,14 @@ export default function InviteSurveyUsers({ question }) {
                     }
 
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <h3>Invite users to this survey using the form below</h3>
                         </div>
                     </div>
 
                     { error && 
                         <div className="row">
-                            <div className="col-md-12">
+                            <div className="col-12">
                                 <div className="alert alert-warning">
                                     Some of the email addresses seem to be incorrect. Please review the list before submitting the form. Please note that the email addresses must be full addresses (e.g. abc@test.com)
                                 </div>
@@ -100,10 +124,11 @@ export default function InviteSurveyUsers({ question }) {
                     }
 
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <p>Enter full email addresses of the participants in the box below. Please only enter<b> one email per line.</b></p>
+                            <a href="#" onClick={showAddressLookUp} title="Show Address Lookup"><i className="far fa-address-book"></i></a>
                         </div>
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <div className="form-group field">
                                 <textarea name="participants" className="form-field" value={formData.participants} rows={formData.participants.split('\n').length} onChange={handleInputChange} placeholder="Participant Email addresses" />
                                 <label className="form-label" htmlFor="participants">Participant Email addresses</label>
@@ -112,7 +137,7 @@ export default function InviteSurveyUsers({ question }) {
                     </div>
 
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <div className="form-group field">
                                 <input type="text" name="emailSubject" className="form-field" value={formData.emailSubject} onChange={handleInputChange} placeholder="Email subject" />
                                 <label className="form-label" htmlFor="emailSubject">Email subject</label>
@@ -121,7 +146,7 @@ export default function InviteSurveyUsers({ question }) {
                     </div>
 
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <div className="form-group field">
                                 <textarea name="emailBody" className="form-field" value={formData.emailBody} rows="10" onChange={handleInputChange} placeholder="Email body" />
                                 <label className="form-label" htmlFor="emailBody">Email body</label>
@@ -136,6 +161,12 @@ export default function InviteSurveyUsers({ question }) {
                             </div>
                         </div>
                     }
+
+                    {overlayVisible && 
+                        <AddressLookup addressbook={addressbook} close={hideAddressLookUp} onSubmit={addAddressesFromAddressbook} />
+                    }
+
+                    <div className={classNames('overlay', { 'visible': overlayVisible })}></div>
 
                 </div>
             </div>

@@ -3,7 +3,6 @@ const users = require('../../lib/users');
 const mail = require('../../lib/mail');
 
 const sinon = require('sinon');
-const ObjectID = require('mongodb').ObjectID;
 
 describe('user model tests', () => {
     let mockDB, mockMail;
@@ -24,23 +23,11 @@ describe('user model tests', () => {
         
         test('findByEmail', done => {
             const email = 'a@a.com';
-            const dummyUser = { _id: new ObjectID(), email};
+            const dummyUser = { email };
             mockDB.expects('findOne').once().resolves(dummyUser);
         
             users.findByEmail(email).then(found => {
                 expect(found.email).toBe(email);
-                expect(found).toBe(dummyUser);
-                done();
-            });
-        });
-        
-        test('findByID', done => {
-            const email = 'a@a.com';
-            const id = 'abc123456789';
-            const dummyUser = { _id: new ObjectID(id), email};
-            mockDB.expects('findOne').once().resolves(dummyUser);
-        
-            users.findById(id).then(found => {
                 expect(found).toBe(dummyUser);
                 done();
             });
@@ -51,7 +38,7 @@ describe('user model tests', () => {
         test('successful login', done => {
             const email = 'a@a.com';
             const password = 'testdummy01';
-            const dummyUser = { _id: new ObjectID(), email};
+            const dummyUser = { email };
             mockDB.expects('findOne').once().resolves(dummyUser);
 
             users.login(email, password).then(found => {
@@ -63,7 +50,7 @@ describe('user model tests', () => {
         test('failed login', done => {
             const email = 'a@a.com';
             const password = 'testdummy02';
-            const dummyUser = { _id: new ObjectID(), email};
+            const dummyUser = { email };
             mockDB.expects('findOne').once().resolves(null);
 
             users.login(email, password).then(found => {
@@ -76,7 +63,7 @@ describe('user model tests', () => {
     describe('forgot password', () => {
         test('resetPassword', done => {
             const email = 'a@test.com';
-            const dummyUser = { _id: new ObjectID(), email};
+            const dummyUser = { email };
             mockDB.expects('findOne').once().resolves(dummyUser);
             mockDB.expects('save').once().resolves({message: 'OK'});
             mockMail.expects('send').once().returns(null);
@@ -90,6 +77,31 @@ describe('user model tests', () => {
         test('resetPassword should fail without valid inputs', done => {
 
             users.resetPassword(null).catch((e) => {
+                expect(e).not.toBe(null);
+                done();
+            });
+        });
+    });
+
+    describe('change password', () => {
+        test('updatePassword', done => {
+            const email = 'a@test.com';
+            const password = 'newPass01';
+            const dummyUser = { email };
+            mockDB.expects('findOne').once().resolves(dummyUser);
+            mockDB.expects('save').once().resolves({message: 'OK'});
+            mockMail.expects('send').once().returns(null);
+
+            users.updatePassword(email, password).then((data) => {
+                expect(data).not.toBe(null);
+                done();
+            });
+        });
+
+        test('updatePassword should fail without valid inputs', done => {
+            const email = 'a@test.com';
+
+            users.updatePassword(email, null).catch((e) => {
                 expect(e).not.toBe(null);
                 done();
             });

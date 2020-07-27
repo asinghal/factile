@@ -56,7 +56,7 @@ const _find = (client, collectionName, query, sort, projection, limit) => {
     const collection = getCollection(client, collectionName);
 
     return new Promise(resolve => {
-        collection.find(query, { sort, projection, limit }).toArray((err, data) => {
+        collection.find(query, { sort, projection: { ...projection,  _id: 0 }, limit }).toArray((err, data) => {
             assert.equal(err, null);
 
             close(client);
@@ -76,7 +76,7 @@ const _findOne = (client, collectionName, query, projection) => {
     const collection = getCollection(client, collectionName);
 
     return new Promise(resolve => {
-        collection.findOne(query, { projection }, ((err, data) => {
+        collection.findOne(query, { projection: { ...projection,  _id: 0 } }, ((err, data) => {
             assert.equal(err, null);
 
             close(client);

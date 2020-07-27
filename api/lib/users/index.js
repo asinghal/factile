@@ -3,11 +3,7 @@ const db = require('../db');
 const mail = require('../mail');
 const { validateInputs } = require('../utils/validation');
 
-const ObjectID = require('mongodb').ObjectID;
-
 const findByEmail = (email) => db.findOne('users', { email });
-
-const findById = (id) => db.findOne('users', { _id: new ObjectID(id) });
 
 const encrypt = (password) => {
     const hash = crypto.createHash('sha512');
@@ -21,22 +17,25 @@ const randomPassword = () =>
 
 const login = (email, password) => db.findOne('users', { email, password: encrypt(password) }, { password: 0 });
 
-const resetPassword = (email) => {
-    return validateInputs([email], () => {
-        const newPass = randomPassword();
-        return findByEmail(email).then(user => db.save('users', { ...user, password: encrypt(newPass) }, 'email') ).then((data) => {
-            mail.send(email, null, null, null, 'Your temporary password', 'forgotPassword', { newPass });
+const _updatePassword = (email, password, sendMail) => {
+    return validateInputs([email, password], () => {
+        return findByEmail(email).then(user => db.save('users', { ...user, password: encrypt(password) }, 'email') ).then((data) => {
+            sendMail();
             return data;
         });
     });
 };
 
+const resetPassword = (email) => {
+    const newPass = randomPassword();
+    return _updatePassword(email, newPass, () => {
+        mail.send(email, null, null, null, 'Your temporary password', 'forgotPassword', { newPass });
+    });
+};
+
 const updatePassword = (email, password) => {
-    return validateInputs([email, password], () => {
-        return findByEmail(email).then(user => db.save('users', { ...user, password: encrypt(password) }, 'email') ).then((data) => {
-            mail.send(email, null, null, null, 'Your password has been changed', 'changePassword', {});
-            return data;
-        });
+    return _updatePassword(email, password, () => {
+        mail.send(email, null, null, null, 'Your password has been changed', 'changePassword', {});
     });
 };
 
@@ -49,4 +48,4 @@ const create = (user) => {
     });
 };
 
-module.exports = { findByEmail, findById, login, resetPassword, updatePassword, create, randomPassword };
+module.exports = { findByEmail, login, resetPassword, updatePassword, create, randomPassword };

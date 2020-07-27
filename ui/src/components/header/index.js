@@ -57,6 +57,11 @@ export default function Header({userLoggedIn, setUserLoggedIn}) {
                                         </SecureAccess>
                                         <SecureAccess>
                                         <li>
+                                            <Link to="/addressbook">Address Book</Link>
+                                        </li>
+                                        </SecureAccess>
+                                        <SecureAccess>
+                                        <li>
                                             <Link to="/user/preferences">Settings</Link>
                                         </li>
                                         </SecureAccess>

@@ -1,0 +1,14 @@
+.address-book .form-field {
+    border-color: #dddddd;
+}
+
+.address-book .address-group {
+    border-bottom: 1px solid;
+    padding: 2em 0;
+    margin: 1em 0;
+}
+
+.address-book h2 {
+    border-bottom: 1px dotted;
+    margin: 1.5em 0;
+}

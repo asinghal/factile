@@ -26,6 +26,7 @@ import Settings from "./pages/settings/index.js";
 import OAuthInterstitial from "./pages/oauth-interstitial/index.js";
 import SurveyAnalytics from "./pages/survey-responses/analytics/index.js";
 import SurveySettings from "./pages/survey-editor/survey-settings/index.js";
+import Addressbook from "./pages/address-book/index.js";
 
 export default function Routes() {
     return (
@@ -41,6 +42,11 @@ export default function Routes() {
             <Route exact path="/">
                 <EditorBase>
                     <Home />
+                </EditorBase>
+            </Route>
+            <Route exact path="/addressbook">
+                <EditorBase>
+                    <Addressbook />
                 </EditorBase>
             </Route>
             <Route exact path="/surveys">

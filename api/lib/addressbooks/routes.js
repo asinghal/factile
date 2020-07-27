@@ -47,7 +47,7 @@ router.get('/groups', (req, res) => AdressBooks.findGroupsByOwner(req.user.email
 router.get('/groups/:name', (req, res) => AdressBooks.findAddressesByOwnerAndGroup(req.user.email, req.params.name).then((data) => res.send(data)));
 
 /**
- * @api {post} /api/addressbooks/ Save Addressbook
+ * @api {post} /api/addressbooks Save Addressbook
  * @apiDescription Creates or updates an addressbook for the logged in user
  * @apiName Save Addressbook
  * @apiGroup Addressbook

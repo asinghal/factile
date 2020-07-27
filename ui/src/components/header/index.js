@@ -28,7 +28,7 @@ export default function Header({userLoggedIn, setUserLoggedIn}) {
     };
 
     return (
-        <header>
+        <header data-testid="header">
         <div className="header">
             <div id="sticky-header" className="main-header-area">
                 <div className="container">

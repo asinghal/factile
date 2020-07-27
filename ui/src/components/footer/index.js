@@ -5,7 +5,7 @@ import './footer.css';
 
 export default function Footer() {
     return (
-        <footer className="footer">
+        <footer className="footer" data-testid="footer">
         <div className="container">
             <div className="row">
                 <div className="col-md-4">

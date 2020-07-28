@@ -2,6 +2,7 @@ version: 2.1
 orbs:
   node: circleci/node@1.1.6
   slack: circleci/slack@3.4.2
+  cypress: cypress-io/cypress@1
 jobs:
   build-and-test-ui:
     executor:
@@ -30,3 +31,4 @@ workflows:
       jobs:
         - build-and-test-ui
         - build-and-test-api
+        - cypress/run

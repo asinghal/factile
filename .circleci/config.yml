@@ -34,3 +34,4 @@ workflows:
         - cypress/run:
             working_directory: ui
             command: npm run-script cy:ci
+            no-workspace: true

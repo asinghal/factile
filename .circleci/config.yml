@@ -33,4 +33,4 @@ workflows:
         - build-and-test-api
         - cypress/run:
             working_directory: ui
-            start: start-server-and-test start http://localhost:3000 cy:run
+            start: ./node_modules/.bin/start-server-and-test start http://localhost:3000 cy:run

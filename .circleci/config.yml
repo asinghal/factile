@@ -26,11 +26,23 @@ jobs:
             - run: cd api && npm test
       - slack/status:
           fail_only: true
+  integration-tests:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: cd ui && npm install
+            - run: cd ui && npm run-script cy:ci
+      - slack/status:
+          fail_only: true
 workflows:
     build-and-test:
       jobs:
         - build-and-test-ui
         - build-and-test-api
+        - integration-tests
         - cypress/run:
             working_directory: ui
             start: npm run-script cy:ci

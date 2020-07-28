@@ -12,13 +12,13 @@ export default function Home({setUserLoggedIn}) {
             <div className="container">
                 <div className="row align-items-center">
                     <div className="col-xl-7 col-md-6">
-                        <div className="slider_text ">
+                        <div className="slider_text" data-testid="hero-box">
                             <h3>Factile</h3>
                             <p>Understand your audience with free surveys!</p>
                         </div>
                     </div>
                     <div className="col-xl-5 col-md-6">
-                        <div>
+                        <div data-testid="login-form">
                             { showLoginForm && 
                                 <LoginForm setUserLoggedIn={setUserLoggedIn} setShowLoginForm={setShowLoginForm} />
                             }
@@ -34,7 +34,7 @@ export default function Home({setUserLoggedIn}) {
             <section className="features">
                 <div className="container">
                     <div className="row">
-                        <div className="col-md-8">
+                        <div className="col-md-8" data-testid="features-1">
                             <h3><i className="fas fa-chevron-circle-right blue"></i>&nbsp;Free Online Surveys</h3>
                             <p>Design and share unlimited surveys at zero cost (100% free). This free online survey tool provides many advanced features as flow logic, offline survey capability, mobile/ iPad support - features that other tools would charge for! </p>
                         </div>

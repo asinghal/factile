@@ -69,7 +69,7 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
                 {!!errorMessage &&
                     <div className="row">
                         <div className="col-md-12">
-                            <div className="alert alert-danger">{errorMessage}</div>
+                            <div className="alert alert-danger" data-testid="login-error">{errorMessage}</div>
                         </div>
                     </div>
                 }
@@ -85,7 +85,7 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        <button onClick={initiateLogin}>Login</button>
+                        <button onClick={initiateLogin} data-testid="login-btn">Login</button>
                         <span className="oauth-button">
                             <i onClick={initiateGoogleAuth} className="fab fa-google"></i>
                         </span>
@@ -101,7 +101,7 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
                 </div>
                 <div className="row">
                     <div className="col-md-12">
-                        Forgot password? <a href="/" onClick={resetPassword}>Click here to reset</a>
+                        Forgot password? <a href="/" onClick={resetPassword} data-testid="reset-password">Click here to reset</a>
                     </div>
                 </div>
             </form>

@@ -11,3 +11,4 @@ ec2
 apidoc
 apidoc.tar.gz
 api/apidoc-config/dist/index.html
+ui/cypress/videos/factile-ui/*.mp4

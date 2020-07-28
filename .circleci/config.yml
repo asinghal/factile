@@ -30,6 +30,7 @@ jobs:
     executor:
       name: node/default
     steps:
+      - checkout
       - cypress/run:
           working_directory: ui
       - slack/status:

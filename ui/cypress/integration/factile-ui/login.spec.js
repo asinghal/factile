@@ -13,7 +13,7 @@ describe('Login Test', () => {
       cy.route({
         url: '/api/surveys',
         method: 'GET',
-        response: [{surveyId: '1234', name: 'Test', status: 'Draft', history: { created_at: new Date()}}]
+        response: [{surveyId: '1234', name: 'Test', status: 'Draft', history: { created_at: new Date(), created_by: 'a@test.com' }}]
       }).as('mysurveys');
 
       cy.visit('/');

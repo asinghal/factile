@@ -65,4 +65,4 @@ describe('Login Test', () => {
       cy.get('[data-testid="login-btn"]').click();
       cy.get('[data-testid="login-error"]').should('have.text', 'Please enter a valid email address and password');
     });
-  })
+  });

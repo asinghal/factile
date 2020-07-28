@@ -3,6 +3,17 @@ orbs:
   node: circleci/node@1.1.6
   slack: circleci/slack@3.4.2
 jobs:
+  build-and-test-ui:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - node/with-cache:
+          steps:
+            - run: cd ui && npm install
+            - run: cd ui && CI=true npm test
+      - slack/status:
+          fail_only: true
   build-and-test-api:
     executor:
       name: node/default
@@ -17,4 +28,5 @@ jobs:
 workflows:
     build-and-test:
       jobs:
+        - build-and-test-ui
         - build-and-test-api

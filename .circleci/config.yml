@@ -35,5 +35,3 @@ workflows:
             working_directory: ui
             start: npm run-script cy:ci
             no-workspace: true
-        - slack/status:
-            fail_only: true

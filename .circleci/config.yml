@@ -33,4 +33,4 @@ workflows:
         - build-and-test-api
         - cypress/run:
             working_directory: ui
-            start: npm run-script cy:ci
+            start: npm start & npx wait-on http://localhost:3000

@@ -18,7 +18,7 @@
     "react-dom": "^16.13.1",
     "react-gtm-module": "^2.0.10",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.1",
+    "react-scripts": "3.4.0",
     "react-wordcloud": "^1.2.3"
   },
   "scripts": {

@@ -26,11 +26,12 @@ jobs:
             - run: cd api && npm test
       - slack/status:
           fail_only: true
+  cypress-integration:
+    steps:
+      - run: npm run-script cy:ci
 workflows:
     build-and-test:
       jobs:
         - build-and-test-ui
         - build-and-test-api
-        - cypress/run:
-            working_directory: ui
-            start: npm start & npx wait-on http://localhost:3000
+        - cypress-integration

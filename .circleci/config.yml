@@ -26,20 +26,14 @@ jobs:
             - run: cd api && npm test
       - slack/status:
           fail_only: true
-  e2e-test-ui:
-    executor:
-      name: node/default
-    steps:
-      - checkout
-      - cypress/run:
-          working_directory: ui
-          start: npm run-script cy:ci
-          no-workspace: true
-      - slack/status:
-          fail_only: true
 workflows:
     build-and-test:
       jobs:
         - build-and-test-ui
         - build-and-test-api
-        - e2e-test-ui
+        - cypress/run:
+            working_directory: ui
+            start: npm run-script cy:ci
+            no-workspace: true
+        - slack/status:
+            fail_only: true

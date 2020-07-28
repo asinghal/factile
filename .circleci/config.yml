@@ -31,7 +31,7 @@ jobs:
       name: node/default
     steps:
       - checkout
-      - cypress:install:
+      - cypress/install:
           working_directory: ui
       - cypress/run:
           working_directory: ui

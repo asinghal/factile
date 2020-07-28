@@ -33,4 +33,4 @@ workflows:
         - build-and-test-api
         - cypress/run:
             working_directory: ui
-            start: npm cy:ci
+            start: npm run-script cy:ci

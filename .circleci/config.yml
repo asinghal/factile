@@ -31,10 +31,11 @@ jobs:
       name: node/default
     steps:
       - checkout
-      - node/with-cache:
-          steps:
-            - run: cd ui && npm install
-            - run: cd ui && npm run-script cy:ci
+      - cypress:install:
+          working_directory: ui
+      - cypress/run:
+          working_directory: ui
+          start: npm run-script cy:ci
       - slack/status:
           fail_only: true
 workflows:
@@ -43,6 +44,3 @@ workflows:
         - build-and-test-ui
         - build-and-test-api
         - integration-tests
-        - cypress/run:
-            working_directory: ui
-            start: npm run-script cy:ci

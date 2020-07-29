@@ -83,7 +83,7 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
     };
 
     return (
-        <div className={'question-block ' + (question.qType === 'page' ? 'page-break': '')}>
+        <div className={'question-block ' + (question.qType === 'page' ? 'page-break': '')} data-testid={"question-block-" + questionId}>
             {answerPipingData.display &&
                 <div className="answer-piping form-group" onMouseOut={hidePipingOptions} onBlur={hidePipingOptions}>
                     <select className="form-field" onChange={addAnswerPipingToQuestion}>

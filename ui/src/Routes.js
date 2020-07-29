@@ -45,63 +45,63 @@ export default function Routes() {
                 </EditorBase>
             </Route>
             <Route exact path="/addressbook">
-                <EditorBase>
+                <EditorBase secure="true">
                     <Addressbook />
                 </EditorBase>
             </Route>
             <Route exact path="/surveys">
-                <EditorBase>
+                <EditorBase secure="true">
                     <ListSurveys />
                 </EditorBase>
             </Route>
             <Route exact path="/surveys/new">
-                <EditorBase>
+                <EditorBase secure="true">
                     <NewSurvey />
                 </EditorBase>
             </Route>
             <Route exact path="/surveys/:id/edit">
-                <EditorBase>
+                <EditorBase secure="true">
                     <NewSurvey />
                 </EditorBase>
             </Route>
             <Route exact path="/surveys/:id/questions">
-                <EditorBase>
+                <EditorBase secure="true">
                     <Questionnaire />
                 </EditorBase>
             </Route>
             <Route exact path="/surveys/:id/invite">
-                <EditorBase>
+                <EditorBase secure="true">
                     <InviteSurveyUsers />
                 </EditorBase>
             </Route>
             <Route exact path="/surveys/:id/responses">
-                <EditorBase>
+                <EditorBase secure="true">
                     <SurveyResponses />
                 </EditorBase>
             </Route>
             <Route exact path="/surveys/:id/analytics">
-                <EditorBase>
+                <EditorBase secure="true">
                     <SurveyAnalytics />
                 </EditorBase>
             </Route>
             <Route exact path="/surveys/:id/participants">
-                <EditorBase>
+                <EditorBase secure="true">
                     <Participants />
                 </EditorBase>
             </Route>
             <Route exact path="/surveys/:id/collaborators">
-                <EditorBase>
+                <EditorBase secure="true">
                     <SurveyCollaborators />
                 </EditorBase>
             </Route>
             <Route exact path="/surveys/:id/settings">
-                <EditorBase>
+                <EditorBase secure="true">
                     <SurveySettings />
                 </EditorBase>
             </Route>
 
             <Route exact path="/user/preferences">
-                <EditorBase>
+                <EditorBase secure="true">
                     <Settings />
                 </EditorBase>
             </Route>
@@ -112,7 +112,7 @@ export default function Routes() {
 
             {/* Respondent view */}
             <Route exact path="/surveys/:id/preview">
-                <RespondentBase>
+                <RespondentBase secure="true">
                     <PreviewSurvey />
                 </RespondentBase>
             </Route>

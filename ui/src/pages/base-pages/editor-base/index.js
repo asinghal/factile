@@ -17,6 +17,11 @@ export default function EditorBase(props) {
       }
     }, [props.secure, userLoggedIn]);
 
+    if (props.secure === 'true' && !userLoggedIn && !isLoggedIn()) {
+      // code repetition and over optimisation? deliberate. no point rendering if we are anyways redirecting
+      return null;
+    }
+
     return (
       <>
         <Header userLoggedIn={userLoggedIn} setUserLoggedIn={setUserLoggedIn} />

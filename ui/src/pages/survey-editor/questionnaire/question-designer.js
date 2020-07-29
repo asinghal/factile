@@ -155,7 +155,7 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
                 <div className="row">
                     <div className="col-md-12">
                         <div className="choices">
-                            <input type="checkbox" id={questionId + "-mandatory"} name="mandatory" value="true" defaultChecked={questionData.mandatory} onChange={handleChangeCheckbox} /><label htmlFor={questionId + "-mandatory"}>Mandatory?</label>
+                            <input type="checkbox" id={questionId + "-mandatory"} name="mandatory" value="true" defaultChecked={questionData.mandatory} onChange={handleChangeCheckbox} /><label id={"label-" + questionId + "-mandatory"} htmlFor={questionId + "-mandatory"}>Mandatory?</label>
                         </div>
                     </div>
                 </div>
@@ -165,7 +165,7 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
                 <div className="row">
                     <div className="col-md-12">
                         <div className="choices">
-                            <input type="checkbox" id={questionId + "-hasOther"} name="hasOther" value="true" defaultChecked={questionData.hasOther} onChange={handleChangeCheckbox} /><label htmlFor={questionId + "-hasOther"}>Add an "other" option and text field for user to answer?</label>
+                            <input type="checkbox" id={questionId + "-hasOther"} name="hasOther" value="true" defaultChecked={questionData.hasOther} onChange={handleChangeCheckbox} /><label id={"label-" + questionId + "-hasOther"} htmlFor={questionId + "-hasOther"}>Add an "other" option and text field for user to answer?</label>
                         </div>
                     </div>
                 </div>

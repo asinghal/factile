@@ -67,7 +67,14 @@ describe('New Survey Test', () => {
                 response: {surveyId: 'abcd-xyz-123456', name: 'Test survey', status: 'Draft', history: { created_at: new Date(), created_by: 'a@test.com' }}
             }).as('thisSurvey');
 
+            cy.route({
+                url: '/api/surveys/abcd-xyz-123456',
+                method: 'PUT',
+                response: {surveyId: 'abcd-xyz-123456' }
+            }).as('updatethisSurvey');
+
             cy.visit('/surveys/abcd-xyz-123456/questions');
+            cy.wait('@thisSurvey');
             cy.get('[data-testid="survey-title"]').should('have.text', 'Test survey');
 
             // click the add questions button
@@ -76,7 +83,12 @@ describe('New Survey Test', () => {
             cy.get('[data-testid="add-questions-0-option-radio"]').click();
 
             cy.get('[data-testid="question-block-q1"] h4').should('have.text', 'Single Choice');
-        });
+            cy.get('[data-testid="question-block-q1"] input[name="text"]').type('Howzat?', { delay: 100 });
+            cy.get('[data-testid="question-block-q1"] textarea[name="options"]').type('Out\nNot Out\nRefer', { delay: 100 });
+            cy.get('#label-q1-mandatory').click();
+            cy.get('[data-testid="btn-save-details-0"]').click();
+            cy.wait('@updatethisSurvey');
+         });
     });
 
 });

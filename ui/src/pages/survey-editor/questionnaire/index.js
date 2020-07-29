@@ -52,7 +52,7 @@ export default function Questionnaire() {
                     <DropdownMenu buttonText="Add a question" options={questionTypes} onSelection={(value) => onSelection(value)} testId={"add-questions-" + index} />
                 </div>
                 <div className="col-md-6 col-lg-4">
-                    <button className="base-btn submit-btn" onClick={SaveDetails} data-testid={"save-details-" + index} >Save Details</button>
+                    <button className="base-btn submit-btn" onClick={SaveDetails} data-testid={"btn-save-details-" + index} >Save Details</button>
                 </div>
             </div>
         );

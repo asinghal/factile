@@ -47,26 +47,26 @@ export default function Header({userLoggedIn, setUserLoggedIn}) {
                                     <ul id="navigation">
                                         <SecureAccess>
                                             <li>
-                                                <Link to="/surveys">My Surveys</Link>
+                                                <Link to="/surveys" data-testid="my-surveys-nav-link">My Surveys</Link>
                                             </li>
                                         </SecureAccess>
                                         <SecureAccess>
                                             <li>
-                                                <Link to="/surveys/new">New Survey</Link>
+                                                <Link to="/surveys/new" data-testid="new-survey-nav-link">New Survey</Link>
                                             </li>
                                         </SecureAccess>
                                         <SecureAccess>
                                         <li>
-                                            <Link to="/addressbook">Address Book</Link>
+                                            <Link to="/addressbook" data-testid="address-book-nav-link">Address Book</Link>
                                         </li>
                                         </SecureAccess>
                                         <SecureAccess>
                                         <li>
-                                            <Link to="/user/preferences">Settings</Link>
+                                            <Link to="/user/preferences" data-testid="settings-nav-link">Settings</Link>
                                         </li>
                                         </SecureAccess>
                                         <li>
-                                            <Link to="/static/help">Help</Link>
+                                            <Link to="/static/help" data-testid="help-nav-link">Help</Link>
                                         </li>
                                     </ul>
                                 </nav>

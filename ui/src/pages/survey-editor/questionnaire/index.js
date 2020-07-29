@@ -65,7 +65,7 @@ export default function Questionnaire() {
                     <SurveyManagementMenu surveyId={survey.surveyId} />
                 </div>
                 <div className="col-md-8 col-lg-9 col-sm-12">
-                    <h2>{survey.name}</h2>
+                    <h2 data-testid="survey-title">{survey.name}</h2>
 
                     <div className={classNames('overlay', { 'visible': overlayVisible })}></div>
 

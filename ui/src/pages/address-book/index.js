@@ -73,7 +73,7 @@ export default function Addressbook() {
     };
 
     return (
-        <div className="container address-book">
+        <div className="container address-book" id="top">
             <div className="row">
                 <div className="col-12">
                     <h1>Address Book</h1>
@@ -126,7 +126,7 @@ export default function Addressbook() {
                     <div className="col-4"><input type="text" name="name" value={contact.name} placeholder="Name" className="form-field" onChange={(event) => updateContact(event, selectedGroup.name, i)} /></div>
                     <div className="col-7"><input type="text" name="email" value={contact.email} placeholder="E-mail address" className="form-field" onChange={(event) => updateContact(event, selectedGroup.name, i)} /></div>
                     <div className="col-1">
-                        <a href="#" onClick={(event) => deleteContact(event, selectedGroup.name, i)} title="Delete"><i className="fas fa-times"></i></a>
+                        <a href="#top" onClick={(event) => deleteContact(event, selectedGroup.name, i)} title="Delete"><i className="fas fa-times"></i></a>
                     </div>
                 </div>
                 )}

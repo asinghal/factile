@@ -101,6 +101,7 @@ export default function NewSurvey() {
         } else {
             setSurvey(DEFAULT_SURVEY);
         }
+    // eslint-disable-next-line
     }, [id, history]);
 
     return (

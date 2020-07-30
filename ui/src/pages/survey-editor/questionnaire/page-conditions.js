@@ -47,6 +47,7 @@ export default function PageConditions({ question, allQuestions }) {
                 valueText: (defaultSelectedOptionIndex === -1) ? question.conditions[0].value : ''
             });
         }
+    // eslint-disable-next-line
     }, [ question.questionId ]);
 
     const addConditionWhenComplete = (updatedConditionMeta) => {

@@ -15,7 +15,7 @@ export default function EditorBase(props) {
       if (props.secure === 'true' && !userLoggedIn && !isLoggedIn()) {
         return history.replace('/');
       }
-    }, [props.secure, userLoggedIn]);
+    }, [props.secure, userLoggedIn, history]);
 
     if (props.secure === 'true' && !userLoggedIn && !isLoggedIn()) {
       // code repetition and over optimisation? deliberate. no point rendering if we are anyways redirecting

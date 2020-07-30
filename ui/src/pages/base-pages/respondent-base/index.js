@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { isLoggedIn } from '../../../authentication.js';
 import RespondentFooter from '../../../components/respondent-footer';
-import { useHistory } from 'react-router-dom';
 
 export default function RespondentBase(props) {  
 

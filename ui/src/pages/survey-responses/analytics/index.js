@@ -20,6 +20,7 @@ export default function SurveyAnalytics() {
             setQuestions(survey.questions.filter(q => !!q.options));
             addConstraint({ question: '', value: '' });
         }).catch(() => history.replace('/'));
+    // eslint-disable-next-line
     }, [id, history]);
 
     const addConstraint = (constraint) => {

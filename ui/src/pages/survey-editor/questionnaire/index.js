@@ -45,14 +45,14 @@ export default function Questionnaire() {
         }).catch(() => history.replace('/'));
     }, [id, history]);
     
-    const KeyActions = () => {
+    const KeyActions = ({ index }) => {
         return (
             <div className="row">
                 <div className="col-md-6 col-lg-4">
-                    <DropdownMenu buttonText="Add a question" options={questionTypes} onSelection={(value) => onSelection(value)} />
+                    <DropdownMenu buttonText="Add a question" options={questionTypes} onSelection={(value) => onSelection(value)} testId={"add-questions-" + index} />
                 </div>
                 <div className="col-md-6 col-lg-4">
-                    <button className="base-btn submit-btn" onClick={SaveDetails}>Save Details</button>
+                    <button className="base-btn submit-btn" onClick={SaveDetails} data-testid={"btn-save-details-" + index} >Save Details</button>
                 </div>
             </div>
         );
@@ -65,7 +65,7 @@ export default function Questionnaire() {
                     <SurveyManagementMenu surveyId={survey.surveyId} />
                 </div>
                 <div className="col-md-8 col-lg-9 col-sm-12">
-                    <h2>{survey.name}</h2>
+                    <h2 data-testid="survey-title">{survey.name}</h2>
 
                     <div className={classNames('overlay', { 'visible': overlayVisible })}></div>
 
@@ -73,14 +73,14 @@ export default function Questionnaire() {
                         <div className="alert alert-warning">This survey must be activated on the Invitations page before it can be accessed by respondents</div>
                     }
 
-                    <KeyActions />
+                    <KeyActions index="0" />
                     <div>
                     {survey.questions && survey.questions.map((question, index) => 
                         <QuestionDesigner key={index} questionId={question.questionId || ('q' + (index + 1))} question={question} allQuestions={survey.questions} language={survey.language || '1'} deleteQuestion={() => deleteQuestion(index)} />
                     )}
                     </div>
                     {survey.questions && !!survey.questions.length &&
-                        <KeyActions />
+                        <KeyActions index="1" />
                     }
                 </div>
             </div>

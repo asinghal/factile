@@ -65,6 +65,7 @@ export default function SurveyView({ survey, addResponse, onPageSubmit, answersA
         } else {
             setPageNum(0);
         }
+    // eslint-disable-next-line
     }, [survey.surveyId]);
 
     return (

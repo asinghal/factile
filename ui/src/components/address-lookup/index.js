@@ -27,7 +27,8 @@ export default function AddressLookup({ addressbook, close, onSubmit }) {
 
     const UseAddresses = (event) => {
         event.preventDefault();
-        onSubmit([... new Set(selectedAddresses.map(x => x.email))]);
+        const uniqueAddresses = new Set(selectedAddresses.map(x => x.email));
+        onSubmit([...uniqueAddresses]);
         close(event);
     };
 
@@ -40,14 +41,15 @@ export default function AddressLookup({ addressbook, close, onSubmit }) {
             return;
         }
         setSelectedAddresses( selectedAddresses.filter( x => filteredAddressBook.groups.map(g => g.addresses.map(a => ({group: g.name, email: a.email}))).find(g => g.find(a => a.group === x.group && a.email === x.email) )) )
+        // eslint-disable-next-line
     }, [filteredAddressBook]);
 
     return (
-        <div className="address-lookup">
+        <div className="address-lookup" id="popup-top">
             <div className="row popup-header">
                 <div className="col-11"><h1>Address Book</h1></div>
                 <div className="col-1">
-                    <a href="#" onClick={close} title="Close Address Lookup"><i className="fas fa-times"></i></a>
+                    <a href="#popup-top" onClick={close} title="Close Address Lookup"><i className="fas fa-times"></i></a>
                 </div>
             </div>
             <div className="row content">

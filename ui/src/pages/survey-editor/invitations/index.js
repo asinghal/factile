@@ -75,7 +75,7 @@ export default function InviteSurveyUsers({ question }) {
     };
 
     return (
-        <div className="new-survey container">
+        <div className="new-survey container" id="top">
             <div className="row">
                 <div className="col-md-4 col-lg-3 col-sm-12">
                     <SurveyManagementMenu surveyId={survey.surveyId} />
@@ -126,7 +126,7 @@ export default function InviteSurveyUsers({ question }) {
                     <div className="row">
                         <div className="col-12">
                             <p>Enter full email addresses of the participants in the box below. Please only enter<b> one email per line.</b></p>
-                            <a href="#" onClick={showAddressLookUp} title="Show Address Lookup"><i className="far fa-address-book"></i></a>
+                            <a href="#top" onClick={showAddressLookUp} title="Show Address Lookup"><i className="far fa-address-book"></i></a>
                         </div>
                         <div className="col-12">
                             <div className="form-group field">

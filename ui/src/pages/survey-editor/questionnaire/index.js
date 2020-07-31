@@ -11,6 +11,7 @@ import { questionTypes } from './question-types.js';
 
 import '../../../components/forms/buttons.css';
 import './questionnaire.css';
+import SurveyStepsNav from "../../../components/surveys/survey-steps-nav";
 
 export default function Questionnaire() {
     const [survey, setSurvey] = useState({});
@@ -65,12 +66,25 @@ export default function Questionnaire() {
                     <SurveyManagementMenu surveyId={survey.surveyId} />
                 </div>
                 <div className="col-md-8 col-lg-9 col-sm-12">
-                    <h2 data-testid="survey-title">{survey.name}</h2>
+                    <div className="row">
+                        <div className="col-12">
+                            <SurveyStepsNav currentStepNum="2" />
+                        </div>
+                    </div>
 
                     <div className={classNames('overlay', { 'visible': overlayVisible })}></div>
 
+                    <div className="row">
+                        <div className="col-12">
+                            <h2 data-testid="survey-title">{survey.name}</h2>
+                        </div>
+                    </div>
                     {survey.status === 'Draft' && 
-                        <div className="alert alert-warning">This survey must be activated on the Invitations page before it can be accessed by respondents</div>
+                        <div className="row">
+                            <div className="col-12">
+                                    <div className="alert alert-warning">This survey must be activated on the Invitations page before it can be accessed by respondents</div>
+                            </div>
+                        </div>
                     }
 
                     <KeyActions index="0" />

@@ -8,6 +8,7 @@ import './new-survey.css';
 import { save, update, findSurvey, upload } from '../api.js';
 import { languages } from './languages.js';
 import SurveyManagementMenu from "../../../components/surveys/survey-management-menu";
+import SurveyStepsNav from "../../../components/surveys/survey-steps-nav";
 
 const DEFAULT_SURVEY = { language: '1', layout: {}, thank_you_text: 'Thank you for participating.' };
 
@@ -111,15 +112,29 @@ export default function NewSurvey() {
                     <SurveyManagementMenu surveyId={survey.surveyId} />
                 </div>
                 <div className="col-md-8 col-lg-9 col-sm-12">
-                    {!id && 
-                        <h2>New Survey</h2>
-                    }
-                    {id && 
-                        <h2>Edit Survey</h2>
-                    }
+                    <div className="row">
+                        <div className="col-12">
+                            <SurveyStepsNav currentStepNum="1" />
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-12">
+                            {!id && 
+                                <h2>New Survey</h2>
+                            }
+                            {id && 
+                                <h2>Edit Survey</h2>
+                            }
+                        </div>
+                    </div>
 
                     {!!errorMessage &&
-                        <div className="alert alert-danger" id="errorMessage">{errorMessage}</div>
+                        <div className="row">
+                            <div className="col-12">
+                                <div className="alert alert-danger" id="errorMessage">{errorMessage}</div>
+                            </div>
+                        </div>
                     }
 
                     <div className="row">

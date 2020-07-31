@@ -43,6 +43,10 @@
     width: 50%;
 }
 
+.answer-piping .form-field {
+    color: #fff;
+}
+
 .answer-piping-icon {
     cursor: pointer;
 }

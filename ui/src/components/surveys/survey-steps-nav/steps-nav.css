@@ -1,0 +1,41 @@
+.steps-nav ul {
+    list-style-type: none;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin: 0 0 4em 0;
+    padding: 0;
+}
+
+.steps-nav ul li {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.steps-nav .step-num {
+    padding: 10px 15px;
+    font-size: 25px;
+    border-radius: 30px;
+    color: #888888;
+    background-color: #C7C7C7;
+    height: 50px;
+    width: 50px;
+}
+
+.steps-nav .step-num.active {
+    background-color: #4CA9FD;
+    color: #ffffff;
+}
+
+.steps-nav .step-details {
+    font-size: 0.8em;
+}
+
+.steps-nav .connector {
+    width: 100%;
+    height: 2px;
+    margin-top: 25px;
+    background-color: #C7C7C7;
+}

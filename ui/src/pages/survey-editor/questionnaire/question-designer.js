@@ -125,8 +125,8 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
                 <div className="row">
                     <div className="col-md-11">
                         <div className="form-group field">
-                            <textarea name="options" className="form-field" value={questionData.options} rows={questionData.options.split('\n').length} onChange={handleInputChange} placeholder="Options" />
-                            <label className="form-label" htmlFor="options">Options</label>
+                            <textarea name="options" className="form-field" value={questionData.options} rows={questionData.options.split('\n').length} onChange={handleInputChange} placeholder="Options (one per line)" />
+                            <label className="form-label" htmlFor="options">Options (one per line)</label>
                         </div>
                     </div>
                     <div className="col-md-1">
@@ -140,8 +140,8 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
             <div className="row">
                 <div className="col-md-12">
                     <div className="form-group field">
-                        <textarea name="dimensions" className="form-field" value={questionData.dimensions} rows={questionData.dimensions.split('\n').length} onChange={handleInputChange} placeholder="Dimensions/ sub questions" />
-                        <label className="form-label" htmlFor="dimensions">Dimensions/ sub questions</label>
+                        <textarea name="dimensions" className="form-field" value={questionData.dimensions} rows={questionData.dimensions.split('\n').length} onChange={handleInputChange} placeholder="Dimensions/ sub questions (one per line)" />
+                        <label className="form-label" htmlFor="dimensions">Dimensions/ sub questions (one per line)</label>
                     </div>
                 </div>
                 <div className="col-md-1">

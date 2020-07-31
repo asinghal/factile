@@ -8,6 +8,7 @@ import '../../../components/forms/inputs.css';
 import { isValidEmail } from "../../../utils";
 import { getAddressbook } from "../../address-book/api";
 import AddressLookup from "../../../components/address-lookup";
+import SurveyStepsNav from "../../../components/surveys/survey-steps-nav";
 
 export default function InviteSurveyUsers({ question }) {
     const [survey, setSurvey] = useState({});
@@ -81,6 +82,12 @@ export default function InviteSurveyUsers({ question }) {
                     <SurveyManagementMenu surveyId={survey.surveyId} />
                 </div>
                 <div className="col-md-8 col-lg-9 col-sm-12">
+                    <div className="row">
+                        <div className="col-12">
+                            <SurveyStepsNav currentStepNum="3" />
+                        </div>
+                    </div>
+
                     <div className="row">
                         <div className="col-12">
                             <h1>{survey.name}</h1>

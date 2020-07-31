@@ -24,3 +24,15 @@
     padding: 1em;
     border-bottom: 1px dotted #AAAAAA;
 }
+
+.help .screenshot img {
+    max-width: 100%;
+    max-height: 500px;
+}
+
+.help .screenshot .screenshot-title {
+    font-weight: 600;
+    margin: 1em 0;
+    border-bottom: 1px solid;
+    color: #4CA9FD;
+}

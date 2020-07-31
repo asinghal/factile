@@ -138,7 +138,7 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
             }
             {qTypeMetaInfo.dimensions &&
             <div className="row">
-                <div className="col-md-12">
+                <div className="col-12">
                     <div className="form-group field">
                         <textarea name="dimensions" className="form-field" value={questionData.dimensions} rows={questionData.dimensions.split('\n').length} onChange={handleInputChange} placeholder="Dimensions/ sub questions (one per line)" />
                         <label className="form-label" htmlFor="dimensions">Dimensions/ sub questions (one per line)</label>
@@ -154,7 +154,7 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
 
             {question.qType !== 'page' && question.qType !== 'plaintext' &&
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-12">
                         <div className="choices">
                             <input type="checkbox" id={questionId + "-mandatory"} name="mandatory" value="true" defaultChecked={questionData.mandatory} onChange={handleChangeCheckbox} /><label id={"label-" + questionId + "-mandatory"} htmlFor={questionId + "-mandatory"}>Mandatory?</label>
                         </div>
@@ -164,7 +164,7 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
             {qTypeMetaInfo.options &&
             <>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-12">
                         <div className="choices">
                             <input type="checkbox" id={questionId + "-hasOther"} name="hasOther" value="true" defaultChecked={questionData.hasOther} onChange={handleChangeCheckbox} /><label id={"label-" + questionId + "-hasOther"} htmlFor={questionId + "-hasOther"}>Add an "other" option and text field for user to answer?</label>
                         </div>
@@ -172,7 +172,7 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
                 </div>
                 {questionData.hasOther &&
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <div className="form-group field">
                                 <input type="text" name="otherBox" className="form-field" value={questionData.otherBox || ''} onChange={handleInputChange} placeholder="'Other' box label" />
                                 <label className="form-label" htmlFor="otherBox">'Other' box label</label>

@@ -37,7 +37,7 @@ export default function SurveySettings() {
                 </div>
                 <div className="col-md-8 col-lg-9 col-sm-12">
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <h1>{survey.name}: Advanced Settings</h1>
                         </div>
                     </div>

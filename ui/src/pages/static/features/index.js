@@ -6,7 +6,7 @@ export default function Features() {
     return (
         <div className="container">
 	    	<div className="row">
-	    		<div className="col-md-12">
+	    		<div className="col-12">
 						<h1>The Coolest Surveying Tool Available!</h1>
 						
 						<h2>So what's so cool anyways?</h2>
@@ -53,7 +53,7 @@ export default function Features() {
 	    			</p>
 	    		</div>
 	    	</div>
-	    	<div className="row"><div className="col-md-12 clearfix">&nbsp;</div></div>
+	    	<div className="row"><div className="col-12 clearfix">&nbsp;</div></div>
 	    	<div className="row">
 	    		<div className="col-md-6 feature-block">
                     <i className="fas fa-chart-pie"></i> Analyse The Captured Data 
@@ -78,7 +78,7 @@ export default function Features() {
 	    			</p>
 	    		</div>
 	    	</div>
-	    	<div className="row"><div className="col-md-12 clearfix">&nbsp;</div></div>
+	    	<div className="row"><div className="col-12 clearfix">&nbsp;</div></div>
 	      <div className="row">
 	    		<div className="col-md-6 feature-block">
                     <i className="fas fa-wifi"></i> Surveys That Work Offline
@@ -89,7 +89,7 @@ export default function Features() {
 	    			<p>Draw insights easily with Factile's powerful analytical ability. Group a set of questions and generate a report on most preferred answer combinations, across different permutations!</p>
 	    		</div>
 	    	</div>
-	    	<div className="row"><div className="col-md-12 clearfix">&nbsp;</div></div>
+	    	<div className="row"><div className="col-12 clearfix">&nbsp;</div></div>
 	      <div className="row">
 	    		<div className="col-md-6 feature-block">
                     <i className="fas fa-project-diagram"></i> Manage The Survey Flow
@@ -100,7 +100,7 @@ export default function Features() {
 	    			<p>Use one of the predefined questionnaires as a starting point and customize it to suit your needs.</p>
 	    		</div>
 	    	</div>
-	    	<div className="row"><div className="col-md-12 clearfix">&nbsp;</div></div>
+	    	<div className="row"><div className="col-12 clearfix">&nbsp;</div></div>
 	      <div className="row">
 	    		<div className="col-md-6 feature-block">
                     <i className="fas fa-language"></i> Multiple Languages
@@ -117,7 +117,7 @@ export default function Features() {
 	    			<p>Radio buttons, checkboxes, ranking or rating scales that look like iPhone and work easily with touch phones.</p>
 	    		</div>
 	    	</div>
-	    	<div className="row"><div className="col-md-12 clearfix">&nbsp;</div></div>
+	    	<div className="row"><div className="col-12 clearfix">&nbsp;</div></div>
 	    	<div className="row">
 	    		<div className="col-md-6 feature-block">
                     <i className="fas fa-camera"></i> Preview Survey Before Sending It Out.
@@ -128,7 +128,7 @@ export default function Features() {
 	    			<p>Invite participants through email, or make it an open survey and just share the link on Facebook/ Twitter/ anywhere!</p>
 	    		</div>
 	    	</div>
-	    	<div className="row"><div className="col-md-12 clearfix">&nbsp;</div></div>
+	    	<div className="row"><div className="col-12 clearfix">&nbsp;</div></div>
 	      <div className="row">
 	    		<div className="col-md-6 feature-block">
                     <i className="fas fa-users"></i> Collaborate
@@ -139,7 +139,7 @@ export default function Features() {
 	    			<p>Maintain an address book of frequently used email addresses.</p>
 	    		</div>
 	    	</div>
-	    	<div className="row"><div className="col-md-12 clearfix">&nbsp;</div></div>
+	    	<div className="row"><div className="col-12 clearfix">&nbsp;</div></div>
 	      <div className="row">
 	    		<div className="col-md-6 feature-block">
                     <i className="fas fa-shield-alt"></i> Security
@@ -150,7 +150,7 @@ export default function Features() {
 	    			<p>This is free software and you can download and install on your infrastructure.</p>
 	    		</div>
 	    	</div>
-	    	<div className="row"><div className="col-md-12 clearfix">&nbsp;</div></div>
+	    	<div className="row"><div className="col-12 clearfix">&nbsp;</div></div>
 	    </div>
     );
 };

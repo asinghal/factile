@@ -43,34 +43,34 @@ export default function RegistrationForm({setUserLoggedIn, setShowLoginForm}) {
         <div className="login-form">
             <form>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-12">
                         <h3>Sign up</h3>
                     </div>
                 </div>
                 {!!errorMessage &&
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <div className="alert alert-danger">{errorMessage}</div>
                         </div>
                     </div>
                 }
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-12">
                         <input type="text" id="email" name="email" value={user.email} placeholder="email" onChange={handleInputChange} />
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-12">
                         <input type="password" id="password" name="password" value={user.password} placeholder="password" onChange={handleInputChange} />
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-12">
                         <button onClick={submitForm}>Register</button>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-12">
                     Already a user? <a href="/" onClick={showLoginForm}>Click here to login</a>
                     </div>
                 </div>

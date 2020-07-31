@@ -112,6 +112,12 @@ export default function NewSurvey() {
     // eslint-disable-next-line
     }, [id, history]);
 
+    const HelpText = ({ text }) => (
+        <div className="help-text">
+            <i className="fas fa-info-circle"></i>&nbsp;{text}
+        </div>
+    );
+    
     return (
         <div className="new-survey container">
             <div className="row">
@@ -167,6 +173,7 @@ export default function NewSurvey() {
                                 <input type="text" name="name" id="survey-name" className="form-field" value={survey.name || ''} onChange={handleInputChange} placeholder="Survey Name" />
                                 <label htmlFor="name" className="form-label">Survey Name</label>
                             </div>
+                            <HelpText text="Mandatory field. This is the title of the survey that will be displayed to the respondents on every page. Also it acts as a reference for you to look up in your list of surveys." />
                         </div>
                     </div>
 
@@ -180,6 +187,7 @@ export default function NewSurvey() {
                                 </select>
                                 <label htmlFor="language" className="form-label">Language</label>
                             </div>
+                            <HelpText text="The language of the survey" />
                         </div>
                     </div>
 
@@ -192,6 +200,7 @@ export default function NewSurvey() {
                                 <div><input name="accessType" type="radio" id="openAccess" value="open" onChange={handleInputChange} checked={survey.accessType === 'open'} /><label htmlFor="openAccess" data-testid="openAccess">Anyone with the link</label></div>
                                 <div><input name="accessType" type="radio" id="emailAccess" value="email" onChange={handleInputChange} checked={survey.accessType === 'email'} /><label htmlFor="emailAccess">By invitation</label></div>
                             </div>
+                            <HelpText text="Mandatory field. Defines the visibility of this survey. An open access means anyone can access and the responses will always be anonymous. Access by invitation provides a degree of privacy to the survey, especially as these can not be automatically mapped by search engines like Google." />
                         </div>
                     </div>
 
@@ -200,6 +209,7 @@ export default function NewSurvey() {
                             <div className="choices">
                                 <input type="checkbox" id="includeProgress" name="includeProgress" value="true" defaultChecked={survey.layout.includeProgress} onChange={handleChangeLayoutCheckbox} /><label htmlFor="includeProgress">Show Progress Bar</label>
                             </div>
+                            <HelpText text="When checked, display a progress tracker to the respondents of the survey" />
                         </div>
                     </div>
 
@@ -215,6 +225,7 @@ export default function NewSurvey() {
                                 <textarea name="intro_text" className="form-field" value={survey.intro_text || ''} onChange={handleInputChange}  placeholder="Introductory Message (optional)"/>
                                 <label htmlFor="intro_text" className="form-label">Introductory Message (optional)</label>
                             </div>
+                            <HelpText text="When specified, this becomes the first page of the survey. This can be very useful in setting context, or sharing instructions with the audience." />
                         </div>
                     </div>
 
@@ -224,6 +235,7 @@ export default function NewSurvey() {
                                 <textarea name="thank_you_text" className="form-field" value={survey.thank_you_text || ''} onChange={handleInputChange}  placeholder="'Thank you' text"/>
                                 <label htmlFor="thank_you_text" className="form-label">'Thank you' text</label>
                             </div>
+                            <HelpText text="This appears on the final page of the survey after the respondent has submitted answers to all questions, and indicates that the respondent can safely close the window." />
                         </div>
                     </div>
 
@@ -239,6 +251,7 @@ export default function NewSurvey() {
                                 <input type="file" className="form-field" name="logoFile" onChange={onFileChange} />
                                 <label htmlFor="logoFile" className="form-label">Logo image</label>
                             </div>
+                            <HelpText text="(Optional) An image/ picture that should be displayed on top of every page in the survey" />
                         </div>
                     </div>
 
@@ -252,6 +265,7 @@ export default function NewSurvey() {
                                 <div><input name="logoAlignment" type="radio" id="centerPos" value="center" onChange={handleLayoutInputChange} checked={survey.layout.logoAlignment === 'center'} /><label htmlFor="centerPos" >Center</label></div>
                                 <div><input name="logoAlignment" type="radio" id="rightPos" value="right" onChange={handleLayoutInputChange} checked={survey.layout.logoAlignment === 'right'} /><label htmlFor="rightPos" >Right</label></div>
                             </div>
+                            <HelpText text="The position of the above mentioned image/ picture on the page." />
                         </div>
                     </div>
 
@@ -261,6 +275,7 @@ export default function NewSurvey() {
                                 <input type="color" className="form-field" name="bodycolor" value={survey.layout.bodycolor || defaultBgColor} onChange={handleLayoutInputChange} placeholder="Page Background Color" />
                                 <label htmlFor="bodycolor" className="form-label">Page Background Color</label>
                             </div>
+                            <HelpText text="Base background color of the survey that will only appear as side ribbons" />
                         </div>
                     </div>
 
@@ -270,6 +285,7 @@ export default function NewSurvey() {
                                 <input type="color" className="form-field" name="containercolor" value={survey.layout.containercolor || defaultBgColor} onChange={handleLayoutInputChange} placeholder="Survey Name" />
                                 <label htmlFor="containercolor" className="form-label">Survey Box Color</label>
                             </div>
+                            <HelpText text="Background color of the main content of the survey" />
                         </div>
                     </div>
 
@@ -279,6 +295,7 @@ export default function NewSurvey() {
                                 <input type="color" className="form-field" name="logoBgColor" value={survey.layout.logoBgColor || defaultBgColor} onChange={handleLayoutInputChange} placeholder="Logo Background Color" />
                                 <label htmlFor="logoBgColor" className="form-label">Logo Background Color</label>
                             </div>
+                            <HelpText text="Background color for the uploaded logo image" />
                         </div>
                     </div>
 
@@ -288,6 +305,7 @@ export default function NewSurvey() {
                                 <input type="color" className="form-field" name="textColor" value={survey.layout.textColor || defaultTextColor} onChange={handleLayoutInputChange} placeholder="Text Color" />
                                 <label htmlFor="textColor" className="form-label">Text Color</label>
                             </div>
+                            <HelpText text="Color of texts and lines in the survey" />
                         </div>
                     </div>
 

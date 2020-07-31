@@ -1,3 +1,9 @@
 .new-survey .row {
     margin: 1em 0;
 }
+
+.new-survey .subsection {
+    background-color: #E9F4FE;
+    padding: 1em;
+    margin-bottom: 1em;
+}

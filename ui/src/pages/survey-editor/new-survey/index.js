@@ -10,7 +10,14 @@ import { languages } from './languages.js';
 import SurveyManagementMenu from "../../../components/surveys/survey-management-menu";
 import SurveyStepsNav from "../../../components/surveys/survey-steps-nav";
 
-const DEFAULT_SURVEY = { language: '1', layout: {}, thank_you_text: 'Thank you for participating.' };
+const DEFAULT_SURVEY = { 
+    language: '1', 
+    layout: { 
+        logoAlignment: 'left', bodycolor: '#FFFFFF', containercolor: '#FFFFFF', logoBgColor: '#FFFFFF', textColor: '#333333' 
+    },
+    thank_you_text: 'Thank you for participating.',
+    accessType: 'open' 
+};
 
 export default function NewSurvey() {
     const [survey, setSurvey] = useState(DEFAULT_SURVEY);
@@ -143,14 +150,19 @@ export default function NewSurvey() {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             {!!survey.surveyId && 
                                 <div className={'alert alert-' + statusAlert.css}>{statusAlert.msg}</div>
                             }
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
+                            <h4 className="subsection"><i className="fas fa-chevron-circle-right blue" aria-hidden="true"></i>&nbsp;Basic setup</h4>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col-12">
                             <div className="form-group field">
                                 <input type="text" name="name" id="survey-name" className="form-field" value={survey.name || ''} onChange={handleInputChange} placeholder="Survey Name" />
                                 <label htmlFor="name" className="form-label">Survey Name</label>
@@ -159,7 +171,7 @@ export default function NewSurvey() {
                     </div>
 
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <div className="form-group field">
                                 <select id="language" name="language" value={survey.language} className="form-field" onChange={handleInputChange}>
                                     {languages.map((language, index) => 
@@ -172,16 +184,7 @@ export default function NewSurvey() {
                     </div>
 
                     <div className="row">
-                        <div className="col-md-12">
-                            <div className="form-group field">
-                                <input type="file" className="form-field" name="logoFile" onChange={onFileChange} />
-                                <label htmlFor="logoFile" className="form-label">Logo image</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <div>
                                 <strong>Who can take this survey?</strong>
                             </div>
@@ -193,7 +196,54 @@ export default function NewSurvey() {
                     </div>
 
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
+                            <div className="choices">
+                                <input type="checkbox" id="includeProgress" name="includeProgress" value="true" defaultChecked={survey.layout.includeProgress} onChange={handleChangeLayoutCheckbox} /><label htmlFor="includeProgress">Show Progress Bar</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-12">
+                            <h4 className="subsection"><i className="fas fa-chevron-circle-right blue" aria-hidden="true"></i>&nbsp;Introductory texts</h4>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="form-group field">
+                                <textarea name="intro_text" className="form-field" value={survey.intro_text || ''} onChange={handleInputChange}  placeholder="Introductory Message (optional)"/>
+                                <label htmlFor="intro_text" className="form-label">Introductory Message (optional)</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="form-group field">
+                                <textarea name="thank_you_text" className="form-field" value={survey.thank_you_text || ''} onChange={handleInputChange}  placeholder="'Thank you' text"/>
+                                <label htmlFor="thank_you_text" className="form-label">'Thank you' text</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-12">
+                            <h4 className="subsection"><i className="fas fa-chevron-circle-right blue" aria-hidden="true"></i>&nbsp;Layout and Appearance</h4>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="form-group field">
+                                <input type="file" className="form-field" name="logoFile" onChange={onFileChange} />
+                                <label htmlFor="logoFile" className="form-label">Logo image</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-12">
                             <div>
                                 <strong>Logo position</strong>
                             </div>
@@ -206,15 +256,7 @@ export default function NewSurvey() {
                     </div>
 
                     <div className="row">
-                        <div className="col-md-12">
-                            <div className="choices">
-                                <input type="checkbox" id="includeProgress" name="includeProgress" value="true" defaultChecked={survey.layout.includeProgress} onChange={handleChangeLayoutCheckbox} /><label htmlFor="includeProgress">Show Progress Bar</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <div className="form-group field">
                                 <input type="color" className="form-field" name="bodycolor" value={survey.layout.bodycolor || defaultBgColor} onChange={handleLayoutInputChange} placeholder="Page Background Color" />
                                 <label htmlFor="bodycolor" className="form-label">Page Background Color</label>
@@ -223,7 +265,7 @@ export default function NewSurvey() {
                     </div>
 
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <div className="form-group field">
                                 <input type="color" className="form-field" name="containercolor" value={survey.layout.containercolor || defaultBgColor} onChange={handleLayoutInputChange} placeholder="Survey Name" />
                                 <label htmlFor="containercolor" className="form-label">Survey Box Color</label>
@@ -232,7 +274,7 @@ export default function NewSurvey() {
                     </div>
 
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <div className="form-group field">
                                 <input type="color" className="form-field" name="logoBgColor" value={survey.layout.logoBgColor || defaultBgColor} onChange={handleLayoutInputChange} placeholder="Logo Background Color" />
                                 <label htmlFor="logoBgColor" className="form-label">Logo Background Color</label>
@@ -241,28 +283,10 @@ export default function NewSurvey() {
                     </div>
 
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <div className="form-group field">
                                 <input type="color" className="form-field" name="textColor" value={survey.layout.textColor || defaultTextColor} onChange={handleLayoutInputChange} placeholder="Text Color" />
                                 <label htmlFor="textColor" className="form-label">Text Color</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="form-group field">
-                                <textarea name="intro_text" className="form-field" value={survey.intro_text || ''} onChange={handleInputChange}  placeholder="Introductory Message (optional)"/>
-                                <label htmlFor="intro_text" className="form-label">Introductory Message (optional)</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="row">
-                        <div className="col-md-12">
-                            <div className="form-group field">
-                                <textarea name="thank_you_text" className="form-field" value={survey.thank_you_text || ''} onChange={handleInputChange}  placeholder="'Thank you' text"/>
-                                <label htmlFor="thank_you_text" className="form-label">'Thank you' text</label>
                             </div>
                         </div>
                     </div>

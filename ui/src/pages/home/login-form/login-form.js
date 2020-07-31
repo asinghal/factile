@@ -9,6 +9,7 @@ import { isValidEmail } from "../../../utils.js";
 export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
     const [user, setUser] = useState({ email: '', password: ''});
     const [errorMessage, setErrorMessage] = useState('');
+    const [infoMessage, setInfoMessage] = useState('');
 
     let history = useHistory();
 
@@ -40,7 +41,12 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
             setErrorMessage('Please enter a valid email address');
             return;
         }
-        forgotPassword(user.email).then(console.log);
+        forgotPassword(user.email).then(() => {
+            setInfoMessage('We have sent you a temprary password. Please check your email.');
+            setTimeout(() => {
+                setInfoMessage('');
+            }, 5000);
+        });
     };
 
     const showRegistrationForm = (event) => {
@@ -70,6 +76,13 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
                     <div className="row">
                         <div className="col-md-12">
                             <div className="alert alert-danger" data-testid="login-error">{errorMessage}</div>
+                        </div>
+                    </div>
+                }
+                {!!infoMessage &&
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="alert alert-success" data-testid="login-success">{infoMessage}</div>
                         </div>
                     </div>
                 }

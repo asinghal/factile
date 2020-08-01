@@ -102,7 +102,7 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
                 </div>
             }
             <div className="row">
-                <div className="col-11">
+                <div className="col-10 col-md-11">
                 <h4>{qTypeMetaInfo.name}</h4>
                 </div>
                 <div className="col-1">
@@ -114,7 +114,7 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
             }
             {question.qType !== 'page' &&
                 <div className="row">
-                    <div className="col-11">
+                    <div className="col-10 col-md-11">
                         <div className="form-group field">
                             <input type="text" name="text" className="form-field" value={questionData.text || ''} onChange={handleInputChange} placeholder="Question text" />
                             <label className="form-label" htmlFor="text">Question text</label>
@@ -130,7 +130,7 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
             }
             {qTypeMetaInfo.options &&
                 <div className="row">
-                    <div className="col-11">
+                    <div className="col-10 col-md-11">
                         <div className="form-group field">
                             <textarea name="options" className="form-field" value={questionData.options} rows={questionData.options.split('\n').length} onChange={handleInputChange} placeholder="Options (one per line)" />
                             <label className="form-label" htmlFor="options">Options (one per line)</label>
@@ -146,10 +146,10 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
             }
             {qTypeMetaInfo.dimensions &&
             <div className="row">
-                <div className="col-11">
+                <div className="col-10 col-md-11">
                     <div className="form-group field">
                         <textarea name="dimensions" className="form-field" value={questionData.dimensions} rows={questionData.dimensions.split('\n').length} onChange={handleInputChange} placeholder="Dimensions/ sub questions (one per line)" />
-                        <label className="form-label" htmlFor="dimensions">Dimensions/ sub questions (one per line)</label>
+                        <label className="form-label" htmlFor="dimensions">Sub questions (one per line)</label>
                     </div>
                     <HelpText text="Sub questions, or rows in the table. These are the dimensions respondents will be 'rating' on. Please ensure that you enter only one per line." />
                 </div>

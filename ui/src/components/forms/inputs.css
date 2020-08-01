@@ -36,7 +36,10 @@ input[type="color"].form-field {
     top: 0;
     display: block;
     transition: 0.2s;
-    color: #9b9b9b;
+    color: #333333;
+    font-weight: 600;
+    max-height: 1.5em;
+    overflow: auto;
 }
   
 .form-field:focus ~ .form-label {

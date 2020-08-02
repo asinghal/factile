@@ -35,9 +35,9 @@ button.secondary-btn {
     color: #4CA9FD;
 }
 
-@media all and (max-width:30em){
-    .base-btn {
-      display:block;
-      margin:0.4em auto;
+@media all and (max-width:30em) {
+    button.base-btn {
+        display:block;
+        margin:0.4em auto;
     }
 }

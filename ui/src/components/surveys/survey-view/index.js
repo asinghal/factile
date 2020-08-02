@@ -84,7 +84,7 @@ export default function SurveyView({ survey, addResponse, onPageSubmit, answersA
                 {survey.intro_text && pageNum === 0 &&
                 <>
                     <div className="row">
-                        <div className="col-12 col-md-12">
+                        <div className="col-12">
                             <div>{survey.intro_text}</div>
                         </div>
                     </div>
@@ -99,7 +99,7 @@ export default function SurveyView({ survey, addResponse, onPageSubmit, answersA
                     {pageNum > 0 && survey.pages && survey.pages[pageNum-1] && 
                     <>
                         <div className="row">
-                            <div className="col-12 col-md-12">
+                            <div className="col-12">
                                 <p><i>Questions marked with ** are mandatory</i></p>
                                 <Page page={survey.pages[pageNum-1]} saveResponse={saveResponse} />
                             </div>

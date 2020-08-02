@@ -35,24 +35,24 @@ export default function SurveyCollaborators() {
                 </div>
                 <div className="col-md-8 col-lg-9 col-sm-12">
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <h1>{survey.name}: Manage Collaborators</h1>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             {survey.owner && survey.owner.map((o, index) => 
                                 <div key={index}>{o}</div>
                             )}
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             &nbsp;
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <div className="form-group field">
                                 <input type="email" name="newCollaborator" className="form-field" value={newCollaborator} onChange={handleInputChange} placeholder="New Collaborator" />
                                 <label className="form-label" htmlFor="newCollaborator">New Collaborator</label>

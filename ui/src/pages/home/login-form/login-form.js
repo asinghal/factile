@@ -68,36 +68,36 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
         <div className="login-form">
             <form>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-12">
                         <h3>Login to get started</h3>
                     </div>
                 </div>
                 {!!errorMessage &&
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <div className="alert alert-danger" data-testid="login-error">{errorMessage}</div>
                         </div>
                     </div>
                 }
                 {!!infoMessage &&
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <div className="alert alert-success" data-testid="login-success">{infoMessage}</div>
                         </div>
                     </div>
                 }
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-12">
                         <input type="text" id="email" name="email" value={user.email} placeholder="email" onChange={handleInputChange} />
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-12">
                         <input type="password" id="password" name="password" value={user.password} placeholder="password" onChange={handleInputChange} />
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-12">
                         <button onClick={initiateLogin} data-testid="login-btn">Login</button>
                         <span className="oauth-button">
                             <i onClick={initiateGoogleAuth} className="fab fa-google"></i>
@@ -108,12 +108,12 @@ export default function LoginForm({setUserLoggedIn, setShowLoginForm}) {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-12">
                         Not a user yet? <a href="/" onClick={showRegistrationForm}>Click here to register</a>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-12">
                         Forgot password? <a href="/" onClick={resetPassword} data-testid="reset-password">Click here to reset</a>
                     </div>
                 </div>

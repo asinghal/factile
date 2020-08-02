@@ -6,6 +6,7 @@ import '../../../components/forms/inputs.css';
 
 import './questionnaire.css';
 import PageConditions from "./page-conditions.js";
+import HelpText from "../../../components/help-text/index.js";
 
 const toTextArray = (text, language) => ({ texts: [ { text, language } ]});
 const toArray = (text) => text.split('\n');
@@ -96,10 +97,10 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
                 </div>
             }
             <div className="row">
-                <div className="col-sm-11 col-md-11">
+                <div className="col-10 col-md-11">
                 <h4>{qTypeMetaInfo.name}</h4>
                 </div>
-                <div className="col-sm-1 col-md-1">
+                <div className="col-1">
                     <span className="delete-btn" onClick={deleteQuestion} title="delete this question" ><i className="far fa-trash-alt"></i></span>
                 </div>
             </div>
@@ -108,13 +109,14 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
             }
             {question.qType !== 'page' &&
                 <div className="row">
-                    <div className="col-md-11">
+                    <div className="col-10 col-md-11">
                         <div className="form-group field">
                             <input type="text" name="text" className="form-field" value={questionData.text || ''} onChange={handleInputChange} placeholder="Question text" />
                             <label className="form-label" htmlFor="text">Question text</label>
                         </div>
+                        <HelpText text="Main text that will initiate this section" />
                     </div>
-                    <div className="col-md-1">
+                    <div className="col-1">
                         {answerPipingData.questions.length > 0 &&
                             <span className="answer-piping-icon" onClick={() => showPipingOptions('text')}><i className="fas fa-chevron-left"></i></span>
                         }
@@ -123,13 +125,14 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
             }
             {qTypeMetaInfo.options &&
                 <div className="row">
-                    <div className="col-md-11">
+                    <div className="col-10 col-md-11">
                         <div className="form-group field">
                             <textarea name="options" className="form-field" value={questionData.options} rows={questionData.options.split('\n').length} onChange={handleInputChange} placeholder="Options (one per line)" />
                             <label className="form-label" htmlFor="options">Options (one per line)</label>
                         </div>
+                        <HelpText text="Answer options. Please ensure that you enter only one per line." />
                     </div>
-                    <div className="col-md-1">
+                    <div className="col-1">
                         {answerPipingData.questions.length > 0 &&
                             <span className="answer-piping-icon" onClick={() => showPipingOptions('options')}><i className="fas fa-chevron-left"></i></span>
                         }
@@ -138,13 +141,14 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
             }
             {qTypeMetaInfo.dimensions &&
             <div className="row">
-                <div className="col-md-12">
+                <div className="col-10 col-md-11">
                     <div className="form-group field">
                         <textarea name="dimensions" className="form-field" value={questionData.dimensions} rows={questionData.dimensions.split('\n').length} onChange={handleInputChange} placeholder="Dimensions/ sub questions (one per line)" />
-                        <label className="form-label" htmlFor="dimensions">Dimensions/ sub questions (one per line)</label>
+                        <label className="form-label" htmlFor="dimensions">Sub questions (one per line)</label>
                     </div>
+                    <HelpText text="Sub questions, or rows in the table. These are the dimensions respondents will be 'rating' on. Please ensure that you enter only one per line." />
                 </div>
-                <div className="col-md-1">
+                <div className="col-1">
                     {answerPipingData.questions.length > 0 &&
                         <span className="answer-piping-icon" onClick={() => showPipingOptions('dimensions')}><i className="fas fa-chevron-left"></i></span>
                     }
@@ -154,25 +158,27 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
 
             {question.qType !== 'page' && question.qType !== 'plaintext' &&
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-12">
                         <div className="choices">
                             <input type="checkbox" id={questionId + "-mandatory"} name="mandatory" value="true" defaultChecked={questionData.mandatory} onChange={handleChangeCheckbox} /><label id={"label-" + questionId + "-mandatory"} htmlFor={questionId + "-mandatory"}>Mandatory?</label>
                         </div>
+                        <HelpText text="When checked, respondents will be asked for provide an answer for this question before proceeding." />
                     </div>
                 </div>
             }
             {qTypeMetaInfo.options &&
             <>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-12">
                         <div className="choices">
                             <input type="checkbox" id={questionId + "-hasOther"} name="hasOther" value="true" defaultChecked={questionData.hasOther} onChange={handleChangeCheckbox} /><label id={"label-" + questionId + "-hasOther"} htmlFor={questionId + "-hasOther"}>Add an "other" option and text field for user to answer?</label>
                         </div>
+                        <HelpText text="When checked, it shows a text box where users can present a free text answer if none of the given options match their expectations." />
                     </div>
                 </div>
                 {questionData.hasOther &&
                     <div className="row">
-                        <div className="col-md-12">
+                        <div className="col-12">
                             <div className="form-group field">
                                 <input type="text" name="otherBox" className="form-field" value={questionData.otherBox || ''} onChange={handleInputChange} placeholder="'Other' box label" />
                                 <label className="form-label" htmlFor="otherBox">'Other' box label</label>

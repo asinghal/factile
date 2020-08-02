@@ -11,7 +11,7 @@
     border: 0;
     border-bottom: 1px solid;
     outline: 0;
-    padding: 7px 0;
+    padding: 15px 0 7px 0;
     background: transparent;
     transition: border-color 0.2s;
 }
@@ -36,7 +36,10 @@ input[type="color"].form-field {
     top: 0;
     display: block;
     transition: 0.2s;
-    color: #9b9b9b;
+    color: #333333;
+    font-weight: 600;
+    max-height: 1.5em;
+    overflow: auto;
 }
   
 .form-field:focus ~ .form-label {

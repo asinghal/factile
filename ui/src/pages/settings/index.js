@@ -29,19 +29,19 @@ export default function Settings () {
             {error &&
             <>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-12">
                         <span className="alert alert-danger">There was an error. Please check the inputs and try again.</span>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-12">
                         &nbsp;
                     </div>
                 </div>
             </>
             }
             <div className="row">
-                <div className="col-md-12">
+                <div className="col-12">
                     <div className="form-group field">
                         <input type="password" name="password" id="password" className="form-field" onChange={onChange} placeholder="New Password" />
                         <label htmlFor="password" className="form-label">New Password</label>
@@ -49,7 +49,7 @@ export default function Settings () {
                 </div>
             </div>
             <div className="row">
-                <div className="col-md-12">
+                <div className="col-12">
                     <div className="form-group field">
                         <input type="password" name="newPassword" id="newPassword" className="form-field" onChange={onChange} placeholder="Please enter the new Password again" />
                         <label htmlFor="newPassword" className="form-label">Please enter the new Password again</label>

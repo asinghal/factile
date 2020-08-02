@@ -26,6 +26,13 @@ import ResponsesImg from './images/responses.png';
 import SurveyDetailsImg from './images/survey-details.png';
 import SurveySettingsImg from './images/survey-settings.png';
 
+const Screenshot = ({ title, img }) => (
+	<div className="screenshot">
+		<div className="screenshot-title">{title}</div>
+		<img alt={title} src={img} />
+	</div>
+);
+
 export default function Help() {
     return (
         <div className="container help">
@@ -66,10 +73,7 @@ export default function Help() {
 									</dl>
 								</div>
 
-								<div className="screenshot">
-									<div className="screenshot-title">Login options</div>
-									<img src={HomeImg} />
-								</div>
+								<Screenshot title="Login options" img={HomeImg} />
 							</div>
 							<div className="topic">
 								<h3 id="designing"><i className="fas fa-chevron-circle-right blue"></i>&nbsp;Designing a survey
@@ -88,30 +92,11 @@ export default function Help() {
 									</ol>
 								</div>
 
-								<div className="screenshot">
-									<div className="screenshot-title">New Survey</div>
-									<img src={NewSurveyImg} />
-								</div>
-
-								<div className="screenshot">
-									<div className="screenshot-title">Edit Survey</div>
-									<img src={SurveyDetailsImg} />
-								</div>
-
-								<div className="screenshot">
-									<div className="screenshot-title">Questionnaire Designer</div>
-									<img src={QuestionnaireDesignerImg} />
-								</div>
-
-								<div className="screenshot">
-									<div className="screenshot-title">Invite Audience</div>
-									<img src={InviteImg} />
-								</div>
-
-								<div className="screenshot">
-									<div className="screenshot-title">Preview</div>
-									<img src={PreviewImg} />
-								</div>
+								<Screenshot title="New Survey" img={NewSurveyImg} />
+								<Screenshot title="Edit Survey" img={SurveyDetailsImg} />
+								<Screenshot title="Questionnaire Designer" img={QuestionnaireDesignerImg} />
+								<Screenshot title="Invite Audience" img={InviteImg} />
+								<Screenshot title="Preview" img={PreviewImg} />
 							</div>
 							<div className="topic">
 								<h3 id="logic"><i className="fas fa-chevron-circle-right blue"></i>&nbsp;Defining Logic</h3>
@@ -131,21 +116,9 @@ export default function Help() {
 									</ol>
 								</div>
 
-								<div className="screenshot">
-									<div className="screenshot-title">Page break and flow control</div>
-									<img src={PageBreakImg} />
-								</div>
-
-								<div className="screenshot">
-									<div className="screenshot-title">Answer piping (selection)</div>
-									<img src={AnswerPiping1Img} />
-								</div>
-
-								<div className="screenshot">
-									<div className="screenshot-title">Answer piping (embedded)</div>
-									<img src={AnswerPiping2Img} />
-								</div>
-
+								<Screenshot title="Page break and flow control" img={PageBreakImg} />
+								<Screenshot title="Answer piping (selection)" img={AnswerPiping1Img} />
+								<Screenshot title="Answer piping (embedded)" img={AnswerPiping2Img} />
 							</div>
 							<div className="topic">
 								<h3 id="preview"><i className="fas fa-chevron-circle-right blue"></i>&nbsp;Preview the survey
@@ -188,35 +161,17 @@ export default function Help() {
 									</ol>
 								</div>
 
-								<div className="screenshot">
-									<div className="screenshot-title">Responses view</div>
-									<img src={ResponsesImg} />
-								</div>
-
-								<div className="screenshot">
-									<div className="screenshot-title">Advanced Analysis</div>
-									<img src={InsightsImg} />
-								</div>
+								<Screenshot title="Responses view" img={ResponsesImg} />
+								<Screenshot title="Advanced Analysis" img={InsightsImg} />
 							</div>
 							<div className="topic">
 								<h3 id="manage"><i className="fas fa-chevron-circle-right blue"></i>&nbsp;Manage Surveys</h3>
 								<p>You can view/ edit a survey, review its responses or delete just the responses/ the
 									questionnaire as well from the dashboard.</p>
 
-								<div className="screenshot">
-									<div className="screenshot-title">List Surveys</div>
-									<img src={MySurveysImg} />
-								</div>
-
-								<div className="screenshot">
-									<div className="screenshot-title">Survey Settings</div>
-									<img src={SurveySettingsImg} />
-								</div>
-
-								<div className="screenshot">
-									<div className="screenshot-title">Manage Collaborators</div>
-									<img src={CollaboratorsImg} />
-								</div>
+								<Screenshot title="List Surveys" img={MySurveysImg} />
+								<Screenshot title="Survey Settings" img={SurveySettingsImg} />
+								<Screenshot title="Manage Collaborators" img={CollaboratorsImg} />
 							</div>
 							<div className="topic">
 								<h3 id="qtype"><i className="fas fa-chevron-circle-right blue"></i>&nbsp;Question Types</h3>
@@ -256,50 +211,15 @@ export default function Help() {
 								</div>
 
 
-								<div className="screenshot">
-									<div className="screenshot-title">Question types</div>
-									<img src={QuestionsImg} />
-								</div>
-
-								<div className="screenshot">
-									<div className="screenshot-title">Text Field question</div>
-									<img src={QuestionTextboxImg} />
-								</div>
-
-								<div className="screenshot">
-									<div className="screenshot-title">Single Choice question</div>
-									<img src={QuestionSingleImg} />
-								</div>
-
-								<div className="screenshot">
-									<div className="screenshot-title">Multiple choice question</div>
-									<img src={QuestionMultipleImg} />
-								</div>
-
-								<div className="screenshot">
-									<div className="screenshot-title">Dropdown</div>
-									<img src={QuestionDropdownImg} />
-								</div>
-
-								<div className="screenshot">
-									<div className="screenshot-title">Large Text/ Essay</div>
-									<img src={QuestionLargetextImg} />
-								</div>
-
-								<div className="screenshot">
-									<div className="screenshot-title">Ranking</div>
-									<img src={QuestionRankingImg} />
-								</div>
-
-								<div className="screenshot">
-									<div className="screenshot-title">Rating</div>
-									<img src={QuestionRatingImg} />
-								</div>
-
-								<div className="screenshot">
-									<div className="screenshot-title">Plain Text</div>
-									<img src={QuestionPlainImg} />
-								</div>
+								<Screenshot title="Question types" img={QuestionsImg} />
+								<Screenshot title="Text Field question" img={QuestionTextboxImg} />
+								<Screenshot title="Single Choice question" img={QuestionSingleImg} />
+								<Screenshot title="Multiple choice question" img={QuestionMultipleImg} />
+								<Screenshot title="Dropdown" img={QuestionDropdownImg} />
+								<Screenshot title="Large Text/ Essay" img={QuestionLargetextImg} />
+								<Screenshot title="Ranking" img={QuestionRankingImg} />
+								<Screenshot title="Rating" img={QuestionRatingImg} />
+								<Screenshot title="Plain Text" img={QuestionPlainImg} />
 							</div>
 							<div className="topic">
 								<h3 id="mobile"><i className="fas fa-chevron-circle-right blue"></i>&nbsp;Mobile Devices</h3>

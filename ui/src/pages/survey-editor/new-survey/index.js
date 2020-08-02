@@ -9,6 +9,7 @@ import { save, update, findSurvey, upload } from '../api.js';
 import { languages } from './languages.js';
 import SurveyManagementMenu from "../../../components/surveys/survey-management-menu";
 import SurveyStepsNav from "../../../components/surveys/survey-steps-nav";
+import HelpText from "../../../components/help-text";
 
 const DEFAULT_SURVEY = { 
     language: '1', 
@@ -112,12 +113,6 @@ export default function NewSurvey() {
     // eslint-disable-next-line
     }, [id, history]);
 
-    const HelpText = ({ text }) => (
-        <div className="help-text">
-            <i className="fas fa-info-circle"></i>&nbsp;{text}
-        </div>
-    );
-    
     return (
         <div className="new-survey container">
             <div className="row">

@@ -6,6 +6,7 @@ import '../../../components/forms/inputs.css';
 
 import './questionnaire.css';
 import PageConditions from "./page-conditions.js";
+import HelpText from "../../../components/help-text/index.js";
 
 const toTextArray = (text, language) => ({ texts: [ { text, language } ]});
 const toArray = (text) => text.split('\n');
@@ -82,12 +83,6 @@ export default function QuestionDesigner({question, allQuestions, questionId, la
         setQuestionData(q => ({...q, [event.target.name]: !questionData[event.target.name]}));
         question[event.target.name] = !questionData[event.target.name];
     };
-
-    const HelpText = ({ text }) => (
-        <div className="help-text">
-            <i className="fas fa-info-circle"></i>&nbsp;{text}
-        </div>
-    );
 
     return (
         <div className={'question-block ' + (question.qType === 'page' ? 'page-break': '')} data-testid={"question-block-" + questionId}>

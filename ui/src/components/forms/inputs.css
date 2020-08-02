@@ -11,7 +11,7 @@
     border: 0;
     border-bottom: 1px solid;
     outline: 0;
-    padding: 7px 0;
+    padding: 15px 0 7px 0;
     background: transparent;
     transition: border-color 0.2s;
 }

@@ -66,6 +66,7 @@ footer {
     background-color: #dddddd;
     color: #8f1212;
     padding: 5px 10px;
+    overflow-wrap: break-word;
 }
 
 .api-block .api-description {

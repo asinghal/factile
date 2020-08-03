@@ -3,13 +3,14 @@ import Header from '../../../components/header/index.js';
 import Footer from '../../../components/footer/index.js';
 import { isLoggedIn } from '../../../authentication.js';
 import CookieConsent from "react-cookie-consent";
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 export default function EditorBase(props) {
     const [userLoggedIn, setUserLoggedIn] = useState(isLoggedIn());
     // we need to add these attributes to the child nodes
     const updatedChildrenWithProps = React.Children.map( props.children, child => React.cloneElement(child, { setUserLoggedIn }));
     const history = useHistory();
+    const location = useLocation();
 
     useEffect(() => {
       if (props.secure === 'true' && !userLoggedIn && !isLoggedIn()) {
@@ -17,6 +18,11 @@ export default function EditorBase(props) {
       }
     }, [props.secure, userLoggedIn, history]);
 
+    useEffect(() => {
+      // on page change, go to top of the page
+      window.scrollTo(0, 0);
+    }, [location]);
+  
     if (props.secure === 'true' && !userLoggedIn && !isLoggedIn()) {
       // code repetition and over optimisation? deliberate. no point rendering if we are anyways redirecting
       return null;

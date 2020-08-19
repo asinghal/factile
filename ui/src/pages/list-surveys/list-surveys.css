@@ -15,3 +15,14 @@
 .my-surveys .survey-row a, .my-surveys .survey-row a:hover, .my-surveys .survey-row a:visited {
     color: #337ab7;
 }
+
+.create-survey-btn {
+    padding: 5em 0;
+    font-size: 1.2em;
+}
+
+.create-survey-btn a, .create-survey-btn a:hover {
+    padding: 10px 20px;
+    background-color: #4CA9FD;
+    color: #ffffff;
+}

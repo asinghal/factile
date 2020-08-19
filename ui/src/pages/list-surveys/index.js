@@ -33,6 +33,12 @@ export default function ListSurveys() {
     return (
         <div className="container my-surveys">
             <h2>Surveys</h2>
+            {(!surveys || !surveys.length) && 
+            <div className="create-survey-btn">
+                <a href="/surveys/new">Create a new survey</a>
+            </div>
+            }
+            {(!!surveys && !!surveys.length) && 
             <div className="row survey-header-row">
                 <div className="col-md-4">Name</div>
                 <div className="col-md-2">Status</div>
@@ -40,6 +46,7 @@ export default function ListSurveys() {
                 <div className="col-md-2">Created by</div>
                 <div className="col-md-2">&nbsp;</div>
             </div>
+            }
             {surveys.map(survey => 
             <ShowSurveyRow survey={survey} key={survey.surveyId + '-' + survey.status}/>
             )}

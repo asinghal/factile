@@ -18,7 +18,7 @@ const AdressBooks = require('./');
  * @apiSuccess {String} addresses[name] Name of the contact
  * @apiSuccess {String} addresses[email] Email address of the contact
  */
-router.get('/', (req, res) => AdressBooks.findByOwner(req.user.email).then((data) => res.send(data)));
+router.get('/', (req, res) => AdressBooks.findByOwner(req.user.email).then((data) => res.send(data || {})));
 
 /**
  * @api {get} /api/addressbooks/groups Get Address Groups
@@ -30,7 +30,7 @@ router.get('/', (req, res) => AdressBooks.findByOwner(req.user.email).then((data
  *
  * @apiSuccess {String[]} groups Array of group names
  */
-router.get('/groups', (req, res) => AdressBooks.findGroupsByOwner(req.user.email).then((data) => res.send(data)));
+router.get('/groups', (req, res) => AdressBooks.findGroupsByOwner(req.user.email).then((data) => res.send(data || [])));
 
 /**
  * @api {get} /api/addressbooks/groups/:name Get Addresses for Group
@@ -44,7 +44,7 @@ router.get('/groups', (req, res) => AdressBooks.findGroupsByOwner(req.user.email
  * @apiSuccess {String} addresses[name] Name of the contact
  * @apiSuccess {String} addresses[email] Email address of the contact
  */
-router.get('/groups/:name', (req, res) => AdressBooks.findAddressesByOwnerAndGroup(req.user.email, req.params.name).then((data) => res.send(data)));
+router.get('/groups/:name', (req, res) => AdressBooks.findAddressesByOwnerAndGroup(req.user.email, req.params.name).then((data) => res.send(data || {})));
 
 /**
  * @api {post} /api/addressbooks Save Addressbook
